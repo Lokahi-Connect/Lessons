@@ -11,18 +11,23 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);min-height:100vh;padding-bottom:64px;}
+body{font-family:'Inter',Inter,system-ui,-apple-system,sans-serif;background:var(--page-bg);color:var(--navy);min-height:100vh;padding-bottom:64px;}
 .masthead{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-mid) 55%,var(--navy-soft) 100%);padding:32px 24px 26px;text-align:center;position:relative;overflow:hidden;}
 .masthead::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--sky),var(--gold));}
-.mast-eyebrow{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--sky);margin-bottom:8px;}
-.mast-title{font-family:'Orbitron',sans-serif;font-size:clamp(20px,6vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px;}
+.mast-eyebrow{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--sky);margin-bottom:8px;}
+.mast-title{font-family:'Orbitron',monospace;font-size:clamp(20px,6vw,36px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px;}
 .mast-title em{color:var(--gold-light);font-style:normal;}
 .mast-sub{font-size:14px;color:var(--foam);font-weight:400;margin-top:4px;}
+.masthead-actions{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.mast-btn{background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);color:white;border-radius:20px;padding:7px 18px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;cursor:pointer;transition:all 0.18s;}
+.mast-btn:hover{background:rgba(255,255,255,0.22);}
+.mast-btn.danger{border-color:rgba(255,100,100,0.5);color:#ffb3b3;}
+.mast-btn.danger:hover{background:rgba(255,80,80,0.18);}
 .welcome{background:var(--gold-bg);border-bottom:3px solid var(--gold);padding:14px 20px;text-align:center;font-size:14px;font-weight:600;color:var(--navy-mid);line-height:1.6;}
 .welcome strong{color:var(--gold);}
 .how-wrap{max-width:720px;margin:18px auto 0;padding:0 16px;}
 .how-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px 22px;border-left:5px solid var(--ocean);}
-.how-heading{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ocean);margin-bottom:12px;}
+.how-heading{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ocean);margin-bottom:12px;}
 .how-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:9px;font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.5;}
 .how-row:last-child{margin-bottom:0;}
 .how-num{width:24px;height:24px;border-radius:50%;background:var(--ocean);color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
@@ -34,16 +39,23 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
 .prog-dot{width:14px;height:14px;border-radius:50%;background:var(--page-bg);border:2px solid var(--gray-border);transition:all 0.35s;}
 .prog-dot.done{background:var(--green);border-color:var(--green);box-shadow:0 0 0 3px var(--green-light);}
 .prog-dot-label{font-size:10px;font-weight:600;color:var(--gray-text);white-space:nowrap;}
+/* Score bar */
+.score-bar-wrap{max-width:720px;margin:10px auto 0;padding:0 16px;}
+.score-bar-inner{background:white;border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);padding:12px 18px;display:flex;align-items:center;gap:14px;}
+.score-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-text);white-space:nowrap;}
+.score-track{flex:1;height:8px;background:var(--gray-border);border-radius:4px;overflow:hidden;}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--ocean),var(--sky));border-radius:4px;transition:width 0.4s ease;width:0%;}
+.score-num{font-size:13px;font-weight:800;color:var(--navy-soft);white-space:nowrap;}
 .main{max-width:720px;margin:0 auto;padding:18px 16px;display:flex;flex-direction:column;gap:24px;}
 .section-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
 .section-head{display:flex;align-items:center;gap:16px;padding:16px 22px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);}
-.s-num{font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;color:var(--gold-light);line-height:1;flex-shrink:0;}
+.s-num{font-family:'Orbitron',monospace;font-size:30px;font-weight:900;color:var(--gold-light);line-height:1;flex-shrink:0;}
 .s-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sky);margin-bottom:3px;}
-.s-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:white;letter-spacing:0.4px;}
+.s-title{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:white;letter-spacing:0.4px;}
 .section-body{padding:20px 22px;display:flex;flex-direction:column;gap:16px;}
 .passage{background:var(--foam-light);border-radius:var(--radius-sm);padding:16px 20px;border-left:4px solid var(--ocean);}
 .passage-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--ocean);margin-bottom:10px;}
-.passage-text{font-family:'Source Serif 4',serif;font-size:15px;line-height:1.9;color:var(--navy-mid);}
+.passage-text{font-family:'Source Serif 4','Georgia',serif;font-size:15px;line-height:1.9;color:var(--navy-mid);}
 .passage-text strong{font-weight:700;color:var(--navy);}
 .task{background:var(--page-bg);border-radius:var(--radius-sm);padding:16px 18px;border:2px solid var(--gray-border);}
 .task-head{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-soft);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
@@ -53,11 +65,13 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
 .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
 .wchip{background:white;border:2px solid var(--ocean);border-radius:20px;padding:5px 15px;font-size:14px;font-weight:700;color:var(--ocean);cursor:pointer;transition:all 0.18s;user-select:none;}
 .wchip:hover:not(.used){background:var(--ocean);color:white;transform:translateY(-2px);}
+.wchip:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .wchip.selected{background:var(--ocean);color:white;outline:3px solid var(--gold);outline-offset:2px;}
 .wchip.used{opacity:0.3;cursor:default;text-decoration:line-through;}
-.fill-sentence{font-family:'Source Serif 4',serif;font-size:15px;line-height:2.4;color:var(--navy-mid);}
+.fill-sentence{font-family:'Source Serif 4','Georgia',serif;font-size:15px;line-height:2.4;color:var(--navy-mid);}
 .blank{display:inline-flex;align-items:center;justify-content:center;min-width:88px;height:34px;padding:0 10px;border-bottom:3px solid var(--ocean);border-radius:3px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;transition:all 0.2s;vertical-align:middle;margin:0 3px;}
 .blank:hover{background:var(--foam-light);}
+.blank:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .blank.filled{background:var(--foam-light);border-color:var(--green);color:var(--green);}
 .blank.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);animation:shake 0.35s ease;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
@@ -67,6 +81,7 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
 .tf-row.answered-f{border-color:var(--ocean);background:var(--foam-light);}
 .tf-btns{display:flex;gap:6px;flex-shrink:0;margin-top:1px;}
 .tfbtn{border:2px solid var(--gray-border);border-radius:6px;padding:5px 13px;font-family:'Inter',sans-serif;font-size:12px;font-weight:800;cursor:pointer;background:white;transition:all 0.18s;white-space:nowrap;}
+.tfbtn:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .tfbtn.T:hover{background:var(--green-light);border-color:var(--green);color:var(--green);}
 .tfbtn.F:hover{background:var(--foam-light);border-color:var(--ocean);color:var(--ocean);}
 .tfbtn.sel-T{background:var(--green-light);border-color:var(--green);color:var(--green);}
@@ -75,240 +90,283 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
 .pool{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
 .pchip{background:white;border:2px solid var(--navy-soft);border-radius:8px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--navy-mid);cursor:pointer;transition:all 0.18s;user-select:none;}
 .pchip:hover:not(.placed){border-color:var(--ocean);color:var(--ocean);transform:translateX(4px);}
+.pchip:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .pchip.placed{opacity:0.28;cursor:default;transform:none;}
 .slots{display:flex;flex-direction:column;gap:7px;}
 .slot{display:flex;align-items:center;gap:10px;border:2px dashed var(--gray-border);border-radius:8px;padding:9px 14px;min-height:44px;font-size:13px;font-weight:500;color:var(--gray-text);cursor:pointer;transition:all 0.2s;background:white;}
 .slot:hover{border-color:var(--sky);}
+.slot:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .slot.filled{border-style:solid;border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:700;}
-.slot-n{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gray-text);flex-shrink:0;width:22px;text-align:center;}
+.slot-n{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--gray-text);flex-shrink:0;width:22px;text-align:center;}
 .slot.filled .slot-n{color:var(--green);}
 .title-choices{display:flex;flex-direction:column;gap:8px;}
 .title-opt{background:white;border:2px solid var(--gray-border);border-radius:10px;padding:13px 16px;font-size:14px;font-weight:600;color:var(--navy-mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;line-height:1.5;}
 .title-opt:hover{border-color:var(--ocean);color:var(--navy);}
+.title-opt:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .title-opt.picked{border-color:var(--gold);background:var(--gold-bg);color:var(--navy);}
 .radio-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.18s;}
 .title-opt.picked .radio-circle{background:var(--gold);border-color:var(--gold);}
 .title-opt.picked .radio-circle::after{content:'';width:8px;height:8px;background:white;border-radius:50%;}
 .complete-btn{width:100%;background:var(--ocean);color:white;border:none;border-radius:var(--radius-sm);padding:12px 20px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(25,118,210,0.3);}
 .complete-btn:hover{background:var(--steel);transform:translateY(-1px);}
+.complete-btn:focus{outline:3px solid var(--gold);outline-offset:2px;}
 .done-banner{background:var(--green-bg);border:2px solid var(--green);border-radius:var(--radius-sm);padding:11px 16px;font-size:14px;font-weight:700;color:var(--green);text-align:center;animation:fadeUp 0.35s ease;}
 .final-card{background:linear-gradient(150deg,var(--navy) 0%,var(--navy-soft) 100%);border-radius:var(--radius);padding:28px 24px;text-align:center;box-shadow:var(--shadow-lg);animation:fadeUp 0.5s ease;}
-.final-card h2{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--gold-light);margin-bottom:10px;}
+.final-card h2{font-family:'Orbitron',monospace;font-size:20px;color:var(--gold-light);margin-bottom:10px;}
 .final-card p{font-size:14px;color:var(--foam);line-height:1.7;margin-bottom:16px;}
 .final-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
 .final-chip{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:white;}
+.final-actions{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+.final-btn{background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);color:white;border-radius:20px;padding:9px 22px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.18s;}
+.final-btn:hover{background:rgba(255,255,255,0.25);}
+.final-btn:focus{outline:3px solid var(--gold);outline-offset:2px;}
+/* Toast notification */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:white;border-radius:20px;padding:10px 22px;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);transition:transform 0.3s ease;z-index:1000;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .hidden{display:none!important;}
+
+/* ——— PRINT STYLES ——— */
+@media print {
+  body{background:white;padding:0;}
+  .masthead{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:20px 24px;}
+  .masthead-actions,.how-wrap,.progress-wrap,.score-bar-wrap,.complete-btn,.mast-btn,.final-actions,.toast{display:none!important;}
+  .welcome{border:1px solid var(--gold);margin-bottom:12px;}
+  .main{padding:0;gap:16px;}
+  .section-card{box-shadow:none;border:1px solid var(--gray-border);page-break-inside:avoid;}
+  .section-head{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .task{border-color:var(--gray-border);}
+  .wchip,.pchip,.tfbtn,.title-opt,.slot{border-color:var(--gray-border)!important;}
+  .wchip.used{display:none;}
+  .blank{border-bottom:2px solid #999;min-width:80px;display:inline-block;}
+  .done-banner{border:1px solid var(--green);}
+  .final-card{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  @page{margin:0.6in 0.5in;}
+}
 </style>
 </head>
 <body>
-<div class="masthead">
+<div class="masthead" role="banner">
   <div class="mast-eyebrow">Fourth Grade &bull; Informational Text</div>
   <h1 class="mast-title">&#9875; Naval Ships<br><em>of the World</em></h1>
   <div class="mast-sub">Read. Discover. Build your report &mdash; your way.</div>
+  <div class="masthead-actions">
+    <button class="mast-btn" onclick="printReport()" aria-label="Print or save as PDF">&#128438; Print / Save PDF</button>
+    <button class="mast-btn" onclick="copyShareLink()" aria-label="Copy shareable link">&#128279; Copy Link</button>
+    <button class="mast-btn danger" onclick="confirmReset()" aria-label="Reset all answers">&#8635; Reset</button>
+  </div>
 </div>
-<div class="welcome">
+<div class="welcome" role="note">
   <strong>Here is what is great about this assignment:</strong> there is no blank page, no copying, and no spelling from memory.<br>
   Everything you need is already written. You read, choose, click, and arrange &mdash; and the report builds itself.
 </div>
 <div class="how-wrap">
-  <div class="how-card">
+  <div class="how-card" role="complementary" aria-label="Instructions">
     <div class="how-heading">&#129517; How This Works</div>
-    <div class="how-row"><div class="how-num">1</div><div><strong>Read</strong> each passage &mdash; real facts about real ships.</div></div>
-    <div class="how-row"><div class="how-num">2</div><div><strong>Click words</strong> into blanks, mark True/False, and sort facts into order. No spelling from memory.</div></div>
-    <div class="how-row"><div class="how-num">3</div><div><strong>Choose your title</strong> at the end &mdash; you decide what your report is called.</div></div>
-    <div class="how-row"><div class="how-num">4</div><div>When each section is done, <strong>tap the button</strong> to mark it complete.</div></div>
-    <div class="how-note">&#128161; You can do the four sections in <strong>any order</strong>. Start with whichever ship sounds most interesting.</div>
+    <div class="how-row"><div class="how-num" aria-hidden="true">1</div><div><strong>Read</strong> each passage &mdash; real facts about real ships.</div></div>
+    <div class="how-row"><div class="how-num" aria-hidden="true">2</div><div><strong>Click words</strong> into blanks, mark True/False, and sort facts into order. No spelling from memory.</div></div>
+    <div class="how-row"><div class="how-num" aria-hidden="true">3</div><div><strong>Choose your title</strong> at the end &mdash; you decide what your report is called.</div></div>
+    <div class="how-row"><div class="how-num" aria-hidden="true">4</div><div>When each section is done, <strong>tap the button</strong> to mark it complete.</div></div>
+    <div class="how-note">&#128161; You can do the four sections in <strong>any order</strong>. Start with whichever ship sounds most interesting. <strong>Your progress is saved automatically.</strong></div>
   </div>
 </div>
-<div class="progress-wrap">
+<div class="progress-wrap" role="region" aria-label="Progress tracker">
   <div class="prog-label">Sections completed</div>
   <div class="prog-dots">
-    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-1"></div><div class="prog-dot-label">Destroyers</div></div>
-    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-2"></div><div class="prog-dot-label">Carriers</div></div>
-    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-3"></div><div class="prog-dot-label">Submarines</div></div>
-    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-4"></div><div class="prog-dot-label">Battleships</div></div>
-    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-5"></div><div class="prog-dot-label">My Title</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-1" role="img" aria-label="Section 1: Destroyers - not complete"></div><div class="prog-dot-label">Destroyers</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-2" role="img" aria-label="Section 2: Carriers - not complete"></div><div class="prog-dot-label">Carriers</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-3" role="img" aria-label="Section 3: Submarines - not complete"></div><div class="prog-dot-label">Submarines</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-4" role="img" aria-label="Section 4: Battleships - not complete"></div><div class="prog-dot-label">Battleships</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-5" role="img" aria-label="Section 5: My Title - not complete"></div><div class="prog-dot-label">My Title</div></div>
   </div>
 </div>
-<div class="main">
+<div class="score-bar-wrap" role="region" aria-label="Score tracker">
+  <div class="score-bar-inner">
+    <div class="score-label">Score</div>
+    <div class="score-track" role="progressbar" aria-valuemin="0" aria-valuemax="17" aria-valuenow="0" id="score-track">
+      <div class="score-fill" id="score-fill"></div>
+    </div>
+    <div class="score-num" id="score-num">0 / 17</div>
+  </div>
+</div>
+<div class="main" role="main">
 
 <!-- SECTION 1: DESTROYERS -->
-<div class="section-card">
-  <div class="section-head"><div class="s-num">01</div><div><div class="s-tag">Subtopic One</div><div class="s-title">Destroyers</div></div></div>
+<div class="section-card" role="region" aria-labelledby="s1-title">
+  <div class="section-head"><div class="s-num" aria-hidden="true">01</div><div><div class="s-tag">Subtopic One</div><div class="s-title" id="s1-title">Destroyers</div></div></div>
   <div class="section-body">
-    <div class="passage">
+    <div class="passage" role="article">
       <div class="passage-label">&#128214; Read This First</div>
       <div class="passage-text">A <strong>destroyer</strong> is a fast, powerful warship designed to protect larger ships in a fleet. Destroyers are armed with guided <strong>missiles</strong>, torpedoes, and naval guns. They are built for speed &mdash; some can travel at over <strong>30 knots</strong> (about 35 miles per hour) through open ocean. Modern destroyers carry <strong>radar</strong> and sonar systems that can detect enemy submarines lurking beneath the waves. The United States Navy operates the <strong>Arleigh Burke class</strong>, considered among the most advanced destroyers in the world. These ships are named after famous naval commanders.</div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 1</span> Fill in the Blanks</div>
+    <div class="task" role="group" aria-labelledby="task1-head">
+      <div class="task-head" id="task1-head"><span class="task-badge">TASK 1</span> Fill in the Blanks</div>
       <div class="task-instr">Click a word in the word bank, then click the blank where it belongs. Each word fits exactly one blank. The passage above has all the answers &mdash; you can look back any time.</div>
-      <div class="word-bank" id="wb1">
-        <div class="wchip" data-word="fast" onclick="pickChip(this,'wb1')">fast</div>
-        <div class="wchip" data-word="missiles" onclick="pickChip(this,'wb1')">missiles</div>
-        <div class="wchip" data-word="protect" onclick="pickChip(this,'wb1')">protect</div>
-        <div class="wchip" data-word="radar" onclick="pickChip(this,'wb1')">radar</div>
-        <div class="wchip" data-word="submarines" onclick="pickChip(this,'wb1')">submarines</div>
+      <div class="word-bank" id="wb1" role="group" aria-label="Word bank for task 1">
+        <div class="wchip" data-word="fast" tabindex="0" onclick="pickChip(this,'wb1')" onkeydown="chipKey(event,this,'wb1')" role="button" aria-pressed="false">fast</div>
+        <div class="wchip" data-word="missiles" tabindex="0" onclick="pickChip(this,'wb1')" onkeydown="chipKey(event,this,'wb1')" role="button" aria-pressed="false">missiles</div>
+        <div class="wchip" data-word="protect" tabindex="0" onclick="pickChip(this,'wb1')" onkeydown="chipKey(event,this,'wb1')" role="button" aria-pressed="false">protect</div>
+        <div class="wchip" data-word="radar" tabindex="0" onclick="pickChip(this,'wb1')" onkeydown="chipKey(event,this,'wb1')" role="button" aria-pressed="false">radar</div>
+        <div class="wchip" data-word="submarines" tabindex="0" onclick="pickChip(this,'wb1')" onkeydown="chipKey(event,this,'wb1')" role="button" aria-pressed="false">submarines</div>
       </div>
-      <div class="fill-sentence">Destroyers are <span class="blank" data-ans="fast" data-bank="wb1" onclick="dropWord(this)">_______</span> warships that <span class="blank" data-ans="protect" data-bank="wb1" onclick="dropWord(this)">_______</span> larger ships. They are armed with <span class="blank" data-ans="missiles" data-bank="wb1" onclick="dropWord(this)">_______</span> and use <span class="blank" data-ans="radar" data-bank="wb1" onclick="dropWord(this)">_______</span> to detect <span class="blank" data-ans="submarines" data-bank="wb1" onclick="dropWord(this)">_______</span> beneath the sea.</div>
+      <div class="fill-sentence">Destroyers are <span class="blank" data-ans="fast" data-bank="wb1" data-id="b1a" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 1">_______</span> warships that <span class="blank" data-ans="protect" data-bank="wb1" data-id="b1b" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 2">_______</span> larger ships. They are armed with <span class="blank" data-ans="missiles" data-bank="wb1" data-id="b1c" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 3">_______</span> and use <span class="blank" data-ans="radar" data-bank="wb1" data-id="b1d" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 4">_______</span> to detect <span class="blank" data-ans="submarines" data-bank="wb1" data-id="b1e" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 5">_______</span> beneath the sea.</div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 2</span> True or False?</div>
+    <div class="task" role="group" aria-labelledby="task2-head">
+      <div class="task-head" id="task2-head"><span class="task-badge">TASK 2</span> True or False?</div>
       <div class="task-instr">Tap <strong>TRUE</strong> or <strong>FALSE</strong> for each statement. Use the passage to help you.</div>
-      <div class="tf-list">
-        <div class="tf-row" id="tfr1a"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1a')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1a')">FALSE</button></div><div class="tf-text">Destroyers are designed to be fast.</div></div>
-        <div class="tf-row" id="tfr1b"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1b')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1b')">FALSE</button></div><div class="tf-text">Destroyers are the largest ships in a fleet.</div></div>
-        <div class="tf-row" id="tfr1c"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1c')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1c')">FALSE</button></div><div class="tf-text">The Arleigh Burke class is used by the U.S. Navy.</div></div>
+      <div class="tf-list" role="list">
+        <div class="tf-row" id="tfr1a" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1a')" data-tf-row="tfr1a" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1a')" data-tf-row="tfr1a" data-tf-val="F">FALSE</button></div><div class="tf-text">Destroyers are designed to be fast.</div></div>
+        <div class="tf-row" id="tfr1b" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1b')" data-tf-row="tfr1b" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1b')" data-tf-row="tfr1b" data-tf-val="F">FALSE</button></div><div class="tf-text">Destroyers are the largest ships in a fleet.</div></div>
+        <div class="tf-row" id="tfr1c" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr1c')" data-tf-row="tfr1c" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr1c')" data-tf-row="tfr1c" data-tf-val="F">FALSE</button></div><div class="tf-text">The Arleigh Burke class is used by the U.S. Navy.</div></div>
       </div>
     </div>
     <button class="complete-btn" onclick="completeSection(1)">&#10003; Mark Section 1 Complete</button>
-    <div class="done-banner hidden" id="done-1">&#9875; Section 1 done &mdash; nice work, commander.</div>
+    <div class="done-banner hidden" id="done-1" role="alert">&#9875; Section 1 done &mdash; nice work, commander.</div>
   </div>
 </div>
 
 <!-- SECTION 2: AIRCRAFT CARRIERS -->
-<div class="section-card">
-  <div class="section-head"><div class="s-num">02</div><div><div class="s-tag">Subtopic Two</div><div class="s-title">Aircraft Carriers</div></div></div>
+<div class="section-card" role="region" aria-labelledby="s2-title">
+  <div class="section-head"><div class="s-num" aria-hidden="true">02</div><div><div class="s-tag">Subtopic Two</div><div class="s-title" id="s2-title">Aircraft Carriers</div></div></div>
   <div class="section-body">
-    <div class="passage">
+    <div class="passage" role="article">
       <div class="passage-label">&#128214; Read This First</div>
       <div class="passage-text">An <strong>aircraft carrier</strong> is the largest warship ever built. It works like a <strong>floating air base</strong>, launching and recovering military jets, helicopters, and drones. The flat top deck &mdash; called the <strong>flight deck</strong> &mdash; can stretch as long as three football fields on the biggest carriers. The U.S. Navy&rsquo;s <strong>Nimitz class</strong> and newer <strong>Gerald R. Ford class</strong> are powered by <strong>nuclear reactors</strong>, which means they can sail for up to 20 years without refueling. Carriers never travel alone: they move with a <strong>carrier strike group</strong> of cruisers, destroyers, and submarines that provide protection.</div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 3</span> Put the Facts in Order</div>
+    <div class="task" role="group" aria-labelledby="task3-head">
+      <div class="task-head" id="task3-head"><span class="task-badge">TASK 3</span> Put the Facts in Order</div>
       <div class="task-instr">These facts each contain a number. Click them in order from the <strong>smallest number</strong> to the <strong>largest number</strong>. Click a fact from the list, then click a numbered slot below.</div>
-      <div class="pool" id="pool2">
-        <div class="pchip" data-val="3" onclick="pickChunk(this,'pool2','slots2')">The flight deck is as long as 3 football fields.</div>
-        <div class="pchip" data-val="20" onclick="pickChunk(this,'pool2','slots2')">Nuclear reactors let these ships sail for up to 20 years without refueling.</div>
-        <div class="pchip" data-val="1" onclick="pickChunk(this,'pool2','slots2')">A carrier strike group includes at least 1 aircraft carrier.</div>
+      <div class="pool" id="pool2" role="group" aria-label="Facts to order">
+        <div class="pchip" data-val="3" tabindex="0" onclick="pickChunk(this,'pool2','slots2')" onkeydown="chunkKey(event,this,'pool2','slots2')" role="button">The flight deck is as long as 3 football fields.</div>
+        <div class="pchip" data-val="20" tabindex="0" onclick="pickChunk(this,'pool2','slots2')" onkeydown="chunkKey(event,this,'pool2','slots2')" role="button">Nuclear reactors let these ships sail for up to 20 years without refueling.</div>
+        <div class="pchip" data-val="1" tabindex="0" onclick="pickChunk(this,'pool2','slots2')" onkeydown="chunkKey(event,this,'pool2','slots2')" role="button">A carrier strike group includes at least 1 aircraft carrier.</div>
       </div>
-      <div class="slots" id="slots2">
-        <div class="slot" data-pos="0" onclick="placeChunk(this,'slots2')"><span class="slot-n">1st</span><span class="slot-txt">click a fact above, then click here</span></div>
-        <div class="slot" data-pos="1" onclick="placeChunk(this,'slots2')"><span class="slot-n">2nd</span><span class="slot-txt">click a fact above, then click here</span></div>
-        <div class="slot" data-pos="2" onclick="placeChunk(this,'slots2')"><span class="slot-n">3rd</span><span class="slot-txt">click a fact above, then click here</span></div>
+      <div class="slots" id="slots2" role="group" aria-label="Order slots">
+        <div class="slot" data-pos="0" data-pool="pool2" tabindex="0" onclick="placeChunk(this,'slots2')" onkeydown="slotKey(event,this,'slots2')" role="button" aria-label="First slot"><span class="slot-n">1st</span><span class="slot-txt">click a fact above, then click here</span></div>
+        <div class="slot" data-pos="1" data-pool="pool2" tabindex="0" onclick="placeChunk(this,'slots2')" onkeydown="slotKey(event,this,'slots2')" role="button" aria-label="Second slot"><span class="slot-n">2nd</span><span class="slot-txt">click a fact above, then click here</span></div>
+        <div class="slot" data-pos="2" data-pool="pool2" tabindex="0" onclick="placeChunk(this,'slots2')" onkeydown="slotKey(event,this,'slots2')" role="button" aria-label="Third slot"><span class="slot-n">3rd</span><span class="slot-txt">click a fact above, then click here</span></div>
       </div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 4</span> Fill in the Blanks</div>
+    <div class="task" role="group" aria-labelledby="task4-head">
+      <div class="task-head" id="task4-head"><span class="task-badge">TASK 4</span> Fill in the Blanks</div>
       <div class="task-instr">Click a word, then click the blank where it belongs.</div>
-      <div class="word-bank" id="wb2">
-        <div class="wchip" data-word="largest" onclick="pickChip(this,'wb2')">largest</div>
-        <div class="wchip" data-word="floating" onclick="pickChip(this,'wb2')">floating</div>
-        <div class="wchip" data-word="nuclear" onclick="pickChip(this,'wb2')">nuclear</div>
-        <div class="wchip" data-word="protection" onclick="pickChip(this,'wb2')">protection</div>
+      <div class="word-bank" id="wb2" role="group" aria-label="Word bank for task 4">
+        <div class="wchip" data-word="largest" tabindex="0" onclick="pickChip(this,'wb2')" onkeydown="chipKey(event,this,'wb2')" role="button" aria-pressed="false">largest</div>
+        <div class="wchip" data-word="floating" tabindex="0" onclick="pickChip(this,'wb2')" onkeydown="chipKey(event,this,'wb2')" role="button" aria-pressed="false">floating</div>
+        <div class="wchip" data-word="nuclear" tabindex="0" onclick="pickChip(this,'wb2')" onkeydown="chipKey(event,this,'wb2')" role="button" aria-pressed="false">nuclear</div>
+        <div class="wchip" data-word="protection" tabindex="0" onclick="pickChip(this,'wb2')" onkeydown="chipKey(event,this,'wb2')" role="button" aria-pressed="false">protection</div>
       </div>
-      <div class="fill-sentence">Aircraft carriers are the <span class="blank" data-ans="largest" data-bank="wb2" onclick="dropWord(this)">_______</span> warships ever built. They serve as a <span class="blank" data-ans="floating" data-bank="wb2" onclick="dropWord(this)">_______</span> air base, powered by <span class="blank" data-ans="nuclear" data-bank="wb2" onclick="dropWord(this)">_______</span> reactors. Other ships travel with them for <span class="blank" data-ans="protection" data-bank="wb2" onclick="dropWord(this)">_______</span>.</div>
+      <div class="fill-sentence">Aircraft carriers are the <span class="blank" data-ans="largest" data-bank="wb2" data-id="b2a" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 1">_______</span> warships ever built. They serve as a <span class="blank" data-ans="floating" data-bank="wb2" data-id="b2b" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 2">_______</span> air base, powered by <span class="blank" data-ans="nuclear" data-bank="wb2" data-id="b2c" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 3">_______</span> reactors. Other ships travel with them for <span class="blank" data-ans="protection" data-bank="wb2" data-id="b2d" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 4">_______</span>.</div>
     </div>
     <button class="complete-btn" onclick="completeSection(2)">&#10003; Mark Section 2 Complete</button>
-    <div class="done-banner hidden" id="done-2">&#9992;&#65039; Section 2 done &mdash; those carriers are remarkable.</div>
+    <div class="done-banner hidden" id="done-2" role="alert">&#9992;&#65039; Section 2 done &mdash; those carriers are remarkable.</div>
   </div>
 </div>
 
 <!-- SECTION 3: SUBMARINES -->
-<div class="section-card">
-  <div class="section-head"><div class="s-num">03</div><div><div class="s-tag">Subtopic Three</div><div class="s-title">Submarines</div></div></div>
+<div class="section-card" role="region" aria-labelledby="s3-title">
+  <div class="section-head"><div class="s-num" aria-hidden="true">03</div><div><div class="s-tag">Subtopic Three</div><div class="s-title" id="s3-title">Submarines</div></div></div>
   <div class="section-body">
-    <div class="passage">
+    <div class="passage" role="article">
       <div class="passage-label">&#128214; Read This First</div>
       <div class="passage-text">A <strong>submarine</strong> is a naval vessel that can operate entirely underwater. Submarines use <strong>ballast tanks</strong> &mdash; chambers that fill with seawater to make the vessel sink, or release water to make it rise. Nuclear-powered submarines like the U.S. Navy&rsquo;s <strong>Ohio class</strong> can remain <strong>submerged</strong> for months, surfacing only when the crew needs supplies. Submarines are the navy&rsquo;s most secretive weapons: they can fire <strong>torpedoes</strong> to destroy other ships, or launch <strong>ballistic missiles</strong> from beneath the ocean. Their greatest advantage is <strong>stealth</strong> &mdash; an enemy often cannot detect a submarine until it is far too late.</div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 5</span> True or False?</div>
+    <div class="task" role="group" aria-labelledby="task5-head">
+      <div class="task-head" id="task5-head"><span class="task-badge">TASK 5</span> True or False?</div>
       <div class="task-instr">Tap <strong>TRUE</strong> or <strong>FALSE</strong> for each statement.</div>
-      <div class="tf-list">
-        <div class="tf-row" id="tfr3a"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3a')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3a')">FALSE</button></div><div class="tf-text">Ballast tanks control whether a submarine sinks or rises.</div></div>
-        <div class="tf-row" id="tfr3b"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3b')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3b')">FALSE</button></div><div class="tf-text">Nuclear submarines must surface every single day.</div></div>
-        <div class="tf-row" id="tfr3c"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3c')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3c')">FALSE</button></div><div class="tf-text">Stealth is one of a submarine&rsquo;s greatest advantages.</div></div>
+      <div class="tf-list" role="list">
+        <div class="tf-row" id="tfr3a" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3a')" data-tf-row="tfr3a" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3a')" data-tf-row="tfr3a" data-tf-val="F">FALSE</button></div><div class="tf-text">Ballast tanks control whether a submarine sinks or rises.</div></div>
+        <div class="tf-row" id="tfr3b" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3b')" data-tf-row="tfr3b" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3b')" data-tf-row="tfr3b" data-tf-val="F">FALSE</button></div><div class="tf-text">Nuclear submarines must surface every single day.</div></div>
+        <div class="tf-row" id="tfr3c" role="listitem"><div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tfr3c')" data-tf-row="tfr3c" data-tf-val="T">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tfr3c')" data-tf-row="tfr3c" data-tf-val="F">FALSE</button></div><div class="tf-text">Stealth is one of a submarine&rsquo;s greatest advantages.</div></div>
       </div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 6</span> Fill in the Blanks</div>
+    <div class="task" role="group" aria-labelledby="task6-head">
+      <div class="task-head" id="task6-head"><span class="task-badge">TASK 6</span> Fill in the Blanks</div>
       <div class="task-instr">Click a word, then click the blank where it belongs.</div>
-      <div class="word-bank" id="wb3">
-        <div class="wchip" data-word="underwater" onclick="pickChip(this,'wb3')">underwater</div>
-        <div class="wchip" data-word="months" onclick="pickChip(this,'wb3')">months</div>
-        <div class="wchip" data-word="torpedoes" onclick="pickChip(this,'wb3')">torpedoes</div>
-        <div class="wchip" data-word="stealth" onclick="pickChip(this,'wb3')">stealth</div>
+      <div class="word-bank" id="wb3" role="group" aria-label="Word bank for task 6">
+        <div class="wchip" data-word="underwater" tabindex="0" onclick="pickChip(this,'wb3')" onkeydown="chipKey(event,this,'wb3')" role="button" aria-pressed="false">underwater</div>
+        <div class="wchip" data-word="months" tabindex="0" onclick="pickChip(this,'wb3')" onkeydown="chipKey(event,this,'wb3')" role="button" aria-pressed="false">months</div>
+        <div class="wchip" data-word="torpedoes" tabindex="0" onclick="pickChip(this,'wb3')" onkeydown="chipKey(event,this,'wb3')" role="button" aria-pressed="false">torpedoes</div>
+        <div class="wchip" data-word="stealth" tabindex="0" onclick="pickChip(this,'wb3')" onkeydown="chipKey(event,this,'wb3')" role="button" aria-pressed="false">stealth</div>
       </div>
-      <div class="fill-sentence">Submarines operate <span class="blank" data-ans="underwater" data-bank="wb3" onclick="dropWord(this)">_______</span> and can stay submerged for <span class="blank" data-ans="months" data-bank="wb3" onclick="dropWord(this)">_______</span> at a time. They fire <span class="blank" data-ans="torpedoes" data-bank="wb3" onclick="dropWord(this)">_______</span> as weapons, and their greatest advantage is <span class="blank" data-ans="stealth" data-bank="wb3" onclick="dropWord(this)">_______</span>.</div>
+      <div class="fill-sentence">Submarines operate <span class="blank" data-ans="underwater" data-bank="wb3" data-id="b3a" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 1">_______</span> and can stay submerged for <span class="blank" data-ans="months" data-bank="wb3" data-id="b3b" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 2">_______</span> at a time. They fire <span class="blank" data-ans="torpedoes" data-bank="wb3" data-id="b3c" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 3">_______</span> as weapons, and their greatest advantage is <span class="blank" data-ans="stealth" data-bank="wb3" data-id="b3d" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 4">_______</span>.</div>
     </div>
     <button class="complete-btn" onclick="completeSection(3)">&#10003; Mark Section 3 Complete</button>
-    <div class="done-banner hidden" id="done-3">&#127754; Section 3 done &mdash; diving deep, commander.</div>
+    <div class="done-banner hidden" id="done-3" role="alert">&#127754; Section 3 done &mdash; diving deep, commander.</div>
   </div>
 </div>
 
 <!-- SECTION 4: BATTLESHIPS -->
-<div class="section-card">
-  <div class="section-head"><div class="s-num">04</div><div><div class="s-tag">Subtopic Four</div><div class="s-title">Battleships</div></div></div>
+<div class="section-card" role="region" aria-labelledby="s4-title">
+  <div class="section-head"><div class="s-num" aria-hidden="true">04</div><div><div class="s-tag">Subtopic Four</div><div class="s-title" id="s4-title">Battleships</div></div></div>
   <div class="section-body">
-    <div class="passage">
+    <div class="passage" role="article">
       <div class="passage-label">&#128214; Read This First</div>
       <div class="passage-text">The <strong>battleship</strong> was once the most powerful warship on the ocean. Armored in thick steel and armed with enormous guns that could fire shells <strong>20 miles</strong>, battleships were the centerpiece of every major navy from the early 1900s through World War II. The most famous American battleships were the <strong>Iowa class</strong> &mdash; including the <em>USS Iowa</em>, <em>USS New Jersey</em>, <em>USS Missouri</em>, and <em>USS Wisconsin</em>. The <em>USS Missouri</em> is especially famous: Japan signed its <strong>surrender</strong> ending World War II aboard her deck in 1945. Today no navy operates battleships &mdash; they were <strong>retired</strong> because aircraft carriers and guided missiles made them less effective. Several Iowa-class ships are now <strong>museum ships</strong> open to the public.</div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 7</span> Put Events in Order</div>
+    <div class="task" role="group" aria-labelledby="task7-head">
+      <div class="task-head" id="task7-head"><span class="task-badge">TASK 7</span> Put Events in Order</div>
       <div class="task-instr">These events happened at different times in history. Click an event from the list, then click a numbered slot below to place it in <strong>the order it happened</strong> &mdash; earliest first.</div>
-      <div class="pool" id="pool4">
-        <div class="pchip" data-val="2" onclick="pickChunk(this,'pool4','slots4')">Japan signed its surrender on the deck of the USS Missouri.</div>
-        <div class="pchip" data-val="4" onclick="pickChunk(this,'pool4','slots4')">Iowa-class ships became museum ships open to the public.</div>
-        <div class="pchip" data-val="1" onclick="pickChunk(this,'pool4','slots4')">Battleships became the centerpiece of major navies in the early 1900s.</div>
-        <div class="pchip" data-val="3" onclick="pickChunk(this,'pool4','slots4')">Battleships were retired because missiles and carriers replaced them.</div>
+      <div class="pool" id="pool4" role="group" aria-label="Events to order">
+        <div class="pchip" data-val="2" tabindex="0" onclick="pickChunk(this,'pool4','slots4')" onkeydown="chunkKey(event,this,'pool4','slots4')" role="button">Japan signed its surrender on the deck of the USS Missouri.</div>
+        <div class="pchip" data-val="4" tabindex="0" onclick="pickChunk(this,'pool4','slots4')" onkeydown="chunkKey(event,this,'pool4','slots4')" role="button">Iowa-class ships became museum ships open to the public.</div>
+        <div class="pchip" data-val="1" tabindex="0" onclick="pickChunk(this,'pool4','slots4')" onkeydown="chunkKey(event,this,'pool4','slots4')" role="button">Battleships became the centerpiece of major navies in the early 1900s.</div>
+        <div class="pchip" data-val="3" tabindex="0" onclick="pickChunk(this,'pool4','slots4')" onkeydown="chunkKey(event,this,'pool4','slots4')" role="button">Battleships were retired because missiles and carriers replaced them.</div>
       </div>
-      <div class="slots" id="slots4">
-        <div class="slot" data-pos="0" onclick="placeChunk(this,'slots4')"><span class="slot-n">1st</span><span class="slot-txt">click an event above, then click here</span></div>
-        <div class="slot" data-pos="1" onclick="placeChunk(this,'slots4')"><span class="slot-n">2nd</span><span class="slot-txt">click an event above, then click here</span></div>
-        <div class="slot" data-pos="2" onclick="placeChunk(this,'slots4')"><span class="slot-n">3rd</span><span class="slot-txt">click an event above, then click here</span></div>
-        <div class="slot" data-pos="3" onclick="placeChunk(this,'slots4')"><span class="slot-n">4th</span><span class="slot-txt">click an event above, then click here</span></div>
+      <div class="slots" id="slots4" role="group" aria-label="Order slots">
+        <div class="slot" data-pos="0" data-pool="pool4" tabindex="0" onclick="placeChunk(this,'slots4')" onkeydown="slotKey(event,this,'slots4')" role="button" aria-label="First slot"><span class="slot-n">1st</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="1" data-pool="pool4" tabindex="0" onclick="placeChunk(this,'slots4')" onkeydown="slotKey(event,this,'slots4')" role="button" aria-label="Second slot"><span class="slot-n">2nd</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="2" data-pool="pool4" tabindex="0" onclick="placeChunk(this,'slots4')" onkeydown="slotKey(event,this,'slots4')" role="button" aria-label="Third slot"><span class="slot-n">3rd</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="3" data-pool="pool4" tabindex="0" onclick="placeChunk(this,'slots4')" onkeydown="slotKey(event,this,'slots4')" role="button" aria-label="Fourth slot"><span class="slot-n">4th</span><span class="slot-txt">click an event above, then click here</span></div>
       </div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 8</span> Fill in the Blanks</div>
+    <div class="task" role="group" aria-labelledby="task8-head">
+      <div class="task-head" id="task8-head"><span class="task-badge">TASK 8</span> Fill in the Blanks</div>
       <div class="task-instr">Click a word, then click the blank where it belongs.</div>
-      <div class="word-bank" id="wb4">
-        <div class="wchip" data-word="armor" onclick="pickChip(this,'wb4')">armor</div>
-        <div class="wchip" data-word="guns" onclick="pickChip(this,'wb4')">guns</div>
-        <div class="wchip" data-word="surrender" onclick="pickChip(this,'wb4')">surrender</div>
-        <div class="wchip" data-word="retired" onclick="pickChip(this,'wb4')">retired</div>
-        <div class="wchip" data-word="museum" onclick="pickChip(this,'wb4')">museum</div>
+      <div class="word-bank" id="wb4" role="group" aria-label="Word bank for task 8">
+        <div class="wchip" data-word="armor" tabindex="0" onclick="pickChip(this,'wb4')" onkeydown="chipKey(event,this,'wb4')" role="button" aria-pressed="false">armor</div>
+        <div class="wchip" data-word="guns" tabindex="0" onclick="pickChip(this,'wb4')" onkeydown="chipKey(event,this,'wb4')" role="button" aria-pressed="false">guns</div>
+        <div class="wchip" data-word="surrender" tabindex="0" onclick="pickChip(this,'wb4')" onkeydown="chipKey(event,this,'wb4')" role="button" aria-pressed="false">surrender</div>
+        <div class="wchip" data-word="retired" tabindex="0" onclick="pickChip(this,'wb4')" onkeydown="chipKey(event,this,'wb4')" role="button" aria-pressed="false">retired</div>
+        <div class="wchip" data-word="museum" tabindex="0" onclick="pickChip(this,'wb4')" onkeydown="chipKey(event,this,'wb4')" role="button" aria-pressed="false">museum</div>
       </div>
-      <div class="fill-sentence">Battleships were covered in thick steel <span class="blank" data-ans="armor" data-bank="wb4" onclick="dropWord(this)">_______</span> and armed with massive <span class="blank" data-ans="guns" data-bank="wb4" onclick="dropWord(this)">_______</span>. Japan signed its <span class="blank" data-ans="surrender" data-bank="wb4" onclick="dropWord(this)">_______</span> on the USS Missouri. Today, battleships are <span class="blank" data-ans="retired" data-bank="wb4" onclick="dropWord(this)">_______</span> and some serve as <span class="blank" data-ans="museum" data-bank="wb4" onclick="dropWord(this)">_______</span> ships.</div>
+      <div class="fill-sentence">Battleships were covered in thick steel <span class="blank" data-ans="armor" data-bank="wb4" data-id="b4a" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 1">_______</span> and armed with massive <span class="blank" data-ans="guns" data-bank="wb4" data-id="b4b" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 2">_______</span>. Japan signed its <span class="blank" data-ans="surrender" data-bank="wb4" data-id="b4c" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 3">_______</span> on the USS Missouri. Today, battleships are <span class="blank" data-ans="retired" data-bank="wb4" data-id="b4d" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 4">_______</span> and some serve as <span class="blank" data-ans="museum" data-bank="wb4" data-id="b4e" tabindex="0" onclick="dropWord(this)" onkeydown="blankKey(event,this)" role="button" aria-label="blank 5">_______</span> ships.</div>
     </div>
     <button class="complete-btn" onclick="completeSection(4)">&#10003; Mark Section 4 Complete</button>
-    <div class="done-banner hidden" id="done-4">&#128481;&#65039; Section 4 done &mdash; battleships were something else.</div>
+    <div class="done-banner hidden" id="done-4" role="alert">&#128481;&#65039; Section 4 done &mdash; battleships were something else.</div>
   </div>
 </div>
 
 <!-- SECTION 5: TITLE -->
-<div class="section-card">
-  <div class="section-head"><div class="s-num">05</div><div><div class="s-tag">My Report</div><div class="s-title">Choose Your Title</div></div></div>
+<div class="section-card" role="region" aria-labelledby="s5-title">
+  <div class="section-head"><div class="s-num" aria-hidden="true">05</div><div><div class="s-tag">My Report</div><div class="s-title" id="s5-title">Choose Your Title</div></div></div>
   <div class="section-body">
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 9</span> Pick a Report Title</div>
+    <div class="task" role="group" aria-labelledby="task9-head">
+      <div class="task-head" id="task9-head"><span class="task-badge">TASK 9</span> Pick a Report Title</div>
       <div class="task-instr">You have explored four types of naval ships. Every informational report needs a title. <strong>Pick the one that fits your report best.</strong> There is no wrong answer &mdash; this is your choice.</div>
-      <div class="title-choices" id="titles">
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#9875; <strong>Naval Ships: Defenders of the Sea</strong></div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127754; <strong>From Battleships to Submarines: The History of Naval Power</strong></div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#9992;&#65039; <strong>Warships of the World: Four Types of Naval Vessels</strong></div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127919; <strong>Full Speed Ahead: How Naval Ships Changed History</strong></div>
+      <div class="title-choices" id="titles" role="radiogroup" aria-label="Report title choices">
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'titles')" onkeydown="titleKey(event,this,'titles')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>&#9875; <strong>Naval Ships: Defenders of the Sea</strong></div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'titles')" onkeydown="titleKey(event,this,'titles')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>&#127754; <strong>From Battleships to Submarines: The History of Naval Power</strong></div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'titles')" onkeydown="titleKey(event,this,'titles')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>&#9992;&#65039; <strong>Warships of the World: Four Types of Naval Vessels</strong></div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'titles')" onkeydown="titleKey(event,this,'titles')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>&#127919; <strong>Full Speed Ahead: How Naval Ships Changed History</strong></div>
       </div>
     </div>
-    <div class="task">
-      <div class="task-head"><span class="task-badge">TASK 10</span> Which Ship Was Most Interesting to You?</div>
+    <div class="task" role="group" aria-labelledby="task10-head">
+      <div class="task-head" id="task10-head"><span class="task-badge">TASK 10</span> Which Ship Was Most Interesting to You?</div>
       <div class="task-instr">Click the one that you found most interesting. There is no right or wrong answer.</div>
-      <div class="title-choices" id="faves">
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>Destroyers &mdash; fast and armed to the teeth</div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>Aircraft Carriers &mdash; floating cities with flight decks</div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>Submarines &mdash; silent hunters of the deep</div>
-        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>Battleships &mdash; armored giants of history</div>
+      <div class="title-choices" id="faves" role="radiogroup" aria-label="Favorite ship choices">
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'faves')" onkeydown="titleKey(event,this,'faves')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>Destroyers &mdash; fast and armed to the teeth</div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'faves')" onkeydown="titleKey(event,this,'faves')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>Aircraft Carriers &mdash; floating cities with flight decks</div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'faves')" onkeydown="titleKey(event,this,'faves')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>Submarines &mdash; silent hunters of the deep</div>
+        <div class="title-opt" tabindex="0" onclick="pickTitle(this,'faves')" onkeydown="titleKey(event,this,'faves')" role="radio" aria-checked="false"><div class="radio-circle" aria-hidden="true"></div>Battleships &mdash; armored giants of history</div>
       </div>
     </div>
     <button class="complete-btn" onclick="completeSection(5)">&#127386; Submit My Report</button>
-    <div class="done-banner hidden" id="done-5">&#127386; Report submitted &mdash; outstanding work, commander.</div>
+    <div class="done-banner hidden" id="done-5" role="alert">&#127386; Report submitted &mdash; outstanding work, commander.</div>
   </div>
 </div>
 
-<div class="final-card hidden" id="final-card">
+<div class="final-card hidden" id="final-card" role="region" aria-label="Mission complete">
   <h2>&#127386; Mission Complete</h2>
   <p>You have completed an informational report on four types of naval ships.<br>You read real facts, identified key vocabulary, sorted information, and chose your own title.<br>That is exactly what informational writing is.</p>
   <div class="final-chips">
@@ -317,75 +375,313 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
     <div class="final-chip">&#127754; Submarines</div>
     <div class="final-chip">&#128481;&#65039; Battleships</div>
   </div>
+  <div class="final-actions">
+    <button class="final-btn" onclick="printReport()">&#128438; Print / Save PDF</button>
+    <button class="final-btn" onclick="copyShareLink()">&#128279; Share Link</button>
+  </div>
 </div>
 
 </div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast" aria-live="polite" aria-atomic="true"></div>
+
 <script>
-let activeChip=null;
-function pickChip(el,bankId){
-  if(el.classList.contains('used'))return;
-  document.querySelectorAll('#'+bankId+' .wchip').forEach(c=>c.classList.remove('selected'));
-  if(activeChip===el){activeChip=null;return;}
-  activeChip=el;el.classList.add('selected');
+// ——— STATE & STORAGE ———
+const STORE_KEY = 'naval_ships_v1';
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : { blanks:{}, tf:{}, chunks:{}, titles:{}, done:[] };
+  } catch(e) { return { blanks:{}, tf:{}, chunks:{}, titles:{}, done:[] }; }
 }
-function dropWord(slot){
-  if(!activeChip)return;
-  const word=activeChip.getAttribute('data-word');
-  const answer=slot.getAttribute('data-ans');
-  const bankId=slot.getAttribute('data-bank');
-  if(slot.dataset.current){
-    const prev=document.querySelector('#'+bankId+' [data-word="'+slot.dataset.current+'"]');
-    if(prev){prev.classList.remove('used','selected');}
+
+function saveState() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+// ——— SCORE TRACKER ———
+// Total scoreable items: 13 blanks + 6 T/F = 19... but we show /17 (blanks only + T/F)
+// Actually: blanks: 5+4+4+5=18... wait, let's count:
+// wb1: 5 blanks, wb2: 4 blanks, wb3: 4 blanks, wb4: 5 blanks = 18 blanks
+// T/F: 3+3=6 rows... but T/F doesn't have right/wrong, just engagement
+// For score, count: correct blanks (13 total fill-blanks scored) + sections completed
+// Simpler: score = number of correctly filled blanks (all blank data-ans matches)
+const TOTAL_SCORE = 18; // total blanks
+
+function recalcScore() {
+  let correct = 0;
+  document.querySelectorAll('.blank.filled').forEach(() => correct++);
+  const pct = Math.round((correct / TOTAL_SCORE) * 100);
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-num').textContent = correct + ' / ' + TOTAL_SCORE;
+  document.getElementById('score-track').setAttribute('aria-valuenow', correct);
+}
+
+// ——— KEYBOARD HELPERS ———
+function chipKey(e, el, bankId) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickChip(el, bankId); }
+}
+function blankKey(e, el) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dropWord(el); }
+}
+function chunkKey(e, el, poolId, slotId) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickChunk(el, poolId, slotId); }
+}
+function slotKey(e, el, slotId) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); placeChunk(el, slotId); }
+}
+function titleKey(e, el, groupId) {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickTitle(el, groupId); }
+}
+
+// ——— WORD BANK / FILL BLANKS ———
+let activeChip = null;
+
+function pickChip(el, bankId) {
+  if (el.classList.contains('used')) return;
+  document.querySelectorAll('#' + bankId + ' .wchip').forEach(c => {
+    c.classList.remove('selected');
+    c.setAttribute('aria-pressed', 'false');
+  });
+  if (activeChip === el) { activeChip = null; return; }
+  activeChip = el;
+  el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
+}
+
+function dropWord(slot) {
+  if (!activeChip) return;
+  const word = activeChip.getAttribute('data-word');
+  const answer = slot.getAttribute('data-ans');
+  const bankId = slot.getAttribute('data-bank');
+  const blankId = slot.getAttribute('data-id');
+  if (slot.dataset.current) {
+    const prev = document.querySelector('#' + bankId + ' [data-word="' + slot.dataset.current + '"]');
+    if (prev) { prev.classList.remove('used', 'selected'); prev.setAttribute('aria-pressed','false'); }
+    // Remove from state
+    if (blankId) delete state.blanks[blankId];
   }
-  slot.textContent=word;slot.dataset.current=word;
-  slot.classList.remove('wrong','filled');
-  if(word===answer){
+  slot.textContent = word;
+  slot.dataset.current = word;
+  slot.classList.remove('wrong', 'filled');
+  if (word === answer) {
     slot.classList.add('filled');
-  }else{
+    slot.setAttribute('aria-label', 'filled: ' + word);
+    if (blankId) state.blanks[blankId] = word;
+    saveState();
+    recalcScore();
+  } else {
     slot.classList.add('wrong');
-    setTimeout(()=>slot.classList.remove('wrong'),600);
-    activeChip.classList.remove('used','selected');activeChip=null;return;
+    setTimeout(() => { slot.classList.remove('wrong'); slot.textContent = '_______'; slot.dataset.current = ''; }, 600);
+    activeChip.classList.remove('used', 'selected');
+    activeChip.setAttribute('aria-pressed', 'false');
+    activeChip = null;
+    return;
   }
-  activeChip.classList.add('used');activeChip.classList.remove('selected');activeChip=null;
+  activeChip.classList.add('used');
+  activeChip.classList.remove('selected');
+  activeChip.setAttribute('aria-pressed', 'false');
+  activeChip = null;
 }
-function pickTF(btn,choice,rowId){
-  const row=document.getElementById(rowId);
-  row.querySelectorAll('.tfbtn').forEach(b=>b.classList.remove('sel-T','sel-F'));
-  btn.classList.add('sel-'+choice);
-  row.classList.remove('answered-t','answered-f');
-  row.classList.add(choice==='T'?'answered-t':'answered-f');
+
+// ——— TRUE / FALSE ———
+function pickTF(btn, choice, rowId) {
+  const row = document.getElementById(rowId);
+  row.querySelectorAll('.tfbtn').forEach(b => b.classList.remove('sel-T', 'sel-F'));
+  btn.classList.add('sel-' + choice);
+  row.classList.remove('answered-t', 'answered-f');
+  row.classList.add(choice === 'T' ? 'answered-t' : 'answered-f');
+  state.tf[rowId] = choice;
+  saveState();
 }
-let pendingChunk=null;
-function pickChunk(el,poolId,slotId){
-  if(el.classList.contains('placed'))return;
-  document.querySelectorAll('#'+poolId+' .pchip').forEach(c=>c.style.outline='');
-  if(pendingChunk===el){pendingChunk=null;return;}
-  pendingChunk=el;el.style.outline='2px solid #1976d2';
+
+// ——— ORDERING CHUNKS ———
+let pendingChunk = null;
+
+function pickChunk(el, poolId, slotId) {
+  if (el.classList.contains('placed')) return;
+  document.querySelectorAll('#' + poolId + ' .pchip').forEach(c => c.style.outline = '');
+  if (pendingChunk === el) { pendingChunk = null; return; }
+  pendingChunk = el;
+  el.style.outline = '2px solid #1976d2';
 }
-function placeChunk(slot,slotId){
-  if(!pendingChunk)return;
-  if(slot.classList.contains('filled'))return;
-  slot.querySelector('.slot-txt').textContent=pendingChunk.textContent;
+
+function placeChunk(slot, slotId) {
+  if (!pendingChunk) return;
+  if (slot.classList.contains('filled')) return;
+  const poolId = slot.getAttribute('data-pool') || slotId.replace('slots','pool');
+  const pos = slot.getAttribute('data-pos');
+  const txt = pendingChunk.textContent;
+  slot.querySelector('.slot-txt').textContent = txt;
   slot.classList.add('filled');
-  pendingChunk.classList.add('placed');pendingChunk.style.outline='';pendingChunk=null;
+  slot.setAttribute('aria-label', 'slot ' + (parseInt(pos)+1) + ': ' + txt);
+  pendingChunk.classList.add('placed');
+  pendingChunk.style.outline = '';
+  // Save chunk state
+  if (!state.chunks[slotId]) state.chunks[slotId] = {};
+  state.chunks[slotId][pos] = txt;
+  // Mark source chip
+  const chipTxt = pendingChunk.textContent;
+  state.chunks[slotId]['_src_' + pos] = chipTxt;
+  pendingChunk = null;
+  saveState();
 }
-function pickTitle(el){
-  const group=el.closest('.title-choices');
-  group.querySelectorAll('.title-opt').forEach(o=>o.classList.remove('picked'));
+
+// ——— TITLE PICKER ———
+function pickTitle(el, groupId) {
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.title-opt').forEach(o => {
+    o.classList.remove('picked');
+    o.setAttribute('aria-checked', 'false');
+  });
   el.classList.add('picked');
+  el.setAttribute('aria-checked', 'true');
+  state.titles[groupId] = el.textContent.trim();
+  saveState();
 }
-const done=new Set();
-function completeSection(n){
+
+// ——— SECTION COMPLETE ———
+const done = new Set(state.done || []);
+
+function completeSection(n) {
   done.add(n);
-  document.getElementById('done-'+n).classList.remove('hidden');
-  const dot=document.getElementById('dot-'+n);
-  if(dot)dot.classList.add('done');
-  if(done.size>=5){
-    const fc=document.getElementById('final-card');
+  if (!state.done) state.done = [];
+  if (!state.done.includes(n)) state.done.push(n);
+  saveState();
+  document.getElementById('done-' + n).classList.remove('hidden');
+  const dot = document.getElementById('dot-' + n);
+  if (dot) {
+    dot.classList.add('done');
+    dot.setAttribute('aria-label', 'Section ' + n + ' - complete');
+  }
+  if (done.size >= 5) {
+    const fc = document.getElementById('final-card');
     fc.classList.remove('hidden');
-    setTimeout(()=>fc.scrollIntoView({behavior:'smooth',block:'center'}),200);
+    setTimeout(() => fc.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
   }
 }
+
+// ——— PRINT ———
+function printReport() {
+  window.print();
+}
+
+// ——— SHARE LINK ———
+function copyShareLink() {
+  const url = window.location.href.split('?')[0].split('#')[0];
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => showToast('&#128279; Link copied to clipboard!'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('&#128279; Link copied to clipboard!');
+  }
+}
+
+// ——— RESET ———
+function confirmReset() {
+  if (confirm('Reset all answers and start over? This cannot be undone.')) {
+    localStorage.removeItem(STORE_KEY);
+    location.reload();
+  }
+}
+
+// ——— TOAST ———
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ——— RESTORE STATE ON LOAD ———
+function restoreState() {
+  // Restore blanks
+  Object.entries(state.blanks || {}).forEach(([id, word]) => {
+    const el = document.querySelector('[data-id="' + id + '"]');
+    if (!el) return;
+    const bankId = el.getAttribute('data-bank');
+    const chip = document.querySelector('#' + bankId + ' [data-word="' + word + '"]');
+    el.textContent = word;
+    el.dataset.current = word;
+    el.classList.add('filled');
+    el.setAttribute('aria-label', 'filled: ' + word);
+    if (chip) { chip.classList.add('used'); }
+  });
+
+  // Restore T/F
+  Object.entries(state.tf || {}).forEach(([rowId, choice]) => {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+    const btn = row.querySelector('.tfbtn.' + choice);
+    if (btn) {
+      btn.classList.add('sel-' + choice);
+      row.classList.add(choice === 'T' ? 'answered-t' : 'answered-f');
+    }
+  });
+
+  // Restore chunks
+  Object.entries(state.chunks || {}).forEach(([slotId, posMap]) => {
+    Object.entries(posMap).forEach(([pos, txt]) => {
+      if (pos.startsWith('_src_')) return;
+      const slot = document.querySelector('#' + slotId + ' [data-pos="' + pos + '"]');
+      if (!slot) return;
+      slot.querySelector('.slot-txt').textContent = txt;
+      slot.classList.add('filled');
+      slot.setAttribute('aria-label', 'slot ' + (parseInt(pos)+1) + ': ' + txt);
+      // Mark pool chip as placed
+      const poolId = slot.getAttribute('data-pool');
+      if (poolId) {
+        document.querySelectorAll('#' + poolId + ' .pchip').forEach(chip => {
+          if (chip.textContent.trim() === txt.trim()) chip.classList.add('placed');
+        });
+      }
+    });
+  });
+
+  // Restore title picks
+  Object.entries(state.titles || {}).forEach(([groupId, txt]) => {
+    const group = document.getElementById(groupId);
+    if (!group) return;
+    group.querySelectorAll('.title-opt').forEach(opt => {
+      if (opt.textContent.trim() === txt) {
+        opt.classList.add('picked');
+        opt.setAttribute('aria-checked', 'true');
+      }
+    });
+  });
+
+  // Restore section completions
+  (state.done || []).forEach(n => {
+    const banner = document.getElementById('done-' + n);
+    if (banner) banner.classList.remove('hidden');
+    const dot = document.getElementById('dot-' + n);
+    if (dot) {
+      dot.classList.add('done');
+      dot.setAttribute('aria-label', 'Section ' + n + ' - complete');
+    }
+    done.add(n);
+  });
+
+  if (done.size >= 5) {
+    document.getElementById('final-card').classList.remove('hidden');
+  }
+
+  recalcScore();
+
+  if (Object.keys(state.blanks || {}).length > 0 || (state.done || []).length > 0) {
+    showToast('&#128190; Progress restored from last session');
+  }
+}
+
+restoreState();
 </script>
 </body>
 </html>
