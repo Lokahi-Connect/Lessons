@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ships Without Borders — Naval Vessels of the World</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b1f3a;--navy-mid:#15305a;--navy-soft:#1e4070;--steel:#2a5298;
+  --ocean:#1976d2;--sky:#42a5f5;--foam:#b3d9f7;--foam-light:#e8f4fd;
+  --gold:#c8982a;--gold-light:#f5d87a;--gold-bg:#fffbea;
+  --white:#f9fbfd;--gray-text:#6b7d93;--gray-border:#d0dce8;--page-bg:#eef2f7;
+  --green:#2e7d32;--green-light:#c8e6c9;--green-bg:#f1f8f1;
+  --red:#c62828;--red-bg:#fff5f5;
+  --purple:#6a1b9a;--purple-light:#e1bee7;--purple-bg:#f3e5f5;--purple-mid:#8e24aa;
+  --teal:#00796b;--teal-light:#b2dfdb;--teal-bg:#e0f2f1;
+  --shadow-sm:0 2px 8px rgba(11,31,58,0.10);
+  --shadow:0 4px 18px rgba(11,31,58,0.13);
+  --shadow-lg:0 8px 36px rgba(11,31,58,0.18);
+  --radius:16px;--radius-sm:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);min-height:100vh;padding-bottom:64px;}
+
+/* MASTHEAD */
+.masthead{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-mid) 55%,var(--navy-soft) 100%);padding:32px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+.masthead::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--sky),var(--purple-light),var(--gold));}
+.mast-eyebrow{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--sky);margin-bottom:8px;}
+.mast-title{font-family:'Orbitron',sans-serif;font-size:clamp(18px,5.5vw,34px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px;}
+.mast-title em{color:var(--gold-light);font-style:normal;}
+.mast-sub{font-size:14px;color:var(--foam);font-weight:400;margin-top:4px;line-height:1.65;}
+.flag-row{display:flex;justify-content:center;gap:14px;margin-top:14px;font-size:26px;}
+
+/* WELCOME */
+.welcome{background:var(--gold-bg);border-bottom:3px solid var(--gold);padding:15px 20px;font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.75;}
+.welcome strong{color:var(--gold);font-weight:700;}
+.welcome em{font-style:italic;}
+
+/* HOW CARD */
+.how-wrap{max-width:720px;margin:18px auto 0;padding:0 16px;}
+.how-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px 22px;border-left:5px solid var(--ocean);}
+.how-heading{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ocean);margin-bottom:12px;}
+.how-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:9px;font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.6;}
+.how-row:last-child{margin-bottom:0;}
+.how-num{width:24px;height:24px;border-radius:50%;background:var(--ocean);color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.how-note{background:var(--foam-light);border-left:3px solid var(--sky);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:13px;font-weight:500;color:var(--navy-soft);line-height:1.65;}
+.how-note strong{font-weight:700;}
+
+/* PROGRESS */
+.progress-wrap{max-width:720px;margin:16px auto 0;padding:0 16px;text-align:center;}
+.prog-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-text);margin-bottom:8px;}
+.prog-dots{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.prog-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.prog-dot{width:14px;height:14px;border-radius:50%;background:var(--page-bg);border:2px solid var(--gray-border);transition:all 0.35s;}
+.prog-dot.done{background:var(--green);border-color:var(--green);box-shadow:0 0 0 3px var(--green-light);}
+.prog-dot-label{font-size:10px;font-weight:600;color:var(--gray-text);white-space:nowrap;}
+
+/* MAIN */
+.main{max-width:720px;margin:0 auto;padding:18px 16px;display:flex;flex-direction:column;gap:24px;}
+
+/* SECTION CARDS */
+.section-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.section-head{display:flex;align-items:center;gap:16px;padding:16px 22px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);}
+.section-head.uk{background:linear-gradient(135deg,#012169 0%,#8b0000 100%);}
+.section-head.jp{background:linear-gradient(135deg,#9b1b2c 0%,#2a2a2a 100%);}
+.section-head.in{background:linear-gradient(135deg,#b5591c 0%,#1a6b2e 100%);}
+.section-head.swi{background:linear-gradient(135deg,var(--purple) 0%,var(--teal) 100%);}
+.s-num{font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;color:rgba(255,255,255,0.9);line-height:1;flex-shrink:0;}
+.s-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:3px;}
+.s-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:white;letter-spacing:0.4px;}
+.s-flag{font-size:26px;margin-left:auto;flex-shrink:0;}
+.section-body{padding:20px 22px;display:flex;flex-direction:column;gap:16px;}
+
+/* PASSAGE */
+.passage{background:var(--foam-light);border-radius:var(--radius-sm);padding:16px 20px;border-left:4px solid var(--ocean);}
+.passage-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--ocean);margin-bottom:10px;}
+.passage-text{font-family:'Source Serif 4',serif;font-size:15px;line-height:1.95;color:var(--navy-mid);}
+.passage-text strong{font-weight:700;color:var(--navy);}
+.passage-text em{font-style:italic;}
+
+/* SWI SPOTLIGHT */
+.swi-spot{background:var(--purple-bg);border-radius:var(--radius-sm);padding:16px 20px;border-left:4px solid var(--purple-mid);}
+.swi-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--purple-mid);margin-bottom:10px;}
+.swi-content{font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.75;}
+.swi-content strong{font-weight:700;color:var(--purple);}
+.swi-content em{font-style:italic;}
+.root-pill{display:inline-block;background:var(--purple);color:white;border-radius:20px;padding:2px 12px;font-size:13px;font-weight:700;margin:0 2px;}
+.meaning-pill{display:inline-block;background:var(--teal);color:white;border-radius:20px;padding:2px 12px;font-size:13px;font-weight:700;margin:0 2px;}
+
+/* TASKS */
+.task{background:var(--page-bg);border-radius:var(--radius-sm);padding:16px 18px;border:2px solid var(--gray-border);}
+.task-head{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--navy-soft);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.task-badge{background:var(--navy-soft);color:white;border-radius:20px;padding:2px 10px;font-size:10px;font-weight:800;letter-spacing:1px;}
+.task-badge.swi-badge{background:var(--purple-mid);}
+.task-badge.opt-badge{background:var(--teal);}
+.task-instr{font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.65;margin-bottom:14px;}
+.task-instr strong{font-weight:700;}
+.task-instr em{font-style:italic;color:var(--gray-text);}
+
+/* WORD BANK */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.wchip{background:white;border:2px solid var(--ocean);border-radius:20px;padding:5px 15px;font-size:14px;font-weight:700;color:var(--ocean);cursor:pointer;transition:all 0.18s;user-select:none;}
+.wchip:hover:not(.used){background:var(--ocean);color:white;transform:translateY(-2px);}
+.wchip.selected{background:var(--ocean);color:white;outline:3px solid var(--gold);outline-offset:2px;}
+.wchip.used{opacity:0.3;cursor:default;text-decoration:line-through;}
+
+/* FILL SENTENCE */
+.fill-sentence{font-family:'Source Serif 4',serif;font-size:15px;line-height:2.55;color:var(--navy-mid);}
+.blank{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:34px;padding:0 10px;border-bottom:3px solid var(--ocean);border-radius:3px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;transition:all 0.2s;vertical-align:middle;margin:0 3px;}
+.blank:hover{background:var(--foam-light);}
+.blank.filled{background:var(--foam-light);border-color:var(--green);color:var(--green);}
+.blank.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red);animation:shake 0.35s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* TRUE / FALSE */
+.tf-list{display:flex;flex-direction:column;gap:10px;}
+.tf-row{background:white;border-radius:var(--radius-sm);padding:12px 14px;border:2px solid var(--gray-border);display:flex;align-items:flex-start;gap:12px;transition:border-color 0.2s;}
+.tf-row.answered-t{border-color:var(--green);background:var(--green-bg);}
+.tf-row.answered-f{border-color:var(--ocean);background:var(--foam-light);}
+.tf-btns{display:flex;gap:6px;flex-shrink:0;margin-top:1px;}
+.tfbtn{border:2px solid var(--gray-border);border-radius:6px;padding:5px 13px;font-family:'Inter',sans-serif;font-size:12px;font-weight:800;cursor:pointer;background:white;transition:all 0.18s;white-space:nowrap;}
+.tfbtn.T:hover,.tfbtn.T.sel{background:var(--green-light);border-color:var(--green);color:var(--green);}
+.tfbtn.F:hover,.tfbtn.F.sel{background:var(--foam-light);border-color:var(--ocean);color:var(--ocean);}
+.tf-text{font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.55;flex:1;}
+
+/* ORDERING */
+.pool{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+.pchip{background:white;border:2px solid var(--navy-soft);border-radius:8px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--navy-mid);cursor:pointer;transition:all 0.18s;user-select:none;}
+.pchip:hover:not(.placed){border-color:var(--ocean);color:var(--ocean);transform:translateX(4px);}
+.pchip.placed{opacity:0.28;cursor:default;transform:none;}
+.slots{display:flex;flex-direction:column;gap:7px;}
+.slot{display:flex;align-items:center;gap:10px;border:2px dashed var(--gray-border);border-radius:8px;padding:9px 14px;min-height:44px;font-size:13px;font-weight:500;color:var(--gray-text);cursor:pointer;transition:all 0.2s;background:white;}
+.slot:hover{border-color:var(--sky);}
+.slot.filled{border-style:solid;border-color:var(--green);background:var(--green-bg);color:var(--navy);font-weight:600;}
+.slot-n{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--gray-text);flex-shrink:0;width:28px;}
+.slot.filled .slot-n{color:var(--green);}
+
+/* SWI WORD SPOTTER */
+.spotter-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.spotter-chip{background:white;border:2px solid var(--gray-border);border-radius:20px;padding:8px 18px;font-size:14px;font-weight:700;color:var(--navy-mid);cursor:pointer;transition:all 0.2s;user-select:none;}
+.spotter-chip:hover:not(.locked){border-color:var(--purple-mid);color:var(--purple-mid);}
+.spotter-chip.spotted{background:var(--purple-bg);border-color:var(--purple-mid);color:var(--purple);outline:3px solid var(--purple-light);outline-offset:2px;}
+.spotter-chip.correct{background:var(--green-bg);border-color:var(--green);color:var(--green);cursor:default;}
+.spotter-chip.incorrect{background:var(--red-bg);border-color:var(--red);color:var(--red);cursor:default;}
+.spotter-chip.missed{background:var(--foam-light);border-color:var(--sky);color:var(--steel);cursor:default;}
+.spotter-chip.neutral{opacity:0.45;cursor:default;}
+.spotter-chip.locked{cursor:default;}
+.spotter-result{border-radius:var(--radius-sm);padding:13px 16px;font-size:14px;font-weight:600;text-align:center;margin-top:8px;line-height:1.6;}
+.spotter-result.great{background:var(--green-bg);border:2px solid var(--green);color:var(--green);}
+.spotter-result.partial{background:var(--purple-bg);border:2px solid var(--purple-mid);color:var(--purple);}
+
+/* SWI WORD MATCH */
+.match-area{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:520px){.match-area{grid-template-columns:1fr;}}
+.match-words{display:flex;flex-direction:column;gap:8px;}
+.match-defs{display:flex;flex-direction:column;gap:8px;}
+.mchip{background:white;border:2px solid var(--teal);border-radius:8px;padding:10px 14px;font-size:14px;font-weight:700;color:var(--teal);cursor:pointer;transition:all 0.18s;user-select:none;text-align:center;}
+.mchip:hover:not(.matched){background:var(--teal-bg);transform:translateX(3px);}
+.mchip.m-selected{background:var(--teal);color:white;outline:3px solid var(--gold);outline-offset:2px;}
+.mchip.matched{opacity:0.32;cursor:default;transform:none;}
+.def-slot{border:2px dashed var(--gray-border);border-radius:8px;padding:9px 14px;min-height:52px;font-size:13px;font-weight:500;color:var(--gray-text);cursor:pointer;transition:all 0.2s;background:white;line-height:1.55;}
+.def-slot:hover{border-color:var(--teal);}
+.def-slot.def-filled{border-style:solid;border-color:var(--teal);background:var(--teal-bg);}
+.def-slot .def-word{font-weight:800;color:var(--teal);margin-bottom:2px;font-size:14px;}
+.def-slot .def-text{font-size:12px;color:var(--gray-text);font-weight:500;line-height:1.5;}
+
+/* WORD FAMILY TREE */
+.tree-wrap{background:var(--purple-bg);border-radius:var(--radius-sm);padding:20px;border:1px solid var(--purple-light);}
+.tree-root{text-align:center;margin-bottom:18px;}
+.tree-root-word{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--purple);display:inline-block;background:white;border:3px solid var(--purple);border-radius:12px;padding:8px 28px;}
+.tree-root-label{font-size:12px;font-weight:600;color:var(--purple-mid);margin-top:7px;font-style:italic;}
+.tree-branches{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:14px;}
+.tree-leaf{background:white;border:2px solid var(--purple-light);border-radius:10px;padding:10px 12px;text-align:center;}
+.leaf-word{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px;}
+.leaf-def{font-size:11px;font-weight:500;color:var(--gray-text);line-height:1.5;}
+
+/* TITLE CHOICES */
+.title-choices{display:flex;flex-direction:column;gap:8px;}
+.title-opt{background:white;border:2px solid var(--gray-border);border-radius:10px;padding:13px 16px;font-size:14px;font-weight:600;color:var(--navy-mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;line-height:1.5;}
+.title-opt:hover{border-color:var(--ocean);color:var(--navy);}
+.title-opt.picked{border-color:var(--gold);background:var(--gold-bg);color:var(--navy);}
+.radio-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.18s;}
+.title-opt.picked .radio-circle{background:var(--gold);border-color:var(--gold);}
+.title-opt.picked .radio-circle::after{content:'';width:8px;height:8px;background:white;border-radius:50%;}
+
+/* BUTTONS & BANNERS */
+.complete-btn{width:100%;background:var(--ocean);color:white;border:none;border-radius:var(--radius-sm);padding:13px 20px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(25,118,210,0.3);}
+.complete-btn:hover{background:var(--steel);transform:translateY(-1px);}
+.done-banner{background:var(--green-bg);border:2px solid var(--green);border-radius:var(--radius-sm);padding:11px 16px;font-size:14px;font-weight:700;color:var(--green);text-align:center;animation:fadeUp 0.35s ease;}
+
+/* BRAIN BREAK */
+.break-toggle{background:var(--teal-bg);border:2px solid var(--teal-light);border-radius:var(--radius-sm);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;font-weight:600;color:var(--teal);transition:background 0.2s;user-select:none;}
+.break-toggle:hover{background:var(--teal-light);}
+.break-toggle .break-arrow{font-size:11px;transition:transform 0.2s;}
+.break-toggle.open .break-arrow{transform:rotate(180deg);}
+.break-content{background:var(--teal-bg);border:2px solid var(--teal-light);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:14px 16px;font-size:14px;font-weight:500;color:var(--navy-mid);line-height:1.75;}
+.break-content strong{font-weight:700;color:var(--teal);}
+
+/* FINAL CARD */
+.final-card{background:linear-gradient(150deg,var(--navy) 0%,var(--purple) 100%);border-radius:var(--radius);padding:30px 24px;text-align:center;box-shadow:var(--shadow-lg);animation:fadeUp 0.5s ease;}
+.final-card h2{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--gold-light);margin-bottom:10px;}
+.final-card p{font-size:14px;color:var(--foam);line-height:1.75;margin-bottom:18px;}
+.final-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.final-chip{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.28);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:white;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hidden{display:none!important;}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="mast-eyebrow">Fourth Grade &bull; Informational Text &bull; SWI Edition</div>
+  <h1 class="mast-title">&#9875; Ships<br><em>Without Borders</em></h1>
+  <div class="mast-sub">Naval vessels from around the world &mdash; plus a word investigation</div>
+  <div class="flag-row">&#127468;&#127463; &#127471;&#127477; &#127470;&#127475; &#128300;</div>
+</div>
+
+<!-- WELCOME -->
+<div class="welcome">
+  <strong>A note before you begin:</strong> This assignment has been made so that <em>you are in charge</em>. There is no handwriting, no spelling from memory, and no wrong way to explore. Everything is clickable. You can move between sections in whatever order works for you &mdash; and it is completely fine to stop and come back later. <strong>Take what you need, and leave what you don&rsquo;t.</strong>
+</div>
+
+<!-- HOW THIS WORKS -->
+<div class="how-wrap">
+  <div class="how-card">
+    <div class="how-heading">&#9749; How This Works</div>
+    <div class="how-row"><div class="how-num">1</div><div><strong>Read</strong> each passage at your own pace &mdash; real facts about real ships from the UK, Japan, and India.</div></div>
+    <div class="how-row"><div class="how-num">2</div><div><strong>Explore the SWI Spotlight</strong> in each section to find out where key words come from. You might find this fascinating.</div></div>
+    <div class="how-row"><div class="how-num">3</div><div><strong>Click words into blanks</strong>, tap True/False, or sort facts. No typing or spelling from memory is ever required.</div></div>
+    <div class="how-row"><div class="how-num">4</div><div><strong>Visit the Word Lab</strong> (Section 4) whenever you like &mdash; it investigates a single Latin word that has been hiding in English for 2,000 years.</div></div>
+    <div class="how-note">&#128161; <strong>You can do these four sections in any order.</strong> Start with whichever ship or topic sounds most interesting to you. There is no rush, and each section stands on its own.</div>
+  </div>
+</div>
+
+<!-- PROGRESS DOTS -->
+<div class="progress-wrap">
+  <div class="prog-label">Sections explored</div>
+  <div class="prog-dots">
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-1"></div><div class="prog-dot-label">&#127468;&#127463; HMS Queen E.</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-2"></div><div class="prog-dot-label">&#127471;&#127477; Yamato</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-3"></div><div class="prog-dot-label">&#127470;&#127475; INS Vikrant</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-4"></div><div class="prog-dot-label">&#128300; Word Lab</div></div>
+    <div class="prog-dot-wrap"><div class="prog-dot" id="dot-5"></div><div class="prog-dot-label">&#9875; My Report</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ============================================================
+     SECTION 1: HMS QUEEN ELIZABETH (UK)
+     ============================================================ -->
+<div class="section-card">
+  <div class="section-head uk">
+    <div class="s-num">01</div>
+    <div>
+      <div class="s-tag">United Kingdom</div>
+      <div class="s-title">HMS Queen Elizabeth</div>
+    </div>
+    <div class="s-flag">&#127468;&#127463;</div>
+  </div>
+  <div class="section-body">
+
+    <div class="passage">
+      <div class="passage-label">&#128214; Read This First</div>
+      <div class="passage-text">
+        The <strong>HMS Queen Elizabeth</strong> is the largest warship ever built for the <strong>Royal Navy</strong> of the United Kingdom. This enormous ship is an <strong>aircraft carrier</strong> &mdash; a floating base from which military jets can take off and land at sea. It was <strong>commissioned</strong> in 2017, which means it was officially put into active service for the first time. The ship is named after <strong>Queen Elizabeth I</strong>, who ruled England from 1558 to 1603.<br><br>
+        The carrier weighs <strong>65,000 tonnes</strong> and stretches <strong>280 meters</strong> from front to back &mdash; roughly the same length as <strong>three soccer fields</strong> placed end to end. Up to <strong>36 F-35B fighter jets</strong> can operate from its enormous flight deck. The HMS Queen Elizabeth regularly trains and sails alongside the <strong>navies of other nations</strong>, including the United States and Japan, showing that modern naval power often crosses borders.
+      </div>
+    </div>
+
+    <div class="swi-spot">
+      <div class="swi-label">&#128300; SWI Spotlight &mdash; Word Investigation</div>
+      <div class="swi-content">
+        The passage uses the word <strong>commissioned</strong>. Let&rsquo;s look inside it.<br><br>
+        It is built from two Latin parts:<br>
+        &nbsp;&nbsp;&nbsp;<span class="root-pill">com-</span> = together &nbsp;&nbsp; <span class="root-pill">-miss-</span> = to send<br><br>
+        So when a warship is <strong>commissioned</strong>, it is officially <em>sent out together</em> into service for the first time. This same root hides in other familiar words: <strong>mission</strong>, <strong>permission</strong>, <strong>dismiss</strong>, and <strong>submit</strong>. They all share the idea of sending something somewhere.
+      </div>
+    </div>
+
+    <div class="break-toggle" id="brk1-btn" onclick="toggleBreak('brk1')">
+      &#9749; Curious about the ship&rsquo;s unusual design? (optional &mdash; click to find out) <span class="break-arrow">&#9660;</span>
+    </div>
+    <div class="break-content hidden" id="brk1">
+      <strong>Did you know?</strong> The HMS Queen Elizabeth has <strong>two control towers</strong> on its flight deck instead of the usual one. No other carrier in the world has two islands quite like this. One tower controls the ship itself; the other manages aircraft. It was designed this way so that if one tower is damaged, the other can keep the ship running.
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 1</span> Fill in the Blanks</div>
+      <div class="task-instr">Click a word in the word bank to select it, then click the blank where it belongs. <em>You can look back at the passage above any time you like.</em></div>
+      <div class="word-bank" id="wb1">
+        <div class="wchip" data-word="Royal Navy" onclick="pickChip(this,'wb1')">Royal Navy</div>
+        <div class="wchip" data-word="carrier" onclick="pickChip(this,'wb1')">carrier</div>
+        <div class="wchip" data-word="commissioned" onclick="pickChip(this,'wb1')">commissioned</div>
+        <div class="wchip" data-word="280 meters" onclick="pickChip(this,'wb1')">280 meters</div>
+        <div class="wchip" data-word="three" onclick="pickChip(this,'wb1')">three</div>
+      </div>
+      <div class="fill-sentence">
+        The HMS Queen Elizabeth belongs to the <span class="blank" data-ans="Royal Navy" data-bank="wb1" onclick="dropWord(this)">_______</span>. It is an aircraft <span class="blank" data-ans="carrier" data-bank="wb1" onclick="dropWord(this)">_______</span> that was <span class="blank" data-ans="commissioned" data-bank="wb1" onclick="dropWord(this)">_______</span> in 2017. The ship is <span class="blank" data-ans="280 meters" data-bank="wb1" onclick="dropWord(this)">_______</span> long &mdash; about <span class="blank" data-ans="three" data-bank="wb1" onclick="dropWord(this)">_______</span> soccer fields end to end.
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 2</span> True or False?</div>
+      <div class="task-instr">Tap <strong>TRUE</strong> or <strong>FALSE</strong> for each statement. The passage above has everything you need.</div>
+      <div class="tf-list">
+        <div class="tf-row" id="tf1a">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf1a')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf1a')">FALSE</button></div>
+          <div class="tf-text">The HMS Queen Elizabeth is named after Queen Elizabeth I.</div>
+        </div>
+        <div class="tf-row" id="tf1b">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf1b')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf1b')">FALSE</button></div>
+          <div class="tf-text">The HMS Queen Elizabeth only ever sails alone and never trains with other countries&rsquo; navies.</div>
+        </div>
+        <div class="tf-row" id="tf1c">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf1c')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf1c')">FALSE</button></div>
+          <div class="tf-text">The flight deck of this carrier can hold up to 36 F-35B jets.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="complete-btn" onclick="completeSection(1)">&#10003; Mark Section 1 Explored</button>
+    <div class="done-banner hidden" id="done-1">&#127468;&#127463; Section 1 explored &mdash; well done, navigator.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 2: BATTLESHIP YAMATO (JAPAN)
+     ============================================================ -->
+<div class="section-card">
+  <div class="section-head jp">
+    <div class="s-num">02</div>
+    <div>
+      <div class="s-tag">Japan &mdash; Historical</div>
+      <div class="s-title">Battleship Yamato</div>
+    </div>
+    <div class="s-flag">&#127471;&#127477;</div>
+  </div>
+  <div class="section-body">
+
+    <div class="passage">
+      <div class="passage-label">&#128214; Read This First</div>
+      <div class="passage-text">
+        The <strong>Yamato</strong> was the most powerful <strong>battleship</strong> ever built. Launched in <strong>1941</strong> by the Imperial Japanese Navy, this giant warship weighed <strong>72,800 tonnes</strong> &mdash; heavier than any battleship before or since. It stretched <strong>263 meters</strong> from bow to stern and was armored in thick steel plating. Its nine massive guns could fire shells weighing <strong>1,360 kilograms</strong> &mdash; almost as heavy as a small car &mdash; across a distance of <strong>42 kilometers</strong>.<br><br>
+        The ship was named after the ancient region of <strong>Yamato</strong>, a name that stands for Japan itself. Despite its incredible size, the Yamato was sunk on <strong>April 7, 1945</strong>, during a mission called <strong>Operation Ten-Go</strong>, when American aircraft struck it with bombs and torpedoes. Of the 2,700 sailors on board, only 280 survived. Today, the Yamato is remembered through <strong>museums, books, and films</strong> &mdash; and its name lives on in the famous Japanese animated series <em>Space Battleship Yamato</em>.
+      </div>
+    </div>
+
+    <div class="swi-spot">
+      <div class="swi-label">&#128300; SWI Spotlight &mdash; Compound Words</div>
+      <div class="swi-content">
+        Look at the word <strong>battleship</strong>. It is a <strong>compound word</strong> &mdash; two complete words joined together to make one new word:<br><br>
+        &nbsp;&nbsp;&nbsp;<span class="root-pill">battle</span> + <span class="root-pill">ship</span> = a ship built for battle<br><br>
+        English builds many naval words this way. Here are a few more you might explore:<br>
+        &nbsp;&nbsp;&nbsp;<strong>warship</strong> (war&nbsp;+&nbsp;ship) &nbsp;&middot;&nbsp; <strong>gunboat</strong> (gun&nbsp;+&nbsp;boat) &nbsp;&middot;&nbsp; <strong>flagship</strong> (flag&nbsp;+&nbsp;ship)<br><br>
+        A <em>flagship</em> was once the ship that flew a special flag to show where the admiral was. Today the word <strong>flagship</strong> still means &ldquo;the most important thing of its kind&rdquo; in English &mdash; even when ships are not involved at all.
+      </div>
+    </div>
+
+    <div class="break-toggle" id="brk2-btn" onclick="toggleBreak('brk2')">
+      &#9749; Want to picture just how big the Yamato was? (optional) <span class="break-arrow">&#9660;</span>
+    </div>
+    <div class="break-content hidden" id="brk2">
+      <strong>Scale check:</strong> Each of the Yamato&rsquo;s main gun barrels was <strong>21 meters long</strong> &mdash; about as long as a school bus and a half. Each shell it fired weighed more than a fully loaded SUV. Yet even with all this firepower, the Yamato could not defend itself against aircraft attacking from above &mdash; one reason why aircraft carriers eventually replaced battleships as the most important ships in a navy.
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 3</span> Put Events in Order</div>
+      <div class="task-instr">
+        These four events all appear in the passage. Click an event from the list, then click a numbered slot to place it in order &mdash; <strong>earliest first</strong>. <em>Tip: look for dates and clue words like &ldquo;today&rdquo; or &ldquo;1941.&rdquo;</em>
+      </div>
+      <div class="pool" id="pool2">
+        <div class="pchip" onclick="pickChunk(this,'pool2','slots2')">The Yamato became famous in Japanese culture through books, films, and a TV series.</div>
+        <div class="pchip" onclick="pickChunk(this,'pool2','slots2')">The Yamato was launched by the Imperial Japanese Navy.</div>
+        <div class="pchip" onclick="pickChunk(this,'pool2','slots2')">American aircraft sank the Yamato during Operation Ten-Go.</div>
+        <div class="pchip" onclick="pickChunk(this,'pool2','slots2')">The ancient region of Yamato gave its name to the Japanese homeland.</div>
+      </div>
+      <div class="slots" id="slots2">
+        <div class="slot" data-pos="0" onclick="placeChunk(this,'slots2')"><span class="slot-n">1st</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="1" onclick="placeChunk(this,'slots2')"><span class="slot-n">2nd</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="2" onclick="placeChunk(this,'slots2')"><span class="slot-n">3rd</span><span class="slot-txt">click an event above, then click here</span></div>
+        <div class="slot" data-pos="3" onclick="placeChunk(this,'slots2')"><span class="slot-n">4th</span><span class="slot-txt">click an event above, then click here</span></div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 4</span> Fill in the Blanks</div>
+      <div class="task-instr">Click a word, then click the blank where it belongs.</div>
+      <div class="word-bank" id="wb2">
+        <div class="wchip" data-word="heaviest" onclick="pickChip(this,'wb2')">heaviest</div>
+        <div class="wchip" data-word="nine" onclick="pickChip(this,'wb2')">nine</div>
+        <div class="wchip" data-word="aircraft" onclick="pickChip(this,'wb2')">aircraft</div>
+        <div class="wchip" data-word="sunk" onclick="pickChip(this,'wb2')">sunk</div>
+      </div>
+      <div class="fill-sentence">
+        The Yamato was the <span class="blank" data-ans="heaviest" data-bank="wb2" onclick="dropWord(this)">_______</span> battleship ever built. It carried <span class="blank" data-ans="nine" data-bank="wb2" onclick="dropWord(this)">_______</span> massive guns. In 1945, American <span class="blank" data-ans="aircraft" data-bank="wb2" onclick="dropWord(this)">_______</span> attacked and <span class="blank" data-ans="sunk" data-bank="wb2" onclick="dropWord(this)">_______</span> the ship.
+      </div>
+    </div>
+
+    <button class="complete-btn" onclick="completeSection(2)">&#10003; Mark Section 2 Explored</button>
+    <div class="done-banner hidden" id="done-2">&#127471;&#127477; Section 2 explored &mdash; the Yamato was truly remarkable.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 3: INS VIKRANT (INDIA)
+     ============================================================ -->
+<div class="section-card">
+  <div class="section-head in">
+    <div class="s-num">03</div>
+    <div>
+      <div class="s-tag">India</div>
+      <div class="s-title">INS Vikrant</div>
+    </div>
+    <div class="s-flag">&#127470;&#127475;</div>
+  </div>
+  <div class="section-body">
+
+    <div class="passage">
+      <div class="passage-label">&#128214; Read This First</div>
+      <div class="passage-text">
+        The <strong>INS Vikrant</strong> made history in <strong>2022</strong> as the first aircraft carrier ever designed and built entirely inside <strong>India</strong>. Before this ship, India had to buy its carriers from other countries. Now India joins a small group of nations &mdash; including the United States, the United Kingdom, France, and Russia &mdash; capable of building their own carriers.<br><br>
+        <strong>INS</strong> stands for <strong>Indian Naval Ship</strong>. The name <strong>Vikrant</strong> comes from the ancient <strong>Sanskrit</strong> language and means <em>&ldquo;courageous.&rdquo;</em> The carrier weighs <strong>45,000 tonnes</strong> and is <strong>262 meters</strong> long. It can carry <strong>MiG-29K fighter jets</strong> and several types of helicopters. Building it required <strong>ten years</strong> of work and involved hundreds of Indian companies working together. When it launched, India&rsquo;s Prime Minister called it a symbol of the nation&rsquo;s <strong>self-reliance</strong> &mdash; the ability to build what you need for yourself.
+      </div>
+    </div>
+
+    <div class="swi-spot">
+      <div class="swi-label">&#128300; SWI Spotlight &mdash; Where Does &ldquo;Navy&rdquo; Come From?</div>
+      <div class="swi-content">
+        The passage mentions the <strong>Indian Naval Ship</strong>. But where does the word <strong>navy</strong> come from?<br><br>
+        The word <strong>navy</strong> traces back to the Latin word <strong><em>navis</em></strong>, which simply meant <em>ship</em>:<br><br>
+        &nbsp;&nbsp;&nbsp;<span class="meaning-pill">navis</span> = ship &nbsp;(Latin, about 2,000 years old)<br><br>
+        Centuries ago, Latin speakers used <em>navis</em> for any vessel on water. The word slowly moved into French as <em>navie</em> (a fleet of ships), then into English as <strong>navy</strong>. But that same ancient root is hiding in many more English words we still use today &mdash; and you will discover all of them in <strong>Section 4: The Word Lab</strong>.
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 5</span> True or False?</div>
+      <div class="task-instr">Tap <strong>TRUE</strong> or <strong>FALSE</strong> for each statement.</div>
+      <div class="tf-list">
+        <div class="tf-row" id="tf3a">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf3a')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf3a')">FALSE</button></div>
+          <div class="tf-text">INS Vikrant was the first aircraft carrier ever built entirely inside India.</div>
+        </div>
+        <div class="tf-row" id="tf3b">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf3b')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf3b')">FALSE</button></div>
+          <div class="tf-text">The name &ldquo;Vikrant&rdquo; is a French word meaning &ldquo;powerful.&rdquo;</div>
+        </div>
+        <div class="tf-row" id="tf3c">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf3c')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf3c')">FALSE</button></div>
+          <div class="tf-text">Building the INS Vikrant took about ten years.</div>
+        </div>
+        <div class="tf-row" id="tf3d">
+          <div class="tf-btns"><button class="tfbtn T" onclick="pickTF(this,'T','tf3d')">TRUE</button><button class="tfbtn F" onclick="pickTF(this,'F','tf3d')">FALSE</button></div>
+          <div class="tf-text">India is one of only a few countries in the world that can build its own aircraft carriers.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 6</span> Fill in the Blanks</div>
+      <div class="task-instr">Click a word, then click the blank where it belongs.</div>
+      <div class="word-bank" id="wb3">
+        <div class="wchip" data-word="history" onclick="pickChip(this,'wb3')">history</div>
+        <div class="wchip" data-word="Sanskrit" onclick="pickChip(this,'wb3')">Sanskrit</div>
+        <div class="wchip" data-word="courageous" onclick="pickChip(this,'wb3')">courageous</div>
+        <div class="wchip" data-word="self-reliance" onclick="pickChip(this,'wb3')">self-reliance</div>
+      </div>
+      <div class="fill-sentence">
+        The INS Vikrant made <span class="blank" data-ans="history" data-bank="wb3" onclick="dropWord(this)">_______</span> in 2022. Its name comes from the <span class="blank" data-ans="Sanskrit" data-bank="wb3" onclick="dropWord(this)">_______</span> language and means <span class="blank" data-ans="courageous" data-bank="wb3" onclick="dropWord(this)">_______</span>. It became a symbol of India&rsquo;s <span class="blank" data-ans="self-reliance" data-bank="wb3" onclick="dropWord(this)">_______</span>.
+      </div>
+    </div>
+
+    <button class="complete-btn" onclick="completeSection(3)">&#10003; Mark Section 3 Explored</button>
+    <div class="done-banner hidden" id="done-3">&#127470;&#127475; Section 3 explored &mdash; a proud chapter in naval history.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 4: SWI WORD LAB
+     ============================================================ -->
+<div class="section-card">
+  <div class="section-head swi">
+    <div class="s-num">04</div>
+    <div>
+      <div class="s-tag">Word Investigation</div>
+      <div class="s-title">The Word Lab: &ldquo;nav-&rdquo;</div>
+    </div>
+    <div class="s-flag">&#128300;</div>
+  </div>
+  <div class="section-body">
+
+    <div class="passage" style="border-left-color:var(--purple-mid);background:var(--purple-bg);">
+      <div class="passage-label" style="color:var(--purple-mid);">&#129516; How Words Actually Work</div>
+      <div class="passage-text">
+        Words are not random. They have <strong>history</strong>, <strong>roots</strong>, and <strong>building blocks</strong>. When we investigate how a word is built &mdash; where it came from and what its parts mean &mdash; we understand it deeply and never have to simply memorize it.<br><br>
+        In this section, you will investigate a single Latin word that has been quietly living inside modern English for about <strong>2,000 years</strong>. It was used by Roman sailors and soldiers. And you use words built from it every single time you talk about ships or finding your way somewhere.
+      </div>
+    </div>
+
+    <!-- WORD FAMILY TREE -->
+    <div class="tree-wrap">
+      <div class="tree-root">
+        <div class="tree-root-word">nav-</div>
+        <div class="tree-root-label">from Latin <em>navis</em> = ship</div>
+      </div>
+      <div class="tree-branches">
+        <div class="tree-leaf">
+          <div class="leaf-word">navy</div>
+          <div class="leaf-def">a country&rsquo;s fleet of warships and those who serve on them</div>
+        </div>
+        <div class="tree-leaf">
+          <div class="leaf-word">naval</div>
+          <div class="leaf-def">relating to a navy or to ships at sea</div>
+        </div>
+        <div class="tree-leaf">
+          <div class="leaf-word">navigate</div>
+          <div class="leaf-def">to plan and follow a route across water or land</div>
+        </div>
+        <div class="tree-leaf">
+          <div class="leaf-word">navigator</div>
+          <div class="leaf-def">a person whose job is to find and follow a route</div>
+        </div>
+        <div class="tree-leaf">
+          <div class="leaf-word">navigation</div>
+          <div class="leaf-def">the skill or process of finding and following a route</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASK 7: WORD SPOTTER -->
+    <div class="task">
+      <div class="task-head"><span class="task-badge swi-badge">TASK 7</span> Word Spotter</div>
+      <div class="task-instr">
+        Below are eight words. <strong>Four of them</strong> belong to the <em>nav-</em> family (they carry the Latin root for &ldquo;ship&rdquo; inside them). The other four do not. Click the ones you think might be from the <em>nav-</em> family. You can change your mind as many times as you like. When you&rsquo;re ready, tap <strong>Check My Choices</strong>.
+      </div>
+      <div class="spotter-grid" id="spotter-grid">
+        <div class="spotter-chip" data-nav="true" onclick="toggleSpotter(this)">navy</div>
+        <div class="spotter-chip" data-nav="false" onclick="toggleSpotter(this)">napkin</div>
+        <div class="spotter-chip" data-nav="true" onclick="toggleSpotter(this)">navigate</div>
+        <div class="spotter-chip" data-nav="false" onclick="toggleSpotter(this)">normal</div>
+        <div class="spotter-chip" data-nav="true" onclick="toggleSpotter(this)">naval</div>
+        <div class="spotter-chip" data-nav="false" onclick="toggleSpotter(this)">noble</div>
+        <div class="spotter-chip" data-nav="true" onclick="toggleSpotter(this)">navigator</div>
+        <div class="spotter-chip" data-nav="false" onclick="toggleSpotter(this)">novel</div>
+      </div>
+      <button class="complete-btn" style="background:var(--purple-mid);box-shadow:0 4px 14px rgba(106,27,154,0.3);" onclick="checkSpotter()">&#128269; Check My Choices</button>
+      <div class="spotter-result hidden" id="spotter-result"><span id="spotter-msg"></span></div>
+    </div>
+
+    <!-- TASK 8: MATCH THE MEANING -->
+    <div class="task">
+      <div class="task-head"><span class="task-badge swi-badge">TASK 8</span> Match Each Word to Its Meaning</div>
+      <div class="task-instr">
+        Click a word on the <strong>left</strong> to select it, then click the definition on the <strong>right</strong> where it belongs. <em>If you want to change a match, just click a new word and click the slot again &mdash; it will update.</em>
+      </div>
+      <div class="match-area">
+        <div class="match-words" id="match-words">
+          <div class="mchip" data-mword="navy" onclick="pickMWord(this)">navy</div>
+          <div class="mchip" data-mword="naval" onclick="pickMWord(this)">naval</div>
+          <div class="mchip" data-mword="navigate" onclick="pickMWord(this)">navigate</div>
+          <div class="mchip" data-mword="navigator" onclick="pickMWord(this)">navigator</div>
+          <div class="mchip" data-mword="navigation" onclick="pickMWord(this)">navigation</div>
+        </div>
+        <div class="match-defs" id="match-defs">
+          <div class="def-slot" data-mans="navigate" onclick="placeMWord(this)">
+            <div class="def-word"></div>
+            <div class="def-text">to plan and follow a route across water or land</div>
+          </div>
+          <div class="def-slot" data-mans="naval" onclick="placeMWord(this)">
+            <div class="def-word"></div>
+            <div class="def-text">relating to a navy, its ships, or its sailors</div>
+          </div>
+          <div class="def-slot" data-mans="navigator" onclick="placeMWord(this)">
+            <div class="def-word"></div>
+            <div class="def-text">a person whose job is to find and follow a route</div>
+          </div>
+          <div class="def-slot" data-mans="navigation" onclick="placeMWord(this)">
+            <div class="def-word"></div>
+            <div class="def-text">the skill or process of finding and following a route</div>
+          </div>
+          <div class="def-slot" data-mans="navy" onclick="placeMWord(this)">
+            <div class="def-word"></div>
+            <div class="def-text">a country&rsquo;s entire fleet of warships and the people who serve on them</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="complete-btn" style="background:linear-gradient(135deg,var(--purple) 0%,var(--teal) 100%);box-shadow:0 4px 14px rgba(106,27,154,0.28);" onclick="completeSection(4)">&#10003; Mark Section 4 Explored</button>
+    <div class="done-banner hidden" id="done-4" style="background:var(--purple-bg);border-color:var(--purple-mid);color:var(--purple);">&#128300; Word Lab complete &mdash; you just did what linguists do.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5: MY REPORT — CHOOSE & REFLECT
+     ============================================================ -->
+<div class="section-card">
+  <div class="section-head">
+    <div class="s-num">05</div>
+    <div>
+      <div class="s-tag">My Report</div>
+      <div class="s-title">Choose &amp; Reflect</div>
+    </div>
+    <div class="s-flag">&#9875;</div>
+  </div>
+  <div class="section-body">
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 9</span> Pick a Report Title</div>
+      <div class="task-instr">
+        You have explored three ships from three countries and investigated a Latin root that is still active in English today. Every informational report needs a title. <strong>Pick the one that feels right to you &mdash; there is no wrong answer here.</strong>
+      </div>
+      <div class="title-choices" id="titles">
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#9875; <strong>Ships Without Borders: Naval Vessels of the World</strong></div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#128481;&#65039; <strong>From Japan to India: Great Warships Around the Globe</strong></div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#128300; <strong>Words and Warships: Exploring Naval Language and History</strong></div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127754; <strong>Rulers of the Sea: How Navies Shape the World</strong></div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-head"><span class="task-badge">TASK 10</span> Which Section Was Most Interesting to You?</div>
+      <div class="task-instr">Click the one you found most engaging. This is genuinely your choice &mdash; there is no right or wrong answer.</div>
+      <div class="title-choices" id="faves">
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127468;&#127463; HMS Queen Elizabeth &mdash; the UK&rsquo;s floating air base</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127471;&#127477; Battleship Yamato &mdash; Japan&rsquo;s legendary giant</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#127470;&#127475; INS Vikrant &mdash; India&rsquo;s historic achievement</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>&#128300; The Word Lab &mdash; discovering what words are built from</div>
+      </div>
+    </div>
+
+    <div class="task" style="border-color:var(--teal-light);">
+      <div class="task-head"><span class="task-badge opt-badge">TASK 11</span> One Thing You Noticed &mdash; <em>Optional</em></div>
+      <div class="task-instr">
+        If anything in this assignment surprised you, you might want to click it below. <em>There is no obligation here at all &mdash; feel free to skip this, or come back to it later if you like.</em>
+      </div>
+      <div class="title-choices" id="noticing">
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>I was surprised by how old some of the words we use every day actually are.</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>I did not expect one Latin word to be hiding in so many different English words.</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>I found it interesting that navies from different countries often work together.</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>The size of the Yamato surprised me most &mdash; I did not think ships could be that big.</div>
+        <div class="title-opt" onclick="pickTitle(this)"><div class="radio-circle"></div>I noticed something else &mdash; I would like to tell someone about it.</div>
+      </div>
+    </div>
+
+    <button class="complete-btn" onclick="completeSection(5)">&#127386; Submit My Report</button>
+    <div class="done-banner hidden" id="done-5">&#127386; Report submitted &mdash; outstanding work, navigator.</div>
+  </div>
+</div>
+
+<!-- FINAL CARD -->
+<div class="final-card hidden" id="final-card">
+  <h2>&#127754; Mission Complete</h2>
+  <p>You have completed an informational report on naval vessels from around the world &mdash; and along the way, you investigated a 2,000-year-old Latin root still active in English today. You read, explored, sorted, and made choices throughout. That is exactly what informational writers and word investigators do.</p>
+  <div class="final-chips">
+    <div class="final-chip">&#127468;&#127463; HMS Queen Elizabeth</div>
+    <div class="final-chip">&#127471;&#127477; Yamato</div>
+    <div class="final-chip">&#127470;&#127475; INS Vikrant</div>
+    <div class="final-chip">&#128300; navis &rarr; navy &rarr; navigate</div>
+  </div>
+</div>
+
+</div><!-- .main -->
+
+<script>
+// ── FILL-IN-THE-BLANK ──────────────────────────────────────────────────────
+let activeChip = null;
+
+function pickChip(el, bankId) {
+  if (el.classList.contains('used')) return;
+  document.querySelectorAll('#' + bankId + ' .wchip').forEach(c => c.classList.remove('selected'));
+  if (activeChip === el) { activeChip = null; return; }
+  activeChip = el;
+  el.classList.add('selected');
+}
+
+function dropWord(slot) {
+  if (!activeChip) return;
+  const word = activeChip.getAttribute('data-word');
+  const answer = slot.getAttribute('data-ans');
+  const bankId = slot.getAttribute('data-bank');
+  if (slot.dataset.current) {
+    const prev = document.querySelector('#' + bankId + ' [data-word="' + slot.dataset.current + '"]');
+    if (prev) { prev.classList.remove('used', 'selected'); }
+  }
+  slot.textContent = word;
+  slot.dataset.current = word;
+  slot.classList.remove('wrong', 'filled');
+  if (word === answer) {
+    slot.classList.add('filled');
+  } else {
+    slot.classList.add('wrong');
+    setTimeout(() => slot.classList.remove('wrong'), 600);
+    activeChip.classList.remove('used', 'selected');
+    activeChip = null;
+    return;
+  }
+  activeChip.classList.add('used');
+  activeChip.classList.remove('selected');
+  activeChip = null;
+}
+
+// ── TRUE / FALSE ────────────────────────────────────────────────────────────
+function pickTF(btn, choice, rowId) {
+  const row = document.getElementById(rowId);
+  row.querySelectorAll('.tfbtn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  row.classList.remove('answered-t', 'answered-f');
+  row.classList.add(choice === 'T' ? 'answered-t' : 'answered-f');
+}
+
+// ── ORDERING ────────────────────────────────────────────────────────────────
+let pendingChunk = null;
+
+function pickChunk(el, poolId, slotId) {
+  if (el.classList.contains('placed')) return;
+  document.querySelectorAll('#' + poolId + ' .pchip').forEach(c => c.style.outline = '');
+  if (pendingChunk === el) { pendingChunk = null; return; }
+  pendingChunk = el;
+  el.style.outline = '2px solid #1976d2';
+}
+
+function placeChunk(slot, slotId) {
+  if (!pendingChunk) return;
+  if (slot.classList.contains('filled')) return;
+  slot.querySelector('.slot-txt').textContent = pendingChunk.textContent;
+  slot.classList.add('filled');
+  pendingChunk.classList.add('placed');
+  pendingChunk.style.outline = '';
+  pendingChunk = null;
+}
+
+// ── TITLE PICKER ────────────────────────────────────────────────────────────
+function pickTitle(el) {
+  const group = el.closest('.title-choices');
+  group.querySelectorAll('.title-opt').forEach(o => o.classList.remove('picked'));
+  el.classList.add('picked');
+}
+
+// ── BRAIN BREAK TOGGLE ──────────────────────────────────────────────────────
+function toggleBreak(id) {
+  const content = document.getElementById(id);
+  const btn = document.getElementById(id + '-btn');
+  content.classList.toggle('hidden');
+  if (btn) btn.classList.toggle('open');
+}
+
+// ── SWI WORD SPOTTER ────────────────────────────────────────────────────────
+let spotterChecked = false;
+
+function toggleSpotter(el) {
+  if (spotterChecked || el.classList.contains('locked')) return;
+  el.classList.toggle('spotted');
+}
+
+function checkSpotter() {
+  if (spotterChecked) return;
+  spotterChecked = true;
+  let correct = 0, total = 0;
+  document.querySelectorAll('#spotter-grid .spotter-chip').forEach(chip => {
+    const isNav = chip.dataset.nav === 'true';
+    const isSelected = chip.classList.contains('spotted');
+    chip.classList.add('locked');
+    if (isNav) {
+      total++;
+      if (isSelected) { chip.classList.add('correct'); correct++; }
+      else             { chip.classList.add('missed'); }
+    } else {
+      if (isSelected) { chip.classList.add('incorrect'); }
+      else            { chip.classList.add('neutral'); }
+    }
+  });
+  const result = document.getElementById('spotter-result');
+  const msg    = document.getElementById('spotter-msg');
+  result.classList.remove('hidden');
+  if (correct === total) {
+    result.classList.add('great');
+    msg.textContent = '&#10003; You found all four nav- words: navy, navigate, naval, and navigator. The other four (napkin, normal, noble, novel) each come from completely different Latin roots.';
+  } else {
+    result.classList.add('partial');
+    msg.textContent = 'You spotted ' + correct + ' of ' + total + ' nav- words. The ones highlighted in green are the nav- family. The ones in light blue are nav- words you may have missed. Look back at the word family tree above to see why each one belongs.';
+  }
+}
+
+// ── SWI WORD MATCH ──────────────────────────────────────────────────────────
+let activeMWord = null;
+
+function pickMWord(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('#match-words .mchip').forEach(c => c.classList.remove('m-selected'));
+  if (activeMWord === el) { activeMWord = null; return; }
+  activeMWord = el;
+  el.classList.add('m-selected');
+}
+
+function placeMWord(slot) {
+  if (!activeMWord) return;
+  const word = activeMWord.getAttribute('data-mword');
+  if (slot.dataset.current) {
+    const prev = document.querySelector('#match-words [data-mword="' + slot.dataset.current + '"]');
+    if (prev) { prev.classList.remove('matched', 'm-selected'); }
+  }
+  slot.querySelector('.def-word').textContent = word;
+  slot.dataset.current = word;
+  slot.classList.add('def-filled');
+  activeMWord.classList.add('matched');
+  activeMWord.classList.remove('m-selected');
+  activeMWord = null;
+}
+
+// ── SECTION COMPLETION ──────────────────────────────────────────────────────
+const done = new Set();
+
+function completeSection(n) {
+  done.add(n);
+  document.getElementById('done-' + n).classList.remove('hidden');
+  const dot = document.getElementById('dot-' + n);
+  if (dot) dot.classList.add('done');
+  if (done.size >= 5) {
+    const fc = document.getElementById('final-card');
+    fc.classList.remove('hidden');
+    setTimeout(() => fc.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }
+}
+</script>
+</body>
+</html>
