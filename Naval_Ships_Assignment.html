@@ -95,13 +95,55 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
 .final-card{background:linear-gradient(150deg,var(--navy) 0%,var(--navy-soft) 100%);border-radius:var(--radius);padding:28px 24px;text-align:center;box-shadow:var(--shadow-lg);animation:fadeUp 0.5s ease;}
 .final-card h2{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--gold-light);margin-bottom:10px;}
 .final-card p{font-size:14px;color:var(--foam);line-height:1.7;margin-bottom:16px;}
-.final-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.final-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px;}
 .final-chip{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:white;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .hidden{display:none!important;}
+
+/* ── Print / Save button ── */
+.print-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:var(--radius-sm);
+  padding:13px 28px;
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:800;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 4px 14px rgba(200,152,42,0.35);
+  width:100%;justify-content:center;
+}
+.print-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.print-btn svg{flex-shrink:0;}
+
+/* floating print button (always visible) */
+.float-print{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:50px;
+  padding:12px 20px;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:800;
+  cursor:pointer;
+  box-shadow:0 4px 18px rgba(200,152,42,0.45);
+  display:flex;align-items:center;gap:7px;
+  transition:all 0.2s;
+}
+.float-print:hover{background:var(--gold-light);transform:translateY(-2px);}
+
+@media print{
+  .float-print,.complete-btn,.how-card,.progress-wrap{display:none!important;}
+  body{background:white;padding:0;}
+  .masthead{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .section-card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;}
+}
 </style>
 </head>
 <body>
+
+<!-- Floating print button — always visible -->
+<button class="float-print" onclick="window.print()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  Print / Save
+</button>
+
 <div class="masthead">
   <div class="mast-eyebrow">Fourth Grade &bull; Informational Text</div>
   <h1 class="mast-title">&#9875; Naval Ships<br><em>of the World</em></h1>
@@ -308,6 +350,7 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
   </div>
 </div>
 
+<!-- FINAL CARD -->
 <div class="final-card hidden" id="final-card">
   <h2>&#127386; Mission Complete</h2>
   <p>You have completed an informational report on four types of naval ships.<br>You read real facts, identified key vocabulary, sorted information, and chose your own title.<br>That is exactly what informational writing is.</p>
@@ -317,6 +360,10 @@ body{font-family:'Inter',sans-serif;background:var(--page-bg);color:var(--navy);
     <div class="final-chip">&#127754; Submarines</div>
     <div class="final-chip">&#128481;&#65039; Battleships</div>
   </div>
+  <button class="print-btn" onclick="window.print()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    🖨️ Print or Save My Report
+  </button>
 </div>
 
 </div>
