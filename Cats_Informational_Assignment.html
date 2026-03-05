@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cats of the World — Informational Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a0a2e; --deep:#2d1457; --violet:#5b2d8e; --lavender:#8b5cf6;
+  --lilac:#c4b5fd; --lilac-pale:#f5f3ff; --lilac-mid:#ede9fe;
+  --gold:#f0a500; --gold-pale:#fff8e1; --amber:#e07b00;
+  --teal:#0f766e; --teal-pale:#ccfbf1; --teal-mid:#99f6e4;
+  --coral:#e11d48; --coral-pale:#fff1f2;
+  --sage:#15803d; --sage-pale:#f0fdf4; --sage-mid:#bbf7d0;
+  --amber-pale:#fffbeb; --amber-mid:#fde68a;
+  --sky:#0369a1; --sky-pale:#e0f2fe;
+  --rose:#be185d; --rose-pale:#fdf2f8;
+  --slate:#334155; --off:#f8f7ff; --border:#e2d9f3;
+  --muted:#6b5b8e; --text:#1e1033; --white:#fff;
+  --rsm:8px; --rmd:14px; --rlg:20px; --rxl:28px;
+  --sh-sm:0 2px 8px rgba(26,10,46,.08);
+  --sh-md:0 6px 24px rgba(26,10,46,.14);
+  --sh-lg:0 16px 48px rgba(26,10,46,.20);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ══ STARRY BG ══ */
+.bg-layer{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 20% 10%,#2d1457 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 85%,#1a0a2e 0%,transparent 55%),
+             linear-gradient(160deg,#1a0a2e 0%,#0f0720 60%,#060310 100%);overflow:hidden}
+.bg-layer::before{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:40px 40px;animation:twinkle 8s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.6}50%{opacity:1}}
+.ptcl{position:fixed;border-radius:50%;background:rgba(196,181,253,.1);
+  animation:drift linear infinite;pointer-events:none;z-index:0}
+@keyframes drift{from{transform:translateY(110vh);opacity:0}8%{opacity:1}92%{opacity:1}to{transform:translateY(-30px);opacity:0}}
+
+/* ══ SHELL ══ */
+#app{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 16px 100px}
+
+/* ══ HERO ══ */
+.hero{text-align:center;padding:48px 20px 40px}
+.hero-icon{font-size:clamp(3rem,9vw,5.5rem);display:block;
+  animation:catBounce 4s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(139,92,246,.6))}
+@keyframes catBounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.hero-eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:5px;font-size:.82rem;
+  color:var(--gold);margin-bottom:8px;opacity:.9}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,7vw,4rem);
+  color:white;line-height:1.0;letter-spacing:.5px;text-shadow:0 4px 20px rgba(0,0,0,.5);margin-bottom:6px}
+.hero h1 span{color:var(--lilac);display:block;font-size:.52em;letter-spacing:4px}
+.hero-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.88);border-radius:30px;padding:5px 15px;font-size:.76rem;font-weight:700}
+.hero-divider{width:50px;height:3px;background:linear-gradient(90deg,transparent,var(--lavender),transparent);
+  border-radius:2px;margin:0 auto 18px}
+.assign-box{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);
+  border-radius:var(--rlg);padding:18px 24px;max-width:620px;margin:0 auto;
+  font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.8;text-align:left}
+.assign-box strong{color:var(--gold)}
+
+/* ══ STICKY PROGRESS ══ */
+.sticky-top{position:sticky;top:0;z-index:50;
+  background:rgba(26,10,46,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 16px;margin:0 -16px 24px}
+.prog-track{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--lavender),var(--lilac));
+  border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 12px rgba(139,92,246,.6)}
+.phase-row{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.phase-dot{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.pd{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);
+  border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:900;color:rgba(255,255,255,.45);transition:all .3s}
+.pd.active{background:var(--lavender);border-color:var(--violet);color:white;
+  box-shadow:0 0 12px rgba(139,92,246,.55);transform:scale(1.1)}
+.pd.done{background:var(--sage);border-color:#14532d;color:white}
+.pl{font-size:.58rem;font-weight:700;color:rgba(255,255,255,.38);text-align:center;max-width:55px}
+
+/* ══ CARDS ══ */
+.card{background:var(--white);border-radius:var(--rxl);box-shadow:var(--sh-lg);
+  overflow:hidden;display:none;margin-bottom:0}
+.card.on{display:block;animation:cIn .4s cubic-bezier(.34,1.2,.64,1)}
+@keyframes cIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+.card-stripe{height:6px}
+.cs-violet{background:linear-gradient(90deg,var(--violet),var(--lavender))}
+.cs-teal{background:linear-gradient(90deg,var(--teal),#2dd4bf)}
+.cs-gold{background:linear-gradient(90deg,var(--gold),#fde68a)}
+.cs-coral{background:linear-gradient(90deg,var(--coral),#fb7185)}
+.cs-sage{background:linear-gradient(90deg,var(--sage),#4ade80)}
+.cs-sky{background:linear-gradient(90deg,var(--sky),#38bdf8)}
+.cs-rose{background:linear-gradient(90deg,var(--rose),#f472b6)}
+.cs-green{background:linear-gradient(90deg,#15803d,#4ade80)}
+.card-head{display:flex;align-items:center;gap:14px;padding:20px 26px 14px;
+  border-bottom:1.5px solid var(--border)}
+.ch-ico{font-size:2rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+.ch-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.5px;
+  color:var(--deep);line-height:1.1}
+.ch-sub{font-size:.78rem;font-weight:600;color:var(--muted);margin-top:2px}
+.card-body{padding:22px 26px}
+
+/* ══ ZONE CHECK-IN ══ */
+.zone-wrap{background:var(--sage-pale);border:2px solid var(--sage-mid);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.zone-wrap h3{font-size:.95rem;font-weight:800;color:var(--sage);margin-bottom:5px}
+.zone-wrap p{font-size:.86rem;color:#14532d;margin-bottom:12px;line-height:1.6}
+.zbrow{display:flex;gap:8px;flex-wrap:wrap}
+.zb{padding:10px 16px;border-radius:25px;border:2.5px solid transparent;
+  font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.zb:hover{transform:translateY(-2px)}
+.zg{background:#bbf7d0;border-color:#4ade80;color:#14532d}
+.zy{background:#fde68a;border-color:#fbbf24;color:#78350f}
+.zr{background:#fecaca;border-color:#f87171;color:#7f1d1d}
+.zb.zsel{border-width:3px;box-shadow:var(--sh-md);transform:scale(1.04)}
+#zmsg{min-height:20px;font-size:.88rem;font-weight:700;padding:8px 12px;border-radius:8px;margin-top:10px}
+#zmsg.show{background:rgba(21,128,61,.1)}
+
+/* ══ NAME ══ */
+.name-wrap{background:var(--gold-pale);border:2px solid var(--gold);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.name-wrap label{font-size:.95rem;font-weight:800;color:#78350f;display:block;margin-bottom:8px}
+.name-input{width:100%;padding:12px 16px;border:2px solid var(--gold);border-radius:var(--rmd);
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;color:var(--text);
+  background:white;outline:none;transition:border-color .2s}
+.name-input:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(240,165,0,.15)}
+
+/* ══ INTRO NOTE ══ */
+.intro-note{background:var(--lilac-pale);border-left:4px solid var(--lavender);
+  border-radius:0 var(--rmd) var(--rmd) 0;padding:14px 18px;
+  font-size:.9rem;line-height:1.8;color:var(--text);margin-bottom:18px}
+.intro-note strong{color:var(--deep)}
+
+/* ══ TOPIC CHOOSER ══ */
+.chooser-intro{font-size:.95rem;line-height:1.85;color:var(--text);margin-bottom:20px}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.topic-card{border-radius:var(--rlg);border:3px solid var(--border);background:var(--off);
+  padding:18px 18px 14px;cursor:pointer;transition:all .25s;position:relative}
+.topic-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.topic-card.picked{border-width:3px;box-shadow:var(--sh-md)}
+.topic-card .tc-icon{font-size:2rem;margin-bottom:8px;display:block}
+.topic-card .tc-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  letter-spacing:.5px;color:var(--deep);margin-bottom:5px}
+.topic-card .tc-desc{font-size:.8rem;color:var(--muted);line-height:1.55;font-weight:600}
+.tc-check{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;
+  background:var(--sage);color:white;display:none;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:900}
+.topic-card.picked .tc-check{display:flex}
+.t0{border-color:#5b2d8e}.t0.picked{background:var(--lilac-pale);border-color:var(--violet)}
+.t1{border-color:#0f766e}.t1.picked{background:var(--teal-pale);border-color:var(--teal)}
+.t2{border-color:#b45309}.t2.picked{background:var(--amber-pale);border-color:var(--amber)}
+.t3{border-color:#e11d48}.t3.picked{background:var(--coral-pale);border-color:var(--coral)}
+.t4{border-color:#0369a1}.t4.picked{background:var(--sky-pale);border-color:var(--sky)}
+
+.order-hint{background:var(--gold-pale);border:2px solid #fde68a;border-radius:var(--rmd);
+  padding:14px 16px;font-size:.88rem;font-weight:700;color:#78350f;margin-bottom:18px}
+
+/* ══ NAVBAR ══ */
+.navbar{display:flex;justify-content:space-between;align-items:center;
+  padding:14px 26px;border-top:1.5px solid var(--border);background:var(--off)}
+.nb{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;
+  border-radius:12px;border:none;font-family:'Nunito',sans-serif;
+  font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s}
+.nb:disabled{opacity:.38;cursor:not-allowed}
+.nb-prev{background:var(--off);border:2px solid var(--border);color:var(--muted)}
+.nb-prev:not(:disabled):hover{background:var(--border);color:var(--deep)}
+.nb-next{background:var(--lavender);color:white;box-shadow:0 4px 14px rgba(139,92,246,.35)}
+.nb-next:not(:disabled):hover{background:var(--violet);transform:translateY(-1px)}
+
+/* ══ STEP BADGE ══ */
+.step-badge{display:inline-flex;align-items:center;gap:6px;
+  background:var(--lilac-pale);border:1.5px solid var(--lilac);
+  border-radius:20px;padding:5px 12px;font-size:.78rem;font-weight:800;
+  color:var(--violet);margin-bottom:16px}
+
+/* ══ READING PASSAGE ══ */
+.passage-box{background:#fffdf7;border:1.5px solid #e8dfc8;border-radius:var(--rlg);
+  padding:22px 26px;font-family:'Lora',serif;font-size:1.02rem;line-height:2.0;
+  color:#1a1a2e;margin-bottom:18px;position:relative;overflow:hidden}
+.passage-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.pb-violet::before{background:linear-gradient(90deg,var(--violet),var(--lavender))}
+.pb-teal::before{background:linear-gradient(90deg,var(--teal),#2dd4bf)}
+.pb-amber::before{background:linear-gradient(90deg,var(--amber),#fde68a)}
+.pb-coral::before{background:linear-gradient(90deg,var(--coral),#fb7185)}
+.pb-sky::before{background:linear-gradient(90deg,var(--sky),#38bdf8)}
+.passage-label{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:2px;
+  color:var(--muted);margin-bottom:10px;display:block}
+.passage-box mark{background:linear-gradient(180deg,transparent 55%,rgba(139,92,246,.3) 55%);
+  border-radius:2px;padding:0 2px}
+.key-word{font-weight:700;color:var(--deep)}
+
+/* ══ WORD BANK ══ */
+.wordbank{background:white;border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:16px 18px;margin-bottom:18px}
+.wordbank h4{font-size:.85rem;font-weight:800;color:var(--deep);margin-bottom:10px}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px}
+.wbc{padding:7px 14px;border-radius:8px;border:2px solid var(--border);
+  background:var(--off);color:var(--text);font-family:'Nunito',sans-serif;
+  font-size:.85rem;font-weight:700;cursor:pointer;transition:all .18s;user-select:none}
+.wbc:hover{background:var(--lilac-pale);border-color:var(--lavender)}
+.wbc.used{opacity:.4;text-decoration:line-through;cursor:default}
+
+/* ══ DRAG & DROP MATCHING ══ */
+.match-section{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.match-section h4{font-size:.88rem;font-weight:800;color:var(--deep);margin-bottom:14px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.match-grid{grid-template-columns:1fr}}
+.match-col-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);margin-bottom:8px;text-align:center}
+.drag-pool{display:flex;flex-direction:column;gap:8px}
+.drag-chip{background:white;border:2.5px solid var(--lavender);border-radius:10px;
+  padding:10px 14px;font-size:.9rem;font-weight:700;color:var(--violet);
+  cursor:grab;user-select:none;transition:all .2s;text-align:center}
+.drag-chip:hover{background:var(--lilac-pale);transform:scale(1.03)}
+.drag-chip.dragging{opacity:.35;cursor:grabbing}
+.drag-chip.chip-placed{opacity:.28;pointer-events:none}
+.drop-col{display:flex;flex-direction:column;gap:8px}
+.drop-zone{border:2.5px dashed var(--border);border-radius:10px;padding:10px 14px;
+  min-height:50px;background:white;display:flex;align-items:center;gap:8px;
+  font-size:.85rem;font-weight:600;color:var(--muted);transition:all .2s;cursor:pointer}
+.drop-zone:hover,.drop-zone.dz-over{border-color:var(--lavender);background:var(--lilac-pale)}
+.drop-zone.dz-correct{border-style:solid;border-color:var(--sage);background:var(--sage-pale);color:var(--sage)}
+.drop-zone.dz-wrong{border-style:solid;border-color:var(--coral);background:var(--coral-pale);animation:shake .35s}
+.dz-answer{font-weight:800;color:var(--violet);margin-right:6px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ══ CLICK CHOICES ══ */
+.choice-section{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.choice-section h4{font-size:.88rem;font-weight:800;color:var(--deep);margin-bottom:6px}
+.choice-prompt{font-size:.88rem;color:var(--muted);font-weight:600;margin-bottom:12px;line-height:1.5}
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:10px}
+.cbtn{padding:11px 14px;border-radius:10px;border:2.5px solid var(--border);background:white;
+  font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;color:var(--text);
+  cursor:pointer;transition:all .2s;text-align:center;line-height:1.4}
+.cbtn:hover{border-color:var(--lavender);background:var(--lilac-pale)}
+.cbtn.c-correct{border-color:var(--sage);background:var(--sage-pale);color:var(--sage);pointer-events:none}
+.cbtn.c-wrong{border-color:var(--coral);background:var(--coral-pale);color:var(--coral);animation:shake .35s}
+.cbtn.c-dim{opacity:.35;pointer-events:none}
+.fb{font-size:.82rem;font-weight:800;padding:7px 12px;border-radius:8px;min-height:20px;margin-top:4px}
+.fb-good{background:var(--sage-pale);color:var(--sage)}
+.fb-try{background:var(--coral-pale);color:var(--coral)}
+
+/* ══ SORT TASK ══ */
+.sort-section{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.sort-section h4{font-size:.88rem;font-weight:800;color:var(--deep);margin-bottom:8px}
+.sort-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;justify-content:center}
+.sort-chip{background:white;border:2.5px solid var(--slate);border-radius:10px;
+  padding:9px 16px;font-size:.88rem;font-weight:700;color:var(--slate);
+  cursor:grab;user-select:none;transition:all .2s}
+.sort-chip:hover{border-color:var(--lavender);color:var(--violet);transform:scale(1.05)}
+.sort-chip.sc-placed{opacity:.28;pointer-events:none}
+.sort-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.sort-grid{grid-template-columns:1fr}}
+.sort-col{border-radius:var(--rlg);overflow:hidden;border:2px solid var(--border)}
+.sort-col-head{padding:10px 14px;text-align:center;font-size:.8rem;font-weight:900;letter-spacing:.5px}
+.sh-dom{background:var(--violet);color:white}
+.sh-wild{background:var(--teal);color:white}
+.sh-both{background:var(--amber);color:white}
+.sort-drop-area{min-height:90px;padding:10px;display:flex;flex-direction:column;gap:6px;background:white}
+.sort-drop-area.sd-over{background:var(--lilac-pale)}
+.placed-chip{background:var(--lilac-pale);border:2px solid var(--lavender);border-radius:8px;
+  padding:7px 12px;font-size:.82rem;font-weight:700;color:var(--violet);text-align:center}
+.placed-chip.pc-correct{background:var(--sage-pale);border-color:var(--sage);color:var(--sage)}
+.placed-chip.pc-wrong{background:var(--coral-pale);border-color:var(--coral);color:var(--coral)}
+
+/* ══ FILL-IN (single word input) ══ */
+.fill-section{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:18px 20px;margin-bottom:18px}
+.fill-section h4{font-size:.88rem;font-weight:800;color:var(--deep);margin-bottom:8px}
+.fill-prompt{font-size:.9rem;color:var(--muted);font-weight:600;margin-bottom:12px;line-height:1.6}
+.fill-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.fill-word-input{border:none;border-bottom:3px solid var(--lavender);background:transparent;
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;color:var(--deep);
+  outline:none;min-width:100px;padding:4px 4px 2px;text-align:center;transition:border-color .2s}
+.fill-word-input:focus{border-bottom-color:var(--violet)}
+.fill-word-input.fi-correct{border-color:var(--sage);color:var(--sage)}
+.fill-word-input.fi-wrong{border-color:var(--coral);color:var(--coral)}
+.fill-check-btn{padding:6px 14px;border-radius:8px;border:2px solid var(--lavender);
+  background:white;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;
+  color:var(--violet);cursor:pointer;transition:all .2s}
+.fill-check-btn:hover{background:var(--lilac-pale)}
+.fill-hint{font-size:.78rem;font-weight:700;color:var(--muted);font-style:italic}
+
+/* ══ TRUE / FALSE ══ */
+.tf-list{display:flex;flex-direction:column;gap:10px}
+.tf-row{background:white;border:2px solid var(--border);border-radius:var(--rmd);
+  padding:12px 14px;display:flex;align-items:flex-start;gap:10px;transition:border-color .2s}
+.tf-row.tf-true{border-color:var(--sage);background:var(--sage-pale)}
+.tf-row.tf-false{border-color:var(--sky);background:var(--sky-pale)}
+.tf-btns{display:flex;gap:6px;flex-shrink:0}
+.tfb{border:2px solid var(--border);border-radius:6px;padding:5px 12px;
+  font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;cursor:pointer;
+  background:white;transition:all .18s;white-space:nowrap}
+.tfb.t-btn:hover{background:var(--sage-pale);border-color:var(--sage);color:var(--sage)}
+.tfb.f-btn:hover{background:var(--sky-pale);border-color:var(--sky);color:var(--sky)}
+.tfb.sel-t{background:var(--sage-pale);border-color:var(--sage);color:var(--sage)}
+.tfb.sel-f{background:var(--sky-pale);border-color:var(--sky);color:var(--sky)}
+.tf-text{font-size:.88rem;font-weight:600;color:var(--text);line-height:1.5;flex:1}
+
+/* ══ MY REPORT BUILDER (word-level) ══ */
+.report-builder{background:white;border:2px solid var(--border);border-radius:var(--rlg);
+  padding:20px 22px;margin-bottom:18px}
+.report-builder h4{font-size:.9rem;font-weight:800;color:var(--deep);margin-bottom:4px}
+.rb-prompt{font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:14px;line-height:1.6}
+.rb-sentence{font-family:'Lora',serif;font-size:1.0rem;line-height:2.6;color:var(--text);
+  background:var(--off);border-radius:10px;padding:12px 16px;border:1.5px solid var(--border)}
+.rb-blank{display:inline-block;min-width:90px;border-bottom:2.5px solid var(--lavender);
+  margin:0 4px;padding:0 6px 2px;font-family:'Nunito',sans-serif;font-size:.88rem;
+  font-weight:800;color:var(--violet);cursor:pointer;transition:all .2s;vertical-align:middle;
+  text-align:center;background:transparent;border-top:none;border-left:none;border-right:none;outline:none}
+.rb-blank:focus{border-bottom-color:var(--violet)}
+.rb-blank.rb-filled{border-color:var(--sage);color:var(--sage)}
+.rb-blank.rb-wrong{border-color:var(--coral);color:var(--coral);animation:shake .35s}
+
+/* ══ REPORT PREVIEW ══ */
+.report-preview{background:#fffdf7;border:2px solid #e8dfc8;border-radius:var(--rlg);
+  padding:28px 32px;font-family:'Lora',serif;font-size:1.0rem;line-height:2.0;
+  color:#1a1a2e;margin-bottom:20px}
+.rp-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;
+  color:var(--deep);text-align:center;margin-bottom:4px}
+.rp-author{text-align:center;font-size:.85rem;color:var(--muted);font-family:'Nunito',sans-serif;
+  font-weight:700;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid #e8dfc8}
+.rp-section{margin-bottom:22px}
+.rp-heading{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.5px;
+  color:var(--violet);margin-bottom:8px}
+.rp-paragraph{white-space:pre-wrap;font-size:.95rem}
+.rp-empty{color:#bbb;font-style:italic;font-size:.88rem;font-family:'Nunito',sans-serif}
+
+/* ══ CELEBRATION ══ */
+.cel-wrap{text-align:center;padding:24px 16px}
+.cel-icon{font-size:3.5rem;display:block;margin-bottom:10px;
+  animation:celPop .6s cubic-bezier(.34,1.5,.64,1)}
+@keyframes celPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.cel-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:1px;color:var(--deep)}
+.cel-sub{font-size:.95rem;color:var(--muted);font-weight:600;margin-top:6px;line-height:1.7}
+.stamps{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+.stamp{background:var(--lilac-pale);border:2px solid var(--lavender);border-radius:20px;
+  padding:6px 16px;font-size:.8rem;font-weight:800;color:var(--violet)}
+
+/* ══ PRINT ══ */
+.print-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);
+  border:none;border-radius:var(--rmd);padding:13px 26px;font-family:'Nunito',sans-serif;
+  font-size:.95rem;font-weight:900;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 14px rgba(240,165,0,.4);width:100%;justify-content:center;margin-top:14px}
+.print-btn:hover{background:var(--amber-mid);transform:translateY(-1px)}
+
+.tip{background:var(--gold-pale);border:1.5px solid #fde68a;border-radius:var(--rmd);
+  padding:12px 16px;font-size:.88rem;font-weight:700;color:#78350f;margin-bottom:16px;line-height:1.6}
+
+@media print{
+  .sticky-top,.navbar,.print-btn{display:none!important}
+  body{background:white}
+  .card{display:block!important;box-shadow:none;break-inside:avoid;margin-bottom:20px}
+  .bg-layer,.ptcl,.hero{display:none!important}
+  .passage-box,.report-preview{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-layer"></div>
+<script>
+for(let i=0;i<18;i++){
+  const p=document.createElement('div');
+  p.className='ptcl';
+  const s=Math.random()*14+6;
+  p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;
+    animation-duration:${Math.random()*18+12}s;animation-delay:${Math.random()*12}s`;
+  document.body.appendChild(p);
+}
+</script>
+
+<div id="app">
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-icon">🐱</span>
+  <div class="hero-eyebrow">Fourth Grade · Informational Writing</div>
+  <h1>Cats of the World<span>Choose · Explore · Build Your Report</span></h1>
+  <div class="hero-pills">
+    <span class="pill">🏠 Domestic Cats</span>
+    <span class="pill">🌿 Wild Cats</span>
+    <span class="pill">🐾 Cat Science</span>
+    <span class="pill">📖 Read & Click</span>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="assign-box">
+    📌 <strong>What you'll do:</strong> Read short passages about cats, then answer by clicking, dragging, and choosing words — no writing from memory. At the end, you'll build your own cat report by picking words and phrases that appear on screen.<br><br>
+    ✅ <strong>Word banks are always visible</strong><br>
+    ✅ <strong>Every task is click or drag</strong><br>
+    ✅ <strong>You choose your subtopics</strong>
+  </div>
+</div>
+
+<!-- STICKY PROGRESS -->
+<div class="sticky-top">
+  <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  <div class="phase-row" id="phaseRow"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 0 — CHECK-IN
+══════════════════════════════════ -->
+<div class="card on" id="phase-0">
+  <div class="card-stripe cs-green"></div>
+  <div class="card-head">
+    <span class="ch-ico">🌿</span>
+    <div><div class="ch-title">Before We Begin</div><div class="ch-sub">Quick check-in + your name</div></div>
+  </div>
+  <div class="card-body">
+    <div class="zone-wrap">
+      <h3>🌡️ How are you feeling right now?</h3>
+      <p>Tap the zone that fits. No wrong answer — this is just for you.</p>
+      <div class="zbrow">
+        <button class="zb zg" onclick="pickZone(this,'🟢 Green zone — you\'re ready. Let\'s explore some cats!')">🟢 Ready to go</button>
+        <button class="zb zy" onclick="pickZone(this,'🟡 Yellow zone — start slow, take your time. You\'ve got this.')">🟡 A little wiggly</button>
+        <button class="zb zr" onclick="pickZone(this,'🔴 Red zone — thank you for telling me. Rest when you need to.')">🔴 Not quite ready</button>
+      </div>
+      <div id="zmsg"></div>
+    </div>
+
+    <div class="name-wrap">
+      <label for="sName">👤 What is your name?</label>
+      <input id="sName" class="name-input" type="text" placeholder="Type your first name here…"/>
+    </div>
+
+    <div class="intro-note">
+      🐱 <strong>About this assignment:</strong> You are going to become an expert on cats — from fluffy house cats to mighty lions. You will:<br><br>
+      ✅ <strong>Read</strong> short passages about 3 types of cats you choose<br>
+      ✅ <strong>Click and drag</strong> to answer questions — no spelling from memory<br>
+      ✅ <strong>Build your report</strong> by choosing words that appear on screen<br><br>
+      This report is <strong>yours</strong>. You choose the cats. You choose the words.
+    </div>
+  </div>
+  <div class="navbar">
+    <span></span>
+    <button class="nb nb-next" onclick="goPhase(1)">I'm ready — Let's explore! →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 1 — CHOOSE YOUR SUBTOPICS
+══════════════════════════════════ -->
+<div class="card" id="phase-1">
+  <div class="card-stripe cs-violet"></div>
+  <div class="card-head">
+    <span class="ch-ico">🗺️</span>
+    <div><div class="ch-title">Choose Your Cats</div><div class="ch-sub">Pick 3 subtopics — any order you like</div></div>
+  </div>
+  <div class="card-body">
+    <p class="chooser-intro">Below are <strong>5 cat subtopics</strong>. <strong>Choose 3</strong> that sound most interesting — these will become your report sections. Tap a card to pick it. Tap again to unpick it.</p>
+    <div class="order-hint">💡 You get to choose what to explore. Pick the cats that sound coolest to you!</div>
+    <div class="topic-grid" id="topicGrid">
+      <div class="topic-card t0" data-id="0" onclick="pickTopic(this)">
+        <span class="tc-icon">🐈</span>
+        <div class="tc-title">Domestic Cat Breeds</div>
+        <div class="tc-desc">From fluffy Maine Coons to sleek Siamese — the amazing variety of pet cats.</div>
+        <div class="tc-check">✓</div>
+      </div>
+      <div class="topic-card t1" data-id="1" onclick="pickTopic(this)">
+        <span class="tc-icon">🦁</span>
+        <div class="tc-title">Big Wild Cats</div>
+        <div class="tc-desc">Lions, tigers, cheetahs, and leopards — the powerful wild relatives of your pet cat.</div>
+        <div class="tc-check">✓</div>
+      </div>
+      <div class="topic-card t2" data-id="2" onclick="pickTopic(this)">
+        <span class="tc-icon">🧬</span>
+        <div class="tc-title">Cat Bodies & Senses</div>
+        <div class="tc-desc">Night vision, whiskers, purring, and claws — how a cat's body is built to survive.</div>
+        <div class="tc-check">✓</div>
+      </div>
+      <div class="topic-card t3" data-id="3" onclick="pickTopic(this)">
+        <span class="tc-icon">🐾</span>
+        <div class="tc-title">Cat Behavior</div>
+        <div class="tc-desc">Why cats purr, knead, hunt, and sleep 16 hours a day — the science of cat behavior.</div>
+        <div class="tc-check">✓</div>
+      </div>
+      <div class="topic-card t4" data-id="4" onclick="pickTopic(this)">
+        <span class="tc-icon">📜</span>
+        <div class="tc-title">Cats Through History</div>
+        <div class="tc-desc">From ancient Egypt to space-traveling Félicette — cats have been beside humans for thousands of years.</div>
+        <div class="tc-check">✓</div>
+      </div>
+    </div>
+    <div id="pickCount" style="font-size:.88rem;font-weight:700;color:var(--muted);margin-bottom:8px">0 of 3 topics chosen</div>
+    <div id="pickMsg" style="display:none" class="tip">✅ Great choices! You've picked 3 subtopics. Tap "Next" to continue.</div>
+  </div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(0)">← Back</button>
+    <button class="nb nb-next" id="btnNext1" disabled onclick="goPhase(2)">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 2 — SUBTOPIC A
+══════════════════════════════════ -->
+<div class="card" id="phase-2">
+  <div class="card-stripe" id="stripe-2"></div>
+  <div class="card-head">
+    <span class="ch-ico" id="ico-2">🐱</span>
+    <div><div class="ch-title" id="title-2">Subtopic 1</div><div class="ch-sub">Read, click, and drag your answers</div></div>
+  </div>
+  <div class="card-body" id="body-2"></div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(1)">← Back</button>
+    <button class="nb nb-next" onclick="goPhase(3)">Next Subtopic →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 3 — SUBTOPIC B
+══════════════════════════════════ -->
+<div class="card" id="phase-3">
+  <div class="card-stripe" id="stripe-3"></div>
+  <div class="card-head">
+    <span class="ch-ico" id="ico-3">🐱</span>
+    <div><div class="ch-title" id="title-3">Subtopic 2</div><div class="ch-sub">Read, click, and drag your answers</div></div>
+  </div>
+  <div class="card-body" id="body-3"></div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(2)">← Back</button>
+    <button class="nb nb-next" onclick="goPhase(4)">Next Subtopic →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 4 — SUBTOPIC C
+══════════════════════════════════ -->
+<div class="card" id="phase-4">
+  <div class="card-stripe" id="stripe-4"></div>
+  <div class="card-head">
+    <span class="ch-ico" id="ico-4">🐱</span>
+    <div><div class="ch-title" id="title-4">Subtopic 3</div><div class="ch-sub">Read, click, and drag your answers</div></div>
+  </div>
+  <div class="card-body" id="body-4"></div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(3)">← Back</button>
+    <button class="nb nb-next" onclick="goPhase(5)">Build My Report →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 5 — BUILD YOUR REPORT
+══════════════════════════════════ -->
+<div class="card" id="phase-5">
+  <div class="card-stripe cs-gold"></div>
+  <div class="card-head">
+    <span class="ch-ico">📝</span>
+    <div><div class="ch-title">Build Your Report</div><div class="ch-sub">Choose words to complete each sentence — no writing from memory</div></div>
+  </div>
+  <div class="card-body" id="body-report">
+    <div class="step-badge">✏️ Final Step — Your Informational Report</div>
+    <div class="intro-note">
+      Below you will see sentence frames for your report. <strong>Each blank has a word bank below it</strong> — tap the word that fits. When all blanks are filled, your report is complete!
+    </div>
+    <div id="report-sections"></div>
+  </div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(4)">← Back</button>
+    <button class="nb nb-next" onclick="goPhase(6)">See My Report! →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PHASE 6 — FINAL REPORT
+══════════════════════════════════ -->
+<div class="card" id="phase-6">
+  <div class="card-stripe cs-violet"></div>
+  <div class="card-head">
+    <span class="ch-ico">🏅</span>
+    <div><div class="ch-title">My Cat Report</div><div class="ch-sub">Your completed informational report</div></div>
+  </div>
+  <div class="card-body">
+    <div class="cel-wrap">
+      <span class="cel-icon">🐱</span>
+      <div class="cel-title">Report Complete!</div>
+      <div class="cel-sub">You read, investigated, and built a real informational report.<br>Every word was chosen by you.</div>
+      <div class="stamps" id="finalStamps"></div>
+    </div>
+    <div class="report-preview" id="reportPreview"></div>
+    <button class="print-btn" onclick="buildFinalReport();window.print()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      🖨️ Print or Save My Report
+    </button>
+  </div>
+  <div class="navbar">
+    <button class="nb nb-prev" onclick="goPhase(5)">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+/* ══════════════════════════════════════════
+   DATA — 5 SUBTOPICS
+══════════════════════════════════════════ */
+const TOPICS = {
+  0: {
+    id:0, icon:'🐈', title:'Domestic Cat Breeds', stripe:'cs-violet',
+    passage:`<span class="passage-label">📖 READ THIS FIRST</span>
+      <p>There are over <mark>100 recognized breeds</mark> of domestic cats in the world. Each breed has a distinctive look, personality, and history. The <span class="key-word">Maine Coon</span> is one of the largest domestic breeds — it has thick, shaggy fur and tufted ears perfectly designed for cold winters. The sleek <span class="key-word">Siamese</span> is known for its striking blue eyes and loud, talkative personality. The <span class="key-word">Persian</span> cat has a flat face and long, silky coat, and is known for being calm and gentle. Some breeds like the <span class="key-word">Sphynx</span> have almost no fur at all! Despite their differences, all domestic cats share the same wild ancestor: the <mark>African wildcat</mark> (<em>Felis silvestris lybica</em>), which humans began taming around <mark>10,000 years ago</mark>.</p>`,
+    pbClass:'pb-violet',
+    words:['Maine Coon','Siamese','Persian','Sphynx','breeds','wildcat','tufted','silky'],
+    matchLeft:['🐾 Large, shaggy, tufted ears','👁️ Blue eyes, very talkative','🧖 Flat face, silky long coat','✨ Almost no fur at all'],
+    matchRight:[
+      {ans:'Persian',label:'Persian'},
+      {ans:'Sphynx',label:'Sphynx'},
+      {ans:'Maine Coon',label:'Maine Coon'},
+      {ans:'Siamese',label:'Siamese'}
+    ],
+    tfItems:[
+      {text:'There are over 100 recognized breeds of domestic cats.',ans:'T'},
+      {text:'All domestic cats descend from the African wildcat.',ans:'T'},
+      {text:'The Maine Coon is the smallest domestic breed.',ans:'F'},
+      {text:'The Sphynx has a very thick, fluffy coat.',ans:'F'}
+    ],
+    sortLabel:'Sort each word — does it describe a domestic cat breed?',
+    sortItems:[
+      {word:'Maine Coon',cat:'yes'},{word:'Blue eyes',cat:'yes'},
+      {word:'African wildcat',cat:'ancestor'},{word:'Sphynx',cat:'yes'},
+      {word:'Persian',cat:'yes'},{word:'10,000 years',cat:'ancestor'}
+    ],
+    sortCols:[
+      {id:'yes',label:'🐈 A Domestic Breed',class:'sh-dom'},
+      {id:'ancestor',label:'🌿 Wild Ancestor / History',class:'sh-wild'}
+    ],
+    reportSentences:[
+      {frame:'There are over ___ recognized breeds of domestic cats.',blanks:[{correct:'100',options:['100','10','1000']}]},
+      {frame:'The ___ cat has tufted ears and thick fur for cold winters.',blanks:[{correct:'Maine Coon',options:['Maine Coon','Siamese','Persian']}]},
+      {frame:'The ___ has almost no fur at all.',blanks:[{correct:'Sphynx',options:['Sphynx','Persian','Maine Coon']}]},
+      {frame:'All domestic cats came from the African ___.',blanks:[{correct:'wildcat',options:['wildcat','lion','cheetah']}]}
+    ]
+  },
+
+  1: {
+    id:1, icon:'🦁', title:'Big Wild Cats', stripe:'cs-teal',
+    passage:`<span class="passage-label">📖 READ THIS FIRST</span>
+      <p>Wild cats live on every continent except Australia and Antarctica. The <span class="key-word">lion</span> is the only cat that lives in groups, called <mark>prides</mark>. Lions are found mainly in <mark>Africa</mark> and hunt large prey like zebra and wildebeest. The <span class="key-word">tiger</span> is the <mark>largest wild cat</mark> in the world — it is a powerful, solitary hunter that stalks prey through dense jungle. The <span class="key-word">cheetah</span> is the <mark>fastest land animal on Earth</mark>, reaching speeds of <mark>70 miles per hour</mark>. The <span class="key-word">leopard</span> is the most adaptable big cat — it can live in forests, deserts, and even cities, and it drags prey <mark>up into trees</mark> to keep it safe from other predators. All big cats share one key feature: the ability to <mark>roar</mark>.</p>`,
+    pbClass:'pb-teal',
+    words:['lion','tiger','cheetah','leopard','prides','roar','solitary','fastest'],
+    matchLeft:['🌿 Lives in groups called prides','🏃 Fastest land animal, 70 mph','🌲 Drags prey up into trees','🐆 Largest wild cat in the world'],
+    matchRight:[
+      {ans:'cheetah',label:'Cheetah'},
+      {ans:'tiger',label:'Tiger'},
+      {ans:'lion',label:'Lion'},
+      {ans:'leopard',label:'Leopard'}
+    ],
+    tfItems:[
+      {text:'Lions are the only cats that live in groups.',ans:'T'},
+      {text:'The cheetah can run 70 miles per hour.',ans:'T'},
+      {text:'Tigers are found mainly in Africa.',ans:'F'},
+      {text:'All big cats can roar.',ans:'T'}
+    ],
+    sortLabel:'Sort each fact — which big cat does it describe?',
+    sortItems:[
+      {word:'Lives in prides',cat:'lion'},{word:'70 mph',cat:'cheetah'},
+      {word:'Largest wild cat',cat:'tiger'},{word:'Climbs with prey',cat:'leopard'},
+      {word:'Found in Africa',cat:'lion'},{word:'Hunts in jungle',cat:'tiger'}
+    ],
+    sortCols:[
+      {id:'lion',label:'🦁 Lion',class:'sh-dom'},
+      {id:'tiger',label:'🐯 Tiger',class:'sh-wild'},
+      {id:'cheetah',label:'🐆 Cheetah',class:'sh-both'},
+      {id:'leopard',label:'🐾 Leopard',class:'sh-dom'}
+    ],
+    reportSentences:[
+      {frame:'The ___ is the only cat that lives in groups called prides.',blanks:[{correct:'lion',options:['lion','tiger','cheetah']}]},
+      {frame:'The ___ is the fastest land animal, reaching 70 miles per hour.',blanks:[{correct:'cheetah',options:['cheetah','leopard','lion']}]},
+      {frame:'The tiger is the ___ wild cat in the world.',blanks:[{correct:'largest',options:['largest','smallest','fastest']}]},
+      {frame:'All big cats share the ability to ___.',blanks:[{correct:'roar',options:['roar','purr','bark']}]}
+    ]
+  },
+
+  2: {
+    id:2, icon:'🧬', title:'Cat Bodies & Senses', stripe:'cs-sky',
+    passage:`<span class="passage-label">📖 READ THIS FIRST</span>
+      <p>A cat's body is built for hunting. Cats have <mark>exceptional night vision</mark> — they can see in light <mark>six times dimmer</mark> than humans can. Their pupils can open extremely wide in the dark, and a reflective layer behind the retina called the <span class="key-word">tapetum lucidum</span> is why cat eyes glow at night. <span class="key-word">Whiskers</span> are not just decoration — they detect tiny changes in air movement, helping cats navigate in the dark and judge whether a space is wide enough to fit through. Cats have <mark>retractable claws</mark>, which they keep sharp by hiding them away when not in use. A cat's <span class="key-word">spine</span> is incredibly flexible — cats have an extra 30 vertebrae compared to humans, which is why they can twist and almost always land on their feet. This is called the <mark>righting reflex</mark>.</p>`,
+    pbClass:'pb-sky',
+    words:['whiskers','claws','spine','tapetum','righting reflex','flexible','retractable','night vision'],
+    matchLeft:['🌙 Allows cats to see in very dim light','💨 Detects changes in air movement','🦶 Kept hidden when not in use','🌀 Helps cats land on their feet'],
+    matchRight:[
+      {ans:'righting reflex',label:'Righting Reflex'},
+      {ans:'whiskers',label:'Whiskers'},
+      {ans:'retractable claws',label:'Retractable Claws'},
+      {ans:'tapetum',label:'Tapetum Lucidum'}
+    ],
+    tfItems:[
+      {text:'Cats can see in light six times dimmer than humans.',ans:'T'},
+      {text:'Whiskers are only for decoration.',ans:'F'},
+      {text:'Cat claws are retractable — they hide them away.',ans:'T'},
+      {text:'Cats have fewer vertebrae than humans.',ans:'F'}
+    ],
+    sortLabel:'Sort each feature — is it about cat eyes, or cat body/movement?',
+    sortItems:[
+      {word:'Tapetum lucidum',cat:'eyes'},{word:'Righting reflex',cat:'body'},
+      {word:'Retractable claws',cat:'body'},{word:'Night vision',cat:'eyes'},
+      {word:'Flexible spine',cat:'body'},{word:'Wide pupils',cat:'eyes'}
+    ],
+    sortCols:[
+      {id:'eyes',label:'👁️ Eyes & Vision',class:'sh-dom'},
+      {id:'body',label:'🦴 Body & Movement',class:'sh-wild'}
+    ],
+    reportSentences:[
+      {frame:'Cats can see in light ___ times dimmer than humans.',blanks:[{correct:'six',options:['six','two','ten']}]},
+      {frame:'___ detect changes in air movement.',blanks:[{correct:'Whiskers',options:['Whiskers','Claws','Ears']}]},
+      {frame:'Cat claws are ___, which keeps them sharp.',blanks:[{correct:'retractable',options:['retractable','permanent','dull']}]},
+      {frame:'The ___ helps cats land on their feet.',blanks:[{correct:'righting reflex',options:['righting reflex','tapetum','spine']}]}
+    ]
+  },
+
+  3: {
+    id:3, icon:'🐾', title:'Cat Behavior', stripe:'cs-coral',
+    passage:`<span class="passage-label">📖 READ THIS FIRST</span>
+      <p>Cats are <mark>obligate carnivores</mark> — they must eat meat to survive. Their brains are wired for hunting, even when they are well-fed pets. <span class="key-word">Purring</span> is not always a sign of happiness — cats also purr when frightened, injured, or giving birth. The frequency of a cat's purr (<mark>25 to 50 Hz</mark>) has been shown to promote <mark>bone healing</mark> in both cats and humans. <span class="key-word">Kneading</span> — the "making biscuits" motion — is a leftover behavior from kittenhood, when kittens kneaded their mother to stimulate milk. Cats sleep an average of <mark>12 to 16 hours</mark> a day to conserve energy for hunting. When a cat <span class="key-word">slowly blinks</span> at you, it is a sign of trust — you can "blink back" to communicate the same feeling.</p>`,
+    pbClass:'pb-amber',
+    words:['purring','kneading','carnivore','slow blink','25 to 50 Hz','trust','hunting','bone healing'],
+    matchLeft:['🎶 Vibration that promotes bone healing','🍞 "Making biscuits" — leftover from kittenhood','👁️ A sign of trust between cat and human','🥩 Must eat meat to survive'],
+    matchRight:[
+      {ans:'slow blink',label:'Slow Blink'},
+      {ans:'kneading',label:'Kneading'},
+      {ans:'purring',label:'Purring'},
+      {ans:'carnivore',label:'Obligate Carnivore'}
+    ],
+    tfItems:[
+      {text:'Cats only purr when they are happy.',ans:'F'},
+      {text:'Purring can help heal bones.',ans:'T'},
+      {text:'Cats sleep 12 to 16 hours a day.',ans:'T'},
+      {text:'A slow blink from a cat is a sign of trust.',ans:'T'}
+    ],
+    sortLabel:'Sort each fact — is it about purring, or about another behavior?',
+    sortItems:[
+      {word:'25 to 50 Hz',cat:'purr'},{word:'Kneading = kittenhood',cat:'other'},
+      {word:'Bone healing',cat:'purr'},{word:'12-16 hrs sleep',cat:'other'},
+      {word:'Sign of fear too',cat:'purr'},{word:'Slow blink = trust',cat:'other'}
+    ],
+    sortCols:[
+      {id:'purr',label:'😸 About Purring',class:'sh-dom'},
+      {id:'other',label:'🐾 Other Behavior',class:'sh-wild'}
+    ],
+    reportSentences:[
+      {frame:'Cats are obligate ___ — they must eat meat.',blanks:[{correct:'carnivores',options:['carnivores','herbivores','omnivores']}]},
+      {frame:'Cats ___ to communicate trust.',blanks:[{correct:'slow blink',options:['slow blink','hiss','meow']}]},
+      {frame:'___ vibrates at 25 to 50 Hz and can help heal bones.',blanks:[{correct:'Purring',options:['Purring','Kneading','Sleeping']}]},
+      {frame:'Cats sleep ___ hours a day to save energy for hunting.',blanks:[{correct:'12 to 16',options:['12 to 16','2 to 4','20 to 22']}]}
+    ]
+  },
+
+  4: {
+    id:4, icon:'📜', title:'Cats Through History', stripe:'cs-rose',
+    passage:`<span class="passage-label">📖 READ THIS FIRST</span>
+      <p>Humans and cats have lived together for at least <mark>10,000 years</mark>. In <span class="key-word">ancient Egypt</span>, cats were considered <mark>sacred animals</mark> — worshipped as gods and mummified after death. The Egyptian goddess <span class="key-word">Bastet</span> had the head of a cat. During the <mark>Middle Ages</mark> in Europe, cats were unfairly feared and persecuted — a decision that may have helped the <mark>Black Plague</mark> spread, as rats carrying the disease multiplied without cats to hunt them. By the <mark>19th century</mark>, cats had regained their status as beloved pets and were featured in books, art, and advertisements. In <mark>1963</mark>, a French cat named <span class="key-word">Félicette</span> became the <mark>first cat in space</mark>, surviving a 15-minute flight aboard a French rocket.</p>`,
+    pbClass:'pb-violet',
+    words:['Egypt','Bastet','sacred','Félicette','Black Plague','10,000 years','mummified','space'],
+    matchLeft:['🛸 First cat to travel to space','🐀 Spread when cats were persecuted','🐱 Cat-headed Egyptian goddess','⚰️ Cats were preserved after death'],
+    matchRight:[
+      {ans:'mummified',label:'Mummified'},
+      {ans:'Bastet',label:'Bastet'},
+      {ans:'Félicette',label:'Félicette'},
+      {ans:'Black Plague',label:'Black Plague'}
+    ],
+    tfItems:[
+      {text:'Cats have lived with humans for at least 10,000 years.',ans:'T'},
+      {text:'In ancient Egypt, cats were feared and hunted.',ans:'F'},
+      {text:'Félicette was the first cat to travel to space.',ans:'T'},
+      {text:'The Middle Ages was a safe time for cats in Europe.',ans:'F'}
+    ],
+    sortLabel:'Sort each event — did it happen in Ancient Egypt, or later in history?',
+    sortItems:[
+      {word:'Bastet worshipped',cat:'egypt'},{word:'Félicette in space (1963)',cat:'later'},
+      {word:'Cats mummified',cat:'egypt'},{word:'Black Plague spread',cat:'later'},
+      {word:'Cats sacred animals',cat:'egypt'},{word:'19th century pets',cat:'later'}
+    ],
+    sortCols:[
+      {id:'egypt',label:'🏛️ Ancient Egypt',class:'sh-dom'},
+      {id:'later',label:'⏰ Later History',class:'sh-wild'}
+    ],
+    reportSentences:[
+      {frame:'Humans and cats have lived together for ___ years.',blanks:[{correct:'10,000',options:['10,000','100','1,000,000']}]},
+      {frame:'In ancient Egypt, cats were considered ___ animals.',blanks:[{correct:'sacred',options:['sacred','dangerous','ordinary']}]},
+      {frame:'The cat goddess ___ had the head of a cat.',blanks:[{correct:'Bastet',options:['Bastet','Nefertiti','Cleopatra']}]},
+      {frame:'___ was the first cat to travel to space.',blanks:[{correct:'Félicette',options:['Félicette','Tom','Whiskers']}]}
+    ]
+  }
+};
+
+/* ══════════════════════════════════════════
+   PHASE / PROGRESS
+══════════════════════════════════════════ */
+const PHASE_LABELS=['Check-In','Choose','Subtopic 1','Subtopic 2','Subtopic 3','Report','My Report'];
+let currentPhase=0;
+const topicOrder=[];
+
+function buildProgressDots(){
+  const row=document.getElementById('phaseRow');
+  row.innerHTML='';
+  PHASE_LABELS.forEach((lbl,i)=>{
+    const wrap=document.createElement('div');
+    wrap.className='phase-dot';
+    wrap.innerHTML=`<div class="pd" id="pd-${i}">${i}</div><div class="pl">${lbl}</div>`;
+    wrap.onclick=()=>{if(i<currentPhase)goPhase(i)};
+    row.appendChild(wrap);
+  });
+}
+function goPhase(n){
+  document.getElementById('phase-'+currentPhase)?.classList.remove('on');
+  currentPhase=n;
+  const card=document.getElementById('phase-'+n);
+  card.classList.add('on');
+  card.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+  if(n>=2&&n<=4) buildSubtopicCard(n);
+  if(n===5) buildReportBuilder();
+  if(n===6) buildFinalReport();
+}
+function updateProgress(){
+  const pct=Math.round((currentPhase/6)*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.querySelectorAll('.pd').forEach((d,i)=>{
+    d.classList.remove('active','done');
+    if(i===currentPhase) d.classList.add('active');
+    else if(i<currentPhase) d.classList.add('done');
+  });
+}
+
+/* ══════════════════════════════════════════
+   TOPIC PICKING
+══════════════════════════════════════════ */
+function pickTopic(card){
+  const id=parseInt(card.dataset.id);
+  if(card.classList.contains('picked')){
+    card.classList.remove('picked');
+    const idx=topicOrder.indexOf(id);
+    if(idx>-1) topicOrder.splice(idx,1);
+  } else {
+    if(topicOrder.length>=3) return;
+    card.classList.add('picked');
+    topicOrder.push(id);
+  }
+  const count=topicOrder.length;
+  document.getElementById('pickCount').textContent=count+' of 3 topics chosen';
+  const msg=document.getElementById('pickMsg');
+  const btn=document.getElementById('btnNext1');
+  if(count===3){msg.style.display='block';btn.disabled=false;}
+  else{msg.style.display='none';btn.disabled=true;}
+}
+
+/* ══════════════════════════════════════════
+   ZONE / CHECK-IN
+══════════════════════════════════════════ */
+function pickZone(btn,msg){
+  document.querySelectorAll('.zb').forEach(b=>b.classList.remove('zsel'));
+  btn.classList.add('zsel');
+  const el=document.getElementById('zmsg');
+  el.textContent=msg; el.className='show';
+}
+
+/* ══════════════════════════════════════════
+   BUILD SUBTOPIC CARDS (phases 2,3,4)
+══════════════════════════════════════════ */
+const stripeClasses=['cs-violet','cs-teal','cs-sky','cs-coral','cs-rose'];
+function buildSubtopicCard(phase){
+  const idx=phase-2;
+  const tid=topicOrder[idx];
+  if(tid===undefined) return;
+  const t=TOPICS[tid];
+  document.getElementById('stripe-'+phase).className='card-stripe '+t.stripe;
+  document.getElementById('ico-'+phase).textContent=t.icon;
+  document.getElementById('title-'+phase).textContent=t.title;
+  const body=document.getElementById('body-'+phase);
+  body.innerHTML=`
+    <div class="step-badge">🔍 Subtopic ${idx+1} of 3 — ${t.title}</div>
+
+    <!-- PASSAGE -->
+    <div class="passage-box ${t.pbClass}">${t.passage}</div>
+
+    <!-- WORD BANK -->
+    <div class="wordbank">
+      <h4>📚 Key Words — tap to mark as noticed</h4>
+      <div class="wb-chips">${t.words.map(w=>`<div class="wbc" onclick="this.classList.toggle('used')">${w}</div>`).join('')}</div>
+    </div>
+
+    <!-- DRAG MATCH -->
+    <div class="match-section">
+      <h4>🔗 Drag & Match — pick up a card, drop it on the right description</h4>
+      <div class="match-grid">
+        <div>
+          <div class="match-col-label">Descriptions</div>
+          <div class="drop-col" id="drops-${tid}">
+            ${t.matchLeft.map((lbl,i)=>`
+              <div class="drop-zone" data-ans="${t.matchRight[i].ans}"
+                ondragover="dzOver(event)" ondrop="dzDrop(event,'${tid}')"
+                onclick="dzTap(this,'${tid}')">
+                <span class="drop-label">${lbl}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="match-col-label">Names</div>
+          <div class="drag-pool" id="chips-${tid}">
+            ${shuffled(t.matchRight).map(item=>`
+              <div class="drag-chip" draggable="true" data-val="${item.ans}"
+                ondragstart="dcDrag(event)" onclick="dcTap(this)">
+                ${item.label}
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRUE / FALSE -->
+    <div class="match-section">
+      <h4>✅ True or False? — Tap TRUE or FALSE for each statement</h4>
+      <div class="tf-list">
+        ${t.tfItems.map((item,i)=>`
+          <div class="tf-row" id="tf-${tid}-${i}">
+            <div class="tf-btns">
+              <button class="tfb t-btn" onclick="pickTF(this,'T','${tid}','${i}')">TRUE</button>
+              <button class="tfb f-btn" onclick="pickTF(this,'F','${tid}','${i}')">FALSE</button>
+            </div>
+            <div class="tf-text">${item.text}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- SORT -->
+    <div class="sort-section">
+      <h4>🗂️ Sort It — drag each card into the right column</h4>
+      <p style="font-size:.84rem;color:var(--muted);font-weight:600;margin-bottom:10px">${t.sortLabel}</p>
+      <div class="sort-pool" id="spool-${tid}">
+        ${shuffled(t.sortItems).map(item=>`
+          <div class="sort-chip" draggable="true" data-val="${item.word}" data-correct="${item.cat}"
+            ondragstart="scDrag(event)" onclick="scTap(this)">
+            ${item.word}
+          </div>`).join('')}
+      </div>
+      <div class="sort-grid">
+        ${t.sortCols.map(col=>`
+          <div class="sort-col">
+            <div class="sort-col-head ${col.class}">${col.label}</div>
+            <div class="sort-drop-area" id="sarea-${tid}-${col.id}"
+              ondragover="saOver(event)" ondrop="saDrop(event,'${tid}','${col.id}')"
+              onclick="saTap(this,'${tid}','${col.id}')">
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+/* ══════════════════════════════════════════
+   DRAG & DROP — MATCHING
+══════════════════════════════════════════ */
+let activeDC=null, tappedDC=null;
+function dcDrag(e){activeDC=e.target;setTimeout(()=>e.target.classList.add('dragging'),0)}
+function dzOver(e){e.preventDefault();e.currentTarget.classList.add('dz-over')}
+function dzDrop(e,tid){
+  e.preventDefault();e.currentTarget.classList.remove('dz-over');
+  if(activeDC) placeMatch(activeDC,e.currentTarget,tid);
+  activeDC?.classList.remove('dragging'); activeDC=null;
+}
+function dcTap(el){
+  if(el.classList.contains('chip-placed')) return;
+  document.querySelectorAll('.drag-chip').forEach(c=>c.style.outline='');
+  tappedDC=tappedDC===el?null:el;
+  if(tappedDC) el.style.outline='3px solid var(--gold)';
+}
+function dzTap(zone,tid){
+  if(!tappedDC) return;
+  placeMatch(tappedDC,zone,tid);
+  tappedDC.style.outline=''; tappedDC=null;
+}
+function placeMatch(chip,zone,tid){
+  if(zone.classList.contains('dz-correct')) return;
+  const val=chip.dataset.val, ans=zone.dataset.ans;
+  zone.querySelector('.dz-answer')?.remove();
+  if(val===ans){
+    zone.classList.add('dz-correct');
+    const sp=document.createElement('span');
+    sp.className='dz-answer'; sp.textContent=val;
+    zone.insertBefore(sp,zone.firstChild);
+    chip.classList.add('chip-placed');
+  } else {
+    zone.classList.add('dz-wrong');
+    setTimeout(()=>zone.classList.remove('dz-wrong'),500);
+  }
+}
+
+/* ══════════════════════════════════════════
+   TRUE / FALSE
+══════════════════════════════════════════ */
+function pickTF(btn,choice,tid,idx){
+  const row=document.getElementById(`tf-${tid}-${idx}`);
+  row.querySelectorAll('.tfb').forEach(b=>b.classList.remove('sel-t','sel-f'));
+  btn.classList.add(choice==='T'?'sel-t':'sel-f');
+  row.classList.remove('tf-true','tf-false');
+  row.classList.add(choice==='T'?'tf-true':'tf-false');
+}
+
+/* ══════════════════════════════════════════
+   SORT
+══════════════════════════════════════════ */
+let activeSort=null, tappedSort=null;
+function scDrag(e){activeSort=e.target; setTimeout(()=>e.target.classList.add('dragging'),0)}
+function saOver(e){e.preventDefault();e.currentTarget.classList.add('sd-over')}
+function saDrop(e,tid,col){
+  e.preventDefault();e.currentTarget.classList.remove('sd-over');
+  if(activeSort) placeSort(activeSort,tid,col);
+  activeSort?.classList.remove('dragging'); activeSort=null;
+}
+function scTap(el){
+  if(el.classList.contains('sc-placed')) return;
+  document.querySelectorAll('.sort-chip').forEach(c=>c.style.outline='');
+  tappedSort=tappedSort===el?null:el;
+  if(tappedSort) el.style.outline='3px solid var(--gold)';
+}
+function saTap(area,tid,col){
+  if(!tappedSort) return;
+  placeSort(tappedSort,tid,col);
+  tappedSort.style.outline=''; tappedSort=null;
+}
+function placeSort(chip,tid,col){
+  const correct=chip.dataset.correct, val=chip.dataset.val;
+  const area=document.getElementById(`sarea-${tid}-${col}`);
+  const placed=document.createElement('div');
+  placed.className='placed-chip '+(col===correct?'pc-correct':'pc-wrong');
+  placed.textContent=val;
+  area.appendChild(placed);
+  chip.classList.add('sc-placed');
+  if(col!==correct){
+    setTimeout(()=>{area.removeChild(placed);chip.classList.remove('sc-placed')},900);
+  }
+}
+
+/* ══════════════════════════════════════════
+   REPORT BUILDER (word-level blanks)
+══════════════════════════════════════════ */
+const reportAnswers={};
+
+function buildReportBuilder(){
+  const container=document.getElementById('report-sections');
+  container.innerHTML='';
+
+  // Introduction sentence (always included)
+  const introDiv=document.createElement('div');
+  introDiv.className='report-builder';
+  introDiv.innerHTML=`
+    <h4>🐱 Introduction</h4>
+    <p class="rb-prompt">Choose a word to complete each sentence for your opening.</p>
+    <div class="rb-sentence">
+      Cats are <span class="rb-blank" id="rb-intro-1" data-correct="fascinating">___</span> animals that have lived beside humans for thousands of years.
+      They come in many <span class="rb-blank" id="rb-intro-2" data-correct="breeds">___</span>, from tiny house cats to powerful wild cats.
+    </div>
+    <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+      <div style="width:100%;font-size:.78rem;font-weight:800;color:var(--muted);margin-bottom:2px">Choose for first blank:</div>
+      ${['fascinating','boring','loud'].map(w=>`<button class="cbtn" onclick="pickRbWord('rb-intro-1',this,'${w}')">${w}</button>`).join('')}
+    </div>
+    <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+      <div style="width:100%;font-size:.78rem;font-weight:800;color:var(--muted);margin-bottom:2px">Choose for second blank:</div>
+      ${['breeds','colors','sizes'].map(w=>`<button class="cbtn" onclick="pickRbWord('rb-intro-2',this,'${w}')">${w}</button>`).join('')}
+    </div>`;
+  container.appendChild(introDiv);
+
+  // Each chosen subtopic
+  topicOrder.forEach((tid,i)=>{
+    const t=TOPICS[tid];
+    const div=document.createElement('div');
+    div.className='report-builder';
+    let sentenceHTML='<div class="rb-sentence">';
+    t.reportSentences.forEach((s,si)=>{
+      const key=`rb-${tid}-${si}`;
+      // replace ___ with blank span
+      let html=s.frame.replace('___',`<span class="rb-blank" id="${key}" data-correct="${s.blanks[0].correct}">___</span>`);
+      sentenceHTML+=html+' ';
+    });
+    sentenceHTML+='</div>';
+    // word pickers per sentence
+    let pickersHTML='';
+    t.reportSentences.forEach((s,si)=>{
+      const key=`rb-${tid}-${si}`;
+      pickersHTML+=`<div style="margin-top:10px">
+        <div style="font-size:.78rem;font-weight:800;color:var(--muted);margin-bottom:4px">Choose for: <em>${s.frame.replace('___','[ ]')}</em></div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          ${s.blanks[0].options.map(w=>`<button class="cbtn" onclick="pickRbWord('${key}',this,'${w}')">${w}</button>`).join('')}
+        </div>
+      </div>`;
+    });
+    div.innerHTML=`
+      <h4>${t.icon} ${t.title}</h4>
+      <p class="rb-prompt">Choose a word for each blank to build your paragraph about ${t.title}.</p>
+      ${sentenceHTML}${pickersHTML}`;
+    container.appendChild(div);
+  });
+
+  // Conclusion
+  const concDiv=document.createElement('div');
+  concDiv.className='report-builder';
+  concDiv.innerHTML=`
+    <h4>🏁 Conclusion</h4>
+    <p class="rb-prompt">Choose words to wrap up your report.</p>
+    <div class="rb-sentence">
+      Cats are <span class="rb-blank" id="rb-conc-1" data-correct="remarkable">___</span> animals — whether they are curled up at home or roaming the wild.
+      Learning about cats helps us understand and <span class="rb-blank" id="rb-conc-2" data-correct="appreciate">___</span> these amazing creatures.
+    </div>
+    <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+      <div style="width:100%;font-size:.78rem;font-weight:800;color:var(--muted);margin-bottom:2px">Choose for first blank:</div>
+      ${['remarkable','ordinary','strange'].map(w=>`<button class="cbtn" onclick="pickRbWord('rb-conc-1',this,'${w}')">${w}</button>`).join('')}
+    </div>
+    <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+      <div style="width:100%;font-size:.78rem;font-weight:800;color:var(--muted);margin-bottom:2px">Choose for second blank:</div>
+      ${['appreciate','avoid','ignore'].map(w=>`<button class="cbtn" onclick="pickRbWord('rb-conc-2',this,'${w}')">${w}</button>`).join('')}
+    </div>`;
+  container.appendChild(concDiv);
+}
+
+function pickRbWord(blankId, btn, word){
+  // Dim siblings in same picker group
+  const picker=btn.closest('div[style]');
+  picker.querySelectorAll('.cbtn').forEach(b=>b.classList.add('c-dim'));
+  btn.classList.remove('c-dim');
+  btn.classList.add('c-correct');
+  // Fill blank
+  const blank=document.getElementById(blankId);
+  if(blank){
+    blank.textContent=word;
+    blank.classList.add('rb-filled');
+  }
+  reportAnswers[blankId]=word;
+}
+
+/* ══════════════════════════════════════════
+   FINAL REPORT
+══════════════════════════════════════════ */
+function buildFinalReport(){
+  const name=(document.getElementById('sName')?.value||'Student').trim();
+
+  // stamps
+  const stamps=document.getElementById('finalStamps');
+  if(stamps){
+    stamps.innerHTML=topicOrder.map(tid=>`<div class="stamp">${TOPICS[tid].icon} ${TOPICS[tid].title}</div>`).join('');
+  }
+
+  // Gather filled blanks
+  function getBlank(id){ return document.getElementById(id)?.textContent||'___'; }
+
+  let html=`<div class="rp-title">Cats of the World</div>
+    <div class="rp-author">Written by ${escH(name)}</div>
+    <div class="rp-section">
+      <div class="rp-heading">🐱 Introduction</div>
+      <div class="rp-paragraph">Cats are ${getBlank('rb-intro-1')} animals that have lived beside humans for thousands of years. They come in many ${getBlank('rb-intro-2')}, from tiny house cats to powerful wild cats.</div>
+    </div>`;
+
+  topicOrder.forEach(tid=>{
+    const t=TOPICS[tid];
+    let para=t.reportSentences.map((s,si)=>{
+      const key=`rb-${tid}-${si}`;
+      const word=reportAnswers[key]||'___';
+      return s.frame.replace('___',word);
+    }).join(' ');
+    html+=`<div class="rp-section">
+      <div class="rp-heading">${t.icon} ${t.title}</div>
+      <div class="rp-paragraph">${escH(para)}</div>
+    </div>`;
+  });
+
+  html+=`<div class="rp-section">
+    <div class="rp-heading">🏁 Conclusion</div>
+    <div class="rp-paragraph">Cats are ${getBlank('rb-conc-1')} animals — whether they are curled up at home or roaming the wild. Learning about cats helps us understand and ${getBlank('rb-conc-2')} these amazing creatures.</div>
+  </div>`;
+
+  const preview=document.getElementById('reportPreview');
+  if(preview) preview.innerHTML=html;
+}
+
+/* ══════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════ */
+function shuffled(arr){return [...arr].sort(()=>Math.random()-.5)}
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// init
+buildProgressDots();
+updateProgress();
+</script>
+</body>
+</html>
