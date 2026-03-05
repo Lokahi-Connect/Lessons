@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "id": "naval-ships-part2",
+    "title": "Naval Ships Around the World",
+    "part": 2,
+    "subtitle": "Word Scientists Set Sail",
+    "series": "Naval Ships Around the World",
+    "band": 3,
+    "grade": "Grade 4",
+    "framework": "Lokahi Connect SWI — Meaning-First",
+    "emoji": "⚓ 🚢 🌊",
+    "badges": [
+      "📖 Reading Passage",
+      "🔬 Word Investigation",
+      "⚙️ Word Sums",
+      "🧩 Matrix"
+    ],
+    "theme": "ocean",
+    "learnerSupports": ["dysgraphia", "ASD-PDA", "APD"]
+  },
+
+  "checkin": {
+    "heading": "Before We Begin",
+    "icon": "🌿",
+    "zones": [
+      {
+        "label": "🟢 Ready to go",
+        "style": "green",
+        "message": "🟢 Green zone — You are ready to roll! Let's get started."
+      },
+      {
+        "label": "🟡 A little wiggly",
+        "style": "yellow",
+        "message": "🟡 Yellow zone — That's okay! Take a breath and try a slow start. You can do this."
+      },
+      {
+        "label": "🔴 Not quite ready",
+        "style": "red",
+        "message": "🔴 Red zone — Thank you for telling me. Take your time. Come back when you feel ready."
+      }
+    ],
+    "intentionHeading": "🎯 What do you want to do today?",
+    "intentionPrompt": "Pick one (or more) — this is YOUR learning.",
+    "intentionOptions": [
+      "📖 Read about ships",
+      "🔬 Investigate words",
+      "⚙️ Build word sums",
+      "🧩 Explore the matrix",
+      "✍️ Answer questions"
+    ],
+    "contextNote": "In Part 1, we explored the base <nav> and how it connects to ships and navigation. In Part 2, we dive deeper — reading a passage, building word sums, and exploring a full word matrix. You're a Word Scientist. Let's investigate!"
+  },
+
+  "review": {
+    "heading": "Part 1 Recap — What Do We Remember?",
+    "icon": "🔄",
+    "intro": "Before new learning, let's reconnect to what we already know. This is how scientists build knowledge — one piece at a time.",
+    "recallCards": [
+      {
+        "label": "Our Base",
+        "value": "<nav>\nmeaning: to steer or guide a ship"
+      },
+      {
+        "label": "Word Family (so far)",
+        "value": "navigate · naval · navigator · navigation"
+      },
+      {
+        "label": "Key Suffixes",
+        "value": "<-al> = "relating to"\n<-ion> = "the act of"\n<-or> = "one who""
+      },
+      {
+        "label": "Ships We Met",
+        "value": "Aircraft carriers, submarines, destroyers, frigates"
+      },
+      {
+        "label": "Join Check",
+        "value": "nav + al → naval ✅ No change needed"
+      },
+      {
+        "label": "Meaning First!",
+        "value": "We always ask "What does it mean?" before asking "How does it sound?""
+      }
+    ],
+    "reviewChoices": [
+      "🗣️ Say it out loud",
+      "✍️ Write it down",
+      "🧠 Think it in my head",
+      "👆 Just read the cards above"
+    ]
+  },
+
+  "passage": {
+    "heading": "Reading Passage — Ships That Navigate the World",
+    "icon": "📖",
+    "title": "⚓ Ships That Navigate the World",
+    "readerPrompt": "Your job while reading: Spot every word that comes from the base <nav>. You can highlight them in your mind or write them down.",
+    "sentences": [
+      {
+        "id": "s1",
+        "text": "Naval forces have existed for thousands of years.",
+        "morphemes": [
+          { "text": "Nav", "type": "base" },
+          { "text": "al", "type": "suffix" },
+          { "text": " forces have existed for thousands of years.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s2",
+        "text": "Long before engines or computers, sailors learned to navigate using the stars, the wind, and the shape of the coastline.",
+        "morphemes": [
+          { "text": "Long before engines or computers, sailors learned to ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "igate", "type": "suffix" },
+          { "text": " using the stars, the wind, and the shape of the coastline.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s3",
+        "text": "Today, every major country that borders an ocean has a naval fleet — a group of ships organized to protect that country's waters.",
+        "morphemes": [
+          { "text": "Today, every major country that borders an ocean has a ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "al", "type": "suffix" },
+          { "text": " fleet — a group of ships organized to protect that country's waters.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s4",
+        "text": "These fleets include many kinds of vessels, from small patrol boats to enormous aircraft carriers.",
+        "morphemes": [
+          { "text": "These fleets include many kinds of vessels, from small patrol boats to enormous aircraft carriers.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s5",
+        "text": "The people who steer these ships are called navigators.",
+        "morphemes": [
+          { "text": "The people who steer these ships are called ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "igator", "type": "suffix" },
+          { "text": "s.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s6",
+        "text": "A navigator studies charts, reads instruments, and plans the safest route across open water.",
+        "morphemes": [
+          { "text": "A ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "igator", "type": "suffix" },
+          { "text": " studies charts, reads instruments, and plans the safest route across open water.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s7",
+        "text": "Navigation is both a science and a skill — it takes years of training to master.",
+        "morphemes": [
+          { "text": "Nav", "type": "base" },
+          { "text": "igation", "type": "suffix" },
+          { "text": " is both a science and a skill — it takes years of training to master.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s8",
+        "text": "Some ships are built for speed, like destroyers and frigates. Others are built for stealth, like submarines.",
+        "morphemes": [
+          { "text": "Some ships are built for speed, like destroyers and frigates. Others are built for stealth, like submarines.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s9",
+        "text": "Submarines can navigate deep beneath the surface of the sea without being seen.",
+        "morphemes": [
+          { "text": "Submarines can ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "igate", "type": "suffix" },
+          { "text": " deep beneath the surface of the sea without being seen.", "type": "plain" }
+        ]
+      },
+      {
+        "id": "s10",
+        "text": "Across the world's navies — from the United States to Japan to Brazil — the goal is the same: to navigate safely, to protect, and to serve.",
+        "morphemes": [
+          { "text": "Across the world's ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "ies", "type": "suffix" },
+          { "text": " — from the United States to Japan to Brazil — the goal is the same: to ", "type": "plain" },
+          { "text": "nav", "type": "base" },
+          { "text": "igate", "type": "suffix" },
+          { "text": " safely, to protect, and to serve.", "type": "plain" }
+        ]
+      }
+    ],
+    "vocabularyGloss": [
+      { "word": "vessel", "definition": "a large boat or ship" },
+      { "word": "fleet", "definition": "a group of ships that belong together" },
+      { "word": "stealth", "definition": "moving quietly so you are hard to detect" },
+      { "word": "hazard", "definition": "something dangerous that could cause harm" },
+      { "word": "instrument", "definition": "a tool used to measure or guide (like a compass or GPS)" }
+    ]
+  },
+
+  "wordSums": {
+    "heading": "Build the Word Sums",
+    "icon": "⚙️",
+    "intro": "Click the base tile first, then add a suffix. Watch the word sum build! After you assemble the tiles, tap Check Join to see if any spelling convention applies.",
+    "base": "nav",
+    "suffixTiles": ["-al", "-igate", "-igation", "-igator", "-ies", "-s"],
+    "builders": [
+      {
+        "id": "1",
+        "heading": "Builder 1 — Assemble a word from <nav>",
+        "prompt": "Pick the base, then one suffix:"
+      },
+      {
+        "id": "2",
+        "heading": "Builder 2 — Try a different combination",
+        "prompt": "Can you build navigation? Or navigators?"
+      }
+    ],
+    "joinCheckMessage": "The base <nav> stays the same at every join. No doubling, no final <e> replacement, no <y>→<i> change. The base is stable across the whole family — your evidence is strong!",
+    "revealedWordSums": [
+      { "sum": "nav + al", "result": "naval", "meaning": "relating to ships or a navy" },
+      { "sum": "nav + igate", "result": "navigate", "meaning": "to steer or guide a ship" },
+      { "sum": "nav + igation", "result": "navigation", "meaning": "the act of navigating" },
+      { "sum": "nav + igator", "result": "navigator", "meaning": "one who navigates" },
+      { "sum": "nav + igator + s", "result": "navigators", "meaning": "more than one navigator" },
+      { "sum": "nav + ies", "result": "navies", "meaning": "plural of navy" }
+    ],
+    "revealJoinNote": "The base <nav> does NOT change at any join. No doubling, no final <e> replacement, no <y>→<i> change. The base stays steady — only the suffixes change!"
+  },
+
+  "matrix": {
+    "heading": "Word Matrix — The Full Family of <nav>",
+    "icon": "🧩",
+    "intro": "A matrix shows the whole word family in one map. The base is in the left column. Suffixes run across the top. Each cell shows the real word formed by combining them.",
+    "base": {
+      "form": "<nav>",
+      "meaning": "to steer or guide"
+    },
+    "columns": ["(none)", "+ -al", "+ -igate", "+ -igation", "+ -igator", "+ -ies"],
+    "rows": [
+      {
+        "base": "<nav>",
+        "cells": ["navy", "naval", "navigate", "navigation", "navigator", "navies"]
+      }
+    ],
+    "joinCheckRow": "The base <nav> is stable — no doubling, no final <e> replacement, no <y>→<i> change at any join. The spelling of the base is preserved across the entire family.",
+    "observations": [
+      "Every word in the family shares the same base <nav>",
+      "Every word carries the same core meaning — something to do with steering or ships",
+      "The suffixes change the job the word does in a sentence (noun, verb, adjective)",
+      "This is why a navigator is "one who navigates" — the meaning is built in to the word!"
+    ],
+    "etymologyNote": {
+      "heading": "💡 Latin roots — going further",
+      "text": "The base <nav> comes from Latin navis, meaning "ship." This is why we also see it in the word nave — the long central part of a church, shaped like the hull of a ship. Same base, same ancestry, same idea of a hull or body that holds things together. Word Scientist bonus!"
+    }
+  },
+
+  "inquiryQuestions": {
+    "heading": "Word Scientist Questions",
+    "icon": "🔬",
+    "intro": "Real scientists ask questions about what they notice. You are a Word Scientist. Take your time — there's no rush. Questions appear one at a time. Use the sentence frames if they help!",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "observe",
+        "label": "👁️ Observe",
+        "question": "Find all the words in the passage that come from the base <nav>. How many did you spot?",
+        "sentenceFrame": "I noticed ___ words from the base <nav>. They were: ___",
+        "placeholder": "Type your answer here, or think it quietly, or say it out loud — your choice!"
+      },
+      {
+        "id": "q2",
+        "type": "hypothesize",
+        "label": "🤔 Hypothesize",
+        "question": "What does the suffix -al add to the meaning of <nav>? What about -igator? How do you know?",
+        "sentenceFrame": "The suffix -al makes the word mean ___. The suffix -igator means ___. I know this because ___",
+        "placeholder": "Type your thinking here..."
+      },
+      {
+        "id": "q3",
+        "type": "conclude",
+        "label": "✅ Conclude",
+        "question": "Does the spelling of the base <nav> change across the whole family? What is your evidence?",
+        "sentenceFrame": "The spelling of <nav> [does / does not] change. My evidence is ___",
+        "placeholder": "Type your conclusion here..."
+      },
+      {
+        "id": "q4",
+        "type": "extend",
+        "label": "🚀 Extend — Bonus!",
+        "question": "Can you think of another word that might belong to the <nav> family? How would you test whether it really belongs?",
+        "sentenceFrame": "A word that might belong is ___. I would test it by ___",
+        "placeholder": "Think like a word scientist — what's your hypothesis?"
+      }
+    ]
+  },
+
+  "celebration": {
+    "heading": "Mission Complete, Word Scientist!",
+    "icon": "🏅",
+    "stars": "⭐ ⚓ ⭐",
+    "title": "Part 2 — Complete!",
+    "message": "You did real scientific work today. You read a complex passage, built word sums, explored a matrix, and used your evidence to draw conclusions. That is what word scientists do.",
+    "stamps": [
+      "📖 Passage Read",
+      "⚙️ Word Sums Built",
+      "🧩 Matrix Explored",
+      "🔬 Questions Answered"
+    ],
+    "closingThought": {
+      "heading": "🌊 One Last Thought",
+      "text": "The base <nav> — from Latin navis, meaning ship — has been sailing through the English language for thousands of years. Every time you say naval, navigate, or navigation, you are carrying a piece of ancient meaning with you. Words are not random. They are built with intention, just like ships.",
+      "reflectionPrompt": "🎯 What is one thing you will remember from today's lesson?",
+      "reflectionPlaceholder": "One thing I will remember is..."
+    }
+  }
+}
