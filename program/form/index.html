@@ -1,1 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;form&gt; — Meaning-First Library · Lokahi Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:       #006B6B;
+      --teal-mid:   #1A4A4A;
+      --teal-light: #E6F5F5;
+      --seafoam:    #4AADA8;
+      --gold:       #B8860B;
+      --gold-light: #FFF8E1;
+      --slate:      #2D3748;
+      --gray:       #4A5568;
+      --gray-light: #718096;
+      --cream:      #FDFAF4;
+      --white:      #FFFFFF;
+      --border:     #C8E6E6;
+      --serif:      'Lora', Georgia, serif;
+      --sans:       'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--slate);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ──────────────────────────────── */
+    .lc-header {
+      background: linear-gradient(135deg, var(--teal-mid) 0%, var(--teal) 100%);
+      padding: 28px 32px 26px;
+    }
+
+    .lc-header-inner {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .lc-breadcrumb {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lc-breadcrumb a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .lc-breadcrumb a:hover { color: rgba(255,255,255,0.9); }
+    .lc-breadcrumb span { color: rgba(255,255,255,0.3); }
+
+    .lc-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .lc-base-display {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .lc-base-glyph {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--white);
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 14px;
+      padding: 10px 22px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .lc-base-meta h1 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .lc-base-meta h1 em {
+      font-style: italic;
+      color: #A8DCDC;
+    }
+
+    .lc-base-meaning {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .lc-base-meaning strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+
+    .lc-band-pill {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    /* ── Main ────────────────────────────────── */
+    .lc-main {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+    }
+
+    /* ── Section label ───────────────────────── */
+    .lc-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Base info strip ─────────────────────── */
+    .lc-info-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .lc-info-cell {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+
+    .lc-info-cell .cell-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 5px;
+    }
+
+    .lc-info-cell .cell-value {
+      font-family: var(--serif);
+      font-size: 0.97rem;
+      color: var(--teal-mid);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .lc-info-cell .cell-value.plain {
+      font-family: var(--sans);
+      font-weight: 400;
+      color: var(--gray);
+      font-size: 0.88rem;
+    }
+
+    /* ── Word family chips ───────────────────── */
+    .lc-family-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .lc-family-chip {
+      font-family: var(--serif);
+      font-size: 0.92rem;
+      font-weight: 600;
+      background: var(--teal-light);
+      color: var(--teal-mid);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 14px;
+    }
+
+    /* ── Resource cards ──────────────────────── */
+    .lc-resources {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .lc-resource-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .lc-resource-card:hover {
+      border-color: var(--seafoam);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      transform: translateY(-1px);
+    }
+
+    .lc-resource-card.unavailable {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .lc-resource-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--teal-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lc-resource-body { flex: 1; min-width: 0; }
+
+    .lc-resource-body h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--teal-mid);
+      margin-bottom: 3px;
+    }
+
+    .lc-resource-body p {
+      font-size: 0.83rem;
+      color: var(--gray-light);
+      line-height: 1.5;
+    }
+
+    .lc-resource-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 7px;
+    }
+
+    .lc-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 10px;
+      padding: 2px 8px;
+    }
+
+    .lc-tag.band { background: var(--teal-light); color: var(--teal-mid); }
+    .lc-tag.type { background: var(--gold-light); color: var(--gold); }
+    .lc-tag.access { background: #F0FFF4; color: #2F855A; }
+    .lc-tag.coming { background: #F7FAFC; color: var(--gray-light); border: 1px solid var(--border); }
+
+    .lc-resource-arrow {
+      font-size: 1.1rem;
+      color: var(--border);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    .lc-resource-card:hover .lc-resource-arrow { color: var(--seafoam); }
+
+    /* ── Prefixes summary ────────────────────── */
+    .lc-prefix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .lc-prefix-cell {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .lc-prefix-tag {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--gold);
+      border-radius: 6px;
+      padding: 2px 9px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .lc-prefix-meaning {
+      font-size: 0.82rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .lc-prefix-meaning strong { color: var(--teal-mid); font-size: 0.88rem; }
+
+    /* ── Library nav ─────────────────────────── */
+    .lc-library-nav {
+      background: var(--teal-light);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lc-library-nav p {
+      font-size: 0.88rem;
+      color: var(--teal-mid);
+    }
+
+    .lc-library-nav a {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .lc-library-nav a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .lc-header { padding: 20px 18px 18px; }
+      .lc-base-glyph { font-size: 2.2rem; padding: 8px 16px; }
+      .lc-base-meta h1 { font-size: 1.2rem; }
+      .lc-main { padding: 24px 14px 56px; }
+      .lc-resource-card { padding: 16px 16px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────── -->
+<div class="lc-header">
+  <div class="lc-header-inner">
+    <div class="lc-breadcrumb">
+      <a href="../index.html">Library</a>
+      <span>›</span>
+      <span>Base: &lt;form&gt;</span>
+    </div>
+    <div class="lc-header-row">
+      <div class="lc-base-display">
+        <div class="lc-base-glyph">&lt;form&gt;</div>
+        <div class="lc-base-meta">
+          <h1>Base: <em>&lt;form&gt;</em></h1>
+          <div class="lc-base-meaning">
+            <strong>shape · make · arrange into a structure</strong><br>
+            from Latin <em>forma</em> — shape, mold, beauty
+          </div>
+        </div>
+      </div>
+      <div class="lc-band-pill">Band 3 · Grades 3–4+</div>
+    </div>
+  </div>
+</div>
+
+<div class="lc-main">
+
+  <!-- Base info -->
+  <div class="lc-section-label">Base information</div>
+  <div class="lc-info-strip">
+    <div class="lc-info-cell">
+      <div class="cell-label">Type</div>
+      <div class="cell-value">Free base</div>
+    </div>
+    <div class="lc-info-cell">
+      <div class="cell-label">Etymology</div>
+      <div class="cell-value plain">Latin <em>forma</em> — shape, mold</div>
+    </div>
+    <div class="lc-info-cell">
+      <div class="cell-label">Join conventions</div>
+      <div class="cell-value plain">No doubling, replacing, or changing at most joins</div>
+    </div>
+    <div class="lc-info-cell">
+      <div class="cell-label">First introduced</div>
+      <div class="cell-value plain">Band 3 — Transition to Generative</div>
+    </div>
+  </div>
+
+  <!-- Word family -->
+  <div class="lc-section-label">Word family</div>
+  <div class="lc-family-row">
+    <div class="lc-family-chip">form</div>
+    <div class="lc-family-chip">formal</div>
+    <div class="lc-family-chip">formation</div>
+    <div class="lc-family-chip">inform</div>
+    <div class="lc-family-chip">information</div>
+    <div class="lc-family-chip">informal</div>
+    <div class="lc-family-chip">reform</div>
+    <div class="lc-family-chip">reformation</div>
+    <div class="lc-family-chip">transform</div>
+    <div class="lc-family-chip">transformation</div>
+    <div class="lc-family-chip">perform</div>
+    <div class="lc-family-chip">performance</div>
+    <div class="lc-family-chip">performer</div>
+    <div class="lc-family-chip">uniform</div>
+    <div class="lc-family-chip">conform</div>
+    <div class="lc-family-chip">conformation</div>
+    <div class="lc-family-chip">reformer</div>
+    <div class="lc-family-chip">informer</div>
+  </div>
+
+  <!-- Prefixes that travel with <form> -->
+  <div class="lc-section-label">Prefixes in this family</div>
+  <div class="lc-prefix-grid">
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">in-</div>
+      <div class="lc-prefix-meaning"><strong>into</strong><br>inform, information</div>
+    </div>
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">re-</div>
+      <div class="lc-prefix-meaning"><strong>again</strong><br>reform, reformation</div>
+    </div>
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">trans-</div>
+      <div class="lc-prefix-meaning"><strong>across</strong><br>transform, transformation</div>
+    </div>
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">per-</div>
+      <div class="lc-prefix-meaning"><strong>through</strong><br>perform, performance</div>
+    </div>
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">uni-</div>
+      <div class="lc-prefix-meaning"><strong>one</strong><br>uniform</div>
+    </div>
+    <div class="lc-prefix-cell">
+      <div class="lc-prefix-tag">con-</div>
+      <div class="lc-prefix-meaning"><strong>together</strong><br>conform, conformation</div>
+    </div>
+  </div>
+
+  <!-- Resources -->
+  <div class="lc-section-label">Resources in this set</div>
+  <div class="lc-resources">
+
+    <a href="lesson.html" class="lc-resource-card">
+      <div class="lc-resource-icon">🔬</div>
+      <div class="lc-resource-body">
+        <h3>Word Scientist Lesson</h3>
+        <p>Full 5-activity interactive investigation — meaning anchor, word sum builder, family matrix, reading passage, and grapheme function.</p>
+        <div class="lc-resource-tags">
+          <span class="lc-tag band">Band 3</span>
+          <span class="lc-tag type">Interactive</span>
+          <span class="lc-tag access">30–45 min</span>
+        </div>
+      </div>
+      <div class="lc-resource-arrow">→</div>
+    </a>
+
+    <div class="lc-resource-card unavailable">
+      <div class="lc-resource-icon">📄</div>
+      <div class="lc-resource-body">
+        <h3>Printable Worksheet</h3>
+        <p>Word sum practice, matrix fill-in, and reflection prompts for pencil-and-paper or classroom printing.</p>
+        <div class="lc-resource-tags">
+          <span class="lc-tag band">Band 3</span>
+          <span class="lc-tag type">Printable</span>
+          <span class="lc-tag coming">Coming soon</span>
+        </div>
+      </div>
+      <div class="lc-resource-arrow">→</div>
+    </div>
+
+    <div class="lc-resource-card unavailable">
+      <div class="lc-resource-icon">🗂️</div>
+      <div class="lc-resource-body">
+        <h3>Matrix Card &amp; Word Wall Poster</h3>
+        <p>Printable visual reference showing the full &lt;form&gt; family matrix — for word walls, student folders, or one-on-one sessions.</p>
+        <div class="lc-resource-tags">
+          <span class="lc-tag band">Band 3</span>
+          <span class="lc-tag type">Printable</span>
+          <span class="lc-tag coming">Coming soon</span>
+        </div>
+      </div>
+      <div class="lc-resource-arrow">→</div>
+    </div>
+
+    <div class="lc-resource-card unavailable">
+      <div class="lc-resource-icon">🎓</div>
+      <div class="lc-resource-body">
+        <h3>Educator Guide</h3>
+        <p>One-page teacher-facing notes — the SWI rationale for &lt;form&gt;, suggested discussion prompts, and common student questions.</p>
+        <div class="lc-resource-tags">
+          <span class="lc-tag band">Band 3</span>
+          <span class="lc-tag type">Educator</span>
+          <span class="lc-tag coming">Coming soon</span>
+        </div>
+      </div>
+      <div class="lc-resource-arrow">→</div>
+    </div>
+
+  </div>
+
+  <!-- Library nav -->
+  <div class="lc-library-nav">
+    <p>Part of the Meaning-First Literacy™ public library by Lokahi Connect.</p>
+    <a href="../index.html">← Back to library</a>
+  </div>
+
+</div>
+
+</body>
+</html>
 
