@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Scientist Worksheet · &lt;form&gt; · Band 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a7a7a;
+    --teal-light: #e8f5f5;
+    --teal-mid: #c2e8e8;
+    --seafoam: #4db8b8;
+    --gold: #b8860b;
+    --gold-light: #fff8e1;
+    --ink: #1a2a2a;
+    --ink-soft: #3a4a4a;
+    --paper: #fdfaf6;
+    --white: #ffffff;
+    --border: #c8d8d8;
+    --base-color: #1a7a7a;
+    --affix-color: #b8860b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+  }
+
+  /* ── SCREEN TOOLBAR ── */
+  .screen-toolbar {
+    background: var(--teal);
+    color: white;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .screen-toolbar span { font-size: 13px; opacity: 0.85; }
+  .btn-print {
+    background: white;
+    color: var(--teal);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-print:hover { background: var(--teal-light); }
+
+  /* ── PAGE ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 28px 48px;
+  }
+
+  /* ── HEADER ── */
+  .worksheet-header {
+    border-bottom: 3px solid var(--teal);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  .band-tag {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .worksheet-title {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1.2;
+  }
+  .worksheet-subtitle {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .name-line {
+    display: flex;
+    gap: 24px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .name-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .name-field input {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 2px 4px;
+    width: 160px;
+    color: var(--ink);
+    outline: none;
+  }
+  .name-field input:focus { border-bottom-color: var(--teal); }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 32px;
+  }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-num {
+    width: 28px;
+    height: 28px;
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .section-prompt {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── ACTIVITY 1: MEANING ANCHOR ── */
+  .meaning-anchor {
+    background: var(--teal-light);
+    border: 2px solid var(--teal-mid);
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .anchor-image-box {
+    width: 90px;
+    height: 90px;
+    border: 2px dashed var(--seafoam);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--seafoam);
+    font-size: 11px;
+    text-align: center;
+    padding: 6px;
+    background: white;
+  }
+  .anchor-content { flex: 1; }
+  .base-display {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--base-color);
+    margin-bottom: 6px;
+  }
+  .meaning-line {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .meaning-line strong { color: var(--ink); }
+  .meaning-fill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+  }
+  .fill-line {
+    border-bottom: 1.5px solid var(--border);
+    min-width: 180px;
+    height: 22px;
+  }
+  .fill-line-input {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 2px 4px;
+    min-width: 180px;
+    color: var(--ink);
+    outline: none;
+  }
+  .fill-line-input:focus { border-bottom-color: var(--teal); }
+
+  /* ── ACTIVITY 2: WORD SUMS ── */
+  .word-sum-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .word-sum-table th {
+    background: var(--teal);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .word-sum-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .word-sum-table tr:nth-child(even) td { background: var(--teal-light); }
+  .ws-given {
+    font-family: 'Lora', serif;
+    color: var(--base-color);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ws-arrow { color: var(--seafoam); font-weight: 600; }
+  .ws-blank {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    width: 130px;
+    padding: 2px 4px;
+    color: var(--ink);
+    outline: none;
+  }
+  .ws-blank:focus { border-bottom-color: var(--teal); }
+  .ws-result {
+    font-family: 'Lora', serif;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .join-note {
+    font-size: 11.5px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ── ACTIVITY 3: WORD FAMILY SORT ── */
+  .sort-instruction {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+  }
+  .word-chip {
+    background: var(--teal-light);
+    border: 1.5px solid var(--teal-mid);
+    color: var(--teal);
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+  .sort-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .sort-box {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sort-box-header {
+    background: var(--teal-mid);
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .sort-box-body {
+    padding: 12px 14px;
+    min-height: 100px;
+    background: white;
+  }
+  .sort-line {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+    height: 22px;
+  }
+  .sort-line-input {
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    padding: 2px 4px;
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .sort-line-input:focus { border-bottom-color: var(--teal); }
+
+  /* ── ACTIVITY 4: FILL IN SENTENCES ── */
+  .sentence-list { list-style: none; }
+  .sentence-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .sentence-num {
+    font-weight: 700;
+    color: var(--teal);
+    min-width: 20px;
+    margin-top: 1px;
+  }
+  .sentence-text { flex: 1; }
+  .sent-blank {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    width: 130px;
+    padding: 0 4px;
+    color: var(--ink);
+    outline: none;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  .sent-blank:focus { border-bottom-color: var(--teal); }
+  .word-box {
+    background: var(--teal-light);
+    border: 1.5px solid var(--teal-mid);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .word-box strong { color: var(--teal); }
+
+  /* ── ACTIVITY 5: BUILD YOUR OWN ── */
+  .byo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .byo-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .byo-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--seafoam);
+    margin-bottom: 6px;
+  }
+  .byo-sum-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .byo-base { color: var(--base-color); font-weight: 700; }
+  .byo-plus { color: var(--ink-soft); }
+  .byo-input {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    width: 90px;
+    padding: 0 4px;
+    color: var(--affix-color);
+    outline: none;
+  }
+  .byo-input:focus { border-bottom-color: var(--teal); }
+  .byo-result-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .byo-result-input {
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    width: 120px;
+    padding: 0 4px;
+    color: var(--ink);
+    outline: none;
+    font-weight: 600;
+  }
+  .byo-result-input:focus { border-bottom-color: var(--teal); }
+  .byo-meaning-input {
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    width: 100%;
+    padding: 2px 4px;
+    color: var(--ink-soft);
+    outline: none;
+    margin-top: 6px;
+  }
+  .byo-meaning-input:focus { border-bottom-color: var(--teal); }
+  .byo-meaning-label { font-size: 12px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ── REFLECTION BOX ── */
+  .reflection-box {
+    background: var(--teal-light);
+    border: 2px solid var(--teal-mid);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .reflection-q {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .reflection-lines { display: flex; flex-direction: column; gap: 0; }
+  .reflection-line {
+    border-bottom: 1px solid var(--border);
+    height: 32px;
+    margin-bottom: 4px;
+  }
+  .reflection-textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.6;
+  }
+  .reflection-textarea:focus { border-color: var(--teal); }
+
+  /* ── MORPHEME KEY ── */
+  .morpheme-key {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .key-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .key-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .key-dot.base { background: var(--base-color); }
+  .key-dot.affix { background: var(--affix-color); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1.5px dashed var(--border);
+    margin: 28px 0;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    .screen-toolbar { display: none !important; }
+    body { background: white; font-size: 14px; }
+    .page { padding: 20px 24px; }
+    .fill-line-input,
+    .ws-blank,
+    .sort-line-input,
+    .sent-blank,
+    .byo-input,
+    .byo-result-input,
+    .byo-meaning-input,
+    .reflection-textarea,
+    .name-field input {
+      display: none !important;
+    }
+    .fill-line,
+    .sort-line,
+    .reflection-line { display: block !important; }
+    .byo-input-print,
+    .ws-blank-print { display: inline-block !important; }
+    .word-chip { border: 1.5px solid var(--teal); }
+    .section { page-break-inside: avoid; }
+  }
+
+  @media screen {
+    .fill-line,
+    .sort-line,
+    .reflection-line { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SCREEN TOOLBAR -->
+<div class="screen-toolbar">
+  <span>🔬 Word Scientist Worksheet · &lt;form&gt; · Band 2 · Grades 2–3</span>
+  <button class="btn-print" onclick="window.print()">🖨️ Print Worksheet</button>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="worksheet-header">
+    <div class="band-tag">Band 2 · Grades 2–3</div>
+    <div class="worksheet-title">Word Scientist Worksheet</div>
+    <div class="worksheet-subtitle">Investigating the base &lt;form&gt; — to shape or make</div>
+    <div class="name-line">
+      <div class="name-field">
+        Name: <input type="text" placeholder="Your name">
+      </div>
+      <div class="name-field">
+        Date: <input type="text" placeholder="Today's date">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: MEANING ANCHOR -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <div class="section-title">What does it mean?</div>
+    </div>
+    <p class="section-prompt">Every investigation starts with meaning. Read the base and its meaning below.</p>
+
+    <div class="meaning-anchor">
+      <div class="anchor-image-box">✏️ Draw a picture of <em>form</em></div>
+      <div class="anchor-content">
+        <div class="base-display">&lt;form&gt;</div>
+        <div class="meaning-line"><strong>Meaning:</strong> to shape, arrange, or make something</div>
+        <div class="meaning-line" style="margin-top:6px"><strong>Example:</strong> "We <em>formed</em> a circle in the classroom."</div>
+        <div class="meaning-fill" style="margin-top:12px">
+          In my own words, <strong>&lt;form&gt;</strong> means:
+          <input type="text" class="fill-line-input" placeholder="write your idea here">
+          <div class="fill-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 2: WORD SUM PRACTICE -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <div class="section-title">Word Sum Practice</div>
+    </div>
+    <p class="section-prompt">A <strong>word sum</strong> shows how a word is built from its parts. Complete each word sum below. Write the finished word in the last column.</p>
+
+    <div class="morpheme-key">
+      <div class="key-item"><div class="key-dot base"></div> Base (teal) = meaning</div>
+      <div class="key-item"><div class="key-dot affix"></div> Suffix (gold) = word job</div>
+    </div>
+
+    <table class="word-sum-table">
+      <thead>
+        <tr>
+          <th>Word Sum</th>
+          <th>→</th>
+          <th>Finished Word</th>
+          <th>Join Check</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ws-given">form + s</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+        <tr>
+          <td><span class="ws-given">form + ed</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+        <tr>
+          <td><span class="ws-given">form + ing</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+        <tr>
+          <td><span class="ws-given">form + al</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+        <tr>
+          <td><span class="ws-given">in + form + ed</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+        <tr>
+          <td><span class="ws-given">re + form</span></td>
+          <td class="ws-arrow">→</td>
+          <td><input type="text" class="ws-blank" placeholder="write word"></td>
+          <td><span class="join-note">✅ No change needed</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 3: WORD FAMILY SORT -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <div class="section-title">Word Family Sort</div>
+    </div>
+
+    <div class="sort-instruction">
+      📋 <strong>Your job:</strong> Sort the words below into two groups — words with a <strong>prefix</strong> (a part added before &lt;form&gt;) and words with only a <strong>suffix</strong> (a part added after &lt;form&gt;).
+    </div>
+
+    <div class="word-bank">
+      <div class="word-chip">reform</div>
+      <div class="word-chip">formal</div>
+      <div class="word-chip">inform</div>
+      <div class="word-chip">formed</div>
+      <div class="word-chip">uniform</div>
+      <div class="word-chip">forming</div>
+      <div class="word-chip">perform</div>
+      <div class="word-chip">formation</div>
+    </div>
+
+    <div class="sort-columns">
+      <div class="sort-box">
+        <div class="sort-box-header">🔵 Has a PREFIX (before &lt;form&gt;)</div>
+        <div class="sort-box-body">
+          <input type="text" class="sort-line-input" placeholder="word 1">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 2">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 3">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 4">
+          <div class="sort-line"></div>
+        </div>
+      </div>
+      <div class="sort-box">
+        <div class="sort-box-header">🟡 Has only a SUFFIX (after &lt;form&gt;)</div>
+        <div class="sort-box-body">
+          <input type="text" class="sort-line-input" placeholder="word 1">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 2">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 3">
+          <div class="sort-line"></div>
+          <input type="text" class="sort-line-input" placeholder="word 4">
+          <div class="sort-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 4: FILL IN THE BLANK -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">4</div>
+      <div class="section-title">Fill in the Blank</div>
+    </div>
+
+    <div class="word-box">
+      <strong>Word bank:</strong> &nbsp; formed &nbsp;·&nbsp; inform &nbsp;·&nbsp; reform &nbsp;·&nbsp; formal &nbsp;·&nbsp; uniform &nbsp;·&nbsp; forming
+    </div>
+
+    <p class="section-prompt">Choose the best word from the bank to complete each sentence.</p>
+
+    <ul class="sentence-list">
+      <li class="sentence-item">
+        <span class="sentence-num">1.</span>
+        <span class="sentence-text">The students wore a <input type="text" class="sent-blank" placeholder="________"> to school every day.</span>
+      </li>
+      <li class="sentence-item">
+        <span class="sentence-num">2.</span>
+        <span class="sentence-text">The teacher will <input type="text" class="sent-blank" placeholder="________"> us about the field trip tomorrow.</span>
+      </li>
+      <li class="sentence-item">
+        <span class="sentence-num">3.</span>
+        <span class="sentence-text">We <input type="text" class="sent-blank" placeholder="________"> a team to clean up the playground.</span>
+      </li>
+      <li class="sentence-item">
+        <span class="sentence-num">4.</span>
+        <span class="sentence-text">The scientists are <input type="text" class="sent-blank" placeholder="________"> a plan to protect the coral reef.</span>
+      </li>
+      <li class="sentence-item">
+        <span class="sentence-num">5.</span>
+        <span class="sentence-text">The community voted to <input type="text" class="sent-blank" placeholder="________"> the rules so they would be more fair.</span>
+      </li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 5: BUILD YOUR OWN WORD SUM -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">5</div>
+      <div class="section-title">Build Your Own Word Sum</div>
+    </div>
+
+    <p class="section-prompt">Add your own prefix or suffix to &lt;form&gt;. Write the word sum, the finished word, and what you think it means.</p>
+
+    <div class="byo-grid">
+      <div class="byo-card">
+        <div class="byo-label">Word Sum 1 — Add a suffix</div>
+        <div class="byo-sum-line">
+          <span class="byo-base">form</span>
+          <span class="byo-plus">+</span>
+          <input type="text" class="byo-input" placeholder="suffix">
+          <span class="byo-plus">→</span>
+        </div>
+        <div class="byo-result-line">
+          Word: <input type="text" class="byo-result-input" placeholder="result">
+        </div>
+        <div class="byo-meaning-label">What does it mean?</div>
+        <input type="text" class="byo-meaning-input" placeholder="write your idea">
+      </div>
+
+      <div class="byo-card">
+        <div class="byo-label">Word Sum 2 — Add a prefix</div>
+        <div class="byo-sum-line">
+          <input type="text" class="byo-input" placeholder="prefix">
+          <span class="byo-plus">+</span>
+          <span class="byo-base">form</span>
+          <span class="byo-plus">→</span>
+        </div>
+        <div class="byo-result-line">
+          Word: <input type="text" class="byo-result-input" placeholder="result">
+        </div>
+        <div class="byo-meaning-label">What does it mean?</div>
+        <input type="text" class="byo-meaning-input" placeholder="write your idea">
+      </div>
+
+      <div class="byo-card">
+        <div class="byo-label">Word Sum 3 — Your choice!</div>
+        <div class="byo-sum-line">
+          <input type="text" class="byo-input" placeholder="prefix">
+          <span class="byo-plus">+</span>
+          <span class="byo-base">form</span>
+          <span class="byo-plus">+</span>
+          <input type="text" class="byo-input" placeholder="suffix">
+          <span class="byo-plus">→</span>
+        </div>
+        <div class="byo-result-line">
+          Word: <input type="text" class="byo-result-input" placeholder="result">
+        </div>
+        <div class="byo-meaning-label">What does it mean?</div>
+        <input type="text" class="byo-meaning-input" placeholder="write your idea">
+      </div>
+
+      <div class="byo-card">
+        <div class="byo-label">Challenge — 3 morphemes!</div>
+        <div class="byo-sum-line" style="font-size:13px">
+          <input type="text" class="byo-input" placeholder="prefix" style="width:70px">
+          <span class="byo-plus">+</span>
+          <span class="byo-base">form</span>
+          <span class="byo-plus">+</span>
+          <input type="text" class="byo-input" placeholder="suffix" style="width:70px">
+        </div>
+        <div class="byo-result-line" style="margin-top:6px">
+          Word: <input type="text" class="byo-result-input" placeholder="result">
+        </div>
+        <div class="byo-meaning-label">What does it mean?</div>
+        <input type="text" class="byo-meaning-input" placeholder="write your idea">
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- REFLECTION -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">💬</div>
+      <div class="section-title">What did we notice?</div>
+    </div>
+
+    <div class="reflection-box">
+      <div class="reflection-q">What stays the same in every &lt;form&gt; family word? What changes?</div>
+      <textarea class="reflection-textarea" placeholder="Write your thinking here..."></textarea>
+      <div class="reflection-lines">
+        <div class="reflection-line"></div>
+        <div class="reflection-line"></div>
+        <div class="reflection-line"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .page -->
+
+</body>
+</html>
