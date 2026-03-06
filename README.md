@@ -22,7 +22,7 @@ Resources designed for the Meaning-First Literacy™ public library.
 
 | Lesson | Band | Description |
 |--------|------|-------------|
-| [Word Scientist: &lt;form&gt;](program/lokahi-form-lesson.html) | Band 3 · Grades 3–4+ | Full 5-activity investigation of the base &lt;form&gt; — meaning anchor, word sum builder, family matrix, reading passage, and grapheme function. Includes text-to-speech and drag-to-answer accommodations. |
+| [Word Scientist: &lt;form&gt;](program/form/lesson.html) | Band 3 · Grades 3–4+ | Full 5-activity investigation of the base &lt;form&gt; — meaning anchor, word sum builder, family matrix, reading passage, and grapheme function. Includes text-to-speech and drag-to-answer accommodations. |
 
 ---
 
@@ -63,7 +63,9 @@ All program lessons include or are being built toward:
 ```
 /
 ├── program/
-│   └── lokahi-form-lesson.html     ← Band 3 · <form> investigation
+│   └── form/
+│       ├── index.html              ← <form> hub page
+│       └── lesson.html             ← Word Scientist interactive lesson
 ├── student/
 │   ├── Naval_Ships_Assignment.html
 │   ├── Cats_Informational_Assignment.html
