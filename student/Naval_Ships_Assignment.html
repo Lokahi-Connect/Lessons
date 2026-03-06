@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naval Ships Around the World — Part 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0b1d33; --deep:#0d2b4e; --ocean:#0e4f8c; --wave:#1976d2;
+  --foam:#e8f4fd; --gold:#f0a500; --gold-pale:#fff4d6; --amber:#e07b00;
+  --teal:#007a6e; --teal-pale:#d0f0ec; --sage:#2e7d32; --sage-pale:#e8f5e9;
+  --lilac:#6a3fa0; --lilac-pale:#f0e8ff; --coral:#c0392b; --coral-pale:#fdecea;
+  --white:#ffffff; --off:#f7f9fc; --border:#dce8f4; --muted:#5a7a99; --text:#1a2e42;
+  --rsm:10px; --rmd:16px; --rlg:22px; --rxl:32px;
+  --sh-sm:0 2px 8px rgba(11,29,51,.08);
+  --sh-md:0 6px 24px rgba(11,29,51,.12);
+  --sh-lg:0 16px 48px rgba(11,29,51,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* OCEAN BG */
+.ocean-bg{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 20% 10%,#1a4a7a 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 80%,#0a2540 0%,transparent 60%),
+             linear-gradient(170deg,#0d2b4e 0%,#0a1f38 50%,#061528 100%);
+  overflow:hidden}
+.ocean-bg::before{content:'';position:absolute;bottom:0;left:-50%;width:200%;height:200px;
+  background:rgba(255,255,255,.03);border-radius:50% 50% 0 0;animation:swell 8s ease-in-out infinite}
+.ocean-bg::after{content:'';position:absolute;bottom:0;left:-50%;width:200%;height:140px;
+  background:rgba(255,255,255,.025);border-radius:50% 50% 0 0;animation:swell 12s ease-in-out infinite reverse}
+@keyframes swell{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(-20px) scaleX(1.05)}}
+.particle{position:fixed;border-radius:50%;background:rgba(255,255,255,.06);
+  animation:drift linear infinite;pointer-events:none;z-index:0}
+@keyframes drift{from{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}to{transform:translateY(-20px) rotate(360deg);opacity:0}}
+
+/* LAYOUT */
+#app{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* HERO */
+.hero{text-align:center;padding:52px 24px 44px;position:relative}
+.hero-anchor{font-size:clamp(3.5rem,10vw,6rem);display:block;
+  filter:drop-shadow(0 0 24px rgba(240,165,0,.5));animation:anchorFloat 4s ease-in-out infinite;margin-bottom:4px}
+@keyframes anchorFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-eyebrow{font-family:'Bebas Neue',sans-serif;letter-spacing:4px;font-size:.85rem;
+  color:var(--gold);text-transform:uppercase;margin-bottom:10px;opacity:.9}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,8vw,4.2rem);color:var(--white);
+  line-height:1.0;letter-spacing:1px;text-shadow:0 4px 24px rgba(0,0,0,.4);margin-bottom:10px}
+.hero h1 span{color:var(--gold);display:block;font-size:.55em;letter-spacing:3px;opacity:.95}
+.hero-meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(8px);color:rgba(255,255,255,.9);border-radius:30px;
+  padding:5px 16px;font-size:.78rem;font-weight:700}
+.hero-div{width:60px;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  border-radius:2px;margin:0 auto 20px}
+.badge-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.85);border-radius:8px;padding:6px 14px;font-size:.78rem;font-weight:700}
+
+/* STICKY NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;
+  background:rgba(11,29,51,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:12px 16px;margin:0 -16px 28px}
+.prog-track{height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;margin-bottom:12px}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),#ffd54f);
+  border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px rgba(240,165,0,.6)}
+.step-tracker{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.si{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:transform .2s}
+.si:hover{transform:translateY(-2px)}
+.sd{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.1);
+  border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.78rem;color:rgba(255,255,255,.5);transition:all .3s}
+.sd.active{background:var(--gold);border-color:var(--amber);color:var(--ink);
+  box-shadow:0 0 14px rgba(240,165,0,.5);transform:scale(1.12)}
+.sd.done{background:var(--sage);border-color:#1b5e20;color:white}
+.sl{font-size:.62rem;font-weight:700;color:rgba(255,255,255,.4);text-align:center;max-width:58px}
+.si.ai .sl{color:var(--gold)}
+
+/* CARDS */
+.card{background:var(--white);border-radius:var(--rxl);box-shadow:var(--sh-lg);
+  margin-bottom:0;overflow:hidden;display:none}
+.card.visible{display:block;animation:cardIn .45s cubic-bezier(.34,1.28,.64,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cb{height:6px}
+.cb-green{background:linear-gradient(90deg,#2e7d32,#43a047)}
+.cb-navy{background:linear-gradient(90deg,#0d2b4e,#1565a0)}
+.cb-ocean{background:linear-gradient(90deg,#0e4f8c,#42a5f5)}
+.cb-gold{background:linear-gradient(90deg,#f0a500,#ffd54f)}
+.cb-teal{background:linear-gradient(90deg,#007a6e,#26a69a)}
+.cb-amber{background:linear-gradient(90deg,#e07b00,#ffa726)}
+.cb-coral{background:linear-gradient(90deg,#c0392b,#ef5350)}
+.ch{display:flex;align-items:center;gap:14px;padding:22px 28px 16px;border-bottom:1.5px solid var(--border)}
+.ch-icon{font-size:2.2rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.1))}
+.ch-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.5px;color:var(--deep);line-height:1.1}
+.ch-sub{font-size:.8rem;font-weight:600;color:var(--muted);margin-top:2px}
+.cbody{padding:24px 28px}
+
+/* CHECK-IN */
+.zone-panel{background:var(--sage-pale);border:2px solid #a5d6a7;border-radius:var(--rlg);padding:20px 22px;margin-bottom:20px}
+.zone-panel h3{font-size:1rem;font-weight:800;color:var(--sage);margin-bottom:6px}
+.zone-panel p{font-size:.88rem;color:#3a5a3c;margin-bottom:14px;line-height:1.6}
+.zbtns{display:flex;gap:10px;flex-wrap:wrap}
+.zbtn{padding:11px 18px;border-radius:30px;border:2.5px solid transparent;
+  font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s}
+.zbtn:hover{transform:translateY(-2px);box-shadow:var(--sh-sm)}
+.zg{background:#c8e6c9;border-color:#66bb6a;color:#1b5e20}
+.zy{background:#fff9c4;border-color:#fdd835;color:#6d4c00}
+.zr{background:#ffcdd2;border-color:#ef9a9a;color:#b71c1c}
+.zbtn.zsel{border-width:3px;transform:translateY(-2px) scale(1.04);box-shadow:var(--sh-md)}
+#zmsg{margin-top:12px;font-size:.9rem;font-weight:700;min-height:22px;padding:8px 12px;border-radius:8px}
+#zmsg.show{background:rgba(46,125,50,.1)}
+.int-panel{background:linear-gradient(135deg,#e3f2fd,#e8f5e9);border:2px solid #90caf9;
+  border-radius:var(--rlg);padding:20px 22px;margin-bottom:20px}
+.int-panel h3{font-size:1rem;font-weight:800;color:var(--ocean);margin-bottom:6px}
+.int-panel p{font-size:.88rem;color:#1a3f66;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{padding:10px 18px;border-radius:30px;border:2px solid #90caf9;background:white;color:var(--ocean);
+  font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.chip:hover{background:var(--ocean);color:white;transform:translateY(-1px)}
+.chip.on{background:var(--ocean);color:white;border-color:var(--deep)}
+.ctx-note{background:var(--foam);border-left:4px solid var(--wave);
+  border-radius:0 var(--rmd) var(--rmd) 0;padding:14px 18px;font-size:.9rem;line-height:1.75;color:var(--text)}
+
+/* REVIEW */
+.rcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:20px}
+.rccard{background:var(--white);border-radius:var(--rmd);padding:16px;
+  border:1.5px solid var(--border);border-top:4px solid var(--gold);
+  box-shadow:var(--sh-sm);transition:transform .2s,box-shadow .2s}
+.rccard:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.rclbl{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.rcval{font-size:.9rem;font-weight:600;color:var(--text);line-height:1.6}
+.chrow{background:var(--gold-pale);border:2px solid #f9d675;border-radius:var(--rlg);padding:18px 20px}
+.chrow h3{font-size:.95rem;font-weight:800;color:#6d4c00;margin-bottom:12px}
+.chopts{display:flex;flex-wrap:wrap;gap:10px}
+.chopt{padding:10px 18px;border-radius:12px;border:2px solid #f9d675;background:white;color:#6d4c00;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s}
+.chopt:hover{background:var(--gold);color:var(--ink)}
+.chopt.on{background:var(--gold);color:var(--ink);border-color:var(--amber)}
+
+/* PASSAGE */
+.rprompt{display:flex;align-items:flex-start;gap:10px;background:linear-gradient(135deg,#e3f2fd,#f0f7ff);
+  border-radius:var(--rmd);padding:14px 18px;font-size:.9rem;line-height:1.7;
+  margin-bottom:18px;border-left:4px solid var(--wave)}
+.mbtn-row{display:flex;gap:8px;margin-bottom:18px}
+.mbtn{padding:9px 18px;border-radius:20px;border:2px solid var(--ocean);background:white;color:var(--ocean);
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s}
+.mbtn.on{background:var(--ocean);color:white}
+.pscroll{background:#fffdf7;border:1.5px solid #e8dfc8;border-radius:var(--rlg);
+  padding:28px 32px;font-family:'Lora',serif;font-size:1.1rem;line-height:2.1;color:#1a1a2e;
+  margin-bottom:18px;box-shadow:inset 0 2px 8px rgba(0,0,0,.04),var(--sh-sm);position:relative}
+.pscroll::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--deep),var(--ocean),var(--deep));
+  border-radius:var(--rlg) var(--rlg) 0 0}
+.ptitle{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:1px;color:var(--deep);
+  margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid #e8dfc8}
+.pchunk{margin-bottom:18px}
+.pchunk:last-child{margin-bottom:0}
+.mb{font-weight:700;border-bottom:3px solid var(--gold);padding-bottom:1px}
+.ms{color:var(--teal);font-style:italic;font-weight:600}
+.scard{display:none;background:#fffdf7;border:1.5px solid #e8dfc8;border-left:6px solid var(--wave);
+  border-radius:var(--rmd);padding:20px 24px;font-family:'Lora',serif;font-size:1.1rem;
+  line-height:1.95;margin-bottom:14px;box-shadow:var(--sh-sm);animation:cardIn .3s ease}
+.scard.on{display:block}
+.snav-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.snvb{padding:11px 22px;border-radius:25px;border:none;font-family:'Nunito',sans-serif;
+  font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s}
+.snvb:hover:not(:disabled){transform:scale(1.04);box-shadow:var(--sh-md)}
+.snvb:disabled{opacity:.35;cursor:not-allowed}
+.snv-p{background:var(--off);color:var(--deep);border:2px solid var(--border)}
+.snv-n{background:var(--ocean);color:white}
+.sctr{font-size:.8rem;font-weight:700;color:var(--muted);margin-left:auto}
+.mleg{display:flex;gap:20px;flex-wrap:wrap;background:var(--off);border-radius:var(--rsm);
+  padding:12px 16px;font-size:.83rem;font-weight:700;margin-bottom:14px}
+.ldot{display:flex;align-items:center;gap:8px}
+.ldsw{height:3px;width:28px;border-radius:2px}
+.gbox{background:var(--lilac-pale);border-radius:var(--rmd);padding:16px 20px}
+.gbox h4{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--lilac);margin-bottom:10px}
+.gi{font-size:.9rem;margin-bottom:7px;line-height:1.5}
+.gw{font-weight:800;color:var(--lilac)}
+
+/* WORD SUMS */
+.bbuilder{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rlg);
+  padding:22px;margin-bottom:16px}
+.bbuilder h4{font-size:1rem;font-weight:800;color:var(--deep);margin-bottom:4px}
+.bbuilder p{font-size:.85rem;color:var(--muted);margin-bottom:14px}
+.track{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.tile{padding:12px 20px;border-radius:10px;font-weight:900;font-size:.95rem;
+  cursor:pointer;border:2.5px solid transparent;transition:all .2s;user-select:none;box-shadow:var(--sh-sm)}
+.tile:hover:not(.used){transform:translateY(-3px) scale(1.04);box-shadow:var(--sh-md)}
+.tb{background:var(--gold-pale);border-color:var(--gold);color:#5a3a00}
+.ts{background:var(--teal-pale);border-color:var(--teal);color:#003d38}
+.tile.used{opacity:.35;transform:none!important;cursor:not-allowed}
+.stage{background:white;border:2px dashed var(--border);border-radius:var(--rmd);
+  padding:16px 20px;min-height:58px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:1.05rem;font-weight:700;color:var(--deep);transition:border-color .2s}
+.stage.hc{border-color:var(--ocean);border-style:solid}
+.spb{background:var(--gold-pale);color:#5a3a00;padding:5px 12px;border-radius:7px;font-weight:900}
+.sps{background:var(--teal-pale);color:#003d38;padding:5px 12px;border-radius:7px;font-style:italic;font-weight:700}
+.spar{color:var(--amber);font-weight:900;font-size:1.3rem}
+.spres{font-size:1.25rem;font-weight:900;color:var(--deep);letter-spacing:-.3px}
+.shint{font-size:.88rem;color:#aaa;font-weight:600}
+.bacts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.abtn{padding:10px 20px;border-radius:25px;border:none;font-family:'Nunito',sans-serif;
+  font-weight:800;font-size:.85rem;cursor:pointer;transition:all .2s}
+.abtn:hover{transform:scale(1.04);box-shadow:var(--sh-md)}
+.aclr{background:var(--coral-pale);color:var(--coral)}
+.achk{background:var(--gold);color:var(--ink)}
+.arev{background:var(--ocean);color:white}
+.fb{margin-top:12px;padding:12px 16px;border-radius:10px;font-weight:700;font-size:.9rem;
+  display:none;line-height:1.6}
+.fbj{background:var(--foam);border:2px solid #90caf9;color:#0d47a1}
+.fbh{background:#fff8e1;border:2px solid #fdd835;color:#6d4c00}
+.revpanel{display:none;background:var(--sage-pale);border:2px solid #a5d6a7;
+  border-radius:var(--rlg);padding:22px;margin-top:16px;animation:cardIn .35s ease}
+.revpanel h4{font-size:.9rem;font-weight:800;color:var(--sage);margin-bottom:14px}
+.sumlist{display:flex;flex-direction:column;gap:9px;font-family:'Lora',serif;font-size:.95rem}
+.sument{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.seq{color:var(--muted);font-weight:600}
+.sword{font-weight:700;color:var(--deep)}
+.sdef{font-size:.8rem;color:var(--muted);font-style:italic}
+.jnote{margin-top:14px;padding:12px 16px;background:white;border-radius:var(--rsm);
+  font-size:.87rem;font-weight:700;color:#0d47a1;line-height:1.6}
+
+/* MATRIX */
+.mxwrap{overflow-x:auto;margin:16px 0}
+.mxtbl{width:100%;border-collapse:separate;border-spacing:4px;font-size:.9rem}
+.mxtbl th{background:var(--deep);color:white;padding:10px 14px;border-radius:8px;
+  font-weight:800;text-align:center;white-space:nowrap}
+.mxtbl td{background:white;border:2px solid var(--border);border-radius:8px;
+  padding:10px 14px;text-align:center;font-weight:600;transition:background .15s}
+.mxtbl tr:hover td:not(.btd):not(.jtd){background:var(--foam)}
+.btd{background:var(--gold-pale)!important;border-color:var(--gold)!important;font-weight:800}
+.rtd strong{color:var(--deep)}
+.jtd{background:var(--foam)!important;color:var(--ocean);font-style:italic;
+  font-size:.82rem;border-color:#90caf9!important}
+.obsbox{background:var(--foam);border-radius:var(--rmd);padding:18px 20px;margin-top:16px}
+.obsbox h4{font-size:.9rem;font-weight:800;color:var(--deep);margin-bottom:10px}
+.obsbox ul{padding-left:20px;font-size:.9rem;line-height:2;color:var(--text)}
+.etymbox{background:var(--gold-pale);border:2px solid #f9d675;border-radius:var(--rmd);
+  padding:18px 20px;margin-top:14px}
+.etymbox h4{font-size:.9rem;font-weight:800;color:#6d4c00;margin-bottom:8px}
+.etymbox p{font-size:.9rem;line-height:1.75;color:#4e342e}
+
+/* INQUIRY */
+.iqitem{display:none;background:white;border:1.5px solid var(--border);
+  border-left:5px solid var(--ocean);border-radius:0 var(--rmd) var(--rmd) 0;
+  padding:20px 22px;margin-bottom:14px;box-shadow:var(--sh-sm)}
+.iqitem.on{display:block;animation:cardIn .35s ease}
+.iqtype{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  color:var(--ocean);margin-bottom:7px}
+.iqq{font-weight:700;color:var(--deep);font-size:1rem;margin-bottom:10px;line-height:1.5}
+.iqframe{background:var(--off);border-radius:var(--rsm);padding:10px 14px;
+  font-size:.87rem;font-weight:600;color:#5a6e80;margin-bottom:10px;line-height:1.6}
+.iqframe em{color:#aaa;font-style:italic}
+.resp{width:100%;min-height:62px;border:2px solid var(--border);border-radius:var(--rsm);
+  padding:10px 14px;font-family:'Nunito',sans-serif;font-size:.95rem;
+  resize:vertical;color:var(--text);transition:border-color .2s}
+.resp:focus{outline:none;border-color:var(--wave);box-shadow:0 0 0 3px rgba(21,101,192,.12)}
+.nqbtn{padding:10px 22px;border-radius:25px;border:2px solid var(--ocean);background:white;color:var(--ocean);
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+  cursor:pointer;transition:all .2s;display:none;margin-bottom:14px}
+.nqbtn.show{display:inline-flex;align-items:center;gap:6px}
+.nqbtn:hover{background:var(--ocean);color:white;transform:translateX(3px)}
+
+/* CELEBRATION */
+.celebrate{text-align:center;padding:28px 20px 24px}
+.cstars{font-size:3.2rem;letter-spacing:10px;display:block;margin-bottom:12px;
+  animation:starPop .6s cubic-bezier(.34,1.5,.64,1)}
+@keyframes starPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.ctitle{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:1px;color:var(--deep)}
+.cbody-txt{font-size:1rem;color:#444;margin-top:10px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.75}
+.stamps{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.stamp{background:linear-gradient(135deg,var(--deep),var(--ocean));color:white;border-radius:var(--rmd);
+  padding:14px 18px;font-weight:800;font-size:.88rem;text-align:center;line-height:1.5;
+  box-shadow:var(--sh-md);animation:cardIn .4s cubic-bezier(.34,1.28,.64,1) both}
+.stamp:nth-child(1){animation-delay:.1s}.stamp:nth-child(2){animation-delay:.2s}
+.stamp:nth-child(3){animation-delay:.3s}.stamp:nth-child(4){animation-delay:.4s}
+.closebox{background:var(--foam);border-radius:var(--rlg);padding:22px 24px;margin-top:20px;border-left:5px solid var(--wave)}
+.closebox h3{font-size:1rem;font-weight:800;color:var(--deep);margin-bottom:10px}
+.closebox p{font-size:.95rem;line-height:1.8;color:var(--text)}
+.closeprompt{margin-top:14px;font-size:.9rem;font-weight:700;color:var(--ocean)}
+
+/* NAV BAR */
+.navbar{display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;border-top:1.5px solid var(--border);gap:12px;flex-wrap:wrap;background:var(--off)}
+.nbtn{padding:13px 28px;border-radius:30px;border:none;font-family:'Nunito',sans-serif;
+  font-weight:800;font-size:.95rem;cursor:pointer;transition:all .25s;
+  display:flex;align-items:center;gap:8px}
+.nbtn:hover{transform:scale(1.04);box-shadow:var(--sh-md)}
+.nbtn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.nprev{background:white;color:var(--deep);border:2px solid var(--border)}
+.nnext{background:linear-gradient(135deg,var(--ocean),var(--wave));color:white}
+
+/* UTILS */
+.intro{font-size:.95rem;line-height:1.85;color:var(--text);margin-bottom:20px}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+textarea:focus-visible{outline:3px solid var(--wave)}
+@media(max-width:600px){
+  .cbody{padding:18px 16px}.pscroll{padding:20px 18px}
+  .navbar{padding:16px}.mxtbl{font-size:.78rem}}
+</style>
+</head>
+<body>
+<div class="ocean-bg"></div>
+<div id="app">
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-anchor">⚓</span>
+  <p class="hero-eyebrow">Lokahi Connect · SWI · Band 3</p>
+  <h1>Naval Ships Around the World<span>Part 2 — Word Scientists Set Sail</span></h1>
+  <div class="hero-meta">
+    <span class="hero-pill">Grade 4</span>
+    <span class="hero-pill">Meaning-First</span>
+    <span class="hero-pill">Base &lt;nav&gt;</span>
+  </div>
+  <div class="hero-div"></div>
+  <div class="badge-row">
+    <span class="badge">📖 Reading Passage</span>
+    <span class="badge">🔬 Word Investigation</span>
+    <span class="badge">⚙️ Word Sums</span>
+    <span class="badge">🧩 Matrix</span>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <div class="prog-track"><div class="prog-fill" id="prog" style="width:14%"></div></div>
+  <div class="step-tracker" id="tracker"></div>
+</div>
+
+<!-- ── STEP 0: CHECK-IN ── -->
+<div class="card visible" id="step-0">
+  <div class="cb cb-green"></div>
+  <div class="ch">
+    <span class="ch-icon">🌿</span>
+    <div><div class="ch-title">Before We Begin</div><div class="ch-sub">Regulation check-in + set your intention</div></div>
+  </div>
+  <div class="cbody">
+    <div class="zone-panel">
+      <h3>🌡️ How are you feeling right now?</h3>
+      <p>Tap the zone that feels right. There's no wrong answer — just good information!</p>
+      <div class="zbtns">
+        <button class="zbtn zg" onclick="pickZone(this,'🟢 Green zone — You are ready to roll! Let\'s get started.')">🟢 Ready to go</button>
+        <button class="zbtn zy" onclick="pickZone(this,'🟡 Yellow zone — That\'s okay! Take a breath and start slow. You can do this.')">🟡 A little wiggly</button>
+        <button class="zbtn zr" onclick="pickZone(this,'🔴 Red zone — Thank you for letting me know. Take your time. Come back when ready.')">🔴 Not quite ready</button>
+      </div>
+      <div id="zmsg"></div>
+    </div>
+    <div class="int-panel">
+      <h3>🎯 What do you want to do today?</h3>
+      <p>Pick one or more — this is YOUR learning.</p>
+      <div class="chips">
+        <div class="chip" onclick="this.classList.toggle('on')">📖 Read about ships</div>
+        <div class="chip" onclick="this.classList.toggle('on')">🔬 Investigate words</div>
+        <div class="chip" onclick="this.classList.toggle('on')">⚙️ Build word sums</div>
+        <div class="chip" onclick="this.classList.toggle('on')">🧩 Explore the matrix</div>
+        <div class="chip" onclick="this.classList.toggle('on')">✍️ Answer questions</div>
+      </div>
+    </div>
+    <div class="ctx-note">
+      📌 <strong>What we're doing today:</strong> In Part 1, we explored the base <strong>&lt;nav&gt;</strong> and how it connects to ships and navigation. In Part 2, we go deeper — reading a passage, building word sums, and exploring a full word matrix. You're a Word Scientist. Let's investigate!
+    </div>
+  </div>
+  <div class="navbar"><span></span><button class="nbtn nnext" onclick="go(1)">I'm ready — Let's go! →</button></div>
+</div>
+
+<!-- ── STEP 1: REVIEW ── -->
+<div class="card" id="step-1">
+  <div class="cb cb-navy"></div>
+  <div class="ch">
+    <span class="ch-icon">🔄</span>
+    <div><div class="ch-title">Part 1 Recap</div><div class="ch-sub">What do we remember?</div></div>
+  </div>
+  <div class="cbody">
+    <p class="intro">Before new learning, let's reconnect to what we already know. This is how scientists build knowledge — one piece at a time.</p>
+    <div class="rcgrid">
+      <div class="rccard"><div class="rclbl">Our Base</div><div class="rcval">&lt;nav&gt;<br><em>meaning: to steer or guide a ship</em></div></div>
+      <div class="rccard"><div class="rclbl">Word Family (so far)</div><div class="rcval">navigate · naval · navigator · navigation</div></div>
+      <div class="rccard"><div class="rclbl">Key Suffixes</div><div class="rcval">&lt;-al&gt; = "relating to"<br>&lt;-ion&gt; = "the act of"<br>&lt;-or&gt; = "one who"</div></div>
+      <div class="rccard"><div class="rclbl">Ships We Met</div><div class="rcval">Aircraft carriers, submarines, destroyers, frigates</div></div>
+      <div class="rccard"><div class="rclbl">Join Check</div><div class="rcval">nav + al → <strong>naval</strong> ✅ No change needed</div></div>
+      <div class="rccard"><div class="rclbl">Meaning First!</div><div class="rcval">We always ask "What does it <em>mean</em>?" before "How does it sound?"</div></div>
+    </div>
+    <div class="chrow">
+      <h3>👉 Choose how to review:</h3>
+      <div class="chopts">
+        <button class="chopt" onclick="solo(this)">🗣️ Say it out loud</button>
+        <button class="chopt" onclick="solo(this)">✍️ Write it down</button>
+        <button class="chopt" onclick="solo(this)">🧠 Think it quietly</button>
+        <button class="chopt" onclick="solo(this)">👆 Just read the cards</button>
+      </div>
+    </div>
+  </div>
+  <div class="navbar"><button class="nbtn nprev" onclick="go(0)">← Back</button><button class="nbtn nnext" onclick="go(2)">Next: Reading Passage →</button></div>
+</div>
+
+<!-- ── STEP 2: PASSAGE ── -->
+<div class="card" id="step-2">
+  <div class="cb cb-ocean"></div>
+  <div class="ch">
+    <span class="ch-icon">📖</span>
+    <div><div class="ch-title">Reading Passage</div><div class="ch-sub">Ships That Navigate the World</div></div>
+  </div>
+  <div class="cbody">
+    <div class="rprompt">
+      <span style="font-size:1.2rem;flex-shrink:0;margin-top:1px">🔍</span>
+      <span><strong>Your job while reading:</strong> Spot every word from the base <strong>&lt;nav&gt;</strong>. Highlight in your mind, say them out loud, or write them down.</span>
+    </div>
+    <div class="mbtn-row">
+      <button class="mbtn on" id="mbF" onclick="setMode('full')">📄 Full passage</button>
+      <button class="mbtn" id="mbC" onclick="setMode('chunk')">🃏 One sentence at a time</button>
+    </div>
+
+    <!-- FULL -->
+    <div id="fullMode">
+      <div class="pscroll">
+        <div class="ptitle">⚓ Ships That Navigate the World</div>
+        <div class="pchunk"><span class="mb">Nav</span><span class="ms">al</span> forces have existed for thousands of years. Long before engines or computers, sailors learned to <span class="mb">nav</span><span class="ms">igate</span> using the stars, the wind, and the shape of the coastline.</div>
+        <div class="pchunk">Today, every major country that borders an ocean has a <span class="mb">nav</span><span class="ms">al</span> fleet — a group of ships organized to protect that country's waters. These fleets include many kinds of vessels, from small patrol boats to enormous aircraft carriers.</div>
+        <div class="pchunk">The people who steer these ships are called <span class="mb">nav</span><span class="ms">igator</span>s. A <span class="mb">nav</span><span class="ms">igator</span> studies charts, reads instruments, and plans the safest route across open water. <span class="mb">Nav</span><span class="ms">igation</span> is both a science and a skill — it takes years of training to master.</div>
+        <div class="pchunk">Some ships are built for speed, like destroyers and frigates. Others are built for stealth, like submarines, which can <span class="mb">nav</span><span class="ms">igate</span> deep beneath the surface of the sea without being seen. These underwater vessels require highly skilled <span class="mb">nav</span><span class="ms">igator</span>s to avoid hazards hidden in the dark.</div>
+        <div class="pchunk" style="margin-bottom:0">Across the world's <span class="mb">nav</span><span class="ms">ies</span> — from the United States to Japan to Brazil — the technology changes, but the goal is the same: to <span class="mb">nav</span><span class="ms">igate</span> safely, to protect, and to serve.</div>
+      </div>
+    </div>
+
+    <!-- CHUNKED -->
+    <div id="chunkMode" style="display:none">
+      <div class="scard on" id="sc-0"><span class="mb">Nav</span><span class="ms">al</span> forces have existed for thousands of years.</div>
+      <div class="scard" id="sc-1">Long before engines or computers, sailors learned to <span class="mb">nav</span><span class="ms">igate</span> using the stars, the wind, and the shape of the coastline.</div>
+      <div class="scard" id="sc-2">Today, every major country that borders an ocean has a <span class="mb">nav</span><span class="ms">al</span> fleet — a group of ships organized to protect that country's waters.</div>
+      <div class="scard" id="sc-3">These fleets include many kinds of vessels, from small patrol boats to enormous aircraft carriers.</div>
+      <div class="scard" id="sc-4">The people who steer these ships are called <span class="mb">nav</span><span class="ms">igator</span>s.</div>
+      <div class="scard" id="sc-5">A <span class="mb">nav</span><span class="ms">igator</span> studies charts, reads instruments, and plans the safest route across open water.</div>
+      <div class="scard" id="sc-6"><span class="mb">Nav</span><span class="ms">igation</span> is both a science and a skill — it takes years of training to master.</div>
+      <div class="scard" id="sc-7">Some ships are built for speed, like destroyers and frigates. Others are built for stealth, like submarines.</div>
+      <div class="scard" id="sc-8">Submarines can <span class="mb">nav</span><span class="ms">igate</span> deep beneath the surface of the sea without being seen.</div>
+      <div class="scard" id="sc-9">Across the world's <span class="mb">nav</span><span class="ms">ies</span> — from the United States to Japan to Brazil — the goal is the same: to <span class="mb">nav</span><span class="ms">igate</span> safely, to protect, and to serve.</div>
+      <div class="snav-row">
+        <button class="snvb snv-p" id="sBtnP" onclick="moveSent(-1)" disabled>← Previous</button>
+        <button class="snvb snv-n" id="sBtnN" onclick="moveSent(1)">Next sentence →</button>
+        <span class="sctr" id="sCtr">Sentence 1 of 10</span>
+      </div>
+    </div>
+
+    <div class="mleg">
+      <div class="ldot"><div class="ldsw" style="background:var(--gold)"></div><span>Gold underline = base &lt;nav&gt;</span></div>
+      <div class="ldot"><div class="ldsw" style="background:var(--teal)"></div><span style="color:var(--teal)">Teal italic = suffix</span></div>
+    </div>
+    <div class="gbox">
+      <h4>📚 Word Support</h4>
+      <div class="gi"><span class="gw">vessel</span> — a large boat or ship</div>
+      <div class="gi"><span class="gw">fleet</span> — a group of ships that belong together</div>
+      <div class="gi"><span class="gw">stealth</span> — moving quietly so you are hard to detect</div>
+      <div class="gi"><span class="gw">hazard</span> — something dangerous that could cause harm</div>
+      <div class="gi"><span class="gw">instrument</span> — a tool used to measure or guide (like a compass or GPS)</div>
+    </div>
+  </div>
+  <div class="navbar"><button class="nbtn nprev" onclick="go(1)">← Back</button><button class="nbtn nnext" onclick="go(3)">Next: Build Word Sums →</button></div>
+</div>
+
+<!-- ── STEP 3: WORD SUMS ── -->
+<div class="card" id="step-3">
+  <div class="cb cb-gold"></div>
+  <div class="ch">
+    <span class="ch-icon">⚙️</span>
+    <div><div class="ch-title">Build the Word Sums</div><div class="ch-sub">Click base first, then add a suffix</div></div>
+  </div>
+  <div class="cbody">
+    <p class="intro">Click the base tile first, then add a suffix. Watch the word sum build! After you assemble the tiles, tap <strong>Check Join</strong> to see if any spelling convention applies.</p>
+
+    <div class="bbuilder">
+      <h4>🔨 Builder 1 — Assemble a word from &lt;nav&gt;</h4>
+      <p>Pick the base, then one suffix:</p>
+      <div class="track" id="rack-1">
+        <div class="tile tb" onclick="addTile(this,'1','nav','base')">nav</div>
+        <div class="tile ts" onclick="addTile(this,'1','-al','suffix')">-al</div>
+        <div class="tile ts" onclick="addTile(this,'1','-igate','suffix')">-igate</div>
+        <div class="tile ts" onclick="addTile(this,'1','-igation','suffix')">-igation</div>
+        <div class="tile ts" onclick="addTile(this,'1','-igator','suffix')">-igator</div>
+        <div class="tile ts" onclick="addTile(this,'1','-ies','suffix')">-ies</div>
+      </div>
+      <div class="stage" id="stage-1"><span class="shint">← Click tiles to build a word sum</span></div>
+      <div class="bacts">
+        <button class="abtn aclr" onclick="clearB('1')">🗑️ Clear</button>
+        <button class="abtn achk" onclick="checkJoin('1')">✅ Check Join</button>
+      </div>
+      <div class="fb" id="fb-1"></div>
+    </div>
+
+    <div class="bbuilder">
+      <h4>🔨 Builder 2 — Try a different combination</h4>
+      <p>Can you build <strong>navigation</strong>? Or <strong>navigators</strong>?</p>
+      <div class="track" id="rack-2">
+        <div class="tile tb" onclick="addTile(this,'2','nav','base')">nav</div>
+        <div class="tile ts" onclick="addTile(this,'2','-al','suffix')">-al</div>
+        <div class="tile ts" onclick="addTile(this,'2','-igate','suffix')">-igate</div>
+        <div class="tile ts" onclick="addTile(this,'2','-igation','suffix')">-igation</div>
+        <div class="tile ts" onclick="addTile(this,'2','-igator','suffix')">-igator</div>
+        <div class="tile ts" onclick="addTile(this,'2','-s','suffix')">-s</div>
+      </div>
+      <div class="stage" id="stage-2"><span class="shint">← Click tiles to build a word sum</span></div>
+      <div class="bacts">
+        <button class="abtn aclr" onclick="clearB('2')">🗑️ Clear</button>
+        <button class="abtn achk" onclick="checkJoin('2')">✅ Check Join</button>
+        <button class="abtn arev" onclick="showReveal()">👁️ Show all word sums</button>
+      </div>
+      <div class="fb" id="fb-2"></div>
+    </div>
+
+    <div class="revpanel" id="reveal">
+      <h4>✅ Complete Word Sum Family — &lt;nav&gt;</h4>
+      <div class="sumlist">
+        <div class="sument"><span class="seq">nav + al →</span><span class="sword">naval</span><span class="sdef">(relating to ships or a navy)</span></div>
+        <div class="sument"><span class="seq">nav + igate →</span><span class="sword">navigate</span><span class="sdef">(to steer or guide a ship)</span></div>
+        <div class="sument"><span class="seq">nav + igation →</span><span class="sword">navigation</span><span class="sdef">(the act of navigating)</span></div>
+        <div class="sument"><span class="seq">nav + igator →</span><span class="sword">navigator</span><span class="sdef">(one who navigates)</span></div>
+        <div class="sument"><span class="seq">nav + igator + s →</span><span class="sword">navigators</span><span class="sdef">(more than one navigator)</span></div>
+        <div class="sument"><span class="seq">nav + ies →</span><span class="sword">navies</span><span class="sdef">(plural of navy)</span></div>
+      </div>
+      <div class="jnote">🔍 <strong>Join Check:</strong> The base &lt;nav&gt; does NOT change at any join. No doubling, no final &lt;e&gt; replacement, no &lt;y&gt;→&lt;i&gt; change. The base stays steady — only the suffixes change!</div>
+    </div>
+  </div>
+  <div class="navbar"><button class="nbtn nprev" onclick="go(2)">← Back</button><button class="nbtn nnext" onclick="go(4)">Next: Matrix →</button></div>
+</div>
+
+<!-- ── STEP 4: MATRIX ── -->
+<div class="card" id="step-4">
+  <div class="cb cb-teal"></div>
+  <div class="ch">
+    <span class="ch-icon">🧩</span>
+    <div><div class="ch-title">Word Matrix</div><div class="ch-sub">The full family of &lt;nav&gt;</div></div>
+  </div>
+  <div class="cbody">
+    <p class="intro">A matrix shows the whole word family in one map. The <strong>base</strong> is in the left column. Suffixes run across the top. Each cell shows the real word formed by combining them.</p>
+    <div class="mxwrap">
+      <table class="mxtbl">
+        <thead><tr><th>BASE</th><th>(none)</th><th>+ -al</th><th>+ -igate</th><th>+ -igation</th><th>+ -igator</th><th>+ -ies</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="btd">&lt;nav&gt;<br><em style="font-size:.72rem;font-weight:400;color:var(--muted)">to steer/guide</em></td>
+            <td class="rtd">navy</td>
+            <td class="rtd"><strong>naval</strong></td>
+            <td class="rtd"><strong>navigate</strong></td>
+            <td class="rtd"><strong>navigation</strong></td>
+            <td class="rtd"><strong>navigator</strong></td>
+            <td class="rtd"><strong>navies</strong></td>
+          </tr>
+          <tr><td colspan="7" class="jtd">🔍 Join Check: The base &lt;nav&gt; is stable — no doubling, no final &lt;e&gt; replacement, no &lt;y&gt;→&lt;i&gt; change at any join. The spelling of the base is preserved across the entire family.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="obsbox">
+      <h4>🧐 What does the matrix show us?</h4>
+      <ul>
+        <li>Every word in the family <strong>shares the same base</strong> &lt;nav&gt;</li>
+        <li>Every word <strong>carries the same core meaning</strong> — something to do with steering or ships</li>
+        <li>The suffixes change the <strong>job the word does in a sentence</strong> (noun, verb, adjective)</li>
+        <li>This is why a <em>navigator</em> is "one who navigates" — the meaning is <em>built in</em> to the word!</li>
+      </ul>
+    </div>
+    <div class="etymbox">
+      <h4>💡 Latin roots — going further</h4>
+      <p>The base &lt;nav&gt; comes from Latin <em>navis</em>, meaning "ship." This is why we also see it in the word <strong>nave</strong> — the long central part of a church, shaped like the hull of a ship. Same base, same ancestry, same idea. Word Scientist bonus!</p>
+    </div>
+  </div>
+  <div class="navbar"><button class="nbtn nprev" onclick="go(3)">← Back</button><button class="nbtn nnext" onclick="go(5)">Next: Inquiry Questions →</button></div>
+</div>
+
+<!-- ── STEP 5: INQUIRY ── -->
+<div class="card" id="step-5">
+  <div class="cb cb-amber"></div>
+  <div class="ch">
+    <span class="ch-icon">🔬</span>
+    <div><div class="ch-title">Word Scientist Questions</div><div class="ch-sub">Observe → Hypothesize → Conclude → Extend</div></div>
+  </div>
+  <div class="cbody">
+    <p class="intro">Real scientists ask questions about what they notice. Take your time — there's no rush. Questions appear one at a time. Use the sentence frames if they help!</p>
+
+    <div class="iqitem on" id="iq-0">
+      <div class="iqtype">👁️ Observe</div>
+      <div class="iqq">Find all the words in the passage that come from the base &lt;nav&gt;. How many did you spot?</div>
+      <div class="iqframe">I noticed <em>___</em> words from the base &lt;nav&gt;. They were: <em>___</em></div>
+      <textarea class="resp" placeholder="Type your answer here, or think it quietly, or say it out loud — your choice!"></textarea>
+    </div>
+
+    <button class="nqbtn show" id="nq1" onclick="showQ(1)">→ Show next question</button>
+
+    <div class="iqitem" id="iq-1">
+      <div class="iqtype">🤔 Hypothesize</div>
+      <div class="iqq">What does the suffix <strong>-al</strong> add to the meaning of &lt;nav&gt;? What about <strong>-igator</strong>? How do you know?</div>
+      <div class="iqframe">The suffix -al makes the word mean <em>___</em>. The suffix -igator means <em>___</em>. I know this because <em>___</em></div>
+      <textarea class="resp" placeholder="Type your thinking here..."></textarea>
+    </div>
+
+    <button class="nqbtn" id="nq2" onclick="showQ(2)">→ Show next question</button>
+
+    <div class="iqitem" id="iq-2">
+      <div class="iqtype">✅ Conclude</div>
+      <div class="iqq">Does the spelling of the base &lt;nav&gt; change across the whole family? What is your evidence?</div>
+      <div class="iqframe">The spelling of &lt;nav&gt; <em>[does / does not]</em> change. My evidence is <em>___</em></div>
+      <textarea class="resp" placeholder="Type your conclusion here..."></textarea>
+    </div>
+
+    <button class="nqbtn" id="nq3" onclick="showQ(3)">→ Show bonus question ✨</button>
+
+    <div class="iqitem" id="iq-3" style="border-left-color:var(--gold)">
+      <div class="iqtype" style="color:var(--amber)">🚀 Extend — Bonus!</div>
+      <div class="iqq">Can you think of another word that <em>might</em> belong to the &lt;nav&gt; family? How would you test whether it really belongs?</div>
+      <div class="iqframe">A word that might belong is <em>___</em>. I would test it by <em>___</em></div>
+      <textarea class="resp" placeholder="Think like a word scientist — what's your hypothesis?"></textarea>
+    </div>
+  </div>
+  <div class="navbar"><button class="nbtn nprev" onclick="go(4)">← Back</button><button class="nbtn nnext" onclick="go(6)">Finish the lesson →</button></div>
+</div>
+
+<!-- ── STEP 6: CELEBRATION ── -->
+<div class="card" id="step-6">
+  <div class="cb cb-coral"></div>
+  <div class="ch">
+    <span class="ch-icon">🏅</span>
+    <div><div class="ch-title">Mission Complete, Word Scientist!</div><div class="ch-sub">Part 2 finished</div></div>
+  </div>
+  <div class="cbody">
+    <div class="celebrate">
+      <span class="cstars">⭐ ⚓ ⭐</span>
+      <div class="ctitle">Part 2 — Complete!</div>
+      <p class="cbody-txt">You did real scientific work today. You read a complex passage, built word sums, explored a matrix, and used your evidence to draw conclusions. That is what word scientists do.</p>
+      <div class="stamps">
+        <div class="stamp">📖<br>Passage Read</div>
+        <div class="stamp">⚙️<br>Word Sums Built</div>
+        <div class="stamp">🧩<br>Matrix Explored</div>
+        <div class="stamp">🔬<br>Questions Answered</div>
+      </div>
+    </div>
+    <div class="closebox">
+      <h3>🌊 One Last Thought</h3>
+      <p>The base <strong>&lt;nav&gt;</strong> — from Latin <em>navis</em>, meaning ship — has been sailing through the English language for thousands of years. Every time you say <em>naval</em>, <em>navigate</em>, or <em>navigation</em>, you are carrying a piece of ancient meaning with you. Words are not random. They are <strong>built with intention</strong>, just like ships.</p>
+      <div class="closeprompt">🎯 What is one thing you will remember from today's lesson?</div>
+      <textarea class="resp" style="margin-top:10px" placeholder="One thing I will remember is..."></textarea>
+    </div>
+  </div>
+  <div class="navbar">
+    <button class="nbtn nprev" onclick="go(5)">← Back</button>
+    <button class="nbtn nnext" onclick="alert('Great work today! Ask your teacher what comes next in the Naval Ships series! ⚓')">🏁 All done!</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+<script>
+// Particles
+(function(){
+  for(let i=0;i<16;i++){
+    const p=document.createElement('div');p.className='particle';
+    const s=[6,8,10,14,18][Math.floor(Math.random()*5)];
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${[18,24,30,36,42][Math.floor(Math.random()*5)]}s;animation-delay:${-Math.random()*40}s`;
+    document.body.appendChild(p);
+  }
+})();
+
+// State
+let cur=0;const TOTAL=7;let sIdx=0;const SMAX=10;
+const B={'1':{parts:[]},'2':{parts:[]}};
+
+// Build tracker
+const LBLS=['Check In','Review','Passage','Word Sums','Matrix','Inquire','Done!'];
+const tracker=document.getElementById('tracker');
+LBLS.forEach((l,i)=>{
+  const item=document.createElement('div');
+  item.className='si'+(i===0?' ai':'');item.id='si'+i;item.onclick=()=>go(i);
+  item.innerHTML=`<div class="sd${i===0?' active':''}" id="sd${i}">${i+1}</div><div class="sl">${l}</div>`;
+  tracker.appendChild(item);
+});
+
+function go(n){
+  document.getElementById('step-'+cur).classList.remove('visible');
+  document.getElementById('sd'+cur).classList.remove('active');
+  document.getElementById('si'+cur).classList.remove('ai');
+  if(n>cur){const d=document.getElementById('sd'+cur);d.classList.add('done');d.textContent='✓';}
+  cur=n;
+  document.getElementById('step-'+n).classList.add('visible');
+  document.getElementById('sd'+n).classList.add('active');
+  document.getElementById('si'+n).classList.add('ai');
+  document.getElementById('prog').style.width=Math.round(n/(TOTAL-1)*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pickZone(btn,msg){
+  document.querySelectorAll('.zbtn').forEach(b=>b.classList.remove('zsel'));
+  btn.classList.add('zsel');
+  const el=document.getElementById('zmsg');el.textContent=msg;el.classList.add('show');
+}
+function solo(btn){document.querySelectorAll('.chopt').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+
+function setMode(m){
+  const isF=m==='full';
+  document.getElementById('fullMode').style.display=isF?'block':'none';
+  document.getElementById('chunkMode').style.display=isF?'none':'block';
+  document.getElementById('mbF').classList.toggle('on',isF);
+  document.getElementById('mbC').classList.toggle('on',!isF);
+  if(!isF){sIdx=0;updSent();}
+}
+function moveSent(d){sIdx=Math.max(0,Math.min(SMAX-1,sIdx+d));updSent();}
+function updSent(){
+  for(let i=0;i<SMAX;i++)document.getElementById('sc-'+i).classList.toggle('on',i===sIdx);
+  document.getElementById('sCtr').textContent='Sentence '+(sIdx+1)+' of '+SMAX;
+  document.getElementById('sBtnP').disabled=sIdx===0;
+  const n=document.getElementById('sBtnN');
+  n.disabled=sIdx===SMAX-1;n.textContent=sIdx===SMAX-1?'✅ All done!':'Next sentence →';
+}
+
+function addTile(el,id,val,type){
+  if(el.classList.contains('used'))return;
+  const b=B[id];
+  if(type==='base'&&b.parts.some(p=>p.type==='base'))return;
+  if(type==='suffix'&&!b.parts.some(p=>p.type==='base')){showFb(id,'h','💡 Start with the base tile first — then add a suffix!');return;}
+  el.classList.add('used');b.parts.push({val,type,el});renderStage(id);
+  document.getElementById('fb-'+id).style.display='none';
+}
+function renderStage(id){
+  const b=B[id],stage=document.getElementById('stage-'+id);
+  if(!b.parts.length){stage.innerHTML='<span class="shint">← Click tiles to build a word sum</span>';stage.classList.remove('hc');return;}
+  stage.classList.add('hc');
+  const base=b.parts.find(p=>p.type==='base'),suffs=b.parts.filter(p=>p.type==='suffix');
+  let h=base?`<span class="spb">${base.val}</span>`:'';
+  suffs.forEach(s=>h+=` <span class="spar">+</span> <span class="sps">${s.val}</span>`);
+  if(base){const w=base.val+suffs.map(s=>s.val.replace(/^-/,'')).join('');h+=` <span class="spar">→</span> <span class="spres">${w}</span>`;}
+  stage.innerHTML=h;
+}
+function clearB(id){B[id].parts.forEach(p=>p.el.classList.remove('used'));B[id].parts=[];renderStage(id);document.getElementById('fb-'+id).style.display='none';}
+function checkJoin(id){
+  if(B[id].parts.length<2){showFb(id,'h','💡 Add a base AND a suffix before checking the join!');return;}
+  showFb(id,'j','🔍 Join Check: The base &lt;nav&gt; stays the same at every join. No doubling, no final &lt;e&gt; replacement, no &lt;y&gt;→&lt;i&gt; change. The base is stable across the whole family — your evidence is strong!');
+}
+function showFb(id,kind,msg){const fb=document.getElementById('fb-'+id);fb.className='fb '+(kind==='j'?'fbj':'fbh');fb.innerHTML=msg;fb.style.display='block';}
+function showReveal(){const r=document.getElementById('reveal');r.style.display='block';r.scrollIntoView({behavior:'smooth'});}
+
+function showQ(n){
+  const q=document.getElementById('iq-'+n);if(q){q.classList.add('on');q.scrollIntoView({behavior:'smooth',block:'start'});}
+  const c=document.getElementById('nq'+n);if(c)c.style.display='none';
+  const nx=document.getElementById('nq'+(n+1));if(nx)nx.classList.add('show');
+}
+</script>
+</body>
+</html>
