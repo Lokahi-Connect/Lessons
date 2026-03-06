@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Educator Sequencing Guide · &lt;form&gt; · Lokahi Connect</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a7a7a;
+    --teal-light: #e8f5f5;
+    --teal-mid: #c2e8e8;
+    --seafoam: #4db8b8;
+    --gold: #b8860b;
+    --gold-light: #fff8e1;
+    --purple: #6b4ea0;
+    --purple-light: #f3eeff;
+    --coral: #c0533a;
+    --coral-light: #fff0ec;
+    --ink: #1a2a2a;
+    --ink-soft: #3a4a4a;
+    --paper: #fdfaf6;
+    --border: #c8d8d8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.7;
+  }
+
+  .screen-toolbar {
+    background: var(--teal);
+    color: white;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .screen-toolbar span { font-size: 13px; opacity: 0.85; }
+  .btn-print {
+    background: white; color: var(--teal); border: none;
+    border-radius: 6px; padding: 7px 18px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    font-weight: 600; cursor: pointer;
+  }
+  .btn-print:hover { background: var(--teal-light); }
+
+  .page { max-width: 780px; margin: 0 auto; padding: 36px 28px 56px; }
+
+  /* HEADER */
+  .doc-header {
+    border-bottom: 3px solid var(--teal);
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+  .doc-type {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--seafoam); margin-bottom: 6px;
+  }
+  .doc-title {
+    font-family: 'Lora', serif; font-size: 28px;
+    font-weight: 700; color: var(--teal); line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .doc-subtitle { font-size: 15px; color: var(--ink-soft); margin-bottom: 14px; }
+  .doc-meta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    font-size: 12px; color: var(--ink-soft);
+  }
+  .doc-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* SECTION HEADERS */
+  h2 {
+    font-family: 'Lora', serif; font-size: 20px;
+    font-weight: 700; color: var(--teal);
+    margin-bottom: 14px; margin-top: 36px;
+    padding-bottom: 6px; border-bottom: 1.5px solid var(--teal-mid);
+  }
+  h3 {
+    font-family: 'Lora', serif; font-size: 16px;
+    font-weight: 700; color: var(--ink);
+    margin-bottom: 10px; margin-top: 22px;
+  }
+  p { margin-bottom: 14px; }
+
+  /* QUOTE BLOCK — Steph's words */
+  .founding-quote {
+    background: var(--teal-light);
+    border-left: 5px solid var(--teal);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .founding-quote cite {
+    display: block; margin-top: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-style: normal;
+    font-weight: 600; color: var(--seafoam);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* SEQUENCING LADDER */
+  .sequence-ladder { margin: 24px 0; }
+  .seq-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .seq-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 17px; top: 38px;
+    width: 2px; height: calc(100% + 2px);
+    background: var(--teal-mid);
+    z-index: 0;
+  }
+  .seq-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--teal); color: white;
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1; position: relative;
+  }
+  .seq-content {
+    flex: 1;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .seq-title {
+    font-weight: 700; color: var(--teal);
+    font-size: 15px; margin-bottom: 4px;
+  }
+  .seq-desc { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 6px; }
+  .seq-examples {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+  .seq-chip {
+    background: var(--teal-light); border: 1.5px solid var(--teal-mid);
+    color: var(--teal); font-family: 'Lora', serif;
+    font-size: 13px; font-weight: 600;
+    padding: 3px 12px; border-radius: 20px;
+  }
+  .seq-chip.gold {
+    background: var(--gold-light); border-color: #e8c84a;
+    color: var(--gold);
+  }
+  .seq-chip.purple {
+    background: var(--purple-light); border-color: #c4a8f0;
+    color: var(--purple);
+  }
+  .seq-band {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 2px 8px; border-radius: 20px; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .band-1 { background: #e8f5e9; color: #2e7d32; }
+  .band-2 { background: #e3f2fd; color: #1565c0; }
+  .band-3 { background: var(--purple-light); color: var(--purple); }
+
+  /* NOTICE BOX */
+  .notice {
+    border-radius: 10px; padding: 16px 20px;
+    margin: 20px 0; font-size: 14px; line-height: 1.65;
+  }
+  .notice.coral {
+    background: var(--coral-light);
+    border-left: 4px solid var(--coral);
+  }
+  .notice.gold {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+  }
+  .notice.teal {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+  }
+  .notice strong { display: block; margin-bottom: 4px; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 0.07em; }
+  .notice.coral strong { color: var(--coral); }
+  .notice.gold strong { color: var(--gold); }
+  .notice.teal strong { color: var(--teal); }
+
+  /* BAND COMPARISON TABLE */
+  .band-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13.5px; margin: 16px 0;
+  }
+  .band-table th {
+    padding: 10px 14px; text-align: left;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .band-table th:first-child { background: var(--teal); color: white; width: 22%; }
+  .band-table th:nth-child(2) { background: #1565c0; color: white; width: 26%; }
+  .band-table th:nth-child(3) { background: #1a6b3c; color: white; width: 26%; }
+  .band-table th:nth-child(4) { background: var(--purple); color: white; width: 26%; }
+  .band-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .band-table tr:nth-child(even) td { background: #f7fafa; }
+  .band-table td:first-child { font-weight: 600; color: var(--ink-soft); font-size: 13px; }
+
+  /* RESPONSIVE FLOW */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .info-card {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .info-card-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--seafoam); margin-bottom: 8px;
+  }
+  .info-card-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+
+  @media print {
+    .screen-toolbar { display: none; }
+    body { background: white; }
+    .page { padding: 20px 24px; }
+    h2 { margin-top: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-toolbar">
+  <span>📋 Educator Sequencing Guide · &lt;form&gt; · Lokahi Connect Meaning-First Literacy™</span>
+  <button class="btn-print" onclick="window.print()">🖨️ Print Guide</button>
+</div>
+
+<div class="page">
+
+  <div class="doc-header">
+    <div class="doc-type">Educator Resource · Sequencing Guide</div>
+    <div class="doc-title">Teaching &lt;form&gt; Across Developmental Bands</div>
+    <div class="doc-subtitle">How to sequence word-forming elements from emergent to generative — and when to follow the learner</div>
+    <div class="doc-meta">
+      <span>📚 Meaning-First Literacy™</span>
+      <span>🎯 Bands 1–3</span>
+      <span>🏷 Base: &lt;form&gt; · Latin <em>forma</em></span>
+    </div>
+  </div>
+
+  <!-- FOUNDATIONAL PRINCIPLE -->
+  <h2>Foundational Sequencing Principle</h2>
+
+  <p>The following principle guides how Lokahi Connect sequences word-forming elements within and across all developmental bands. It is the instructional foundation for every &lt;form&gt; resource in this library.</p>
+
+  <div class="founding-quote">
+    "Word complexity is dependent on the number and familiarity with morphemes. Foundational sequencing reflective of word forming elements will typically follow the order: base (free), suffixes &lt;s&gt; &lt;es&gt; &lt;ed&gt; &lt;ing&gt;, suffixing conventions, prefixes and expansion of suffixes (&lt;y&gt; &lt;ly&gt; &lt;er&gt; &lt;ion&gt;), intro to etymology, base (bound), etymology expanded, chameleon prefixes, connecting vowels. But this can change with student interest, so teachers must be prepared to teach concepts as students notice and become aware of the meaningful structures."
+    <cite>— Steph, Lokahi Connect · Meaning-First Literacy™</cite>
+  </div>
+
+  <div class="notice coral">
+    <strong>⚠️ Critical Reminder</strong>
+    This sequence is a <em>default scaffold</em>, not a rigid script. Student noticing drives instruction. When a learner notices a prefix, a connecting vowel, or an unfamiliar morpheme — that is the moment to teach it, regardless of where it falls in the sequence. Responsive teaching is a core Meaning-First commitment.
+  </div>
+
+  <!-- THE SEQUENCE -->
+  <h2>The Foundational Sequence</h2>
+  <p>The sequence below maps word-forming elements in their typical instructional order. Each stage builds on the one before — but teachers hold this sequence lightly, ready to move in response to learner awareness.</p>
+
+  <div class="sequence-ladder">
+
+    <div class="seq-item">
+      <div class="seq-num">1</div>
+      <div class="seq-content">
+        <div class="seq-title">Free Base <span class="seq-band band-1">Band 1+</span></div>
+        <div class="seq-desc">Begin with a base that can stand alone as a word. Anchor meaning before introducing any affixes. Students explore the base in oral language and connect it to print.</div>
+        <div class="seq-examples">
+          <span class="seq-chip">form</span>
+          <span class="seq-chip">play</span>
+          <span class="seq-chip">help</span>
+          <span class="seq-chip">jump</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">2</div>
+      <div class="seq-content">
+        <div class="seq-title">Foundational Suffixes: &lt;-s&gt; &lt;-es&gt; &lt;-ed&gt; &lt;-ing&gt; <span class="seq-band band-1">Band 1–2</span></div>
+        <div class="seq-desc">Introduce suffixes as meaning markers, not just spelling patterns. &lt;-s&gt; marks plurality or third person; &lt;-ed&gt; marks prior time; &lt;-ing&gt; marks ongoing action. Word sums make the structure visible.</div>
+        <div class="seq-examples">
+          <span class="seq-chip">form + s → forms</span>
+          <span class="seq-chip gold">form + ed → formed</span>
+          <span class="seq-chip gold">form + ing → forming</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">3</div>
+      <div class="seq-content">
+        <div class="seq-title">Suffixing Conventions <span class="seq-band band-2">Band 2</span></div>
+        <div class="seq-desc">When suffixes join bases, spelling sometimes changes at the join. Teach these as named conventions — not exceptions. Check the Join! routines make this investigable and memorable.</div>
+        <div class="seq-examples">
+          <span class="seq-chip">Replace: make + ing → making</span>
+          <span class="seq-chip gold">Double: hop + ing → hopping</span>
+          <span class="seq-chip">Change: happy + ness → happiness</span>
+        </div>
+        <div style="margin-top:8px; font-size:12.5px; color:var(--ink-soft)">
+          Note: &lt;form&gt; requires no join change with foundational suffixes — this makes it ideal for early word sum work.
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">4</div>
+      <div class="seq-content">
+        <div class="seq-title">Prefixes &amp; Expanded Suffixes <span class="seq-band band-2">Band 2–3</span></div>
+        <div class="seq-desc">Introduce prefixes as meaning modifiers that attach before the base. Expand suffix repertoire to include &lt;-y&gt; &lt;-ly&gt; &lt;-er&gt; &lt;-ion&gt;. Students begin constructing and analyzing multi-morpheme words.</div>
+        <div class="seq-examples">
+          <span class="seq-chip">re + form → reform</span>
+          <span class="seq-chip gold">in + form → inform</span>
+          <span class="seq-chip">form + al → formal</span>
+          <span class="seq-chip gold">form + ation → formation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">5</div>
+      <div class="seq-content">
+        <div class="seq-title">Introduction to Etymology <span class="seq-band band-3">Band 3</span></div>
+        <div class="seq-desc">Etymology connects spelling to history and meaning. Students learn that &lt;form&gt; comes from Latin <em>forma</em> — shape, structure, arrangement. This expands word family awareness and builds academic vocabulary bridges.</div>
+        <div class="seq-examples">
+          <span class="seq-chip purple">Latin: <em>forma</em></span>
+          <span class="seq-chip purple">formation</span>
+          <span class="seq-chip purple">transformation</span>
+          <span class="seq-chip purple">deformation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">6</div>
+      <div class="seq-content">
+        <div class="seq-title">Bound Bases <span class="seq-band band-3">Band 3+</span></div>
+        <div class="seq-desc">Some bases cannot stand alone — they require an affix to function as a word. Students who are secure with free bases are ready to investigate bound bases and the families they generate.</div>
+        <div class="seq-examples">
+          <span class="seq-chip purple">&lt;struct&gt; → structure</span>
+          <span class="seq-chip purple">&lt;port&gt; → transport</span>
+          <span class="seq-chip purple">&lt;rupt&gt; → disrupt</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">7</div>
+      <div class="seq-content">
+        <div class="seq-title">Etymology Expanded <span class="seq-band band-3">Band 3+</span></div>
+        <div class="seq-desc">Students investigate etymology across multiple word families, noticing patterns across Latin and Greek roots. They build cross-family connections and begin to use etymology as an independent meaning-making strategy.</div>
+        <div class="seq-examples">
+          <span class="seq-chip purple">Latin families</span>
+          <span class="seq-chip purple">Greek families</span>
+          <span class="seq-chip purple">Cross-family connections</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">8</div>
+      <div class="seq-content">
+        <div class="seq-title">Chameleon Prefixes <span class="seq-band band-3">Band 3+</span></div>
+        <div class="seq-desc">Some prefixes change their spelling to match the base they attach to — these are chameleon prefixes (also called assimilated prefixes). Teaching this explicitly demystifies spelling patterns students encounter in academic vocabulary.</div>
+        <div class="seq-examples">
+          <span class="seq-chip purple">in– → il– ir– im–</span>
+          <span class="seq-chip purple">con– → col– cor– com–</span>
+          <span class="seq-chip purple">ad– → ac– af– ag–</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seq-item">
+      <div class="seq-num">9</div>
+      <div class="seq-content">
+        <div class="seq-title">Connecting Vowels <span class="seq-band band-3">Band 3+</span></div>
+        <div class="seq-desc">Connecting vowels (typically &lt;o&gt; or &lt;i&gt;) link morphemes in compound and Latinate words. Students investigate their function and learn to identify them in multi-morpheme words.</div>
+        <div class="seq-examples">
+          <span class="seq-chip purple">therm + o + meter</span>
+          <span class="seq-chip purple">bi + o + logy</span>
+          <span class="seq-chip purple">agr + i + culture</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end sequence-ladder -->
+
+  <!-- RESPONSIVE TEACHING -->
+  <h2>Responsive Teaching: Following the Learner</h2>
+
+  <p>The sequence above describes a <em>typical</em> progression — not a required one. Meaning-First Literacy™ is grounded in the principle that learner noticing is a legitimate entry point to any stage of the sequence.</p>
+
+  <div class="notice gold">
+    <strong>📌 What this looks like in practice</strong>
+    A Band 1 student notices the word <em>performing</em> on a poster and asks "Is <em>per</em> a part?" — that is the moment to introduce prefixes, even if the class has not reached that stage. A Band 2 student asks "Why does <em>information</em> have <em>form</em> in it?" — that is the moment to introduce etymology. Student curiosity is instructionally valid at every stage.
+  </div>
+
+  <div class="two-col">
+    <div class="info-card">
+      <div class="info-card-label">Teacher readiness</div>
+      <div class="info-card-body">Know the full sequence so you can meet students wherever their noticing takes them. You don't have to teach everything at once — but you should be able to <em>respond</em> to anything.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Linguistically accurate scaffolding</div>
+      <div class="info-card-body">When responding to student noticing outside the planned sequence, maintain precision. Simplify access — never simplify truth. Use correct terminology even with young learners.</div>
+    </div>
+  </div>
+
+  <!-- BAND COMPARISON -->
+  <h2>How &lt;form&gt; Is Taught Across Bands</h2>
+  <p>The table below shows how the same base is sequenced differently at each band — same morphological truth, scaled complexity and academic language.</p>
+
+  <table class="band-table">
+    <thead>
+      <tr>
+        <th>Element</th>
+        <th>Band 1 · K–1</th>
+        <th>Band 2 · Gr 2–3</th>
+        <th>Band 3 · Gr 3–4+</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Base introduction</td>
+        <td>Oral meaning anchor; draw a picture of "form"</td>
+        <td>Written meaning anchor; student restates in own words</td>
+        <td>Etymology anchor: Latin <em>forma</em>; student explains connection</td>
+      </tr>
+      <tr>
+        <td>Word sums</td>
+        <td>form + s, form + ed, form + ing</td>
+        <td>form + al, in + form + ed, re + form</td>
+        <td>trans + form + ation, per + form + ance, con + form + ity</td>
+      </tr>
+      <tr>
+        <td>Suffixes featured</td>
+        <td>&lt;-s&gt; &lt;-ed&gt; &lt;-ing&gt;</td>
+        <td>&lt;-al&gt; &lt;-ed&gt; &lt;-ing&gt; &lt;-ation&gt;</td>
+        <td>&lt;-ation&gt; &lt;-ance&gt; &lt;-ity&gt; &lt;-ive&gt;</td>
+      </tr>
+      <tr>
+        <td>Prefixes featured</td>
+        <td>None</td>
+        <td>re– in– uni–</td>
+        <td>trans– per– con– de– uni– re– in–</td>
+      </tr>
+      <tr>
+        <td>Sort task</td>
+        <td>Word family / not word family</td>
+        <td>Prefix vs. suffix only</td>
+        <td>Sort by prefix meaning</td>
+      </tr>
+      <tr>
+        <td>Fill-in sentences</td>
+        <td>Simple subject + verb</td>
+        <td>Everyday academic contexts</td>
+        <td>Discipline-specific; morpheme clues provided</td>
+      </tr>
+      <tr>
+        <td>Reflection prompt</td>
+        <td>What stays the same? What changes?</td>
+        <td>What stays the same? What changes?</td>
+        <td>How do prefixes change meaning? Use evidence.</td>
+      </tr>
+      <tr>
+        <td>Build-your-own</td>
+        <td>Add one suffix</td>
+        <td>Add prefix or suffix; 4 scaffolded cards</td>
+        <td>Build with 3 morphemes; connect to another base</td>
+      </tr>
+      <tr>
+        <td>Etymology</td>
+        <td>Not introduced</td>
+        <td>Not introduced</td>
+        <td>Latin <em>forma</em>; root type; family size</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- RESOURCE MAP -->
+  <h2>Resource Map for &lt;form&gt;</h2>
+
+  <div class="notice teal">
+    <strong>📁 Files in program/form/</strong>
+    All resources for this base live in the same folder. Each is designed to be used independently or as part of a sequence. The hub page (index.html) links all resources and shows their developmental band.
+  </div>
+
+  <div class="two-col">
+    <div class="info-card">
+      <div class="info-card-label">Interactive Lesson</div>
+      <div class="info-card-body"><strong>lesson.html</strong> — Band 3 full 5-activity investigation. Includes text-to-speech and drag-to-answer accommodations. Best for initial introduction or independent exploration.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Worksheets</div>
+      <div class="info-card-body"><strong>worksheet-band2.html</strong> and <strong>worksheet-band3.html</strong> — Print or digital. Use for practice, assessment, or as a take-home activity after the lesson.</div>
+    </div>
+  </div>
+
+</div><!-- end .page -->
+</body>
+</html>
