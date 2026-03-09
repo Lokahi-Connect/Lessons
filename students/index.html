@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <style>
+    :root {
+      --teal: #0d4f5c;
+      --teal-mid: #1a7a6e;
+      --teal-light: #e6f4f2;
+      --bg: #f5f7f9;
+      --card: #ffffff;
+      --text: #1c2b2e;
+      --muted: #5a7278;
+      --border: #dce8ea;
+      --shadow: 0 8px 28px rgba(13,79,92,0.10);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      opacity: 0.92;
+      max-width: 720px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--teal);
+      margin: 18px 0 14px;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .student-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--teal-light);
+      color: var(--teal);
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .student-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .student-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .student-card a,
+    .back-link {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--teal);
+      color: white;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+    }
+
+    .back-wrap {
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="eyebrow">Lokahi Connect · Student Dashboard</div>
+      <h1>Student Lesson Dashboard</h1>
+      <p>Select a student to open their assigned lessons.</p>
+    </section>
+
+    <h2 class="section-title">Students</h2>
+
+    <div class="student-grid">
+      <article class="student-card">
+        <div class="tag">Student</div>
+        <h2>Daniel</h2>
+        <p>Open Daniel's assigned lessons.</p>
+        <a href="./daniel/">Open Daniel</a>
+      </article>
+
+      <article class="student-card">
+        <div class="tag">Student</div>
+        <h2>Finn</h2>
+        <p>Open Finn's assigned lessons.</p>
+        <a href="./finn/">Open Finn</a>
+      </article>
+    </div>
+
+    <div class="back-wrap">
+      <a class="back-link" href="../">Back to Lesson Library</a>
+    </div>
+  </div>
+</body>
+</html>
