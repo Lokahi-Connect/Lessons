@@ -1,28 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Lokahi Lessons</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lokahi Connect Lessons</title>
+  <style>
+    :root {
+      --teal: #0d4f5c;
+      --teal-mid: #1a7a6e;
+      --teal-light: #e6f4f2;
+      --amber: #e8a040;
+      --bg: #f5f7f9;
+      --card: #ffffff;
+      --text: #1c2b2e;
+      --muted: #5a7278;
+      --border: #dce8ea;
+      --shadow: 0 8px 28px rgba(13,79,92,0.10);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .hero .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.92;
+      max-width: 700px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--teal);
+      margin: 18px 0 14px;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .lesson-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .lesson-card .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--teal-light);
+      color: var(--teal);
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .lesson-card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .lesson-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .lesson-card a {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--teal);
+      color: white;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+    }
+
+    .lesson-card a:hover {
+      opacity: 0.92;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 680px) {
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <section class="hero">
+      <div class="eyebrow">Lokahi Connect · Meaning-First Literacy™</div>
+      <h1>Lesson Library</h1>
+      <p>
+        Welcome to Lokahi Connect Lessons. Choose a lesson below to begin.
+      </p>
+    </section>
 
-<h1>Lokahi Lessons</h1>
+    <h2 class="section-title">Available Lessons</h2>
 
-<p>Welcome to the lesson site.</p>
+    <div class="lesson-grid">
+      <article class="lesson-card">
+        <div class="tag">Grade 3 · Lesson 9</div>
+        <h2>Life in Ashcroft, Colorado</h2>
+        <p>
+          Morpheme investigation, fact vs. opinion, text types, and paragraph writing.
+        </p>
+        <a href="./lesson-9-life-in-ashcroft/">Open Lesson</a>
+      </article>
+    </div>
 
-<p>
-<a href="Naval_Ships_Assignment.html">
-Naval Ships Assignment
-</a>
-</p>
-
+    <div class="footer">
+      Lokahi Connect · lokahiconnect.org
+    </div>
+  </div>
 </body>
 </html>
-<a href="Decimals_Tenths_Hundredths.html">
-  Decimals — Tenths &amp; Hundredths
-</a>
-</p>
-<a href="Cats_Informational_Assignment.html">
-  Cats of the World — Informational Writing
-</a>
-</p>
