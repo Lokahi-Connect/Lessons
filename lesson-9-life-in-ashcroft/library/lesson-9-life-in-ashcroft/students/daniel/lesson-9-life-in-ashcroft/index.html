@@ -36,9 +36,7 @@
       --shadow:      0 8px 28px rgba(13,79,92,0.10);
       --radius:      20px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -46,14 +44,11 @@
       line-height: 1.65;
       font-size: 1rem;
     }
-
     .container {
       max-width: 960px;
       margin: 0 auto;
       padding: 28px 16px 56px;
     }
-
-    /* ── Card Shell ── */
     .lesson-card {
       background: var(--card);
       border-radius: var(--radius);
@@ -61,14 +56,11 @@
       border: 1px solid var(--border);
       overflow: hidden;
     }
-
-    /* ── Header ── */
     .header {
       background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 100%);
       padding: 32px 28px 26px;
       color: white;
     }
-
     .eyebrow {
       font-size: 0.85rem;
       font-weight: 700;
@@ -77,34 +69,29 @@
       opacity: 0.75;
       margin-bottom: 10px;
     }
-
     .header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2rem;
       line-height: 1.25;
       margin-bottom: 10px;
     }
-
     .header p {
       opacity: 0.85;
       font-size: 1rem;
       margin-bottom: 18px;
     }
-
     .goals-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 7px;
     }
-
     .goals-list li {
       opacity: 0.92;
       font-size: 0.97rem;
       padding-left: 20px;
       position: relative;
     }
-
     .goals-list li::before {
       content: "→";
       position: absolute;
@@ -112,35 +99,26 @@
       color: var(--amber);
       font-weight: 700;
     }
-
-    /* ── Progress Bar ── */
     .progress-bar-wrap {
       background: #e9eef0;
       height: 5px;
       width: 100%;
     }
-
     .progress-bar-fill {
       height: 5px;
       background: var(--amber);
       transition: width 0.4s ease;
     }
-
-    /* ── Slides ── */
     .slide {
       display: none;
       padding: 32px 28px 28px;
       animation: fadeIn 0.3s ease;
     }
-
     .slide.active { display: block; }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* ── Stop Label ── */
     .stop-label {
       display: inline-flex;
       align-items: center;
@@ -154,8 +132,6 @@
       margin-bottom: 20px;
       border: 1px solid #b2d8d3;
     }
-
-    /* ── Typography ── */
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.65rem;
@@ -163,59 +139,47 @@
       margin-bottom: 8px;
       line-height: 1.3;
     }
-
     h3 {
       font-size: 1.05rem;
       font-weight: 700;
       color: var(--teal);
       margin-bottom: 8px;
     }
-
     .lead {
       color: var(--muted);
       margin-bottom: 20px;
       font-size: 1rem;
     }
-
-    /* ── Grids ── */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
-
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
-
-    /* ── Cards ── */
     .card {
       background: var(--card);
       border: 1.5px solid var(--border);
       border-radius: 16px;
       padding: 18px;
     }
-
     .card.teal-tint { background: var(--teal-light); border-color: #b2d8d3; }
     .card.amber-tint { background: var(--amber-light); border-color: #f5d498; }
-
-    /* ── Word Wall ── */
     .word-card {
       border: 1.5px solid var(--border);
       border-radius: 16px;
       padding: 18px;
       background: white;
     }
-
     .word-card .word-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
       color: var(--teal);
       margin-bottom: 4px;
     }
-
     .word-card .morpheme-hint {
       font-size: 0.82rem;
       color: var(--amber);
@@ -223,7 +187,6 @@
       margin-bottom: 10px;
       letter-spacing: 0.04em;
     }
-
     .word-definition {
       display: none;
       margin-top: 8px;
@@ -232,9 +195,7 @@
       border-top: 1px dashed var(--border);
       padding-top: 10px;
     }
-
     .word-definition.show { display: block; }
-
     .word-sum-inline {
       display: inline-block;
       background: var(--amber-light);
@@ -246,8 +207,6 @@
       color: var(--teal);
       margin-top: 6px;
     }
-
-    /* ── Buttons ── */
     button {
       border: none;
       border-radius: 12px;
@@ -258,27 +217,22 @@
       cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
-
     button:hover { transform: translateY(-1px); }
     button:disabled { opacity: 0.55; cursor: default; transform: none; }
-
     button.primary {
       background: var(--teal);
       color: white;
       box-shadow: 0 4px 12px rgba(13,79,92,0.25);
     }
-
     button.secondary {
       background: var(--teal-light);
       color: var(--teal);
       border: 1.5px solid #b2d8d3;
     }
-
     button.ghost {
       background: #edf0f2;
       color: var(--text);
     }
-
     button.reveal-btn {
       background: var(--amber-light);
       color: var(--teal);
@@ -286,7 +240,6 @@
       font-size: 0.9rem;
       padding: 8px 14px;
     }
-
     button.choice {
       background: white;
       border: 2px solid var(--border);
@@ -294,20 +247,16 @@
       min-width: 110px;
       font-size: 0.95rem;
     }
-
     button.choice.correct {
       background: var(--success-bg);
       border-color: var(--success);
       color: var(--success);
     }
-
     button.choice.incorrect {
       background: var(--error-bg);
       border-color: var(--error);
       color: var(--error);
     }
-
-    /* ── Nav ── */
     .nav {
       display: flex;
       justify-content: space-between;
@@ -316,27 +265,22 @@
       gap: 12px;
       flex-wrap: wrap;
     }
-
-    /* ── Question Cards ── */
     .question-card {
       border: 1.5px solid var(--border);
       border-radius: 16px;
       padding: 18px;
       background: white;
     }
-
     .question-card .q-text {
       font-size: 1rem;
       margin-bottom: 12px;
       color: var(--text);
     }
-
     .question-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .feedback {
       margin-top: 10px;
       font-size: 0.95rem;
@@ -345,12 +289,9 @@
       padding: 8px 12px;
       display: none;
     }
-
     .feedback.show { display: block; }
     .feedback.correct-fb { background: var(--success-bg); color: var(--success); }
     .feedback.incorrect-fb { background: var(--error-bg); color: var(--error); }
-
-    /* ── Reading Passage ── */
     .passage {
       background: #fafcfc;
       border: 1.5px solid var(--border);
@@ -361,15 +302,11 @@
       line-height: 1.9;
       font-size: 1rem;
     }
-
     .passage p { margin-bottom: 14px; }
     .passage p:last-child { margin-bottom: 0; }
-
-    /* ── Morpheme Highlights in passage ── */
     .base   { background: #cff5ee; border-bottom: 2px solid var(--teal-mid); border-radius: 3px; padding: 0 2px; }
     .suffix { background: #fff0cc; border-bottom: 2px solid var(--amber);    border-radius: 3px; padding: 0 2px; }
     .prefix { background: #e8e0ff; border-bottom: 2px solid #7c5cbf;          border-radius: 3px; padding: 0 2px; }
-
     .morpheme-key {
       display: flex;
       gap: 16px;
@@ -377,21 +314,17 @@
       margin-bottom: 16px;
       font-size: 0.88rem;
     }
-
     .morpheme-key span {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-weight: 600;
     }
-
     .key-swatch {
       width: 14px; height: 14px;
       border-radius: 3px;
       display: inline-block;
     }
-
-    /* ── Word Sum Box ── */
     .word-sum-box {
       background: var(--amber-light);
       border: 1.5px solid #f5d498;
@@ -399,7 +332,6 @@
       padding: 16px 20px;
       margin: 14px 0;
     }
-
     .word-sum-box h4 {
       font-size: 0.82rem;
       text-transform: uppercase;
@@ -407,22 +339,18 @@
       color: var(--muted);
       margin-bottom: 10px;
     }
-
     .sum-row {
       font-family: monospace;
       font-size: 1rem;
       color: var(--teal);
       margin-bottom: 5px;
     }
-
-    /* ── Stats Row ── */
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
       margin: 16px 0 22px;
     }
-
     .stat {
       background: var(--teal-light);
       border: 1px solid #b2d8d3;
@@ -432,43 +360,33 @@
       font-weight: 700;
       color: var(--teal);
     }
-
-    /* ── Venn ── */
     .venn {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 14px;
       margin: 18px 0 24px;
     }
-
     .venn-circle {
       border-radius: 18px;
       padding: 18px 16px;
       border: 2px solid var(--border);
     }
-
     .venn-circle.left   { background: #f5f3ff; border-color: #c4b5fd; }
     .venn-circle.middle { background: var(--teal-light); border-color: #b2d8d3; }
     .venn-circle.right  { background: var(--amber-light); border-color: #f5d498; }
-
     .venn-circle h3 { font-size: 0.95rem; margin-bottom: 10px; }
-
     .venn-circle ul {
       padding-left: 16px;
       font-size: 0.9rem;
       color: var(--muted);
     }
-
     .venn-circle li { margin-bottom: 5px; }
-
-    /* ── Hamburger ── */
     .burger-layer {
       border: 1.5px solid var(--border);
       border-radius: 16px;
       padding: 18px;
       background: white;
     }
-
     .layer-badge {
       display: inline-block;
       padding: 5px 12px;
@@ -477,13 +395,11 @@
       font-size: 0.88rem;
       margin-bottom: 10px;
     }
-
     .layer-badge.bun-top    { background: #fef3c7; color: #92400e; }
     .layer-badge.detail-1   { background: #dcfce7; color: #166534; }
     .layer-badge.detail-2   { background: #fce7f3; color: #9d174d; }
     .layer-badge.detail-3   { background: #e0e7ff; color: #3730a3; }
     .layer-badge.bun-bottom { background: #fef3c7; color: #92400e; }
-
     textarea {
       width: 100%;
       min-height: 90px;
@@ -497,42 +413,29 @@
       background: #fafcfc;
       margin-top: 8px;
     }
-
     textarea:focus {
       outline: none;
       border-color: var(--teal-mid);
     }
-
-    /* ── Summary ── */
     .summary-card {
       border: 1.5px solid var(--border);
       border-radius: 16px;
       padding: 20px;
       margin-bottom: 18px;
     }
-
-    .summary-card ul {
-      padding-left: 20px;
-    }
-
+    .summary-card ul { padding-left: 20px; }
     .summary-card li { margin-bottom: 8px; }
-
-    /* ── Divider ── */
     .divider {
       border: none;
       border-top: 1px solid var(--border);
       margin: 24px 0;
     }
-
-    /* ── Footer ── */
     .footer-note {
       text-align: center;
       font-size: 0.88rem;
       color: var(--muted);
       margin-top: 20px;
     }
-
-    /* ── Inline label ── */
     .label-tag {
       display: inline-block;
       font-size: 0.8rem;
@@ -543,22 +446,57 @@
       border-radius: 6px;
       margin-bottom: 6px;
     }
-
     .label-tag.teal   { background: var(--teal-light); color: var(--teal); }
     .label-tag.amber  { background: var(--amber-light); color: #92400e; }
 
-    /* ── Responsive ── */
-    @media (max-width: 680px) {
-      .grid-2, .grid-3, .venn { grid-template-columns: 1fr; }
-      h2 { font-size: 1.4rem; }
-      .slide, .header { padding: 22px 18px; }
+    /* ══════════════════════════════════════
+       SECTION TTS BUTTON
+    ══════════════════════════════════════ */
+    .section-tts-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: var(--teal);
+      border: 1.5px solid #b2d8d3;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
+      vertical-align: middle;
+      margin-left: 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .section-tts-btn:hover {
+      background: #c4e8e2;
+      box-shadow: 0 2px 8px rgba(13,79,92,0.15);
+      transform: translateY(-1px);
+    }
+    .section-tts-btn.playing {
+      background: var(--amber);
+      color: var(--teal);
+      border-color: var(--amber);
+    }
+    /* Row wrapper so heading and button sit on the same line */
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .section-heading-row h2,
+    .section-heading-row h3 {
+      margin-bottom: 0;
     }
 
     /* ══════════════════════════════════════
        DYSLEXIA SUPPORT TOOLBAR
     ══════════════════════════════════════ */
-
-    /* Floating toolbar */
     #a11y-bar {
       position: fixed;
       bottom: 20px;
@@ -576,7 +514,6 @@
       justify-content: center;
       max-width: 96vw;
     }
-
     #a11y-bar .bar-label {
       color: rgba(255,255,255,0.7);
       font-size: 0.75rem;
@@ -586,7 +523,6 @@
       white-space: nowrap;
       padding-right: 4px;
     }
-
     #a11y-bar button {
       background: rgba(255,255,255,0.12);
       color: white;
@@ -600,19 +536,14 @@
       transition: background 0.15s, transform 0.1s;
       white-space: nowrap;
     }
-
     #a11y-bar button:hover { background: rgba(255,255,255,0.22); }
     #a11y-bar button.on { background: var(--amber); color: var(--teal); border-color: var(--amber); }
-
-    /* TTS word highlight */
     .tts-word {
       background: #ffe066;
       border-radius: 3px;
       padding: 0 1px;
       transition: background 0.1s;
     }
-
-    /* Tinted overlay */
     #tint-overlay {
       position: fixed;
       inset: 0;
@@ -622,8 +553,6 @@
       transition: opacity 0.3s;
     }
     #tint-overlay.show { opacity: 1; }
-
-    /* Reading ruler */
     #ruler {
       position: fixed;
       left: 0;
@@ -637,8 +566,6 @@
       border-bottom: 2px solid var(--amber);
       transition: top 0.05s;
     }
-
-    /* Body-level dyslexia mode classes */
     body.dyslexic-font,
     body.dyslexic-font p,
     body.dyslexic-font li,
@@ -650,7 +577,6 @@
     body.dyslexic-font button {
       font-family: 'OpenDyslexic', sans-serif !important;
     }
-
     body.wide-spacing p,
     body.wide-spacing li,
     body.wide-spacing .q-text,
@@ -659,21 +585,21 @@
       letter-spacing: 0.06em !important;
       word-spacing: 0.18em !important;
     }
-
-    body.large-text {
-      font-size: 1.2rem !important;
-    }
-
+    body.large-text { font-size: 1.2rem !important; }
     body.large-text h2 { font-size: 1.85rem !important; }
-
-    /* TTS playing state */
     #tts-btn.playing { background: #ff6b6b; color: white; border-color: #ff6b6b; }
+
+    @media (max-width: 680px) {
+      .grid-2, .grid-3, .venn { grid-template-columns: 1fr; }
+      h2 { font-size: 1.4rem; }
+      .slide, .header { padding: 22px 18px; }
+      .section-heading-row { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
 <div class="container">
   <div class="lesson-card">
-
     <!-- Header -->
     <div class="header">
       <div class="eyebrow">Lokahi Connect · Meaning-First Literacy™ · Grade 3 · Lesson 9</div>
@@ -686,7 +612,6 @@
         <li>Build a strong paragraph using the Hamburger model</li>
       </ul>
     </div>
-
     <!-- Progress bar -->
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
@@ -697,11 +622,18 @@
     ════════════════════════════════════════ -->
     <section class="slide active" data-slide="0">
       <div class="stop-label">🧱 Stop 1 of 6 — Word Investigation Wall</div>
-      <h2>What's hiding inside these words?</h2>
-      <p class="lead">These words appear in today's passage. Before you read, let's investigate what they mean — using the parts inside them as clues. Tap each word to reveal its meaning and structure.</p>
 
-      <div class="grid-2">
+      <div class="section-heading-row">
+        <h2>What's hiding inside these words?</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide1-intro')" aria-label="Listen to this section">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide1-intro">These words appear in today's passage. Before you read, let's investigate what they mean — using the parts inside them as clues. Tap each word to reveal its meaning and structure.</p>
 
+      <div class="section-heading-row" style="margin-top: 18px;">
+        <h3>Word Cards</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide1-words')" aria-label="Listen to all word cards">🔊 Listen</button>
+      </div>
+      <div class="grid-2" id="slide1-words">
         <div class="word-card">
           <div class="word-title">established</div>
           <div class="morpheme-hint">🔍 Look at the base: &lt;establish&gt;</div>
@@ -713,7 +645,6 @@
             <em>The suffix &lt;-ed&gt; tells us this happened in the past.</em>
           </div>
         </div>
-
         <div class="word-card">
           <div class="word-title">abandoned</div>
           <div class="morpheme-hint">🔍 Look at the base: &lt;abandon&gt;</div>
@@ -725,7 +656,6 @@
             <em>The suffix &lt;-ed&gt; tells us this happened in the past.</em>
           </div>
         </div>
-
         <div class="word-card">
           <div class="word-title">occupied</div>
           <div class="morpheme-hint">🔍 Look at the base: &lt;occupy&gt;</div>
@@ -737,7 +667,6 @@
             <em>Notice: &lt;y&gt; changed to &lt;i&gt; at the join — that's a convention called a <strong>Change</strong>.</em>
           </div>
         </div>
-
         <div class="word-card">
           <div class="word-title">discovered</div>
           <div class="morpheme-hint">🔍 Look at the parts: &lt;dis-&gt; + &lt;cover&gt; + &lt;-ed&gt;</div>
@@ -749,7 +678,6 @@
             <em>The prefix &lt;dis-&gt; means "apart" or "away." To dis-cover is to uncover — to take the cover away from something hidden.</em>
           </div>
         </div>
-
         <div class="word-card">
           <div class="word-title">attracted</div>
           <div class="morpheme-hint">🔍 Look at the parts: &lt;at-&gt; + &lt;tract&gt; + &lt;-ed&gt;</div>
@@ -761,7 +689,6 @@
             <em>The bound base &lt;tract&gt; means "pull." To attract is to pull toward. You can also see it in: tractor, distract, contract.</em>
           </div>
         </div>
-
         <div class="word-card">
           <div class="word-title">expository</div>
           <div class="morpheme-hint">🔍 Look at the base: &lt;expose&gt; / &lt;posit&gt;</div>
@@ -773,9 +700,7 @@
             <em>The prefix &lt;ex-&gt; means "out." The bound base &lt;posit&gt; means "put" or "place." Expository writing puts ideas out into the open.</em>
           </div>
         </div>
-
       </div>
-
       <div class="nav">
         <button class="ghost" disabled>← Back</button>
         <button class="primary" onclick="changeSlide(1)">Next ➜</button>
@@ -787,10 +712,18 @@
     ════════════════════════════════════════ -->
     <section class="slide" data-slide="1">
       <div class="stop-label">🧐 Stop 2 of 6 — Fact vs. Opinion</div>
-      <h2>Fact or Opinion?</h2>
-      <p class="lead">Before we read, you need one important tool: being able to tell a <strong>fact</strong> from an <strong>opinion</strong>.</p>
 
-      <div class="grid-2" style="margin-bottom: 22px;">
+      <div class="section-heading-row">
+        <h2>Fact or Opinion?</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide2-intro')" aria-label="Listen to this section">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide2-intro">Before we read, you need one important tool: being able to tell a fact from an opinion.</p>
+
+      <div class="section-heading-row" style="margin-top: 4px;">
+        <h3>What's the difference?</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide2-cards')" aria-label="Listen to fact and opinion definitions">🔊 Listen</button>
+      </div>
+      <div class="grid-2" id="slide2-cards" style="margin-bottom: 22px;">
         <div class="card teal-tint">
           <div class="label-tag teal">✅ FACT</div>
           <ul style="padding-left: 18px; font-size: 0.97rem; color: var(--text);">
@@ -811,11 +744,12 @@
         </div>
       </div>
 
-      <h3>Now you try! 🎯</h3>
-      <p class="lead" style="margin-top: 6px;">Tap FACT or OPINION for each sentence.</p>
-
+      <div class="section-heading-row">
+        <h3>Now you try! 🎯</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide2-questions')" aria-label="Listen to the questions">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide2-questions" style="margin-top: 6px;">Tap FACT or OPINION for each sentence.</p>
       <div class="grid-2">
-
         <div class="question-card">
           <p class="q-text">Timothy has two cats and three dogs.</p>
           <div class="question-actions">
@@ -824,7 +758,6 @@
           </div>
           <div class="feedback"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">The best ice cream flavor is pistachio.</p>
           <div class="question-actions">
@@ -833,7 +766,6 @@
           </div>
           <div class="feedback"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">They are from the capital of Peru, Lima.</p>
           <div class="question-actions">
@@ -842,7 +774,6 @@
           </div>
           <div class="feedback"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">Orange is the worst color.</p>
           <div class="question-actions">
@@ -851,7 +782,6 @@
           </div>
           <div class="feedback"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">We walked five blocks to visit the toy store.</p>
           <div class="question-actions">
@@ -860,7 +790,6 @@
           </div>
           <div class="feedback"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">Lemonade is better than iced tea.</p>
           <div class="question-actions">
@@ -869,9 +798,7 @@
           </div>
           <div class="feedback"></div>
         </div>
-
       </div>
-
       <div class="nav">
         <button class="ghost" onclick="changeSlide(-1)">← Back</button>
         <button class="primary" onclick="changeSlide(1)">Next ➜</button>
@@ -883,43 +810,53 @@
     ════════════════════════════════════════ -->
     <section class="slide" data-slide="2">
       <div class="stop-label">📖 Stop 3 of 6 — Read &amp; Explore</div>
-      <h2>Life in Ashcroft, Colorado 🏔️</h2>
 
-      <div class="stats">
+      <div class="section-heading-row">
+        <h2>Life in Ashcroft, Colorado 🏔️</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide3-stats')" aria-label="Listen to the Ashcroft facts">🔊 Listen</button>
+      </div>
+      <div class="stats" id="slide3-stats">
         <div class="stat">📅 Founded: 1880</div>
         <div class="stat">⛏️ Started as: Silver mining camp</div>
         <div class="stat">👻 Now: Ghost town</div>
         <div class="stat">🏚️ Buildings left: 9 total</div>
-        <div class="stat">☀️ Summer visitors: ~75 per day</div>
+        <div class="stat">☀️ Summer visitors: about 75 per day</div>
       </div>
 
+      <div class="section-heading-row">
+        <h3>Reading Passage</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide3-passage')" aria-label="Listen to the reading passage">🔊 Listen</button>
+      </div>
       <div class="morpheme-key">
         <span><span class="key-swatch" style="background:#cff5ee; border-bottom: 2px solid var(--teal-mid);"></span> Base morpheme</span>
         <span><span class="key-swatch" style="background:#fff0cc; border-bottom: 2px solid var(--amber);"></span> Suffix</span>
         <span><span class="key-swatch" style="background:#e8e0ff; border-bottom: 2px solid #7c5cbf;"></span> Prefix</span>
       </div>
-
-      <div class="passage">
+      <div class="passage" id="slide3-passage">
         <p>I went to Ashcroft for a class trip. It was amazing. When I arrived, I thought, "Wow! This place looks scary and quiet." My teacher, Mrs. Matthews, smiled and said, "That's because Ashcroft is a ghost town."</p>
-
         <p>The class gasped. "Are there really ghosts here?" asked my friend Taylor. Mrs. Matthews laughed and told us that a ghost town is actually just an <span class="prefix">aban</span><span class="base">don</span><span class="suffix">ed</span> city or town that was once <span class="base">occup</span><span class="suffix">ied</span> by people.</p>
-
         <p>Mrs. Matthews explained to the class that in 1880, Ashcroft was <span class="base">establish</span><span class="suffix">ed</span> as a silver mining camp. Silver was used in photography and medicine. "Sadly, the town's success didn't last long. People left Ashcroft after <span class="prefix">dis</span><span class="base">cover</span><span class="suffix">ing</span> new silver in Aspen. People were <span class="prefix">at</span><span class="base">tract</span><span class="suffix">ed</span> to bigger towns," said Mrs. Matthews.</p>
-
         <p><em>As the sun set across the sky, the class imagined life in Ashcroft. We danced, laughed, and ran into the fields. It was wonderful.</em></p>
       </div>
 
-      <div class="word-sum-box">
-        <h4>🔬 Word Scientist Spotlight — Words from the passage</h4>
-        <div class="sum-row">abandon + ed → abandoned &nbsp;&nbsp; (&lt;-ed&gt; = happened in the past)</div>
-        <div class="sum-row">occup(y) + ed → occupied &nbsp;&nbsp;&nbsp; (&lt;y&gt;→&lt;i&gt; Change at the join)</div>
-        <div class="sum-row">establish + ed → established (&lt;-ed&gt; = happened in the past)</div>
+      <div class="section-heading-row">
+        <h3>🔬 Word Scientist Spotlight</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide3-wordsums')" aria-label="Listen to the word sums">🔊 Listen</button>
+      </div>
+      <div class="word-sum-box" id="slide3-wordsums">
+        <h4>Words from the passage</h4>
+        <div class="sum-row">abandon + ed → abandoned &nbsp;&nbsp; (the suffix -ed tells us this happened in the past)</div>
+        <div class="sum-row">occup(y) + ed → occupied &nbsp;&nbsp;&nbsp; (y changes to i at the join)</div>
+        <div class="sum-row">establish + ed → established (the suffix -ed tells us this happened in the past)</div>
         <div class="sum-row">dis + cover + ing → discovering (no join change needed)</div>
-        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp; (&lt;tract&gt; = "pull")</div>
+        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp; (the base tract means pull)</div>
       </div>
 
-      <div class="card" style="margin-top: 16px;">
+      <div class="section-heading-row" style="margin-top: 16px;">
         <h3>💡 Think About It</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide3-think')" aria-label="Listen to the think about it question">🔊 Listen</button>
+      </div>
+      <div class="card" id="slide3-think">
         <p style="margin-bottom: 12px;">The last sentence says <em>"It was wonderful."</em> — is that a fact or an opinion?</p>
         <div class="question-actions">
           <button class="choice" onclick="checkSingle(this, 'fo-fb', false, 'That sentence includes a personal feeling, so it is an opinion — not something that can be proven.')">Fact</button>
@@ -939,10 +876,18 @@
     ════════════════════════════════════════ -->
     <section class="slide" data-slide="3">
       <div class="stop-label">📚 Stop 4 of 6 — Two Kinds of Text</div>
-      <h2>Literature vs. Informational Text</h2>
-      <p class="lead">The Ashcroft passage mixed both kinds of writing. Can you tell which parts were informational and which were literature?</p>
 
-      <div class="venn">
+      <div class="section-heading-row">
+        <h2>Literature vs. Informational Text</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide4-intro')" aria-label="Listen to this section">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide4-intro">The Ashcroft passage mixed both kinds of writing. Can you tell which parts were informational and which were literature?</p>
+
+      <div class="section-heading-row">
+        <h3>How are they different?</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide4-venn')" aria-label="Listen to the comparison chart">🔊 Listen</button>
+      </div>
+      <div class="venn" id="slide4-venn">
         <div class="venn-circle left">
           <h3>📖 Literature Text</h3>
           <ul>
@@ -971,9 +916,11 @@
         </div>
       </div>
 
-      <h3>💡 Quick Match</h3>
-      <p class="lead" style="margin-top: 4px;">Decide: is each text type Literature or Informational?</p>
-
+      <div class="section-heading-row">
+        <h3>💡 Quick Match</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide4-match-intro')" aria-label="Listen to the quick match instructions">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide4-match-intro" style="margin-top: 4px;">Decide: is each text type Literature or Informational?</p>
       <div class="grid-2">
         <div class="question-card">
           <p class="q-text">📖 <em>The Wonderful Wizard of Oz</em> — a story about a girl named Dorothy who travels to a magical land</p>
@@ -983,7 +930,6 @@
           </div>
           <div class="feedback" id="m1"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">🗞️ An article about the history of Ashcroft, Colorado — when it was founded, why people left, and what it looks like today</p>
           <div class="question-actions">
@@ -992,7 +938,6 @@
           </div>
           <div class="feedback" id="m2"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">🐉 A story about a dragon who learns to read and discovers the school library</p>
           <div class="question-actions">
@@ -1001,7 +946,6 @@
           </div>
           <div class="feedback" id="m3"></div>
         </div>
-
         <div class="question-card">
           <p class="q-text">🐋 A field guide about blue whales — their size, diet, migration routes, and habitat</p>
           <div class="question-actions">
@@ -1011,7 +955,6 @@
           <div class="feedback" id="m4"></div>
         </div>
       </div>
-
       <div class="nav">
         <button class="ghost" onclick="changeSlide(-1)">← Back</button>
         <button class="primary" onclick="changeSlide(1)">Next ➜</button>
@@ -1023,10 +966,18 @@
     ════════════════════════════════════════ -->
     <section class="slide" data-slide="4">
       <div class="stop-label">✍️ Stop 5 of 6 — Hamburger Writing</div>
-      <h2>Build a Strong Paragraph 🍔</h2>
-      <p class="lead">Every strong expository paragraph is built like a hamburger — a strong top, juicy middle, and a solid bottom. You investigated the words. You read the passage. Now let's write.</p>
 
-      <div class="grid-2" style="margin-bottom: 22px;">
+      <div class="section-heading-row">
+        <h2>Build a Strong Paragraph 🍔</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide5-intro')" aria-label="Listen to the hamburger introduction">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide5-intro">Every strong expository paragraph is built like a hamburger — a strong top, juicy middle, and a solid bottom. You investigated the words. You read the passage. Now let's write.</p>
+
+      <div class="section-heading-row">
+        <h3>The Hamburger Model</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide5-model')" aria-label="Listen to the hamburger model description">🔊 Listen</button>
+      </div>
+      <div class="grid-2" id="slide5-model" style="margin-bottom: 22px;">
         <div class="burger-layer">
           <span class="layer-badge bun-top">🍞 Introduction — Top Bun</span>
           <p style="font-size: 0.95rem; color: var(--muted);">Your main idea — what is this paragraph about? This sentence tells the reader what to expect.</p>
@@ -1048,39 +999,35 @@
           <p style="font-size: 0.95rem; color: var(--muted);">Wrap it up — restate your main idea in a new way.</p>
         </div>
       </div>
-
       <hr class="divider" />
 
-      <h3>Your Turn: Write About Ashcroft 📝</h3>
-      <p class="lead" style="margin-top: 4px;">Use what you learned in the passage. You can write bullet points or full sentences — whatever works for you.</p>
-
+      <div class="section-heading-row">
+        <h3>Your Turn: Write About Ashcroft 📝</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide5-prompts')" aria-label="Listen to the writing prompts">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide5-prompts" style="margin-top: 4px;">Use what you learned in the passage. You can write bullet points or full sentences — whatever works for you.</p>
       <div class="grid-2">
         <div class="burger-layer">
           <span class="layer-badge bun-top">🍞 TOP BUN — My main idea about Ashcroft</span>
           <textarea placeholder="Example: Ashcroft, Colorado is a ghost town with an interesting history."></textarea>
         </div>
-
         <div class="burger-layer">
           <span class="layer-badge detail-1">🥬 Detail 1 — What was Ashcroft established as?</span>
           <textarea placeholder="Example: In 1880, Ashcroft was established as a silver mining camp."></textarea>
         </div>
-
         <div class="burger-layer">
           <span class="layer-badge detail-2">🍅 Detail 2 — Why did people leave?</span>
           <textarea placeholder="Example: People left because they discovered new silver in Aspen and were attracted to bigger towns."></textarea>
         </div>
-
         <div class="burger-layer">
           <span class="layer-badge detail-3">🥩 Detail 3 — What is Ashcroft like today?</span>
           <textarea placeholder="Example: Today Ashcroft is abandoned, but about 75 visitors come each summer to see its 9 remaining buildings."></textarea>
         </div>
-
         <div class="burger-layer" style="grid-column: 1 / -1;">
           <span class="layer-badge bun-bottom">🍞 BOTTOM BUN — Wrap it up</span>
           <textarea placeholder="Example: Ashcroft may be abandoned today, but it still has stories to tell."></textarea>
         </div>
       </div>
-
       <div class="nav">
         <button class="ghost" onclick="changeSlide(-1)">← Back</button>
         <button class="primary" onclick="changeSlide(1)">Finish Lesson ➜</button>
@@ -1092,11 +1039,18 @@
     ════════════════════════════════════════ -->
     <section class="slide" data-slide="5">
       <div class="stop-label">🎉 Lesson Complete!</div>
-      <h2>Amazing Work, Word Scientist! ⭐</h2>
-      <p class="lead">You finished Lesson 9 — Fact vs. Opinion · Text Types · Morpheme Investigation · Hamburger Writing</p>
 
-      <div class="summary-card" style="border-color: #b2d8d3; background: var(--teal-light);">
+      <div class="section-heading-row">
+        <h2>Amazing Work, Word Scientist! ⭐</h2>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide6-intro')" aria-label="Listen to the completion message">🔊 Listen</button>
+      </div>
+      <p class="lead" id="slide6-intro">You finished Lesson 9 — Fact vs. Opinion · Text Types · Morpheme Investigation · Hamburger Writing</p>
+
+      <div class="section-heading-row">
         <h3>🔬 In This Lesson You Investigated:</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide6-summary')" aria-label="Listen to the lesson summary">🔊 Listen</button>
+      </div>
+      <div class="summary-card" id="slide6-summary" style="border-color: #b2d8d3; background: var(--teal-light);">
         <ul>
           <li><strong>Morphemes</strong> hiding inside words like <em>discovered</em>, <em>attracted</em>, and <em>established</em></li>
           <li>The bound base <strong>&lt;tract&gt;</strong> means "pull" — it appears in: attract, distract, contract, tractor</li>
@@ -1108,18 +1062,24 @@
         </ul>
       </div>
 
-      <div class="summary-card" style="margin-top: 0;">
+      <div class="section-heading-row" style="margin-top: 0;">
         <h3>🧠 Reflection Prompt</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide6-reflection')" aria-label="Listen to the reflection prompt">🔊 Listen</button>
+      </div>
+      <div class="summary-card" id="slide6-reflection">
         <p style="margin-bottom: 10px;">How is writing a narrative essay different from writing an expository paragraph? Use what you learned today.</p>
         <textarea placeholder="Write your reflection here..."></textarea>
       </div>
 
-      <div class="word-sum-box" style="margin-top: 18px;">
-        <h4>🔍 Bonus Inquiry — Can you find more &lt;tract&gt; words?</h4>
-        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp;("pulled toward")</div>
-        <div class="sum-row">dis + tract + ed → distracted &nbsp;("pulled apart / away")</div>
-        <div class="sum-row">con + tract → contract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;("pulled together")</div>
-        <div class="sum-row">ex + tract → extract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;("pulled out")</div>
+      <div class="section-heading-row" style="margin-top: 18px;">
+        <h3>🔍 Bonus Inquiry — Can you find more &lt;tract&gt; words?</h3>
+        <button class="section-tts-btn" onclick="readSection(this, 'slide6-bonus')" aria-label="Listen to the bonus inquiry">🔊 Listen</button>
+      </div>
+      <div class="word-sum-box" id="slide6-bonus">
+        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp;(pulled toward)</div>
+        <div class="sum-row">dis + tract + ed → distracted &nbsp;(pulled apart or away)</div>
+        <div class="sum-row">con + tract → contract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pulled together)</div>
+        <div class="sum-row">ex + tract → extract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pulled out)</div>
         <p style="margin-top: 10px; font-size: 0.9rem; color: var(--muted);">What do all of these words have in common? How does "pull" fit in each one? 🤔</p>
       </div>
 
@@ -1128,32 +1088,23 @@
         <button class="ghost" onclick="goToSlide(4)">← Review Writing</button>
       </div>
     </section>
-
   </div><!-- end lesson-card -->
-
   <p class="footer-note">Lokahi Connect · Meaning-First Literacy™ · Grade 3 · Lesson 9 · lokahiconnect.org</p>
 </div><!-- end container -->
 
 <!-- Tint overlay -->
 <div id="tint-overlay"></div>
-
 <!-- Reading ruler -->
 <div id="ruler"></div>
 
 <!-- Dyslexia support toolbar -->
 <div id="a11y-bar" role="toolbar" aria-label="Reading support tools">
   <span class="bar-label">🔧 Reading Tools</span>
-
-  <button id="tts-btn" onclick="toggleTTS()" title="Read passage aloud">🔊 Read Aloud</button>
-
+  <button id="tts-btn" onclick="toggleTTS()" title="Read whole slide aloud">🔊 Read Page</button>
   <button id="font-btn" onclick="toggleFont()" title="Switch to dyslexia-friendly font">Aa Font</button>
-
   <button id="spacing-btn" onclick="toggleSpacing()" title="Increase letter and line spacing">↔ Spacing</button>
-
   <button id="size-btn" onclick="toggleSize()" title="Larger text">🔠 Bigger</button>
-
   <button id="tint-btn" onclick="cycleTint()" title="Tint the screen to reduce glare">🎨 Tint</button>
-
   <button id="ruler-btn" onclick="toggleRuler()" title="Follow-along reading ruler">📏 Ruler</button>
 </div>
 
@@ -1166,29 +1117,28 @@
     const pct = (currentSlide / (total - 1)) * 100;
     document.getElementById("progressBar").style.width = pct + "%";
   }
-
   function showSlide(index) {
     slides.forEach((s, i) => s.classList.toggle("active", i === index));
     currentSlide = index;
     window.scrollTo({ top: 0, behavior: "smooth" });
     updateProgress();
   }
-
   function changeSlide(dir) {
+    stopAllSectionTTS();
+    stopTTSIfActive();
     const next = currentSlide + dir;
     if (next >= 0 && next < total) showSlide(next);
   }
-
   function goToSlide(index) {
+    stopAllSectionTTS();
+    stopTTSIfActive();
     if (index >= 0 && index < total) showSlide(index);
   }
-
   function toggleDef(btn) {
     const def = btn.nextElementSibling;
     def.classList.toggle("show");
     btn.textContent = def.classList.contains("show") ? "Hide ▲" : "👆 Tap to investigate";
   }
-
   function checkAnswer(button, selected, correct) {
     const card = button.closest(".question-card");
     const buttons = card.querySelectorAll(".choice");
@@ -1209,7 +1159,6 @@
       feedback.className = "feedback show incorrect-fb";
     }
   }
-
   function checkSingle(button, feedbackId, isCorrect, message) {
     const wrapper = button.parentElement;
     const buttons = wrapper.querySelectorAll(".choice");
@@ -1219,13 +1168,75 @@
     feedback.textContent = message;
     feedback.className = "feedback show " + (isCorrect ? "correct-fb" : "incorrect-fb");
   }
-
   updateProgress();
 
   /* ══════════════════════════════════════
-     DYSLEXIA SUPPORT
+     SECTION-LEVEL TTS
   ══════════════════════════════════════ */
+  let activeSectionBtn = null;
+  let activeSectionUtterance = null;
 
+  function readSection(btn, sectionId) {
+    if (!('speechSynthesis' in window)) {
+      alert('Sorry, your browser does not support text-to-speech.');
+      return;
+    }
+
+    // If this button is already playing, stop it
+    if (activeSectionBtn === btn) {
+      window.speechSynthesis.cancel();
+      btn.textContent = '🔊 Listen';
+      btn.classList.remove('playing');
+      activeSectionBtn = null;
+      return;
+    }
+
+    // Stop any other section currently playing
+    stopAllSectionTTS();
+    // Also stop the full-page TTS if running
+    stopTTSIfActive();
+
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+    const text = el.innerText.trim();
+    if (!text) return;
+
+    activeSectionBtn = btn;
+    btn.textContent = '⏹ Stop';
+    btn.classList.add('playing');
+
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate = 0.88;
+    utt.pitch = 1;
+    utt.lang = 'en-US';
+    activeSectionUtterance = utt;
+
+    utt.onend = function() {
+      btn.textContent = '🔊 Listen';
+      btn.classList.remove('playing');
+      if (activeSectionBtn === btn) activeSectionBtn = null;
+    };
+    utt.onerror = function() {
+      btn.textContent = '🔊 Listen';
+      btn.classList.remove('playing');
+      if (activeSectionBtn === btn) activeSectionBtn = null;
+    };
+
+    window.speechSynthesis.speak(utt);
+  }
+
+  function stopAllSectionTTS() {
+    if (activeSectionBtn) {
+      window.speechSynthesis.cancel();
+      activeSectionBtn.textContent = '🔊 Listen';
+      activeSectionBtn.classList.remove('playing');
+      activeSectionBtn = null;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     FULL-PAGE TTS (toolbar button)
+  ══════════════════════════════════════ */
   let ttsActive = false;
   let fontOn = false;
   let spacingOn = false;
@@ -1240,13 +1251,11 @@
   ];
   let tintIndex = 0;
 
-  // ── TTS ──
   function getReadableText() {
     const passage = document.querySelector('.slide.active .passage');
     if (passage) return passage.innerText;
     return document.querySelector('.slide.active').innerText || '';
   }
-
   function toggleTTS() {
     if (!('speechSynthesis' in window)) {
       alert('Sorry, your browser does not support text-to-speech.');
@@ -1256,17 +1265,19 @@
     if (ttsActive) {
       window.speechSynthesis.cancel();
       ttsActive = false;
-      btn.textContent = '🔊 Read Aloud';
+      btn.textContent = '🔊 Read Page';
       btn.classList.remove('on','playing');
       clearWordHighlights();
       return;
     }
+    // Stop section TTS if running
+    stopAllSectionTTS();
+
     const text = getReadableText();
     if (!text.trim()) return;
     ttsActive = true;
     btn.textContent = '⏹ Stop';
     btn.classList.add('on','playing');
-
     const utt = new SpeechSynthesisUtterance(text);
     utt.rate = 0.88;
     utt.pitch = 1;
@@ -1276,13 +1287,12 @@
     };
     utt.onend = function() {
       ttsActive = false;
-      btn.textContent = '🔊 Read Aloud';
+      btn.textContent = '🔊 Read Page';
       btn.classList.remove('on','playing');
       clearWordHighlights();
     };
     window.speechSynthesis.speak(utt);
   }
-
   function highlightWord(fullText, charIndex, charLen) {
     const passage = document.querySelector('.slide.active .passage');
     if (!passage) return;
@@ -1305,20 +1315,20 @@
       offset += len;
     }
   }
-
   function clearWordHighlights() {
     document.querySelectorAll('.tts-word').forEach(m => {
-      m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
-      m.parentNode && m.parentNode.normalize();
+      if (m.parentNode) {
+        m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
+        m.parentNode && m.parentNode.normalize();
+      }
     });
   }
-
   function stopTTSIfActive() {
     if (ttsActive) {
       window.speechSynthesis.cancel();
       ttsActive = false;
       const btn = document.getElementById('tts-btn');
-      if (btn) { btn.textContent = '🔊 Read Aloud'; btn.classList.remove('on','playing'); }
+      if (btn) { btn.textContent = '🔊 Read Page'; btn.classList.remove('on','playing'); }
       clearWordHighlights();
     }
   }
@@ -1331,7 +1341,6 @@
     btn.textContent = fontOn ? 'Aa Font ✓' : 'Aa Font';
     btn.classList.toggle('on', fontOn);
   }
-
   // ── Spacing ──
   function toggleSpacing() {
     spacingOn = !spacingOn;
@@ -1340,7 +1349,6 @@
     btn.textContent = spacingOn ? '↔ Spacing ✓' : '↔ Spacing';
     btn.classList.toggle('on', spacingOn);
   }
-
   // ── Size ──
   function toggleSize() {
     sizeOn = !sizeOn;
@@ -1349,7 +1357,6 @@
     btn.textContent = sizeOn ? '🔠 Bigger ✓' : '🔠 Bigger';
     btn.classList.toggle('on', sizeOn);
   }
-
   // ── Tint ──
   function cycleTint() {
     tintIndex = (tintIndex + 1) % tints.length;
@@ -1367,7 +1374,6 @@
       btn.classList.remove('on');
     }
   }
-
   // ── Ruler ──
   function toggleRuler() {
     rulerOn = !rulerOn;
@@ -1379,17 +1385,9 @@
     if (rulerOn) document.addEventListener('mousemove', moveRuler);
     else document.removeEventListener('mousemove', moveRuler);
   }
-
   function moveRuler(e) {
     document.getElementById('ruler').style.top = (e.clientY - 22) + 'px';
   }
-
-  // Stop TTS on slide navigation — wrap existing functions
-  const _cs = changeSlide;
-  changeSlide = function(dir) { stopTTSIfActive(); _cs(dir); };
-  const _gs = goToSlide;
-  goToSlide = function(idx) { stopTTSIfActive(); _gs(idx); };
-
 </script>
 </body>
 </html>
