@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Over and Under the Kelp Forest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
+      font-weight: normal;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
+      font-weight: bold;
+    }
+  </style>
+  <style>
+    :root {
+      --teal:        #0d4f5c;
+      --teal-mid:    #1a7a6e;
+      --teal-light:  #e6f4f2;
+      --amber:       #e8a040;
+      --amber-light: #fff4e0;
+      --bg:          #f5f7f9;
+      --card:        #ffffff;
+      --text:        #1c2b2e;
+      --muted:       #5a7278;
+      --border:      #dce8ea;
+      --success:     #1a7a6e;
+      --success-bg:  #e6f4f2;
+      --error-bg:    #fdeaea;
+      --error:       #b91c1c;
+      --shadow:      0 8px 28px rgba(13,79,92,0.10);
+      --radius:      20px;
+      --ocean:       #0a3d54;
+      --ocean-light: #d0eaf5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 16px 80px;
+    }
+    .lesson-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, var(--ocean) 0%, var(--teal-mid) 100%);
+      padding: 32px 28px 26px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: "🦦";
+      position: absolute;
+      right: 28px;
+      top: 24px;
+      font-size: 4rem;
+      opacity: 0.18;
+    }
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .header p {
+      opacity: 0.85;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+    .goals-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .goals-list li {
+      opacity: 0.92;
+      font-size: 0.97rem;
+      padding-left: 20px;
+      position: relative;
+    }
+    .goals-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+      font-weight: 700;
+    }
+    /* ── Progress ── */
+    .progress-bar-wrap { background: #e9eef0; height: 5px; width: 100%; }
+    .progress-bar-fill { height: 5px; background: var(--amber); transition: width 0.4s ease; }
+    /* ── Slides ── */
+    .slide { display: none; padding: 32px 28px 28px; animation: fadeIn 0.3s ease; }
+    .slide.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* ── Stop Label ── */
+    .stop-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-light);
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      border: 1px solid #b2d8d3;
+    }
+    /* ── Section heading rows ── */
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .section-heading-row h2,
+    .section-heading-row h3 { margin-bottom: 0; }
+    /* ── Section TTS button ── */
+    .section-tts-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: var(--teal);
+      border: 1.5px solid #b2d8d3;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .section-tts-btn:hover { background: #c4e8e2; box-shadow: 0 2px 8px rgba(13,79,92,0.15); transform: translateY(-1px); }
+    .section-tts-btn.playing { background: var(--amber); color: var(--teal); border-color: var(--amber); }
+    /* ── Typography ── */
+    h2 { font-family: 'Playfair Display', serif; font-size: 1.65rem; color: var(--teal); margin-bottom: 8px; line-height: 1.3; }
+    h3 { font-size: 1.05rem; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+    .lead { color: var(--muted); margin-bottom: 20px; font-size: 1rem; }
+    /* ── Grids ── */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    /* ── Cards ── */
+    .card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 18px; }
+    .card.teal-tint { background: var(--teal-light); border-color: #b2d8d3; }
+    .card.amber-tint { background: var(--amber-light); border-color: #f5d498; }
+    .card.ocean-tint { background: var(--ocean-light); border-color: #8ec9e0; }
+    /* ── Word Cards ── */
+    .word-card { border: 1.5px solid var(--border); border-radius: 16px; padding: 18px; background: white; }
+    .word-card .word-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal); margin-bottom: 4px; }
+    .word-card .morpheme-hint { font-size: 0.82rem; color: var(--amber); font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em; }
+    .word-definition { display: none; margin-top: 8px; font-size: 0.95rem; color: var(--text); border-top: 1px dashed var(--border); padding-top: 10px; }
+    .word-definition.show { display: block; }
+    .word-sum-inline { display: inline-block; background: var(--amber-light); border: 1px solid #f5d498; border-radius: 8px; padding: 4px 10px; font-family: monospace; font-size: 0.9rem; color: var(--teal); margin-top: 6px; }
+    /* ── Buttons ── */
+    button { border: none; border-radius: 12px; padding: 11px 16px; font-size: 0.97rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: 0.55; cursor: default; transform: none; }
+    button.primary { background: var(--teal); color: white; box-shadow: 0 4px 12px rgba(13,79,92,0.25); }
+    button.secondary { background: var(--teal-light); color: var(--teal); border: 1.5px solid #b2d8d3; }
+    button.ghost { background: #edf0f2; color: var(--text); }
+    button.reveal-btn { background: var(--amber-light); color: var(--teal); border: 1.5px solid #f5d498; font-size: 0.9rem; padding: 8px 14px; }
+    button.choice { background: white; border: 2px solid var(--border); color: var(--text); min-width: 110px; font-size: 0.95rem; }
+    button.choice.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+    button.choice.incorrect { background: var(--error-bg); border-color: var(--error); color: var(--error); }
+    /* ── Nav ── */
+    .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 12px; flex-wrap: wrap; }
+    /* ── Question Cards ── */
+    .question-card { border: 1.5px solid var(--border); border-radius: 16px; padding: 18px; background: white; }
+    .question-card .q-text { font-size: 1rem; margin-bottom: 12px; color: var(--text); }
+    .question-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .feedback { margin-top: 10px; font-size: 0.95rem; font-weight: 600; border-radius: 8px; padding: 8px 12px; display: none; }
+    .feedback.show { display: block; }
+    .feedback.correct-fb { background: var(--success-bg); color: var(--success); }
+    .feedback.incorrect-fb { background: var(--error-bg); color: var(--error); }
+    /* ── Over/Under Passage ── */
+    .passage-wrap {
+      margin: 16px 0 22px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .passage-over {
+      background: linear-gradient(180deg, #d0eaf5 0%, #e8f5fb 100%);
+      border-bottom: 3px solid #8ec9e0;
+      padding: 22px 24px;
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+    .passage-under {
+      background: linear-gradient(180deg, #0a3d54 0%, #0d4f5c 100%);
+      padding: 22px 24px;
+      line-height: 1.9;
+      font-size: 1rem;
+      color: #e8f5fb;
+    }
+    .passage-under .base   { background: rgba(207,245,238,0.25); border-bottom: 2px solid #7eecd6; }
+    .passage-under .suffix { background: rgba(255,240,204,0.2);  border-bottom: 2px solid var(--amber); }
+    .passage-under .prefix { background: rgba(232,224,255,0.2);  border-bottom: 2px solid #c4b5fd; }
+    .passage-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .passage-label.over  { background: #8ec9e0; color: #0a3d54; }
+    .passage-label.under { background: rgba(255,255,255,0.12); color: #b2dff0; }
+    .passage-over p  { margin-bottom: 12px; }
+    .passage-under p { margin-bottom: 12px; }
+    .passage-over p:last-child  { margin-bottom: 0; }
+    .passage-under p:last-child { margin-bottom: 0; }
+    /* ── Morpheme highlights (over section) ── */
+    .base   { background: #cff5ee; border-bottom: 2px solid var(--teal-mid); border-radius: 3px; padding: 0 2px; }
+    .suffix { background: #fff0cc; border-bottom: 2px solid var(--amber);    border-radius: 3px; padding: 0 2px; }
+    .prefix { background: #e8e0ff; border-bottom: 2px solid #7c5cbf;         border-radius: 3px; padding: 0 2px; }
+    .morpheme-key { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; font-size: 0.88rem; }
+    .morpheme-key span { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+    .key-swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+    /* ── Word Sum Box ── */
+    .word-sum-box { background: var(--amber-light); border: 1.5px solid #f5d498; border-radius: 14px; padding: 16px 20px; margin: 14px 0; }
+    .word-sum-box h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 10px; }
+    .sum-row { font-family: monospace; font-size: 1rem; color: var(--teal); margin-bottom: 5px; }
+    /* ── Stats ── */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 16px 0 22px; }
+    .stat { background: var(--ocean-light); border: 1px solid #8ec9e0; border-radius: 12px; padding: 12px 14px; font-size: 0.92rem; font-weight: 700; color: var(--ocean); }
+    /* ── Journey map ── */
+    .journey-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 16px 0 22px;
+    }
+    .journey-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .journey-step .step-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .journey-step .step-body { flex: 1; }
+    .journey-step .step-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .journey-step .step-text { font-size: 0.97rem; color: var(--text); }
+    /* ── Hamburger ── */
+    .burger-layer { border: 1.5px solid var(--border); border-radius: 16px; padding: 18px; background: white; }
+    .layer-badge { display: inline-block; padding: 5px 12px; border-radius: 999px; font-weight: 700; font-size: 0.88rem; margin-bottom: 10px; }
+    .layer-badge.bun-top    { background: #fef3c7; color: #92400e; }
+    .layer-badge.detail-1   { background: #dcfce7; color: #166534; }
+    .layer-badge.detail-2   { background: #fce7f3; color: #9d174d; }
+    .layer-badge.detail-3   { background: #e0e7ff; color: #3730a3; }
+    .layer-badge.bun-bottom { background: #fef3c7; color: #92400e; }
+    textarea { width: 100%; min-height: 90px; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.97rem; color: var(--text); resize: vertical; background: #fafcfc; margin-top: 8px; }
+    textarea:focus { outline: none; border-color: var(--teal-mid); }
+    /* ── Summary ── */
+    .summary-card { border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 18px; }
+    .summary-card ul { padding-left: 20px; }
+    .summary-card li { margin-bottom: 8px; }
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    /* ── Footer ── */
+    .footer-note { text-align: center; font-size: 0.88rem; color: var(--muted); margin-top: 20px; }
+    /* ── Label tags ── */
+    .label-tag { display: inline-block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 9px; border-radius: 6px; margin-bottom: 6px; }
+    .label-tag.teal  { background: var(--teal-light); color: var(--teal); }
+    .label-tag.amber { background: var(--amber-light); color: #92400e; }
+    .label-tag.ocean { background: var(--ocean-light); color: var(--ocean); }
+    /* ── Narrative structure boxes ── */
+    .structure-box {
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .structure-box.journey  { background: var(--ocean-light); border: 1.5px solid #8ec9e0; }
+    .structure-box.conflict { background: var(--error-bg);    border: 1.5px solid #f5c6c6; }
+    /* ── Dyslexia toolbar ── */
+    #a11y-bar {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--teal); border-radius: 999px; padding: 10px 18px;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 24px rgba(13,79,92,0.35); z-index: 9999;
+      flex-wrap: wrap; justify-content: center; max-width: 96vw;
+    }
+    #a11y-bar .bar-label { color: rgba(255,255,255,0.7); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; padding-right: 4px; }
+    #a11y-bar button { background: rgba(255,255,255,0.12); color: white; border: 1.5px solid rgba(255,255,255,0.25); border-radius: 999px; padding: 7px 14px; font-size: 0.85rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.15s, transform 0.1s; white-space: nowrap; }
+    #a11y-bar button:hover { background: rgba(255,255,255,0.22); }
+    #a11y-bar button.on { background: var(--amber); color: var(--teal); border-color: var(--amber); }
+    .tts-word { background: #ffe066; border-radius: 3px; padding: 0 1px; transition: background 0.1s; }
+    #tint-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9998; opacity: 0; transition: opacity 0.3s; }
+    #tint-overlay.show { opacity: 1; }
+    #ruler { position: fixed; left: 0; width: 100%; height: 44px; pointer-events: none; z-index: 9997; display: none; background: rgba(232,160,64,0.22); border-top: 2px solid var(--amber); border-bottom: 2px solid var(--amber); }
+    body.dyslexic-font, body.dyslexic-font p, body.dyslexic-font li, body.dyslexic-font h2, body.dyslexic-font h3, body.dyslexic-font textarea, body.dyslexic-font .word-title, body.dyslexic-font .sum-row, body.dyslexic-font button { font-family: 'OpenDyslexic', sans-serif !important; }
+    body.wide-spacing p, body.wide-spacing li, body.wide-spacing .q-text, body.wide-spacing .passage-over p, body.wide-spacing .passage-under p { line-height: 2.2 !important; letter-spacing: 0.06em !important; word-spacing: 0.18em !important; }
+    body.large-text { font-size: 1.2rem !important; }
+    body.large-text h2 { font-size: 1.85rem !important; }
+    #tts-btn.playing { background: #ff6b6b; color: white; border-color: #ff6b6b; }
+    @media (max-width: 680px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      h2 { font-size: 1.4rem; }
+      .slide, .header { padding: 22px 18px; }
+      .section-heading-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="lesson-card">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="eyebrow">Lokahi Connect · Meaning-First Literacy™ · Grade 3–4</div>
+      <h1>Over and Under the Kelp Forest</h1>
+      <p>A journey narrative — told through observation, wonder, and discovery. 🦦🌊</p>
+      <ul class="goals-list">
+        <li>Investigate the meaning hiding inside words from the passage</li>
+        <li>Learn how journey narratives are structured — and why they feel different</li>
+        <li>Read and explore a sea otter's world above and below the water</li>
+        <li>Write your own journey narrative using the Over/Under structure</li>
+      </ul>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 1 — Word Investigation Wall
+    ════════════════════════════════════════ -->
+    <section class="slide active" data-slide="0">
+      <div class="stop-label">🧱 Stop 1 of 6 — Word Investigation Wall</div>
+
+      <div class="section-heading-row">
+        <h2>What's hiding inside these words?</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s1-intro')" aria-label="Listen">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s1-intro">These words appear in today's passage about sea otters. Before you read, let's investigate what they mean — using the parts inside them as clues. Tap each word to reveal its meaning and word sum.</p>
+
+      <div class="section-heading-row" style="margin-top:18px;">
+        <h3>Word Cards</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s1-words')" aria-label="Listen to word cards">🔊 Listen</button>
+      </div>
+      <div class="grid-2" id="s1-words">
+
+        <div class="word-card">
+          <div class="word-title">floating</div>
+          <div class="morpheme-hint">🔍 Look at the base: &lt;float&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> resting on the surface of water without sinking<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">float + ing → floating</span><br><br>
+            <em>The suffix &lt;-ing&gt; tells us this is happening right now. No join change is needed here — &lt;float&gt; ends in a consonant, so we simply add &lt;-ing&gt;.</em>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">wrapped</div>
+          <div class="morpheme-hint">🔍 Look at the base: &lt;wrap&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> covered or wound around something<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">wrap + ed → wrapped</span><br><br>
+            <em>Notice: the final consonant doubled at the join! &lt;wrap&gt; ends in a short vowel + single consonant, so we Double before adding a vowel suffix. This is the Doubling convention.</em>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">submerged</div>
+          <div class="morpheme-hint">🔍 Look at the parts: &lt;sub-&gt; + &lt;merge&gt; + &lt;-ed&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> placed completely under water<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">sub + merge + ed → submerged</span><br><br>
+            <em>The prefix &lt;sub-&gt; means "under" or "below." The base &lt;merge&gt; means "to plunge or dip." To sub-merge is to go below the surface. Notice the final &lt;e&gt; in &lt;merge&gt; was replaced when &lt;-ed&gt; was added — that's the Replace convention.</em>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">connected</div>
+          <div class="morpheme-hint">🔍 Look at the parts: &lt;con-&gt; + &lt;nect&gt; + &lt;-ed&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> joined or linked together<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">con + nect + ed → connected</span><br><br>
+            <em>The prefix &lt;con-&gt; means "together" or "with." The bound base &lt;nect&gt; means "bind" or "tie." To connect is to tie things together. You can see &lt;nect&gt; in: connect, disconnect, interconnect.</em>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">observer</div>
+          <div class="morpheme-hint">🔍 Look at the parts: &lt;ob-&gt; + &lt;serve&gt; + &lt;-er&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> one who watches carefully and notices<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">ob + serve + er → observer</span><br><br>
+            <em>The prefix &lt;ob-&gt; means "toward" or "over." The base &lt;serve&gt; here means "watch" (from Latin servare). An observer is one who watches over. The final &lt;e&gt; in &lt;serve&gt; was replaced when &lt;-er&gt; was added — Replace convention.</em>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <div class="word-title">anchored</div>
+          <div class="morpheme-hint">🔍 Look at the base: &lt;anchor&gt;</div>
+          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
+          <div class="word-definition">
+            <strong>Meaning:</strong> held firmly in one place<br><br>
+            <strong>Word sum:</strong><br>
+            <span class="word-sum-inline">anchor + ed → anchored</span><br><br>
+            <em>The suffix &lt;-ed&gt; tells us this happened in the past. &lt;anchor&gt; comes from the Greek word ankura, meaning a curved hook that holds. Sea otters anchor themselves using kelp — so they don't drift away while they sleep!</em>
+          </div>
+        </div>
+
+      </div>
+      <div class="nav">
+        <button class="ghost" disabled>← Back</button>
+        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 2 — Narrative Structure
+    ════════════════════════════════════════ -->
+    <section class="slide" data-slide="1">
+      <div class="stop-label">📖 Stop 2 of 6 — Two Ways to Tell a Story</div>
+
+      <div class="section-heading-row">
+        <h2>Not all stories have a conflict</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s2-intro')" aria-label="Listen">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s2-intro">You may have learned that stories need a problem and a solution. Many stories do work that way — but not all of them. Today we'll look at a different kind of story: a <strong>journey narrative</strong>, where the power comes from noticing and wondering, not from conflict.</p>
+
+      <div class="section-heading-row">
+        <h3>Two story structures</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s2-structures')" aria-label="Listen to the two structures">🔊 Listen</button>
+      </div>
+      <div id="s2-structures" style="margin-bottom: 22px;">
+        <div class="structure-box conflict">
+          <div class="label-tag" style="background:#fde8e8; color:#b91c1c;">⚡ Conflict Structure</div>
+          <p style="font-size:0.97rem; margin-top:6px;">A character faces a <strong>problem</strong>. They struggle. They find a <strong>solution</strong>. The story ends when the problem is resolved. This creates tension and urgency — but it can also feel intense.</p>
+          <p style="font-size:0.9rem; color:var(--muted); margin-top:8px; font-style:italic;">Example arc: Character → Problem → Struggle → Solution → Resolution</p>
+        </div>
+        <div class="structure-box journey" style="margin-top:12px;">
+          <div class="label-tag ocean">🌊 Journey Structure</div>
+          <p style="font-size:0.97rem; margin-top:6px;">A character moves through a world. They <strong>notice</strong> things. They <strong>wonder</strong> about what they see. The story ends when the journey is complete — with a feeling of calm, fullness, or understanding.</p>
+          <p style="font-size:0.9rem; color:var(--muted); margin-top:8px; font-style:italic;">Example arc: Character → Movement → Noticing → Wondering → Arriving</p>
+        </div>
+      </div>
+
+      <div class="section-heading-row">
+        <h3>The Over / Under pattern 🌊</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s2-pattern')" aria-label="Listen to the over under pattern">🔊 Listen</button>
+      </div>
+      <div class="grid-2" id="s2-pattern">
+        <div class="card ocean-tint">
+          <div class="label-tag ocean">☀️ OVER — At the Surface</div>
+          <ul style="padding-left: 18px; font-size: 0.97rem; color: var(--text); margin-top: 8px;">
+            <li>What can be seen from above</li>
+            <li>Light, warmth, air</li>
+            <li>What the observer notices first</li>
+          </ul>
+        </div>
+        <div class="card" style="background: #0a3d54; border-color: #1a6a8a;">
+          <div class="label-tag" style="background:rgba(255,255,255,0.12); color:#b2dff0;">🌊 UNDER — Beneath the Surface</div>
+          <ul style="padding-left: 18px; font-size: 0.97rem; color: #d0eaf5; margin-top: 8px;">
+            <li>What lives in the hidden world below</li>
+            <li>Darkness, depth, quiet</li>
+            <li>What requires closer looking</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-heading-row" style="margin-top: 22px;">
+        <h3>💡 Quick Check</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s2-check-intro')" aria-label="Listen to the quick check">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s2-check-intro" style="margin-top:4px;">Which structure does each story use?</p>
+      <div class="grid-2">
+        <div class="question-card">
+          <p class="q-text">🐉 A dragon learns to breathe fire but accidentally burns down the village and must fix everything before winter comes.</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'sc1',false,'Not quite — this story has a problem (burned village) and a solution (fix it before winter). That is a conflict structure.')">Journey</button>
+            <button class="choice" onclick="checkSingle(this,'sc1',true,'Correct! This story has a clear problem and a race to solve it. That is conflict structure.')">Conflict</button>
+          </div>
+          <div class="feedback" id="sc1"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">🦋 A child walks through a meadow in spring, noticing butterflies, listening to bees, and watching clouds shift. The walk ends at home as the sun sets.</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'sc2',true,'Correct! This story has no problem or conflict — only movement, noticing, and arrival. That is journey structure.')">Journey</button>
+            <button class="choice" onclick="checkSingle(this,'sc2',false,'Not quite — this story has no problem to solve. The child simply moves through the world and notices things. That is journey structure.')">Conflict</button>
+          </div>
+          <div class="feedback" id="sc2"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">🐟 A young fish is separated from her family by a current and must find her way back through the reef before nightfall.</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'sc3',false,'Not quite — being separated and needing to return is a clear conflict. There is a problem that must be solved.')">Journey</button>
+            <button class="choice" onclick="checkSingle(this,'sc3',true,'Correct! Being separated from family is a problem, and finding the way back is the solution. That is conflict structure.')">Conflict</button>
+          </div>
+          <div class="feedback" id="sc3"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">🦦 A sea otter wakes at dawn, floats on the surface, dives to find food, grooms her fur, and wraps herself in kelp to rest as night falls.</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'sc4',true,'Correct! This story follows a day in an otter\'s life — no problem, just movement and noticing. That is journey structure.')">Journey</button>
+            <button class="choice" onclick="checkSingle(this,'sc4',false,'Not quite — there is no problem here to solve. The otter simply moves through her day. That is journey structure.')">Conflict</button>
+          </div>
+          <div class="feedback" id="sc4"></div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
+        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 3 — The Passage
+    ════════════════════════════════════════ -->
+    <section class="slide" data-slide="2">
+      <div class="stop-label">🌊 Stop 3 of 6 — Read &amp; Notice</div>
+
+      <div class="section-heading-row">
+        <h2>Over and Under the Kelp Forest 🦦</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s3-stats')" aria-label="Listen to sea otter facts">🔊 Listen</button>
+      </div>
+      <div class="stats" id="s3-stats">
+        <div class="stat">🦦 Species: Sea Otter</div>
+        <div class="stat">🌊 Home: Pacific Coast, California to Alaska</div>
+        <div class="stat">⚖️ Weight: Up to 65 lbs</div>
+        <div class="stat">🍽️ Diet: Urchins, clams, crabs, snails</div>
+        <div class="stat">😴 Sleep: Floating on the surface, wrapped in kelp</div>
+        <div class="stat">🌿 Role: Keystone species — protects kelp forests</div>
+      </div>
+
+      <div class="morpheme-key">
+        <span><span class="key-swatch" style="background:#cff5ee; border-bottom:2px solid var(--teal-mid);"></span> Base morpheme</span>
+        <span><span class="key-swatch" style="background:#fff0cc; border-bottom:2px solid var(--amber);"></span> Suffix</span>
+        <span><span class="key-swatch" style="background:#e8e0ff; border-bottom:2px solid #7c5cbf;"></span> Prefix</span>
+      </div>
+
+      <div class="section-heading-row">
+        <h3>The Passage</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s3-passage')" aria-label="Listen to the passage">🔊 Listen</button>
+      </div>
+
+      <div class="passage-wrap" id="s3-passage">
+        <!-- OVER -->
+        <div class="passage-over">
+          <span class="passage-label over">☀️ Over — At the Surface</span>
+          <p>Over the kelp forest, the morning is still. The water is a deep, cold green, and the light moves across it in slow, quiet patterns. A sea otter lies on her back, <span class="base">float</span><span class="suffix">ing</span> without effort. Her dark eyes are open, watching the sky.</p>
+          <p>She has <span class="base">wrap</span><span class="suffix">ped</span> a long ribbon of kelp around her body. It holds her gently in place, like a soft rope tied to the forest below. She will not drift. She does not need to swim. She simply rests, breathing the salt air, as the waves lift and lower her in a steady rhythm.</p>
+          <p>Her pup is <span class="base">float</span><span class="suffix">ing</span> beside her, tucked close, his fur still fluffy and pale from the cold. She keeps one paw resting lightly on him as they rise and fall together with the sea.</p>
+        </div>
+        <!-- UNDER -->
+        <div class="passage-under">
+          <span class="passage-label under">🌊 Under — Beneath the Surface</span>
+          <p>Under the kelp forest, the world is different. The light filters down in long, shifting columns — green and blue and gold — reaching toward the seafloor far below. Tall stalks of kelp rise from the rocks, <span class="base">connect</span><span class="suffix">ed</span> at their roots to the stone, reaching upward toward the sun.</p>
+          <p>A purple sea urchin moves slowly across the seafloor, grazing on the kelp. It does not know that the otter above depends on this forest — and that this forest depends on the otter. Without the otter, urchins would eat every stalk. The kelp would disappear. The fish that shelter here would have nowhere to go.</p>
+          <p>But the otter dives. She is an <span class="base">observ</span><span class="suffix">er</span> first — she watches the seafloor, reading its patterns. Then she moves. She tucks her body and <span class="prefix">sub</span><span class="base">merg</span><span class="suffix">es</span>, spiraling down through the green light, her paws tucked close, her tail pushing her deeper. She reaches the bottom, selects a sea urchin, and rises back toward the surface — back toward the air, the light, and her pup, still waiting above.</p>
+        </div>
+      </div>
+
+      <div class="section-heading-row">
+        <h3>🔬 Word Scientist Spotlight</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s3-wordsums')" aria-label="Listen to the word sums">🔊 Listen</button>
+      </div>
+      <div class="word-sum-box" id="s3-wordsums">
+        <h4>Words from the passage</h4>
+        <div class="sum-row">float + ing → floating &nbsp;&nbsp; (happening right now; no join change needed)</div>
+        <div class="sum-row">wrap + ed &nbsp;→ wrapped &nbsp;&nbsp; (Doubling convention: short vowel + single consonant before vowel suffix)</div>
+        <div class="sum-row">connect + ed → connected (the prefix con means "together")</div>
+        <div class="sum-row">observ(e) + er → observer (Replace convention: final e replaced by vowel suffix)</div>
+        <div class="sum-row">sub + merge + s → submerges (the prefix sub means "under")</div>
+      </div>
+
+      <div class="section-heading-row" style="margin-top:16px;">
+        <h3>💡 Notice the Structure</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s3-notice')" aria-label="Listen to the structure question">🔊 Listen</button>
+      </div>
+      <div class="card" id="s3-notice">
+        <p style="margin-bottom:12px;">Does this passage have a conflict — a problem that needs to be solved?</p>
+        <div class="question-actions">
+          <button class="choice" onclick="checkSingle(this,'s3-fb',false,'Look again — the otter is not facing a problem. She wakes, floats, dives, and rises. The story follows her journey. There is no conflict.')">Yes, it has a conflict</button>
+          <button class="choice" onclick="checkSingle(this,'s3-fb',true,'Correct! This passage has no conflict. The otter simply moves through her world — over and under. The structure is a journey narrative.')">No — it is a journey</button>
+        </div>
+        <div class="feedback" id="s3-fb"></div>
+      </div>
+
+      <div class="nav">
+        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
+        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 4 — Journey Map
+    ════════════════════════════════════════ -->
+    <section class="slide" data-slide="3">
+      <div class="stop-label">🗺️ Stop 4 of 6 — Journey Map</div>
+
+      <div class="section-heading-row">
+        <h2>Mapping the Otter's Journey</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s4-intro')" aria-label="Listen">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s4-intro">A journey narrative moves through steps — not conflict and resolution, but movement and noticing. Here is the arc of the otter's story from the passage. Can you see the shape of it?</p>
+
+      <div class="section-heading-row">
+        <h3>The Arc of the Journey</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s4-steps')" aria-label="Listen to the journey steps">🔊 Listen</button>
+      </div>
+      <div class="journey-steps" id="s4-steps">
+        <div class="journey-step">
+          <div class="step-icon">🌅</div>
+          <div class="step-body">
+            <div class="step-label">Step 1 — Begin</div>
+            <div class="step-text">The otter wakes. She is floating, anchored in kelp. Her pup is beside her. The world is still and quiet.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-icon">👁️</div>
+          <div class="step-body">
+            <div class="step-label">Step 2 — Observe</div>
+            <div class="step-text">She watches the surface world — the sky, the light, the rhythm of the waves. She is an observer first.</div>
+          </div>
+        </div>
+        <div class="journey-step" style="background:var(--ocean-light); border-color:#8ec9e0;">
+          <div class="step-icon">🌊</div>
+          <div class="step-body">
+            <div class="step-label">Step 3 — Descend</div>
+            <div class="step-text">She submerges. The underwater world is revealed — kelp, light, urchins, the seafloor. The hidden world becomes visible.</div>
+          </div>
+        </div>
+        <div class="journey-step" style="background:var(--ocean-light); border-color:#8ec9e0;">
+          <div class="step-icon">🔍</div>
+          <div class="step-body">
+            <div class="step-label">Step 4 — Discover</div>
+            <div class="step-text">She reads the seafloor, selects her prey, and finds what she came for. Discovery through attention, not struggle.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-icon">🌤️</div>
+          <div class="step-body">
+            <div class="step-label">Step 5 — Return</div>
+            <div class="step-text">She rises back to the surface — back to the air, the light, and her pup. The journey is complete. Nothing is broken. Everything is whole.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-heading-row" style="margin-top:4px;">
+        <h3>💡 Comprehension Check</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s4-check-intro')" aria-label="Listen to comprehension questions">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s4-check-intro" style="margin-top:4px;">Answer these questions using what you read in the passage.</p>
+      <div class="grid-2">
+        <div class="question-card">
+          <p class="q-text">Why does the sea otter wrap herself in kelp?</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'q1',false,'Not quite — the passage says she wraps in kelp so she will not drift away. It holds her in place like a soft rope.')">To keep warm</button>
+            <button class="choice" onclick="checkSingle(this,'q1',true,'Correct! The kelp holds her in place so she does not drift while she rests.')">So she will not drift</button>
+          </div>
+          <div class="feedback" id="q1"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">What would happen to the kelp forest if there were no sea otters?</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'q2',true,'Correct! Without otters, urchins would eat all the kelp, and the fish that shelter there would have nowhere to go.')">Urchins would eat it all</button>
+            <button class="choice" onclick="checkSingle(this,'q2',false,'The passage says urchins eat kelp, and otters eat urchins. Without otters, the urchins would eat every stalk.')">It would grow bigger</button>
+          </div>
+          <div class="feedback" id="q2"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">The passage says the otter is "an observer first." What does this tell us about how she hunts?</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'q3',false,'The passage says she watches and reads the seafloor\'s patterns before she moves. She uses observation, not speed, to hunt.')">She is very fast</button>
+            <button class="choice" onclick="checkSingle(this,'q3',true,'Correct! She watches and reads the seafloor before she acts. Careful noticing comes before action.')">She watches before she acts</button>
+          </div>
+          <div class="feedback" id="q3"></div>
+        </div>
+        <div class="question-card">
+          <p class="q-text">The prefix &lt;sub-&gt; means "under." Which word from the passage uses this prefix?</p>
+          <div class="question-actions">
+            <button class="choice" onclick="checkSingle(this,'q4',true,'Correct! Sub + merge + s = submerges. The otter goes under the surface.')">submerges</button>
+            <button class="choice" onclick="checkSingle(this,'q4',false,'Connected uses the prefix con, which means together. Sub means under — look for submerges in the passage.')">connected</button>
+          </div>
+          <div class="feedback" id="q4"></div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
+        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 5 — Writing: Over/Under
+    ════════════════════════════════════════ -->
+    <section class="slide" data-slide="4">
+      <div class="stop-label">✍️ Stop 5 of 6 — Your Journey Narrative</div>
+
+      <div class="section-heading-row">
+        <h2>Write Your Own Over / Under Story 🌊</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s5-intro')" aria-label="Listen">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s5-intro">You've read a journey narrative. Now it's your turn. You'll use the same Over / Under structure to write about any animal or place you choose. There is no conflict needed — only noticing, moving, and arriving.</p>
+
+      <div class="section-heading-row">
+        <h3>The Over / Under Writing Frame</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s5-frame')" aria-label="Listen to the writing frame">🔊 Listen</button>
+      </div>
+      <div class="journey-steps" id="s5-frame" style="margin-bottom: 22px;">
+        <div class="journey-step">
+          <div class="step-icon">☀️</div>
+          <div class="step-body">
+            <div class="step-label">Over — What does the surface world look, feel, or sound like?</div>
+            <div class="step-text">Describe what can be seen, heard, or felt from above. Use sensory language — light, temperature, sound, movement.</div>
+          </div>
+        </div>
+        <div class="journey-step" style="background:var(--ocean-light); border-color:#8ec9e0;">
+          <div class="step-icon">🌊</div>
+          <div class="step-body">
+            <div class="step-label">Under — What is hidden beneath?</div>
+            <div class="step-text">Reveal the world below. What lives there? What does it look like? What is surprising or interesting?</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-icon">🔄</div>
+          <div class="step-body">
+            <div class="step-label">Connection — How do the two worlds depend on each other?</div>
+            <div class="step-text">What connects above and below? This is where your insight lives — the moment the reader understands something new.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+      <div class="section-heading-row">
+        <h3>Your Turn 📝</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s5-prompts')" aria-label="Listen to the writing prompts">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s5-prompts" style="margin-top:4px;">You can write about the sea otter — or choose your own animal and place. Bullet points or full sentences — whatever works for you.</p>
+
+      <div class="grid-2">
+        <div class="burger-layer">
+          <span class="layer-badge bun-top">☀️ OVER — Describe the surface world</span>
+          <textarea placeholder="Example: Over the kelp forest, the morning is still and cold. The water catches the light..."></textarea>
+        </div>
+        <div class="burger-layer" style="background: var(--ocean-light); border-color: #8ec9e0;">
+          <span class="layer-badge ocean">🌊 UNDER — Reveal the hidden world below</span>
+          <textarea placeholder="Example: Under the surface, tall kelp stalks reach up from the rocks toward the sunlight..."></textarea>
+        </div>
+        <div class="burger-layer" style="grid-column: 1 / -1;">
+          <span class="layer-badge detail-1">🔄 CONNECTION — How do the two worlds depend on each other?</span>
+          <textarea placeholder="Example: The otter connects both worlds. She rests above, but dives below to find food. Without her, the kelp forest would disappear..."></textarea>
+        </div>
+        <div class="burger-layer" style="grid-column: 1 / -1;">
+          <span class="layer-badge bun-bottom">🏡 RETURN — How does your journey end? What feeling does the reader leave with?</span>
+          <textarea placeholder="Example: She rises back through the green water, back to the light and her pup. The forest is whole. The otter is home."></textarea>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
+        <button class="primary" onclick="changeSlide(1)">Finish Lesson ➜</button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SLIDE 6 — Complete
+    ════════════════════════════════════════ -->
+    <section class="slide" data-slide="5">
+      <div class="stop-label">🎉 Lesson Complete!</div>
+
+      <div class="section-heading-row">
+        <h2>Excellent Work, Word Scientist! 🦦⭐</h2>
+        <button class="section-tts-btn" onclick="readSection(this,'s6-intro')" aria-label="Listen">🔊 Listen</button>
+      </div>
+      <p class="lead" id="s6-intro">You finished Journey Narrative · Over/Under Structure · Morpheme Investigation · Sea Otters &amp; Kelp Forests</p>
+
+      <div class="section-heading-row">
+        <h3>🔬 In This Lesson You Investigated:</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s6-summary')" aria-label="Listen to the summary">🔊 Listen</button>
+      </div>
+      <div class="summary-card" id="s6-summary" style="border-color:#b2d8d3; background:var(--teal-light);">
+        <ul>
+          <li>The prefix <strong>&lt;sub-&gt;</strong> means "under" — to submerge is to go below the surface</li>
+          <li>The prefix <strong>&lt;con-&gt;</strong> means "together" — to connect is to tie things together</li>
+          <li>The <strong>Doubling convention</strong>: a final consonant doubles before a vowel suffix when the base ends in a short vowel + single consonant — as in <em>wrap + ed → wrapped</em></li>
+          <li>The <strong>Replace convention</strong>: a final non-syllabic &lt;e&gt; is replaced when a vowel suffix is added — as in <em>observe + er → observer</em></li>
+          <li>A <strong>journey narrative</strong> follows movement and noticing — it does not require a conflict or problem</li>
+          <li>The <strong>Over / Under structure</strong> reveals two connected worlds — surface and hidden — and finds meaning in their connection</li>
+          <li>Sea otters are a <strong>keystone species</strong> — without them, the kelp forest collapses</li>
+        </ul>
+      </div>
+
+      <div class="section-heading-row" style="margin-top: 0;">
+        <h3>🧠 Reflection Prompt</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s6-reflection')" aria-label="Listen to the reflection prompt">🔊 Listen</button>
+      </div>
+      <div class="summary-card" id="s6-reflection">
+        <p style="margin-bottom:10px;">How did reading a journey narrative feel different from reading a story with a conflict? What did you notice about the way this story made you feel?</p>
+        <textarea placeholder="Write your reflection here..."></textarea>
+      </div>
+
+      <div class="section-heading-row" style="margin-top:18px;">
+        <h3>🔍 Bonus Inquiry — More &lt;sub-&gt; and &lt;con-&gt; words</h3>
+        <button class="section-tts-btn" onclick="readSection(this,'s6-bonus')" aria-label="Listen to the bonus inquiry">🔊 Listen</button>
+      </div>
+      <div class="word-sum-box" id="s6-bonus">
+        <h4>The prefix sub means "under"</h4>
+        <div class="sum-row">sub + merge + s → submerges &nbsp;&nbsp; (goes under the surface)</div>
+        <div class="sum-row">sub + marine &nbsp;&nbsp; → submarine &nbsp;&nbsp;&nbsp; (a vessel that travels under the sea)</div>
+        <div class="sum-row">sub + way &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → subway &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (a path that goes under the ground)</div>
+        <h4 style="margin-top:14px;">The prefix con means "together"</h4>
+        <div class="sum-row">con + nect + ed → connected &nbsp;&nbsp; (tied together)</div>
+        <div class="sum-row">con + tract &nbsp;&nbsp;&nbsp;&nbsp; → contract &nbsp;&nbsp;&nbsp; (pulled together — recall tract from Lesson 9!)</div>
+        <div class="sum-row">con + struct &nbsp;&nbsp;&nbsp; → construct &nbsp;&nbsp; (built together)</div>
+        <p style="margin-top:10px; font-size:0.9rem; color:var(--muted);">Can you think of any other words that begin with &lt;sub-&gt; or &lt;con-&gt;? What do they all share? 🤔</p>
+      </div>
+
+      <div class="nav">
+        <button class="secondary" onclick="goToSlide(0)">🔁 Start Over</button>
+        <button class="ghost" onclick="goToSlide(4)">← Review Writing</button>
+      </div>
+    </section>
+
+  </div><!-- end lesson-card -->
+  <p class="footer-note">Lokahi Connect · Meaning-First Literacy™ · Grade 3–4 · lokahiconnect.org</p>
+</div><!-- end container -->
+
+<!-- Tint overlay -->
+<div id="tint-overlay"></div>
+<!-- Reading ruler -->
+<div id="ruler"></div>
+
+<!-- Dyslexia support toolbar -->
+<div id="a11y-bar" role="toolbar" aria-label="Reading support tools">
+  <span class="bar-label">🔧 Reading Tools</span>
+  <button id="tts-btn" onclick="toggleTTS()" title="Read whole slide aloud">🔊 Read Page</button>
+  <button id="font-btn" onclick="toggleFont()" title="Switch to dyslexia-friendly font">Aa Font</button>
+  <button id="spacing-btn" onclick="toggleSpacing()" title="Increase letter and line spacing">↔ Spacing</button>
+  <button id="size-btn" onclick="toggleSize()" title="Larger text">🔠 Bigger</button>
+  <button id="tint-btn" onclick="cycleTint()" title="Tint the screen to reduce glare">🎨 Tint</button>
+  <button id="ruler-btn" onclick="toggleRuler()" title="Follow-along reading ruler">📏 Ruler</button>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slide");
+  const total = slides.length;
+
+  function updateProgress() {
+    const pct = (currentSlide / (total - 1)) * 100;
+    document.getElementById("progressBar").style.width = pct + "%";
+  }
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle("active", i === index));
+    currentSlide = index;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    updateProgress();
+  }
+  function changeSlide(dir) {
+    stopAllSectionTTS();
+    stopTTSIfActive();
+    const next = currentSlide + dir;
+    if (next >= 0 && next < total) showSlide(next);
+  }
+  function goToSlide(index) {
+    stopAllSectionTTS();
+    stopTTSIfActive();
+    if (index >= 0 && index < total) showSlide(index);
+  }
+  function toggleDef(btn) {
+    const def = btn.nextElementSibling;
+    def.classList.toggle("show");
+    btn.textContent = def.classList.contains("show") ? "Hide ▲" : "👆 Tap to investigate";
+  }
+  function checkAnswer(button, selected, correct) {
+    const card = button.closest(".question-card");
+    const buttons = card.querySelectorAll(".choice");
+    const feedback = card.querySelector(".feedback");
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      const val = btn.textContent.trim().toLowerCase();
+      if (val === correct) btn.classList.add("correct");
+      else if (btn === button) btn.classList.add("incorrect");
+    });
+    if (selected === correct) {
+      feedback.textContent = "✅ Correct!";
+      feedback.className = "feedback show correct-fb";
+    } else {
+      feedback.textContent = correct === "fact"
+        ? "This is a fact — it can be proven true."
+        : "This is an opinion — it expresses a personal judgment.";
+      feedback.className = "feedback show incorrect-fb";
+    }
+  }
+  function checkSingle(button, feedbackId, isCorrect, message) {
+    const wrapper = button.parentElement;
+    const buttons = wrapper.querySelectorAll(".choice");
+    const feedback = document.getElementById(feedbackId);
+    buttons.forEach(btn => { btn.disabled = true; });
+    button.classList.add(isCorrect ? "correct" : "incorrect");
+    feedback.textContent = (isCorrect ? "✅ " : "🔍 ") + message;
+    feedback.className = "feedback show " + (isCorrect ? "correct-fb" : "incorrect-fb");
+  }
+  updateProgress();
+
+  /* ══ Section TTS ══ */
+  let activeSectionBtn = null;
+
+  function readSection(btn, sectionId) {
+    if (!('speechSynthesis' in window)) {
+      alert('Sorry, your browser does not support text-to-speech.');
+      return;
+    }
+    if (activeSectionBtn === btn) {
+      window.speechSynthesis.cancel();
+      btn.textContent = '🔊 Listen';
+      btn.classList.remove('playing');
+      activeSectionBtn = null;
+      return;
+    }
+    stopAllSectionTTS();
+    stopTTSIfActive();
+
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+    const text = el.innerText.trim();
+    if (!text) return;
+
+    activeSectionBtn = btn;
+    btn.textContent = '⏹ Stop';
+    btn.classList.add('playing');
+
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate = 0.88; utt.pitch = 1; utt.lang = 'en-US';
+    utt.onend = utt.onerror = function() {
+      btn.textContent = '🔊 Listen';
+      btn.classList.remove('playing');
+      if (activeSectionBtn === btn) activeSectionBtn = null;
+    };
+    window.speechSynthesis.speak(utt);
+  }
+
+  function stopAllSectionTTS() {
+    if (activeSectionBtn) {
+      window.speechSynthesis.cancel();
+      activeSectionBtn.textContent = '🔊 Listen';
+      activeSectionBtn.classList.remove('playing');
+      activeSectionBtn = null;
+    }
+  }
+
+  /* ══ Full-page TTS ══ */
+  let ttsActive = false;
+  let fontOn = false, spacingOn = false, sizeOn = false, rulerOn = false;
+  const tints = [null,'rgba(255,243,176,0.38)','rgba(194,230,208,0.38)','rgba(204,229,255,0.38)','rgba(255,213,200,0.38)'];
+  let tintIndex = 0;
+
+  function getReadableText() {
+    const passage = document.querySelector('.slide.active .passage-over, .slide.active .passage-under');
+    if (passage) return document.querySelector('.slide.active').innerText;
+    return document.querySelector('.slide.active').innerText || '';
+  }
+  function toggleTTS() {
+    if (!('speechSynthesis' in window)) { alert('Sorry, your browser does not support text-to-speech.'); return; }
+    const btn = document.getElementById('tts-btn');
+    if (ttsActive) {
+      window.speechSynthesis.cancel(); ttsActive = false;
+      btn.textContent = '🔊 Read Page'; btn.classList.remove('on','playing');
+      return;
+    }
+    stopAllSectionTTS();
+    const text = document.querySelector('.slide.active').innerText || '';
+    if (!text.trim()) return;
+    ttsActive = true; btn.textContent = '⏹ Stop'; btn.classList.add('on','playing');
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate = 0.88; utt.pitch = 1; utt.lang = 'en-US';
+    utt.onend = function() { ttsActive = false; btn.textContent = '🔊 Read Page'; btn.classList.remove('on','playing'); };
+    window.speechSynthesis.speak(utt);
+  }
+  function stopTTSIfActive() {
+    if (ttsActive) {
+      window.speechSynthesis.cancel(); ttsActive = false;
+      const btn = document.getElementById('tts-btn');
+      if (btn) { btn.textContent = '🔊 Read Page'; btn.classList.remove('on','playing'); }
+    }
+  }
+  function toggleFont() {
+    fontOn = !fontOn; document.body.classList.toggle('dyslexic-font', fontOn);
+    const btn = document.getElementById('font-btn');
+    btn.textContent = fontOn ? 'Aa Font ✓' : 'Aa Font'; btn.classList.toggle('on', fontOn);
+  }
+  function toggleSpacing() {
+    spacingOn = !spacingOn; document.body.classList.toggle('wide-spacing', spacingOn);
+    const btn = document.getElementById('spacing-btn');
+    btn.textContent = spacingOn ? '↔ Spacing ✓' : '↔ Spacing'; btn.classList.toggle('on', spacingOn);
+  }
+  function toggleSize() {
+    sizeOn = !sizeOn; document.body.classList.toggle('large-text', sizeOn);
+    const btn = document.getElementById('size-btn');
+    btn.textContent = sizeOn ? '🔠 Bigger ✓' : '🔠 Bigger'; btn.classList.toggle('on', sizeOn);
+  }
+  function cycleTint() {
+    tintIndex = (tintIndex + 1) % tints.length;
+    const overlay = document.getElementById('tint-overlay');
+    const btn = document.getElementById('tint-btn');
+    if (tints[tintIndex]) {
+      overlay.style.background = tints[tintIndex]; overlay.classList.add('show');
+      const names = ['','Yellow','Green','Blue','Peach'];
+      btn.textContent = '🎨 ' + names[tintIndex] + ' ✓'; btn.classList.add('on');
+    } else {
+      overlay.classList.remove('show'); btn.textContent = '🎨 Tint'; btn.classList.remove('on');
+    }
+  }
+  function toggleRuler() {
+    rulerOn = !rulerOn;
+    const ruler = document.getElementById('ruler'); const btn = document.getElementById('ruler-btn');
+    ruler.style.display = rulerOn ? 'block' : 'none';
+    btn.textContent = rulerOn ? '📏 Ruler ✓' : '📏 Ruler'; btn.classList.toggle('on', rulerOn);
+    if (rulerOn) document.addEventListener('mousemove', moveRuler);
+    else document.removeEventListener('mousemove', moveRuler);
+  }
+  function moveRuler(e) { document.getElementById('ruler').style.top = (e.clientY - 22) + 'px'; }
+</script>
+</body>
+</html>
