@@ -963,7 +963,7 @@ footer a { color:var(--teal); text-decoration:none; }
   <label>Speed</label>
   <input type="range" id="rate-slider" min="0.5" max="1.5" step="0.05" value="0.9" oninput="onRateChange(this.value)">
   <span class="voice-rate-val" id="rate-val">0.9×</span>
-  <button class="voice-test-btn" onclick="speakText('In the word ship, the grapheme S H occupies one consonant position — one spelling unit, not two separate letters.')">▶ Test</button>
+  <button class="voice-test-btn" onclick="speakText('sh. i. p. Word: ship. The grapheme sh occupies the initial consonant position — one spelling unit, not two separate letters.')">▶ Test</button>
   <span id="voice-no-support" style="display:none;color:var(--incorrect);font-size:.8rem;">TTS not available.</span>
 </div>
 
@@ -1067,7 +1067,7 @@ footer a { color:var(--teal); text-decoration:none; }
   </div>
 
   <div class="card">
-    <h3>Is this ⟨tch⟩ or ⟨ch⟩? — the same positional logic, new phoneme</h3>
+    <h3>Is this ⟨tch⟩ or ⟨ch⟩? — the same positional logic, different spelling unit</h3>
     <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">⟨tch⟩ follows the same pattern as ⟨ck⟩. Think about what comes just before the final consonant — then decide.</p>
     <div id="tch-yesno"></div>
   </div>
@@ -1447,8 +1447,111 @@ function speakSection(secId, barId) {
 const SPK = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
 
 // ════════════════════════════════════
-//  CONTEXT SENTENCE RENDERER
+//  GRAPHEME CALL-OUT
 // ════════════════════════════════════
+// Produces SWI call-out speech: graphemes of the base spelled one by one,
+// affixes as single units, then "word: X"
+// graphemes: array of strings — each is one grapheme or one affix unit
+// word: the full word string (spoken last)
+// Examples:
+//   callOut(['sh','i','p'], 'ship')         → "sh. i. p. Word: ship."
+//   callOut(['c','a','tch','es'], 'catches') → "c. a. tch. es. Word: catches."
+//   callOut(['mis','h','a','p'], 'mishap')  → "mis. h. a. p. Word: mishap."
+function callOut(graphemes, word) {
+  return graphemes.join('. ') + '. Word: ' + word + '.';
+}
+
+// Pre-defined grapheme breakdowns for every word in the file
+const GRAPHEMES = {
+  // CVC section
+  cat:       ['c','a','t'],
+  ship:      ['sh','i','p'],
+  duck:      ['d','u','ck'],
+  fish:      ['f','i','sh'],
+  lock:      ['l','o','ck'],
+  thin:      ['th','i','n'],
+  // CK/TCH section
+  back:      ['b','a','ck'],
+  duck2:     ['d','u','ck'],
+  kit:       ['k','i','t'],
+  catch:     ['c','a','tch'],
+  fetch:     ['f','e','tch'],
+  stitch:    ['s','t','i','tch'],
+  notch:     ['n','o','tch'],
+  hutch:     ['h','u','tch'],
+  bench:     ['b','e','n','ch'],
+  arch:      ['a','r','ch'],
+  coach:     ['c','oa','ch'],
+  torch:     ['t','or','ch'],
+  // FLSZ section
+  off:       ['o','ff'],
+  hill:      ['h','i','ll'],
+  buzz:      ['b','u','zz'],
+  miss:      ['m','i','ss'],
+  cliff:     ['c','l','i','ff'],
+  grass:     ['g','r','a','ss'],
+  // SH section
+  shop:      ['sh','o','p'],
+  shed:      ['sh','e','d'],
+  dish:      ['d','i','sh'],
+  rush:      ['r','u','sh'],
+  // TH section
+  thick:     ['th','i','ck'],
+  path:      ['p','a','th'],
+  thank:     ['th','a','n','k'],
+  cloth:     ['c','l','o','th'],
+  truth:     ['t','r','u','th'],
+  // morpheme split
+  mishap:    ['mis','h','a','p'],
+  dishonest: ['dis','h','o','n','e','st'],
+  // WFB derived forms — base graphemes + suffix as single unit
+  cats:         ['c','a','t','s'],
+  catnap:       ['c','a','t','n','a','p'],
+  ships:        ['sh','i','p','s'],
+  shipment:     ['sh','i','p','ment'],
+  shipwreck:    ['sh','i','p','w','r','e','ck'],
+  cliffs:       ['c','l','i','ff','s'],
+  clifftop:     ['c','l','i','ff','t','o','p'],
+  hills:        ['h','i','ll','s'],
+  hillside:     ['h','i','ll','s','i','d','e'],
+  hilly:        ['h','i','ll','y'],
+  grassy:       ['g','r','a','ss','y'],
+  grassland:    ['g','r','a','ss','l','a','n','d'],
+  dishes:       ['d','i','sh','es'],
+  dishcloth:    ['d','i','sh','c','l','o','th'],
+  catches:      ['c','a','tch','es'],
+  catching:     ['c','a','tch','ing'],
+  catcher:      ['c','a','tch','er'],
+  fetches:      ['f','e','tch','es'],
+  fetching:     ['f','e','tch','ing'],
+  thinner:      ['th','i','nn','er'],
+  thinly:       ['th','i','n','ly'],
+  thinness:     ['th','i','n','ness'],
+  baths:        ['b','a','th','s'],
+  bathroom:     ['b','a','th','r','oo','m'],
+};
+
+// Call-out for prefixed words: prefix as single unit, then base graphemes, then whole word
+function callOutPrefixed(word, prefix, base) {
+  const baseG = GRAPHEMES[base] || base.split('');
+  return callOut([prefix, ...baseG], word);
+}
+
+// Call-out for a plain base word
+function callOutBase(w) {
+  const gs = GRAPHEMES[w] || w.split('');
+  return callOut(gs, w);
+}
+
+// Call-out for a suffixed form: base graphemes + suffix as single unit
+function callOutSuffixed(result, base, suf) {
+  const baseG = GRAPHEMES[base] || base.split('');
+  // If full derived form is in GRAPHEMES, use that directly
+  const fullG = GRAPHEMES[result];
+  if (fullG) return callOut(fullG, result);
+  return callOut([...baseG, suf], result);
+}
+
 // ctx string uses <w>word</w> for primary highlight and <w2>word</w2> for secondary
 function renderCtxHtml(ctx, focusWord) {
   if (!ctx) return '';
@@ -1611,7 +1714,10 @@ function makeWFB(containerId, bases) {
       const item = document.createElement('span');
       item.className = 'wfb-result-item'; item.textContent = s.result;
       builtEl.appendChild(item);
-      speakText(`${s.sum}. The base stays stable.` + (s.ctx ? ' ' + s.ctx.replace(/<\/?w2?>/g,'') : ''));
+      // call-out: base graphemes one by one, suffix as single unit, then whole word
+      const baseG = GRAPHEMES[b.base] || [b.base];
+      const coText = callOut([...baseG, s.suf], s.result);
+      speakText(coText);
       // check if all suffixes for this base are now used → reveal investigation card
       const remaining = b.suffixes.filter(sx => {
         const chip = document.getElementById(`${containerId}-chip-${sx.suf}`);
@@ -1664,7 +1770,7 @@ function fillCVC(i) {
   document.getElementById('cvc-c2-sub').textContent = w.c2note;
   document.getElementById('cvc-meaning').textContent = '→ ' + w.meaning;
   renderCtx('cvc-ctx', w.ctx, w.w);
-  speakText(`In the word ${w.w}: the initial consonant is ${w.c1 === 'sh' || w.c1 === 'th' ? 'the grapheme ' + w.c1 : w.c1}. The vowel is ${w.v}. The final consonant is ${w.c2 === 'ck' || w.c2 === 'sh' ? 'the grapheme ' + w.c2 : w.c2}.`);
+  speakText(callOut([w.c1, w.v, w.c2], w.w));
 }
 function speakCVCCard() {
   speakText('Tap a word to see it fill the three positions. Each consonant position holds one grapheme — a spelling unit that may be one letter or two letters working as a team.');
@@ -1675,22 +1781,22 @@ function speakCVCCard() {
 // ════════════════════════════════════
 const ckChunks = [
   { grapheme:'⟨c⟩', label:'before ⟨a⟩, ⟨o⟩, ⟨u⟩', words:['cat','cot','cup','cap','cob'],
-    spk:'Before A, O, U, we write C. Examples: cat, cot, cup, cap, cob.',
+    spk:'Before the vowels a, o, u — we write c. For example: c. a. t. Word: cat.',
     ctx:'The <w>cat</w> sat beside the <w>cup</w> on the windowsill.' },
   { grapheme:'⟨k⟩', label:'before ⟨e⟩, ⟨i⟩', words:['kit','keg','kin','kid'],
-    spk:'Before E and I, we write K. Examples: kit, keg, kin, kid.',
+    spk:'Before the vowels e and i — we write k. For example: k. i. t. Word: kit.',
     ctx:'She opened the repair <w>kit</w> and checked every item.' },
   { grapheme:'⟨ck⟩', label:'final — after a single vowel grapheme', words:['back','duck','lock','tick','neck'],
-    spk:'At the end after a single vowel grapheme, we write C K. Examples: back, duck, lock, tick, neck.',
+    spk:'At the end of a base, after a single vowel grapheme — we write c k. For example: b. a. ck. Word: back.',
     ctx:'The <w>duck</w> waddled <w>back</w> to the pond.' },
   { grapheme:'⟨k⟩', label:'final — after a consonant', words:['milk','desk','risk','mask'],
-    spk:'At the end after a consonant, we write single K. Examples: milk, desk, risk, mask.',
+    spk:'At the end of a base, after a consonant — we write single k. For example: m. i. l. k. Word: milk.',
     ctx:'A glass of cold <w>milk</w> sat on the <w>desk</w>.' },
   { grapheme:'⟨tch⟩', label:'final — after a single vowel grapheme (same rule as ⟨ck⟩)', words:['catch','fetch','stitch','notch','hutch'],
-    spk:'At the end of a base after a single vowel grapheme, the T C H grapheme represents the sound. Examples: catch, fetch, stitch, notch, hutch. Same positional rule as C K.',
+    spk:'At the end of a base, after a single vowel grapheme — we write t c h. Same positional rule as c k. For example: c. a. tch. Word: catch.',
     ctx:'She had to <w>fetch</w> the key before we could open the <w>hutch</w>.' },
   { grapheme:'⟨ch⟩', label:'final — after a consonant or long vowel', words:['bench','arch','coach','teach','torch'],
-    spk:'After a consonant or a long vowel at the end, we write C H. Examples: bench, arch, coach, teach, torch. Same positional rule as single K.',
+    spk:'At the end of a base, after a consonant or long vowel — we write c h. Same positional rule as single k. For example: b. e. n. ch. Word: bench.',
     ctx:'The <w>coach</w> sat on the <w>bench</w> and watched the match.' },
 ];
 let ckChunkIdx = 0;
@@ -1726,10 +1832,10 @@ function revealCKChunk() {
 const ckCompletions = [
   { stem:'Before ⟨a⟩, ⟨o⟩, ⟨u⟩ — we write:', opts:['c','k','ck'], answer:'c', feedback:'⟨c⟩ is the conventional spelling before the back vowels ⟨a⟩, ⟨o⟩, ⟨u⟩.' },
   { stem:'Before ⟨e⟩, ⟨i⟩ — we write:', opts:['c','k','ck'], answer:'k', feedback:'⟨k⟩ is the conventional spelling before the front vowels ⟨e⟩ and ⟨i⟩.' },
-  { stem:'Final, after a single vowel grapheme — /k/ is written:', opts:['k','ck','c'], answer:'ck', feedback:'⟨ck⟩ is the two-letter grapheme used at the end of a base after a single vowel grapheme: back, duck, lock.' },
-  { stem:'Final, after a consonant — /k/ is written:', opts:['ck','c','k'], answer:'k', feedback:'Single ⟨k⟩ follows a consonant at the end of a base: milk, desk, risk.' },
-  { stem:'Final, after a single vowel grapheme — the /tʃ/ phoneme is written:', opts:['ch','tch','tsh'], answer:'tch', feedback:'⟨tch⟩ is the three-letter grapheme used after a single vowel grapheme: catch, fetch, stitch. Same positional rule as ⟨ck⟩.' },
-  { stem:'Final, after a consonant — the /tʃ/ phoneme is written:', opts:['tch','ch','tsh'], answer:'ch', feedback:'⟨ch⟩ follows a consonant or long vowel at the end of a base: bench, arch, coach. Same positional rule as single ⟨k⟩.' },
+  { stem:'Final, after a single vowel grapheme — the spelling unit for this position is:', opts:['k','ck','c'], answer:'ck', feedback:'⟨ck⟩ is a digraph — two letters working as one spelling unit — used at the end of a base after a single vowel grapheme: back, duck, lock.' },
+  { stem:'Final, after a consonant — the spelling unit for this position is:', opts:['ck','c','k'], answer:'k', feedback:'Single ⟨k⟩ follows a consonant at the end of a base: milk, desk, risk.' },
+  { stem:'Final, after a single vowel grapheme — the spelling unit is:', opts:['ch','tch','tsh'], answer:'tch', feedback:'⟨tch⟩ is a trigraph — three letters working as one spelling unit — used at the end of a base after a single vowel grapheme: catch, fetch, stitch. Same positional rule as ⟨ck⟩.' },
+  { stem:'Final, after a consonant — the spelling unit for this position is:', opts:['tch','ch','tsh'], answer:'ch', feedback:'⟨ch⟩ follows a consonant or long vowel at the end of a base: bench, arch, coach. Same positional rule as single ⟨k⟩.' },
 ];
 let ckCompIdx = 0;
 function renderCKCompletions() {
@@ -1780,12 +1886,12 @@ function answerCKComp(i, chosen) {
 
 // Yes/No: ck vs k
 const ckYN = [
-  { w:'back',  ans:'ck', note:'single vowel grapheme ⟨a⟩ before the final — ⟨ck⟩' },
-  { w:'milk',  ans:'k',  note:'consonant ⟨l⟩ before the final — single ⟨k⟩' },
-  { w:'lock',  ans:'ck', note:'single vowel grapheme ⟨o⟩ before the final — ⟨ck⟩' },
-  { w:'desk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩' },
-  { w:'duck',  ans:'ck', note:'single vowel grapheme ⟨u⟩ before the final — ⟨ck⟩' },
-  { w:'risk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩' },
+  { w:'back',  ans:'ck', note:'single vowel grapheme ⟨a⟩ before the final — ⟨ck⟩', callout:'b, a, ck, word back' },
+  { w:'milk',  ans:'k',  note:'consonant ⟨l⟩ before the final — single ⟨k⟩',       callout:'m, i, l, k, word milk' },
+  { w:'lock',  ans:'ck', note:'single vowel grapheme ⟨o⟩ before the final — ⟨ck⟩', callout:'l, o, ck, word lock' },
+  { w:'desk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩',       callout:'d, e, s, k, word desk' },
+  { w:'duck',  ans:'ck', note:'single vowel grapheme ⟨u⟩ before the final — ⟨ck⟩', callout:'d, u, ck, word duck' },
+  { w:'risk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩',       callout:'r, i, s, k, word risk' },
 ];
 function renderCKYN() {
   const el = document.getElementById('ck-yesno');
@@ -1812,7 +1918,8 @@ function answerCKYN(i, chosen) {
   row.classList.add(correct ? 'answered-correct' : 'answered-wrong');
   document.getElementById('ckyn-r-' + i).textContent = item.note;
   document.getElementById('ckyn-r-' + i).className = 'yesno-result' + (correct ? '' : ' wrong-result');
-  speakText(item.note);
+  const g = GRAPHEMES[item.w];
+  speakText((g ? callOut(g, item.w) + ' ' : '') + item.note);
 }
 
 // ════════════════════════════════════
@@ -1866,7 +1973,8 @@ function answerTCHYN(i, chosen) {
   row.classList.add(correct ? 'answered-correct' : 'answered-wrong');
   document.getElementById('tchyn-r-' + i).textContent = item.note;
   document.getElementById('tchyn-r-' + i).className = 'yesno-result' + (correct ? '' : ' wrong-result');
-  speakText(item.note);
+  const g = GRAPHEMES[item.w];
+  speakText((g ? callOut(g, item.w) + ' ' : '') + item.note);
   // reveal next word's pair sentence
   if (i + 1 < tchYN.length) {
     renderCtxPair('tchyn-ctx-' + (i+1), tchYN[i+1].pairs);
@@ -1945,7 +2053,8 @@ function flszAnswer(chosen) {
   fbEl.textContent = (correct ? '✓ ' : '→ ') + item.note;
   fbEl.style.color = correct ? 'var(--seafoam)' : 'var(--teal)';
   document.querySelectorAll('#flsz-oaat .oaat-btn').forEach(b=>b.disabled=true);
-  speakText(item.note);
+  const flszG = GRAPHEMES[item.w];
+  speakText((flszG ? callOut(flszG, item.w) + ' ' : '') + item.note);
   const nextWrap = document.getElementById('flsz-next-wrap');
   const nextBtn = document.getElementById('flsz-next-btn');
   if (nextWrap) {
@@ -2045,7 +2154,8 @@ function cfAnswer(chosen) {
   fbEl.textContent = (correct ? '✓ ' : '→ ') + item.note + (item.family ? ` Family: ${item.family}.` : '');
   fbEl.style.color = correct ? 'var(--seafoam)' : 'var(--teal)';
   document.querySelectorAll('#cf-oaat .oaat-btn').forEach(b=>b.disabled=true);
-  speakText(item.note + (item.family ? ` Family includes: ${item.family}.` : ''));
+  const cfG = GRAPHEMES[item.w];
+  speakText((cfG ? callOut(cfG, item.w) + ' ' : '') + item.note + (item.family ? ` Family includes: ${item.family}.` : ''));
   const nextWrap = document.getElementById('cf-next-wrap');
   const nextBtn = document.getElementById('cf-next-btn');
   if (nextWrap) {
@@ -2095,7 +2205,8 @@ function fillSH(i) {
   });
   document.getElementById('sh-note').textContent = w.note;
   renderCtx('sh-ctx', w.ctx, w.w);
-  speakText(`In the word ${w.w}: ${w.note}.`);
+  const g = GRAPHEMES[w.w];
+  speakText(g ? callOut(g, w.w) : callOut([w.c1, w.v, w.c2], w.w));
 }
 
 // ════════════════════════════════════
@@ -2105,14 +2216,14 @@ const splitWords = [
   {
     display: 'mishap',
     parts: [{text:'mis', type:'prefix', label:'prefix mis- (wrongly/badly)'}, {text:'hap', type:'base', label:'base ⟨hap⟩ (luck, fortune)'}],
-    spk: 'Mishap = prefix mis, meaning wrongly, plus base hap, meaning luck. The S ends the prefix. The H starts the base. There is no S H grapheme — there is a morpheme boundary.',
+    spk: 'mis, h, a, p, word mishap. Prefix mis, base h, a, p. The s ends the prefix. The h starts the base. No sh grapheme — a morpheme boundary.',
     ctx:'It was just a small <w>mishap</w> — no one was hurt.',
     ctx2:'The word means a stroke of bad luck: mis (wrongly) + hap (chance).',
   },
   {
     display: 'dishonest',
     parts: [{text:'dis', type:'prefix', label:'prefix dis- (not/away)'}, {text:'honest', type:'base', label:'base ⟨honest⟩'}],
-    spk: 'Dishonest = prefix dis, meaning not, plus base honest. The S ends the prefix. The H starts the base. No S H grapheme here — a morpheme boundary.',
+    spk: 'dis, h, o, n, e, st, word dishonest. Prefix dis, base h, o, n, e, st. The s ends the prefix. The h starts the base. No sh grapheme — a morpheme boundary.',
     ctx:'It would be <w>dishonest</w> to pretend you didn\'t see it.',
     ctx2:'The word means not honest: dis (not) + honest.',
   },
@@ -2178,14 +2289,14 @@ function tapSplitPart(i) {
     if (stepPrompt) stepPrompt.innerHTML = `Step 2 of 2 — Now tap the <span style="background:var(--teal-lt);border-radius:5px;padding:.1rem .4rem;color:var(--teal);font-family:'DM Mono',monospace;">base</span>`;
     feedback.textContent = '✓ Prefix found. Now tap the base.';
     feedback.style.color = 'var(--seafoam)';
-    speakText(part.label + '. Now tap the base.');
+    speakText(part.text + '. Prefix found. Now tap the base.');
   } else {
     document.getElementById('split-lbl-base').textContent = part.label;
     splitPhase = 2;
     if (stepPrompt) stepPrompt.innerHTML = `✓ Complete — <span style="color:var(--seafoam);">both parts identified!</span>`;
     feedback.textContent = '→ The ⟨s⟩ and ⟨h⟩ belong to different morphemes. No ⟨sh⟩ digraph here.';
     feedback.style.color = 'var(--teal)';
-    speakText(word.spk);
+    speakText(callOutPrefixed(word.display, word.parts[0].text, word.parts[1].text));
   }
 }
 
@@ -2271,7 +2382,8 @@ function thAnswer(chosen) {
   fbEl.textContent=(correct?'✓ ':'→ ')+item.note;
   fbEl.style.color=correct?'var(--seafoam)':'var(--teal)';
   document.querySelectorAll('#th-oaat .oaat-btn').forEach(b=>b.disabled=true);
-  speakText(item.note);
+  const thG = GRAPHEMES[item.w];
+  speakText((thG ? callOut(thG, item.w) + ' ' : '') + item.note);
   const nextWrap = document.getElementById('th-next-wrap');
   const nextBtn = document.getElementById('th-next-btn');
   if (nextWrap) {
@@ -2405,11 +2517,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'ship', meaning:'a large vessel for water',
+      callout:'sh, i, p, word ship',
       ctx:'The tall <w>ship</w> sailed out of the harbour.',
       suffixes:[
-        {suf:'s',     result:'ships',     sum:'ship + s → ships',     ctx:'Several <w>ships</w> were anchored in the bay.'},
-        {suf:'ment',  result:'shipment',  sum:'ship + ment → shipment', ctx:'The <w>shipment</w> arrived two days early.'},
-        {suf:'wreck', result:'shipwreck', sum:'ship + wreck → shipwreck', ctx:'Divers explored the old <w>shipwreck</w> on the seabed.'},
+        {suf:'s',     result:'ships',     sum:'ship + s → ships',     callout:'sh, i, p, s, word ships',     ctx:'Several <w>ships</w> were anchored in the bay.'},
+        {suf:'ment',  result:'shipment',  sum:'ship + ment → shipment', callout:'sh, i, p, ment, word shipment', ctx:'The <w>shipment</w> arrived two days early.'},
+        {suf:'wreck', result:'shipwreck', sum:'ship + wreck → shipwreck', callout:'sh, i, p, wreck, word shipwreck', ctx:'Divers explored the old <w>shipwreck</w> on the seabed.'},
       ],
       investigation:{
         id:'cvc-ship', base:'ship', title:'Word Scientist Investigation',
@@ -2435,11 +2548,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTCHYN();
   makeWFB('tch-wfb', [
     { base:'catch', meaning:'to grab something moving',
+      callout:'c, a, tch, word catch',
       ctx:'She reached up to <w>catch</w> the ball.',
       suffixes:[
-        {suf:'es',  result:'catches',  sum:'catch + es → catches',  ctx:'He <w>catches</w> every ball thrown to him.'},
-        {suf:'ing', result:'catching', sum:'catch + ing → catching', ctx:'She is <w>catching</w> up fast.'},
-        {suf:'er',  result:'catcher',  sum:'catch + er → catcher',  ctx:'The <w>catcher</w> crouched behind the plate.'},
+        {suf:'es',  result:'catches',  sum:'catch + es → catches',  callout:'c, a, tch, es, word catches',  ctx:'He <w>catches</w> every ball thrown to him.'},
+        {suf:'ing', result:'catching', sum:'catch + ing → catching', callout:'c, a, tch, ing, word catching', ctx:'She is <w>catching</w> up fast.'},
+        {suf:'er',  result:'catcher',  sum:'catch + er → catcher',  callout:'c, a, tch, er, word catcher',  ctx:'The <w>catcher</w> crouched behind the plate.'},
       ],
       investigation:{
         id:'tch-catch', base:'catch', title:'Word Scientist Investigation',
@@ -2459,10 +2573,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'fetch', meaning:'to go and get something',
+      callout:'f, e, tch, word fetch',
       ctx:'Can you <w>fetch</w> the key from the hook?',
       suffixes:[
-        {suf:'es',  result:'fetches',  sum:'fetch + es → fetches',  ctx:'She <w>fetches</w> water from the well each morning.'},
-        {suf:'ing', result:'fetching', sum:'fetch + ing → fetching', ctx:'The dog keeps <w>fetching</w> the stick.'},
+        {suf:'es',  result:'fetches',  sum:'fetch + es → fetches',  callout:'f, e, tch, es, word fetches',  ctx:'She <w>fetches</w> water from the well each morning.'},
+        {suf:'ing', result:'fetching', sum:'fetch + ing → fetching', callout:'f, e, tch, ing, word fetching', ctx:'The dog keeps <w>fetching</w> the stick.'},
       ],
       investigation:{
         id:'tch-fetch', base:'fetch', title:'Word Scientist Investigation',
@@ -2484,10 +2599,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFLSZYN();
   makeWFB('flsz-wfb', [
     { base:'cliff', meaning:'a steep rock face',
+      callout:'c, l, i, ff, word cliff',
       ctx:'A seabird perched on the edge of the <w>cliff</w>.',
       suffixes:[
-        {suf:'s',   result:'cliffs',   sum:'cliff + s → cliffs',   ctx:'The white <w>cliffs</w> glowed in the morning light.'},
-        {suf:'top', result:'clifftop', sum:'cliff + top → clifftop', ctx:'They stood on the <w>clifftop</w> and looked out to sea.'},
+        {suf:'s',   result:'cliffs',   sum:'cliff + s → cliffs',   callout:'c, l, i, ff, s, word cliffs',   ctx:'The white <w>cliffs</w> glowed in the morning light.'},
+        {suf:'top', result:'clifftop', sum:'cliff + top → clifftop', callout:'c, l, i, ff, top, word clifftop', ctx:'They stood on the <w>clifftop</w> and looked out to sea.'},
       ],
       investigation:{
         id:'flsz-cliff', base:'cliff', title:'Word Scientist Investigation',
@@ -2506,11 +2622,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'hill', meaning:'a raised area of land',
+      callout:'h, i, ll, word hill',
       ctx:'A path wound slowly up the side of the <w>hill</w>.',
       suffixes:[
-        {suf:'s',    result:'hills',    sum:'hill + s → hills',    ctx:'The <w>hills</w> in the distance were covered in snow.'},
-        {suf:'side', result:'hillside', sum:'hill + side → hillside', ctx:'Sheep grazed on the open <w>hillside</w>.'},
-        {suf:'y',    result:'hilly',    sum:'hill + y → hilly',    ctx:'The road was <w>hilly</w> and the cycling was hard work.'},
+        {suf:'s',    result:'hills',    sum:'hill + s → hills',    callout:'h, i, ll, s, word hills',    ctx:'The <w>hills</w> in the distance were covered in snow.'},
+        {suf:'side', result:'hillside', sum:'hill + side → hillside', callout:'h, i, ll, side, word hillside', ctx:'Sheep grazed on the open <w>hillside</w>.'},
+        {suf:'y',    result:'hilly',    sum:'hill + y → hilly',    callout:'h, i, ll, y, word hilly',    ctx:'The road was <w>hilly</w> and the cycling was hard work.'},
       ],
       investigation:{
         id:'flsz-hill', base:'hill', title:'Word Scientist Investigation',
@@ -2530,10 +2647,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'grass', meaning:'the green ground cover',
+      callout:'g, r, a, ss, word grass',
       ctx:'We sat on the cool <w>grass</w> in the shade of the tree.',
       suffixes:[
-        {suf:'y',    result:'grassy',    sum:'grass + y → grassy',    ctx:'The <w>grassy</w> bank sloped gently down to the stream.'},
-        {suf:'land', result:'grassland', sum:'grass + land → grassland', ctx:'Herds of animals roamed the open <w>grassland</w>.'},
+        {suf:'y',    result:'grassy',    sum:'grass + y → grassy',    callout:'g, r, a, ss, y, word grassy',    ctx:'The <w>grassy</w> bank sloped gently down to the stream.'},
+        {suf:'land', result:'grassland', sum:'grass + land → grassland', callout:'g, r, a, ss, land, word grassland', ctx:'Herds of animals roamed the open <w>grassland</w>.'},
       ],
       investigation:{
         id:'flsz-grass', base:'grass', title:'Word Scientist Investigation',
@@ -2556,10 +2674,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSHBtns();
   makeWFB('sh-wfb', [
     { base:'ship', meaning:'a large vessel for water',
+      callout:'sh, i, p, word ship',
       ctx:'The <w>ship</w> sailed past the lighthouse at dusk.',
       suffixes:[
-        {suf:'s',   result:'ships',    sum:'ship + s → ships',    ctx:'A fleet of <w>ships</w> filled the harbour.'},
-        {suf:'ment',result:'shipment', sum:'ship + ment → shipment', ctx:'The <w>shipment</w> of supplies arrived on time.'},
+        {suf:'s',   result:'ships',    sum:'ship + s → ships',    callout:'sh, i, p, s, word ships',    ctx:'A fleet of <w>ships</w> filled the harbour.'},
+        {suf:'ment',result:'shipment', sum:'ship + ment → shipment', callout:'sh, i, p, ment, word shipment', ctx:'The <w>shipment</w> of supplies arrived on time.'},
       ],
       investigation:{
         id:'sh-ship', base:'ship', title:'Word Scientist Investigation',
@@ -2578,10 +2697,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'dish', meaning:'a container for food',
+      callout:'d, i, sh, word dish',
       ctx:'She placed each <w>dish</w> carefully on the shelf.',
       suffixes:[
-        {suf:'es',    result:'dishes',    sum:'dish + es → dishes',    ctx:'He washed all the <w>dishes</w> after the meal.'},
-        {suf:'cloth', result:'dishcloth', sum:'dish + cloth → dishcloth', ctx:'She wiped the counter with a clean <w>dishcloth</w>.'},
+        {suf:'es',    result:'dishes',    sum:'dish + es → dishes',    callout:'d, i, sh, es, word dishes',    ctx:'He washed all the <w>dishes</w> after the meal.'},
+        {suf:'cloth', result:'dishcloth', sum:'dish + cloth → dishcloth', callout:'d, i, sh, cloth, word dishcloth', ctx:'She wiped the counter with a clean <w>dishcloth</w>.'},
       ],
       investigation:{
         id:'sh-dish', base:'dish', title:'Word Scientist Investigation',
@@ -2604,11 +2724,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTHOAAT();
   makeWFB('th-wfb', [
     { base:'thin', meaning:'not thick; having little depth',
+      callout:'th, i, n, word thin',
       ctx:'The ice was too <w>thin</w> to bear any weight.',
       suffixes:[
-        {suf:'ner',  result:'thinner',  sum:'thin + ner → thinner',  ctx:'The ice grew <w>thinner</w> each day as the sun warmed it.'},
-        {suf:'ly',   result:'thinly',   sum:'thin + ly → thinly',    ctx:'She spread the butter <w>thinly</w> on the bread.'},
-        {suf:'ness', result:'thinness', sum:'thin + ness → thinness', ctx:'The <w>thinness</w> of the ice made it dangerous.'},
+        {suf:'ner',  result:'thinner',  sum:'thin + ner → thinner',  callout:'th, i, n, ner, word thinner',  ctx:'The ice grew <w>thinner</w> each day as the sun warmed it.'},
+        {suf:'ly',   result:'thinly',   sum:'thin + ly → thinly',    callout:'th, i, n, ly, word thinly',   ctx:'She spread the butter <w>thinly</w> on the bread.'},
+        {suf:'ness', result:'thinness', sum:'thin + ness → thinness', callout:'th, i, n, ness, word thinness', ctx:'The <w>thinness</w> of the ice made it dangerous.'},
       ],
       investigation:{
         id:'th-thin', base:'thin', title:'Word Scientist Investigation',
@@ -2628,10 +2749,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       }},
     { base:'bath', meaning:'washing the body in water',
+      callout:'b, a, th, word bath',
       ctx:'She filled the <w>bath</w> with warm water.',
       suffixes:[
-        {suf:'s',    result:'baths',    sum:'bath + s → baths',    ctx:'The old house had two <w>baths</w> on the upper floor.'},
-        {suf:'room', result:'bathroom', sum:'bath + room → bathroom', ctx:'The <w>bathroom</w> tiles were a cool shade of blue.'},
+        {suf:'s',    result:'baths',    sum:'bath + s → baths',    callout:'b, a, th, s, word baths',    ctx:'The old house had two <w>baths</w> on the upper floor.'},
+        {suf:'room', result:'bathroom', sum:'bath + room → bathroom', callout:'b, a, th, room, word bathroom', ctx:'The <w>bathroom</w> tiles were a cool shade of blue.'},
       ],
       investigation:{
         id:'th-bath', base:'bath', title:'Word Scientist Investigation',
