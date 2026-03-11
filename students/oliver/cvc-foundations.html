@@ -778,6 +778,94 @@ main { max-width:780px; margin:0 auto; padding:2rem 1.5rem 5rem; }
 .invest-confirmation { margin-top:.75rem; padding:.65rem .85rem; background:var(--teal); color:white; border-radius:var(--radius-sm); font-size:.87rem; line-height:1.65; display:none; animation:fadeUp .25s ease; }
 .invest-confirmation.show { display:block; }
 
+/* ─── SPELLING APPLICATION ───────────── */
+.spell-word-display {
+  text-align: center;
+  margin: .8rem 0 .6rem;
+}
+.spell-word {
+  font-family: 'DM Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: .08em;
+}
+.spell-blank {
+  display: inline-block;
+  border-bottom: 3px solid var(--amber);
+  min-width: 2.2rem;
+  margin-left: .15rem;
+  vertical-align: baseline;
+  color: var(--amber-dk);
+}
+.spell-options {
+  display: flex;
+  justify-content: center;
+  gap: .75rem;
+  margin: .75rem 0 .5rem;
+  flex-wrap: wrap;
+}
+.spell-opt {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: .55rem 1.4rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: white;
+  color: var(--teal);
+  cursor: pointer;
+  transition: var(--trans);
+  min-width: 80px;
+}
+.spell-opt:hover:not(:disabled) {
+  border-color: var(--teal);
+  background: var(--teal-lt);
+  transform: translateY(-2px);
+}
+.spell-opt.spell-correct {
+  border-color: var(--seafoam);
+  background: var(--seafoam-lt);
+  color: var(--seafoam);
+  pointer-events: none;
+}
+.spell-opt.spell-wrong {
+  border-color: var(--border);
+  background: #fef2f2;
+  color: #dc2626;
+  animation: shake .3s ease;
+  pointer-events: none;
+}
+.spell-opt:disabled { pointer-events: none; opacity: .5; }
+.spell-feedback {
+  min-height: 1.4rem;
+  font-size: .87rem;
+  line-height: 1.65;
+  color: var(--teal);
+  text-align: center;
+  margin: .3rem .5rem .1rem;
+  font-weight: 500;
+}
+.spell-feedback.wrong { color: var(--incorrect); font-weight: 400; }
+.spell-progress {
+  display: flex;
+  justify-content: center;
+  gap: .4rem;
+  margin-bottom: .6rem;
+}
+.spell-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: var(--trans);
+}
+.spell-dot.done-correct { background: var(--seafoam); }
+.spell-dot.done-wrong   { background: var(--incorrect); }
+.spell-dot.current      { background: var(--amber); }
+.spell-ctx {
+  margin-bottom: .5rem;
+}
+
 /* ─── SESSION SUMMARY OVERLAY ────────── */
 #summary-overlay {
   display: none;
@@ -1067,9 +1155,41 @@ footer a { color:var(--teal); text-decoration:none; }
   </div>
 
   <div class="card">
+    <h3>✏️ Spelling application — ⟨ck⟩ or ⟨k⟩?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Each word is missing its final spelling unit. Look at what comes just before the blank — then choose.</p>
+    <div class="spell-progress" id="spell-ck-dots"></div>
+    <div class="spell-ctx" id="spell-ck-ctx"></div>
+    <div class="spell-word-display" id="spell-ck-word"></div>
+    <div class="spell-options">
+      <button class="spell-opt" onclick="answerSpell('ck','ck')" id="spell-ck-opt-ck">ck</button>
+      <button class="spell-opt" onclick="answerSpell('ck','k')"  id="spell-ck-opt-k">k</button>
+    </div>
+    <div class="spell-feedback" id="spell-ck-feedback"></div>
+    <div style="display:none;text-align:center;margin-top:.8rem;" id="spell-ck-next-wrap">
+      <button class="btn btn-primary" onclick="nextSpell('ck')" id="spell-ck-next">Next word →</button>
+    </div>
+  </div>
+
+  <div class="card">
     <h3>Is this ⟨tch⟩ or ⟨ch⟩? — the same positional logic, different spelling unit</h3>
     <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">⟨tch⟩ follows the same pattern as ⟨ck⟩. Think about what comes just before the final consonant — then decide.</p>
     <div id="tch-yesno"></div>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Spelling application — ⟨tch⟩ or ⟨ch⟩?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Each word is missing its final spelling unit. Look at what comes just before the blank — then choose.</p>
+    <div class="spell-progress" id="spell-tch-dots"></div>
+    <div class="spell-ctx" id="spell-tch-ctx"></div>
+    <div class="spell-word-display" id="spell-tch-word"></div>
+    <div class="spell-options">
+      <button class="spell-opt" onclick="answerSpell('tch','tch')" id="spell-tch-opt-tch">tch</button>
+      <button class="spell-opt" onclick="answerSpell('tch','ch')"  id="spell-tch-opt-ch">ch</button>
+    </div>
+    <div class="spell-feedback" id="spell-tch-feedback"></div>
+    <div style="display:none;text-align:center;margin-top:.8rem;" id="spell-tch-next-wrap">
+      <button class="btn btn-primary" onclick="nextSpell('tch')" id="spell-tch-next">Next word →</button>
+    </div>
   </div>
 
   <div class="card">
@@ -1135,6 +1255,19 @@ footer a { color:var(--teal); text-decoration:none; }
       </div>
     </div>
     <button class="card-read-btn" onclick="speakFlszWord()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read current word</button>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Spelling application — single or doubled?</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Each word is missing its final spelling unit. Look at what comes before the blank and decide: single letter, or doubled?</p>
+    <div class="spell-progress" id="spell-flsz-dots"></div>
+    <div class="spell-ctx" id="spell-flsz-ctx"></div>
+    <div class="spell-word-display" id="spell-flsz-word"></div>
+    <div class="spell-options" id="spell-flsz-opts"></div>
+    <div class="spell-feedback" id="spell-flsz-feedback"></div>
+    <div style="display:none;text-align:center;margin-top:.8rem;" id="spell-flsz-next-wrap">
+      <button class="btn btn-primary" onclick="nextSpell('flsz')" id="spell-flsz-next">Next word →</button>
+    </div>
   </div>
 
   <div class="card">
@@ -2546,6 +2679,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCKCompletions();
   renderCKYN();
   renderTCHYN();
+  initSpell('ck');
+  initSpell('tch');
+  initSpell('flsz');
   makeWFB('tch-wfb', [
     { base:'catch', meaning:'to grab something moving',
       callout:'c, a, tch, word catch',
@@ -3033,6 +3169,228 @@ function summariseWFB(id) {
   if (!el) return '—';
   const used = el.querySelectorAll('.wfb-chip.used');
   return used.length > 0 ? `${used.length} form(s) built` : '—';
+}
+
+// ════════════════════════════════════
+//  SPELLING APPLICATION ACTIVITIES
+//  Three sets: ck/k · tch/ch · flsz
+//  Each word: base with final grapheme
+//  missing, context sentence, two options.
+//  Feedback names the structural reason.
+// ════════════════════════════════════
+
+const spellData = {
+  ck: {
+    words: [
+      { stem:'ba',   answer:'ck', opts:['ck','k'],
+        ctx:'She put the book <w>back</w> on the shelf.',
+        feedback:'⟨back⟩ — single vowel grapheme ⟨a⟩ before the final position → ⟨ck⟩',
+        redirect:'Look at what comes just before the blank. Is it a single vowel grapheme, or a consonant?' },
+      { stem:'mil',  answer:'k',  opts:['ck','k'],
+        ctx:'She poured a glass of cold <w>milk</w>.',
+        feedback:'⟨milk⟩ — consonant ⟨l⟩ before the final position → single ⟨k⟩',
+        redirect:'Look at what comes just before the blank — is it a vowel or a consonant?' },
+      { stem:'loc',  answer:'k',  opts:['ck','k'],
+        ctx:'She turned the key in the <w>lock</w>.',
+        feedback:'⟨lock⟩ — single vowel grapheme ⟨o⟩ before the final position → ⟨ck⟩',
+        redirect:'Look at what comes just before the blank. Single vowel grapheme, or a consonant?' },
+      { stem:'des',  answer:'k',  opts:['ck','k'],
+        ctx:'His books were piled high on the <w>desk</w>.',
+        feedback:'⟨desk⟩ — consonant ⟨s⟩ before the final position → single ⟨k⟩',
+        redirect:'Look at what comes just before the blank — vowel or consonant?' },
+      { stem:'duc',  answer:'k',  opts:['ck','k'],
+        ctx:'A <w>duck</w> swam in circles on the pond.',
+        feedback:'⟨duck⟩ — single vowel grapheme ⟨u⟩ before the final position → ⟨ck⟩',
+        redirect:'Look at what comes just before the blank. Is it a single vowel grapheme?' },
+      { stem:'ris',  answer:'k',  opts:['ck','k'],
+        ctx:'Climbing the icy path was a real <w>risk</w>.',
+        feedback:'⟨risk⟩ — consonant ⟨s⟩ before the final position → single ⟨k⟩',
+        redirect:'Look at what comes just before the blank — vowel or consonant?' },
+    ]
+  },
+  tch: {
+    words: [
+      { stem:'ca',   answer:'tch', opts:['tch','ch'],
+        ctx:'She reached out to <w>catch</w> the falling cup.',
+        feedback:'⟨catch⟩ — single vowel grapheme ⟨a⟩ before the final position → ⟨tch⟩',
+        redirect:'Look at what comes just before the blank. Single vowel grapheme, or a consonant?' },
+      { stem:'ben',  answer:'ch',  opts:['tch','ch'],
+        ctx:'The coach sat on the <w>bench</w> and watched.',
+        feedback:'⟨bench⟩ — consonant ⟨n⟩ before the final position → ⟨ch⟩',
+        redirect:'Look at what comes just before the blank — is it a vowel or a consonant?' },
+      { stem:'fe',   answer:'tch', opts:['tch','ch'],
+        ctx:'She had to <w>fetch</w> water from the well.',
+        feedback:'⟨fetch⟩ — single vowel grapheme ⟨e⟩ before the final position → ⟨tch⟩',
+        redirect:'Look at what comes just before the blank. Is it a single vowel grapheme?' },
+      { stem:'ar',   answer:'ch',  opts:['tch','ch'],
+        ctx:'A stone <w>arch</w> stood at the entrance.',
+        feedback:'⟨arch⟩ — consonant ⟨r⟩ before the final position → ⟨ch⟩',
+        redirect:'Look at what comes just before the blank — vowel or consonant?' },
+      { stem:'no',   answer:'tch', opts:['tch','ch'],
+        ctx:'The carpenter carved a small <w>notch</w> in the wood.',
+        feedback:'⟨notch⟩ — single vowel grapheme ⟨o⟩ before the final position → ⟨tch⟩',
+        redirect:'Look at what comes just before the blank. Single vowel grapheme?' },
+      { stem:'tor',  answer:'ch',  opts:['tch','ch'],
+        ctx:'She carried a small <w>torch</w> through the tunnel.',
+        feedback:'⟨torch⟩ — consonant ⟨r⟩ before the final position → ⟨ch⟩',
+        redirect:'Look at what comes just before the blank — vowel or consonant?' },
+    ]
+  },
+  flsz: {
+    words: [
+      { stem:'cli',  answer:'ff', opts:['f','ff'], letter:'f',
+        ctx:'The seabirds nested on the rocky <w>cliff</w>.',
+        feedback:'⟨cliff⟩ — single vowel grapheme ⟨i⟩, content base, end of word → ⟨ff⟩',
+        redirect:'Is there a single vowel grapheme just before the blank? Is this a content word base?' },
+      { stem:'hil',  answer:'ll', opts:['l','ll'], letter:'l',
+        ctx:'They climbed the steep <w>hill</w> to watch the sunset.',
+        feedback:'⟨hill⟩ — single vowel grapheme ⟨i⟩, content base, end of word → ⟨ll⟩',
+        redirect:'Single vowel grapheme before the blank? Content word?' },
+      { stem:'gra',  answer:'ss', opts:['s','ss'], letter:'s',
+        ctx:'The deer stood still in the long <w>grass</w>.',
+        feedback:'⟨grass⟩ — single vowel grapheme ⟨a⟩, content base, end of word → ⟨ss⟩',
+        redirect:'Is there a single vowel grapheme just before the blank? Content base?' },
+      { stem:'bu',   answer:'zz', opts:['z','zz'], letter:'z',
+        ctx:'The bees made a steady <w>buzz</w> around the hive.',
+        feedback:'⟨buzz⟩ — single vowel grapheme ⟨u⟩, content base, end of word → ⟨zz⟩',
+        redirect:'Single vowel grapheme before the blank? Content word base?' },
+      { stem:'mi',   answer:'ss', opts:['s','ss'], letter:'s',
+        ctx:'One wrong step and you would <w>miss</w> the target.',
+        feedback:'⟨miss⟩ — single vowel grapheme ⟨i⟩, content base, end of word → ⟨ss⟩',
+        redirect:'Is there a single vowel grapheme before the blank? Is this a content base?' },
+      { stem:'of',   answer:'f',  opts:['f','ff'], letter:'f',
+        ctx:'She took the lid <w>off</w> the jar.',
+        feedback:'⟨off⟩ — single vowel grapheme ⟨o⟩, content base → ⟨ff⟩',
+        redirect:'Single vowel grapheme before the blank? Content base?' },
+    ]
+  }
+};
+
+const spellState = {};
+['ck','tch','flsz'].forEach(id => {
+  spellState[id] = { idx: 0, answers: [], waiting: false };
+});
+
+function initSpell(id) {
+  spellState[id].idx = 0;
+  spellState[id].answers = [];
+  spellState[id].waiting = false;
+  renderSpellWord(id);
+}
+
+function renderSpellDots(id) {
+  const data = spellData[id].words;
+  const state = spellState[id];
+  const el = document.getElementById('spell-' + id + '-dots');
+  if (!el) return;
+  el.innerHTML = data.map((w,i) => {
+    let cls = 'spell-dot';
+    if (i < state.idx) cls += state.answers[i] ? ' done-correct' : ' done-wrong';
+    else if (i === state.idx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderSpellWord(id) {
+  const state = spellState[id];
+  const data = spellData[id].words;
+  if (state.idx >= data.length) { showSpellComplete(id); return; }
+  const word = data[state.idx];
+  renderSpellDots(id);
+
+  // Context sentence
+  const ctxEl = document.getElementById('spell-' + id + '-ctx');
+  if (ctxEl) ctxEl.innerHTML = renderCtxHtml(word.ctx, word.stem + word.answer);
+
+  // Word display with blank
+  const wEl = document.getElementById('spell-' + id + '-word');
+  if (wEl) wEl.innerHTML = `<span class="spell-word">${word.stem}<span class="spell-blank">___</span></span>`;
+
+  // Options — for flsz, render dynamically
+  if (id === 'flsz') {
+    const optsEl = document.getElementById('spell-flsz-opts');
+    if (optsEl) optsEl.innerHTML = word.opts.map(o =>
+      `<button class="spell-opt" onclick="answerSpell('flsz','${o}')" id="spell-flsz-opt-${o}">${o}</button>`
+    ).join('');
+  } else {
+    // Reset ck/tch option buttons
+    word.opts.forEach(o => {
+      const btn = document.getElementById('spell-' + id + '-opt-' + o);
+      if (btn) { btn.className = 'spell-opt'; btn.disabled = false; }
+    });
+  }
+
+  // Clear feedback and next
+  const fb = document.getElementById('spell-' + id + '-feedback');
+  if (fb) { fb.textContent = ''; fb.className = 'spell-feedback'; }
+  const nw = document.getElementById('spell-' + id + '-next-wrap');
+  if (nw) nw.style.display = 'none';
+
+  state.waiting = false;
+  speakText(callOutBase(word.stem + word.answer));
+}
+
+function answerSpell(id, chosen) {
+  const state = spellState[id];
+  if (state.waiting || state.idx >= spellData[id].words.length) return;
+  const word = spellData[id].words[state.idx];
+  const correct = chosen === word.answer;
+  state.answers.push(correct);
+  state.waiting = true;
+  renderSpellDots(id);
+
+  // Disable all options
+  word.opts.forEach(o => {
+    const btn = document.getElementById('spell-' + id + '-opt-' + o);
+    if (!btn) return;
+    if (o === word.answer) btn.classList.add('spell-correct');
+    else if (o === chosen && !correct) btn.classList.add('spell-wrong');
+    else btn.disabled = true;
+  });
+
+  const fb = document.getElementById('spell-' + id + '-feedback');
+  if (fb) {
+    fb.textContent = correct ? '✓ ' + word.feedback : '→ ' + word.redirect;
+    fb.className = 'spell-feedback' + (correct ? '' : ' wrong');
+  }
+
+  speakText((correct ? 'Correct. ' : 'Let\'s look at that together. ') +
+    (correct ? word.feedback : word.redirect));
+
+  const nw = document.getElementById('spell-' + id + '-next-wrap');
+  const nb = document.getElementById('spell-' + id + '-next');
+  if (nw && nb) {
+    nw.style.display = 'block';
+    nb.textContent = state.idx + 1 >= spellData[id].words.length ? 'See results ✓' : 'Next word →';
+  }
+
+  // Record in session data
+  if (!sessionData.spell) sessionData.spell = {};
+  if (!sessionData.spell[id]) sessionData.spell[id] = { correct: 0, total: 0 };
+  sessionData.spell[id].total++;
+  if (correct) sessionData.spell[id].correct++;
+}
+
+function nextSpell(id) {
+  spellState[id].idx++;
+  renderSpellWord(id);
+}
+
+function showSpellComplete(id) {
+  const state = spellState[id];
+  const correct = state.answers.filter(Boolean).length;
+  const total = state.answers.length;
+  const wEl = document.getElementById('spell-' + id + '-word');
+  if (wEl) wEl.innerHTML = `<span style="font-size:1.1rem;color:var(--seafoam);font-weight:700;">✓ Complete — ${correct} of ${total} correct</span>`;
+  const ctxEl = document.getElementById('spell-' + id + '-ctx');
+  if (ctxEl) ctxEl.innerHTML = '';
+  const optsEl = document.getElementById('spell-' + id + '-opts');
+  if (optsEl) optsEl.innerHTML = '';
+  const fbEl = document.getElementById('spell-' + id + '-feedback');
+  if (fbEl) fbEl.textContent = '';
+  const nw = document.getElementById('spell-' + id + '-next-wrap');
+  if (nw) nw.style.display = 'none';
+  speakText(`Spelling complete. ${correct} of ${total} correct.`);
 }
 </script>
 <!-- ══════════════════════════════════════
