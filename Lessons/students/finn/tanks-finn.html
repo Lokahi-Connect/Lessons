@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Giants — A Word Scientist's Guide to Military Tanks</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS ──────────────────────────────── */
+:root {
+  --teal:      #0d4f5c;
+  --teal-mid:  #165f6e;
+  --teal-lt:   #e8f4f6;
+  --seafoam:   #1a7a6e;
+  --seafoam-lt:#e6f5f3;
+  --amber:     #e8a040;
+  --amber-dk:  #b87830;
+  --amber-lt:  #fef3e2;
+  --sand:      #faf8f4;
+  --muted:     #6b7280;
+  --border:    #d1d5db;
+  --text:      #1a1a2e;
+  --incorrect: #dc2626;
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --shadow-sm: 0 1px 4px rgba(13,79,92,.08);
+  --shadow-md: 0 4px 16px rgba(13,79,92,.12);
+  --shadow-lg: 0 8px 32px rgba(13,79,92,.18);
+  --trans: all .18s ease;
+}
+
+/* ─── RESET & BASE ───────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--text);
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ─── HERO ───────────────────────────────────────── */
+#hero {
+  background: var(--teal);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(26,122,110,.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(232,160,64,.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--teal);
+  font-family: 'DM Mono', monospace;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .25rem .8rem;
+  border-radius: 20px;
+  margin-bottom: .9rem;
+}
+#hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: white;
+  line-height: 1.15;
+  margin-bottom: .5rem;
+  position: relative;
+}
+#hero p {
+  color: rgba(255,255,255,.75);
+  font-size: .95rem;
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+}
+.hero-tank-row {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hero-flag {
+  font-size: 1.6rem;
+  background: rgba(255,255,255,.12);
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans);
+}
+
+/* ─── NAV ────────────────────────────────────────── */
+#main-nav {
+  display: flex;
+  gap: .35rem;
+  padding: .75rem 1rem;
+  background: white;
+  border-bottom: 2px solid var(--teal-lt);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: sticky; top: 0; z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+#main-nav::-webkit-scrollbar { display: none; }
+#main-nav button {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  padding: .42rem .85rem;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--trans);
+  flex-shrink: 0;
+}
+#main-nav button:hover { border-color: var(--teal); color: var(--teal); }
+#main-nav button.active {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+
+/* ─── VOICE BAR ──────────────────────────────────── */
+.voice-bar {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .55rem 1.2rem;
+  background: var(--teal-lt);
+  border-bottom: 1.5px solid var(--border);
+  flex-wrap: wrap;
+  font-size: .78rem;
+  color: var(--muted);
+}
+.voice-bar label { font-weight: 600; color: var(--teal); }
+.voice-bar select, .voice-bar input[type=range] { font-size: .78rem; }
+.voice-bar select {
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: .2rem .5rem;
+  background: white;
+  color: var(--text);
+  max-width: 160px;
+}
+.voice-rate-val { font-family: 'DM Mono', monospace; font-size: .72rem; min-width: 2.2rem; }
+.voice-test-btn {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: .25rem .7rem;
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: var(--trans);
+}
+.voice-test-btn:hover { background: var(--teal-mid); }
+
+/* ─── MAIN LAYOUT ────────────────────────────────── */
+main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── SECTION HEADER ─────────────────────────────── */
+.section-header {
+  display: flex; align-items: flex-start; gap: .9rem;
+  margin-bottom: 1.2rem;
+}
+.section-icon {
+  font-size: 1.8rem;
+  background: var(--teal-lt);
+  border-radius: var(--r-md);
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-header-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--teal);
+  margin-bottom: .2rem;
+  line-height: 1.25;
+}
+.section-header-text p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+
+/* ─── SECTION READ BAR ───────────────────────────── */
+.section-read-bar {
+  display: flex; align-items: center; gap: .7rem;
+  background: var(--teal);
+  color: white;
+  border-radius: var(--r-md);
+  padding: .65rem 1rem;
+  margin-bottom: 1.1rem;
+  cursor: pointer;
+  transition: var(--trans);
+  user-select: none;
+}
+.section-read-bar:hover { background: var(--teal-mid); }
+.srb-icon { width: 22px; height: 22px; flex-shrink: 0; }
+.srb-icon svg { fill: white; width: 100%; height: 100%; display: block; }
+.srb-text { flex: 1; }
+.srb-title { display: block; font-size: .85rem; font-weight: 700; }
+.srb-sub   { display: block; font-size: .72rem; opacity: .75; }
+.srb-stop {
+  background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.4);
+  color: white; border-radius: 6px; padding: .22rem .65rem;
+  font-size: .72rem; font-weight: 700; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: var(--trans); flex-shrink: 0;
+}
+.srb-stop:hover { background: rgba(255,255,255,.35); }
+
+/* ─── CARDS ──────────────────────────────────────── */
+.card {
+  background: white;
+  border-radius: var(--r-lg);
+  border: 1.5px solid var(--border);
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--teal);
+  margin-bottom: .5rem;
+}
+.card p { font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: .6rem; }
+
+/* ─── HIGHLIGHT BOX ──────────────────────────────── */
+.highlight-box {
+  background: var(--teal-lt);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: .75rem 1rem;
+  margin: .6rem 0;
+  font-size: .88rem;
+  line-height: 1.75;
+}
+.highlight-box .label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--teal);
+  margin-bottom: .35rem;
+  text-transform: uppercase;
+}
+
+/* ─── CONTEXT SENTENCE ───────────────────────────── */
+.ctx-sentence {
+  display: flex; align-items: flex-start; gap: .5rem;
+  background: var(--amber-lt);
+  border: 1.5px solid #f3d5a0;
+  border-radius: var(--r-sm);
+  padding: .55rem .8rem;
+  margin: .4rem 0;
+  font-size: .88rem;
+  line-height: 1.75;
+}
+.ctx-icon { flex-shrink: 0; font-size: .85rem; margin-top: .1rem; }
+.ctx-text { flex: 1; }
+.ctx-highlight { background: var(--teal-lt); color: var(--teal); font-weight: 700; border-radius: 4px; padding: .05rem .3rem; font-family: 'DM Mono', monospace; }
+.ctx-highlight-2 { background: var(--seafoam-lt); color: var(--seafoam); font-weight: 600; border-radius: 4px; padding: .05rem .3rem; }
+.ctx-speak { background: none; border: 1px solid #f3d5a0; border-radius: 5px; color: var(--amber-dk); font-size: .65rem; padding: .12rem .38rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: var(--trans); flex-shrink: 0; margin-top: .1rem; }
+.ctx-speak:hover { background: var(--amber-lt); border-color: var(--amber-dk); }
+
+/* ─── BUTTONS ────────────────────────────────────── */
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .88rem;
+  font-weight: 700;
+  padding: .65rem 1.4rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: var(--trans);
+  display: inline-flex; align-items: center; gap: .45rem;
+}
+.btn-primary { background: var(--teal); color: white; }
+.btn-primary:hover { background: var(--teal-mid); transform: translateY(-1px); }
+.btn-outline { background: transparent; border: 2px solid var(--border); color: var(--muted); }
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+.btn-row { display: flex; justify-content: space-between; margin-top: 1.2rem; gap: .8rem; flex-wrap: wrap; }
+
+/* ─── CARD READ BTN ──────────────────────────────── */
+.card-read-btn {
+  display: flex; align-items: center; gap: .45rem;
+  background: none; border: 1.5px solid var(--border);
+  border-radius: 8px; padding: .32rem .75rem;
+  font-size: .75rem; font-weight: 600; color: var(--muted);
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: var(--trans); margin-top: .7rem;
+}
+.card-read-btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+.card-read-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ─── TANK GALLERY ───────────────────────────────── */
+.tank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: .85rem;
+  margin-top: .8rem;
+}
+.tank-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--trans);
+  position: relative;
+}
+.tank-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tank-card.selected { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-lt); }
+.tank-card-flag {
+  font-size: 2.4rem;
+  background: var(--teal-lt);
+  padding: .9rem;
+  text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 80px;
+}
+.tank-card-body { padding: .65rem .8rem; }
+.tank-card-name {
+  font-family: 'DM Mono', monospace;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--teal);
+  display: block;
+}
+.tank-card-country {
+  font-size: .72rem;
+  color: var(--muted);
+  display: block;
+  margin-bottom: .3rem;
+}
+.tank-card-detail {
+  font-size: .78rem;
+  color: var(--text);
+  display: none;
+  margin-top: .3rem;
+  line-height: 1.6;
+}
+.tank-card.expanded .tank-card-detail { display: block; }
+.tank-card-detail .word-chip {
+  display: inline-block;
+  background: var(--teal-lt);
+  color: var(--teal);
+  font-family: 'DM Mono', monospace;
+  font-size: .7rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: .05rem .35rem;
+  margin: .1rem .05rem;
+}
+
+/* ─── WORD FAMILY MATRIX ─────────────────────────── */
+.wf-section { margin-bottom: 1.4rem; }
+.wf-base-banner {
+  background: var(--teal);
+  color: white;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  padding: .8rem 1.1rem;
+  display: flex; align-items: center; gap: .75rem;
+}
+.wf-base-mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: rgba(255,255,255,.15);
+  border-radius: 6px;
+  padding: .15rem .55rem;
+}
+.wf-base-meaning { font-size: .85rem; opacity: .88; }
+.wf-matrix-wrap {
+  border: 2px solid var(--teal);
+  border-top: none;
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  overflow: hidden;
+}
+.wf-matrix-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--teal-lt);
+}
+.wf-matrix-row:last-child { border-bottom: none; }
+.wf-cell {
+  padding: .55rem .7rem;
+  font-size: .84rem;
+  border-right: 1px solid var(--teal-lt);
+  line-height: 1.55;
+  cursor: pointer;
+  transition: var(--trans);
+}
+.wf-cell:last-child { border-right: none; }
+.wf-cell:hover { background: var(--teal-lt); }
+.wf-cell.wf-header {
+  background: var(--teal-lt);
+  font-weight: 700;
+  font-size: .75rem;
+  color: var(--teal);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .05em;
+  cursor: default;
+}
+.wf-cell.wf-header:hover { background: var(--teal-lt); }
+.wf-word { font-family: 'DM Mono', monospace; font-weight: 700; color: var(--teal); font-size: .9rem; }
+.wf-sum { font-size: .72rem; color: var(--muted); display: block; font-family: 'DM Mono', monospace; }
+.wf-gloss { font-size: .75rem; color: var(--seafoam); font-style: italic; display: block; margin-top: .1rem; }
+.wf-cell-ctx { display: none; }
+.wf-cell.wf-active { background: var(--seafoam-lt) !important; }
+.wf-cell.wf-active .wf-cell-ctx { display: block; }
+
+/* ─── WORD SUM BUILDER ───────────────────────────── */
+.wsb-target {
+  background: var(--teal-lt);
+  border: 2.5px dashed var(--teal);
+  border-radius: var(--r-md);
+  min-height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  margin: .6rem 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--teal);
+  gap: .4rem;
+  flex-wrap: wrap;
+  padding: .5rem .7rem;
+  transition: var(--trans);
+}
+.wsb-target.drag-over { background: #d0edf2; border-color: var(--seafoam); }
+.wsb-target.correct { background: var(--seafoam-lt); border-color: var(--seafoam); border-style: solid; }
+.wsb-target.wrong { background: #fef2f2; border-color: var(--incorrect); border-style: solid; }
+.wsb-chips {
+  display: flex; gap: .5rem; flex-wrap: wrap;
+  margin: .6rem 0;
+}
+.wsb-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: .88rem;
+  font-weight: 700;
+  padding: .42rem .85rem;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: grab;
+  user-select: none;
+  transition: var(--trans);
+  color: var(--text);
+}
+.wsb-chip:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.wsb-chip.dragging { opacity: .45; }
+.wsb-chip.prefix { border-color: var(--amber); color: var(--amber-dk); background: var(--amber-lt); }
+.wsb-chip.suffix { border-color: var(--seafoam); color: var(--seafoam); background: var(--seafoam-lt); }
+.wsb-chip.base { border-color: var(--teal); color: var(--teal); background: var(--teal-lt); }
+.wsb-chip.used { opacity: .3; pointer-events: none; }
+.wsb-equation {
+  font-family: 'DM Mono', monospace;
+  font-size: .85rem;
+  color: var(--muted);
+  text-align: center;
+  margin: .3rem 0;
+}
+.wsb-equation .base-part { color: var(--teal); font-weight: 700; }
+.wsb-equation .affix-part { color: var(--seafoam); font-weight: 700; }
+.wsb-equation .plus { color: var(--muted); margin: 0 .2rem; }
+.wsb-equation .arrow { color: var(--amber-dk); margin: 0 .3rem; }
+.wsb-equation .result { color: var(--teal); font-weight: 700; font-size: .95rem; }
+.wsb-feedback {
+  font-size: .87rem; font-weight: 600; text-align: center;
+  min-height: 1.4rem; margin: .2rem 0;
+}
+.wsb-feedback.correct { color: var(--seafoam); }
+.wsb-feedback.wrong { color: var(--incorrect); font-weight: 400; }
+
+/* ─── DRAG-MATCH ─────────────────────────────────── */
+.dm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .7rem;
+  margin: .7rem 0;
+}
+.dm-left, .dm-right { display: flex; flex-direction: column; gap: .5rem; }
+.dm-source {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: .5rem .7rem;
+  font-size: .84rem;
+  cursor: grab;
+  user-select: none;
+  transition: var(--trans);
+  display: flex; align-items: center; gap: .5rem;
+}
+.dm-source:hover { border-color: var(--teal); box-shadow: var(--shadow-sm); transform: translateX(2px); }
+.dm-source.dragging { opacity: .4; }
+.dm-source.placed { opacity: .3; pointer-events: none; }
+.dm-drop {
+  background: var(--teal-lt);
+  border: 2px dashed var(--teal);
+  border-radius: var(--r-sm);
+  padding: .5rem .7rem;
+  font-size: .84rem;
+  min-height: 46px;
+  display: flex; align-items: center; gap: .5rem;
+  transition: var(--trans);
+}
+.dm-drop.drag-over { background: #d0edf2; border-color: var(--seafoam); }
+.dm-drop.correct { background: var(--seafoam-lt); border-color: var(--seafoam); border-style: solid; }
+.dm-drop.wrong { background: #fef2f2; border-color: var(--incorrect); border-style: solid; animation: shake .3s; }
+.dm-drop-label { font-size: .78rem; font-weight: 700; color: var(--teal); font-family: 'DM Mono', monospace; }
+
+/* ─── MULTIPLE CHOICE ────────────────────────────── */
+.mc-prompt {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: .75rem;
+}
+.mc-opts { display: flex; flex-direction: column; gap: .42rem; }
+.mc-opt {
+  display: flex; align-items: center; gap: .65rem;
+  padding: .55rem .85rem;
+  background: white; border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer; transition: var(--trans);
+  font-size: .88rem; font-family: 'DM Sans', sans-serif;
+}
+.mc-opt:hover:not(:disabled) { border-color: var(--seafoam); background: var(--seafoam-lt); transform: translateX(3px); }
+.mc-opt .mc-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); background: white; flex-shrink: 0; transition: var(--trans); }
+.mc-opt:hover:not(:disabled) .mc-dot { border-color: var(--seafoam); }
+.mc-opt.mc-correct { border-color: var(--seafoam); background: var(--seafoam-lt); pointer-events: none; }
+.mc-opt.mc-correct .mc-dot { background: var(--seafoam); border-color: var(--seafoam); }
+.mc-opt.mc-wrong { border-color: var(--incorrect); background: #fef2f2; pointer-events: none; animation: shake .3s; }
+.mc-opt.mc-wrong .mc-dot { background: #fca5a5; border-color: var(--incorrect); }
+.mc-opt:disabled { pointer-events: none; }
+.mc-feedback {
+  margin-top: .6rem; padding: .55rem .8rem;
+  background: var(--teal); color: white;
+  border-radius: var(--r-sm); font-size: .85rem;
+  line-height: 1.65; display: none;
+}
+.mc-feedback.show { display: block; }
+.mc-feedback.wrong-fb { background: var(--amber-lt); color: var(--amber-dk); border: 1.5px solid var(--amber); }
+.mc-progress { display: flex; gap: .4rem; margin-bottom: .7rem; }
+.mc-dot-prog { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: var(--trans); }
+.mc-dot-prog.done-c { background: var(--seafoam); }
+.mc-dot-prog.done-w { background: var(--incorrect); }
+.mc-dot-prog.current { background: var(--amber); }
+
+/* ─── AFFIX LEGEND ───────────────────────────────── */
+.affix-legend {
+  display: flex; gap: .5rem; flex-wrap: wrap;
+  margin-bottom: .8rem;
+}
+.legend-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .2rem .6rem;
+  border-radius: 20px;
+  display: flex; align-items: center; gap: .35rem;
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.legend-base { background: var(--teal-lt); color: var(--teal); }
+.legend-prefix { background: var(--amber-lt); color: var(--amber-dk); }
+.legend-suffix { background: var(--seafoam-lt); color: var(--seafoam); }
+
+/* ─── WORD SUM DISPLAY ───────────────────────────── */
+.word-sum-row {
+  display: flex; align-items: center; gap: .35rem; flex-wrap: wrap;
+  padding: .4rem .3rem;
+  border-bottom: 1px solid var(--teal-lt);
+  font-family: 'DM Mono', monospace;
+  font-size: .88rem;
+}
+.word-sum-row:last-child { border-bottom: none; }
+.ws-base { color: var(--teal); font-weight: 700; }
+.ws-prefix { color: var(--amber-dk); font-weight: 700; }
+.ws-suffix { color: var(--seafoam); font-weight: 700; }
+.ws-op { color: var(--muted); font-size: .8rem; }
+.ws-result { color: var(--text); font-weight: 700; }
+.ws-gloss { font-size: .72rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-style: italic; margin-left: .3rem; }
+
+/* ─── SORT ACTIVITY ──────────────────────────────── */
+.sort-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+  margin: .7rem 0;
+}
+.sort-zone {
+  background: var(--teal-lt);
+  border: 2px dashed var(--teal);
+  border-radius: var(--r-md);
+  padding: .7rem;
+  min-height: 80px;
+  transition: var(--trans);
+}
+.sort-zone.drag-over { background: #d0edf2; border-color: var(--seafoam); }
+.sort-zone-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: .45rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.sort-items {
+  display: flex; flex-direction: column; gap: .32rem;
+}
+.sort-source-pool {
+  display: flex; flex-wrap: wrap; gap: .45rem;
+  margin: .5rem 0 .75rem;
+  min-height: 40px;
+  padding: .4rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: white;
+}
+.sort-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: .84rem;
+  font-weight: 700;
+  padding: .38rem .8rem;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: grab;
+  user-select: none;
+  transition: var(--trans);
+  color: var(--text);
+}
+.sort-chip:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.sort-chip.dragging { opacity: .4; }
+.sort-chip.placed-correct { background: var(--seafoam-lt); border-color: var(--seafoam); color: var(--seafoam); pointer-events: none; }
+.sort-chip.placed-wrong { background: #fef2f2; border-color: var(--incorrect); color: var(--incorrect); }
+
+/* ─── TIMELINE ───────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin: .8rem 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: .65rem;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--teal), var(--seafoam));
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+.tl-dot {
+  position: absolute;
+  left: -1.65rem;
+  top: .4rem;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 2.5px solid white;
+  box-shadow: 0 0 0 2px var(--amber);
+  transition: var(--trans);
+}
+.tl-item:hover .tl-dot { transform: scale(1.3); }
+.tl-item.open .tl-dot { background: var(--teal); box-shadow: 0 0 0 2px var(--teal); }
+.tl-head {
+  display: flex; align-items: baseline; gap: .5rem;
+  font-weight: 700; font-size: .92rem; color: var(--teal);
+}
+.tl-year {
+  font-family: 'DM Mono', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  background: var(--amber);
+  color: white;
+  padding: .1rem .45rem;
+  border-radius: 20px;
+}
+.tl-body {
+  display: none;
+  margin-top: .35rem;
+  font-size: .85rem;
+  color: var(--text);
+  line-height: 1.7;
+  background: var(--teal-lt);
+  border-radius: var(--r-sm);
+  padding: .5rem .7rem;
+}
+.tl-item.open .tl-body { display: block; }
+
+/* ─── ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes popIn  { from { opacity:0; transform:scale(.7); } to { opacity:1; transform:scale(1); } }
+@keyframes shake  {
+  0%,100% { transform:translateX(0); }
+  25%     { transform:translateX(-5px); }
+  75%     { transform:translateX(5px); }
+}
+.fade-up { animation: fadeUp .28s ease; }
+
+/* ─── SCORE BOX ──────────────────────────────────── */
+.score-box {
+  background: var(--teal);
+  color: white;
+  border-radius: var(--r-md);
+  padding: 1rem 1.3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.score-label { font-size: .88rem; font-weight: 600; }
+.score-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* ─── NOTICE PROMPT ──────────────────────────────── */
+.notice-prompt {
+  background: linear-gradient(135deg, #f0f8fa, var(--seafoam-lt));
+  border: 2px solid var(--seafoam);
+  border-radius: var(--r-md);
+  padding: .85rem 1.1rem;
+  margin: .7rem 0;
+  font-size: .88rem;
+  line-height: 1.7;
+}
+.notice-prompt .np-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--seafoam);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: .3rem;
+}
+
+/* ─── PRINT ──────────────────────────────────────── */
+@media print {
+  #main-nav, .voice-bar, .btn-row, .card-read-btn { display: none !important; }
+  .section { display: block !important; }
+}
+
+/* ─── SUMMARY FAB ────────────────────────────────── */
+#summary-fab {
+  position: fixed; bottom: 1.4rem; right: 1.4rem;
+  background: var(--teal); color: white;
+  border: none; border-radius: 28px;
+  padding: .65rem 1.2rem; font-size: .82rem; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: var(--shadow-lg); cursor: pointer;
+  z-index: 100; transition: var(--trans);
+  display: flex; align-items: center; gap: .5rem;
+}
+#summary-fab:hover { background: var(--teal-mid); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+  HERO
+══════════════════════════════ -->
+<div id="hero">
+  <div class="hero-badge">🔭 Word Scientist · Grade 4</div>
+  <h1>Iron Giants</h1>
+  <p>A Word Scientist's guide to military tanks — and the words that describe them.</p>
+  <div class="hero-tank-row">
+    <div class="hero-flag" title="United Kingdom">🇬🇧</div>
+    <div class="hero-flag" title="Germany">🇩🇪</div>
+    <div class="hero-flag" title="United States">🇺🇸</div>
+    <div class="hero-flag" title="Soviet Union">🇷🇺</div>
+    <div class="hero-flag" title="France">🇫🇷</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  NAV
+══════════════════════════════ -->
+<nav id="main-nav">
+  <button class="active" onclick="show('origin',this)">🔍 The Name</button>
+  <button onclick="show('tanks',this)">🌍 World Tour</button>
+  <button onclick="show('arm',this)">⚔️ Base: arm</button>
+  <button onclick="show('protect',this)">🛡 Base: protect</button>
+  <button onclick="show('builder',this)">🔧 Word Builder</button>
+  <button onclick="show('investigate',this)">🔬 Investigate</button>
+</nav>
+
+<div class="voice-bar">
+  <label>🔊 Voice</label>
+  <select id="voice-select" onchange="onVoiceChange()"><option>Loading…</option></select>
+  <label>Speed</label>
+  <input type="range" id="rate-slider" min="0.5" max="1.5" step="0.05" value="0.9" oninput="onRateChange(this.value)">
+  <span class="voice-rate-val" id="rate-val">0.9×</span>
+  <button class="voice-test-btn" onclick="speakText('Ready. I am your reading assistant.')">▶ Test</button>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════
+  SEC 1 — THE NAME
+══════════════════════════════ -->
+<div id="sec-origin" class="section active">
+  <div class="section-header">
+    <div class="section-icon">🔍</div>
+    <div class="section-header-text">
+      <h2>Why are they called "tanks"?</h2>
+      <p>Every word has a story. This one starts with a secret.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-origin" onclick="speakSection('sec-origin','srb-origin')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>A word born from a secret</h3>
+    <p>In 1915, British engineers were building something brand new — an armoured vehicle that could roll over trenches. But they needed to keep it secret from the enemy.</p>
+    <p>When workers asked what they were building, the engineers said: <strong>"water tanks"</strong> — containers for carrying water to the front. The name stuck.</p>
+    <div class="highlight-box">
+      <span class="label">Word Origin</span>
+      The word <strong>tank</strong> was a <em>code name</em> — chosen to hide what was really being built. By the time the secret was out, everyone already called them tanks. The word has meant "armoured fighting vehicle" ever since 1916.
+    </div>
+    <button class="card-read-btn" onclick="speakText('The word tank was a code name chosen to hide what was really being built. By the time the secret was out, everyone already called them tanks.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>What did other countries call them?</h3>
+    <p>Different languages invented different names — and each one reveals what the speakers thought was most important about these machines.</p>
+    <div class="timeline" id="tl-names">
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">🇬🇧 English</span> tank</div>
+        <div class="tl-body">A secret code name — chosen to look like ordinary orders for water containers. The meaning "water container" was borrowed to hide the real meaning.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">🇫🇷 French</span> char d'assaut</div>
+        <div class="tl-body"><em>Char</em> means vehicle or chariot. <em>Assaut</em> means assault — an attack. So French speakers named it an "assault vehicle." They were thinking about what it <em>does</em>.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">🇩🇪 German</span> Panzerkampfwagen</div>
+        <div class="tl-body"><em>Panzer</em> = armour · <em>Kampf</em> = battle · <em>Wagen</em> = vehicle. Put together: "armoured battle vehicle." German packed three ideas into one compound word.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">🇷🇺 Russian</span> танк (tank)</div>
+        <div class="tl-body">Russian simply borrowed the English word — tank — and wrote it in the Cyrillic alphabet. The English secret code name spread around the world.</div>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Tap each country to see what they called their tanks and why.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>🔬 Word Scientist notice</h3>
+    <div class="notice-prompt">
+      <span class="np-label">Notice this</span>
+      The English word <strong>tank</strong> has just one morpheme — it's a single base. But the German word <em>Panzerkampfwagen</em> is built from <strong>three</strong> bases joined together. Languages build words differently. English often borrows or repurposes words. German often compounds them.
+    </div>
+    <p>As a Word Scientist, when you meet a new word, your first question is always: <strong>What does it mean?</strong> — not "how do I say it?"</p>
+    <button class="card-read-btn" onclick="speakText('As a Word Scientist, your first question is always: What does it mean? Not how do I say it.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <span></span>
+    <button class="btn btn-primary" onclick="show('tanks',document.querySelectorAll('#main-nav button')[1])">Next: World Tour →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  SEC 2 — WORLD TOUR
+══════════════════════════════ -->
+<div id="sec-tanks" class="section">
+  <div class="section-header">
+    <div class="section-icon">🌍</div>
+    <div class="section-header-text">
+      <h2>Five tanks from five countries</h2>
+      <p>Tap a tank to learn about it. Then drag the word chips to match them to their descriptions.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-tanks" onclick="speakSection('sec-tanks','srb-tanks')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Tap a tank to learn about it</h3>
+    <div class="tank-grid" id="tank-grid">
+      <!-- rendered by JS -->
+    </div>
+    <button class="card-read-btn" onclick="speakText('Tap any tank card to expand it and learn more.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="card">
+    <h3>🔀 Match — drag each tank name to its description</h3>
+    <p>Each description is missing the tank name. Drag the right chip into the right box.</p>
+    <div class="dm-grid" id="tank-match">
+      <!-- rendered by JS -->
+    </div>
+    <div id="tank-match-fb" style="font-size:.87rem;color:var(--seafoam);font-weight:700;text-align:center;min-height:1.4rem;margin-top:.4rem;"></div>
+    <button class="card-read-btn" onclick="speakText('Drag each tank name chip to the matching description box.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('origin',document.querySelectorAll('#main-nav button')[0])">← Back</button>
+    <button class="btn btn-primary" onclick="show('arm',document.querySelectorAll('#main-nav button')[2])">Next: Base ⟨arm⟩ →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  SEC 3 — THE ARMOUR PROBLEM
+══════════════════════════════ -->
+<div id="sec-arm" class="section">
+  <div class="section-header">
+    <div class="section-icon">⚔️</div>
+    <div class="section-header-text">
+      <h2>The armour problem — 700 years old</h2>
+      <p>Knights and tank crews had the exact same problem. How they solved it tells you everything.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-arm" onclick="speakSection('sec-arm','srb-arm')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>The same problem, 700 years apart</h3>
+    <p>A medieval knight wore <strong>armour</strong> — metal plates covering the body — to survive arrows and sword blows. A tank crew in 1944 sat inside <strong>armoured</strong> steel walls for exactly the same reason: to stay alive while people were trying to kill them.</p>
+    <p>The word connecting all of this is the same word. The base is <strong>⟨arm⟩</strong> — and it doesn't mean the body part. It means <em>weapons and the tools of war</em>. It comes from Latin <em>arma</em>. Armour is quite literally "the weapon-stuff that covers you."</p>
+    <div class="highlight-box">
+      <span class="label">A word that travels through history</span>
+      <strong>arm</strong> → weapons &nbsp;·&nbsp;
+      <strong>armed</strong> → equipped with weapons &nbsp;·&nbsp;
+      <strong>armour</strong> → material that protects against weapons &nbsp;·&nbsp;
+      <strong>armament</strong> → the weapons themselves &nbsp;·&nbsp;
+      <strong>disarm</strong> → to take weapons away
+    </div>
+    <button class="card-read-btn" onclick="speakText('The base arm means weapons and the tools of war. It comes from Latin arma. Every word in this family carries that meaning.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>The arms race — thicker armour, bigger guns</h3>
+    <p>Here's the engineering nightmare of World War II: every time one side built thicker <strong>armour</strong>, the other side built a bigger gun to punch through it. It became a race.</p>
+    <div class="timeline" id="tl-armour">
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">1916</span> 12mm of armour</div>
+        <div class="tl-body">The first British tanks had only 12mm of steel. Enough to stop rifle bullets. A single artillery shell could destroy them. The crew was <strong>armed</strong> — but barely protected.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">1940</span> 80mm — the T-34 breakthrough</div>
+        <div class="tl-body">The Soviet T-34 didn't just add thicker armour — it <em>sloped</em> the armour plates at an angle. A shell hitting a slope is more likely to glance off. With 80mm of <strong>armoured</strong> plate at 60°, it was harder to destroy than a tank with 120mm of flat steel.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">1942</span> The Tiger's 120mm — too heavy to win</div>
+        <div class="tl-body">Germany's Tiger I had 120mm of flat armour. Incredible <strong>armament</strong> — an 88mm gun that could destroy most Allied tanks at 2km. But it weighed 57 tonnes and broke down constantly. Germany built only 1,347. The US built 49,000 Shermans. Quantity beat armour thickness.</div>
+      </div>
+      <div class="tl-item" onclick="toggleTL(this)">
+        <div class="tl-dot"></div>
+        <div class="tl-head"><span class="tl-year">1945</span> The end of the war — and a push to disarm</div>
+        <div class="tl-body">After the war, peace talks focused on <strong>disarmament</strong> — agreements to reduce weapons stockpiles. Countries that had spent years building armoured fleets now debated how to <strong>disarm</strong> safely without becoming vulnerable.</div>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Tap each era to read about how tank armour developed through the war.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="card">
+    <h3>🔭 Now look at the words in the story</h3>
+    <p>You just read four stories. Every highlighted word in them came from the same base. Tap any word in the table to see its word sum and an example sentence from the story.</p>
+    <div class="affix-legend">
+      <div class="legend-chip legend-base"><div class="legend-dot" style="background:var(--teal)"></div>base ⟨arm⟩</div>
+      <div class="legend-chip legend-prefix"><div class="legend-dot" style="background:var(--amber)"></div>prefix</div>
+      <div class="legend-chip legend-suffix"><div class="legend-dot" style="background:var(--seafoam)"></div>suffix</div>
+    </div>
+    <div class="wf-section">
+      <div class="wf-base-banner">
+        <span class="wf-base-mono">arm</span>
+        <span class="wf-base-meaning">Latin arma · weapons · tools of war</span>
+      </div>
+      <div class="wf-matrix-wrap" id="arm-matrix">
+        <div class="wf-matrix-row">
+          <div class="wf-cell wf-header">WORD</div>
+          <div class="wf-cell wf-header">WORD SUM</div>
+          <div class="wf-cell wf-header">MEANING</div>
+        </div>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Tap any word to expand it and see the word sum and a sentence.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="card">
+    <h3>🔀 Sort — where does ⟨arm⟩ sit?</h3>
+    <p>In some of these words the base ⟨arm⟩ is at the start. In one of them, something comes <em>before</em> it. Drag each word into the right zone.</p>
+    <div class="sort-source-pool" id="arm-sort-pool"></div>
+    <div class="sort-grid">
+      <div class="sort-zone" id="arm-sort-start"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="dropSort(event,'arm-sort-start','arm')">
+        <div class="sort-zone-label">⟨arm⟩ at the start</div>
+        <div class="sort-items" id="arm-sort-start-items"></div>
+      </div>
+      <div class="sort-zone" id="arm-sort-end"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="dropSort(event,'arm-sort-end','arm')">
+        <div class="sort-zone-label">Something comes before ⟨arm⟩</div>
+        <div class="sort-items" id="arm-sort-end-items"></div>
+      </div>
+    </div>
+    <div id="arm-sort-fb" style="font-size:.87rem;min-height:1.5rem;padding:.3rem .5rem;border-radius:6px;margin-top:.4rem;font-weight:600;"></div>
+    <button class="card-read-btn" onclick="speakText('Drag each word to show where the base arm sits in that word.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('tanks',document.querySelectorAll('#main-nav button')[1])">← Back</button>
+    <button class="btn btn-primary" onclick="show('protect',document.querySelectorAll('#main-nav button')[3])">Next: The sloped armour secret →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  SEC 4 — THE PROTECT PUZZLE
+══════════════════════════════ -->
+<div id="sec-protect" class="section">
+  <div class="section-header">
+    <div class="section-icon">🛡</div>
+    <div class="section-header-text">
+      <h2>The sloped armour secret</h2>
+      <p>Why does a T-34 beat a Tiger? It's pure geometry — and the word ⟨protect⟩ is at the centre of it.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-protect" onclick="speakSection('sec-protect','srb-protect')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Why slope the armour?</h3>
+    <p>Imagine throwing a ball at a wall. If the wall is straight up, the ball hits flat and stops. But if you tilt the wall to 45°, the ball glances off sideways. The same physics applies to shells hitting tank armour.</p>
+    <p>The Soviet T-34, introduced in 1940, had its armour plates sloped at 60°. This meant a shell didn't just have to punch through 80mm of steel — it effectively had to punch through <em>160mm</em> worth of resistance, because it was hitting at an angle. The sloped plates <strong>protected</strong> the crew far better than thicker flat armour would have.</p>
+    <div class="highlight-box">
+      <span class="label">The T-34 design decision</span>
+      German engineers who captured T-34s in 1941 were stunned. The tank's <strong>protective</strong> geometry was so clever that Germany rushed to copy the sloped design in the Panther tank. A vehicle built for <strong>protection</strong> had changed the entire course of tank engineering.
+    </div>
+    <button class="card-read-btn" onclick="speakText('The T-34\'s sloped armour meant a shell had to punch through twice the effective resistance. Germany copied the design in the Panther.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>The crew inside — what were they protecting?</h3>
+    <p>A tank's armour existed for one reason: to keep the people inside alive. A standard WWII tank carried 4–5 crew: a commander, a gunner, a loader, a driver, and a radio operator. Each had one job — and the armour was their <strong>protector</strong>.</p>
+    <p>But the armour also had to be light enough to move. Too thick and the tank couldn't go anywhere. The engineers had to find the exact balance — enough <strong>protection</strong> to survive, light enough to fight. Every tank in history is a different answer to that same question.</p>
+    <div class="ctx-sentence">
+      <span class="ctx-icon">💬</span>
+      <span class="ctx-text">The Tiger's thick armour <span class="ctx-highlight">protected</span> the crew — but the tank weighed so much it often sank in mud.</span>
+      <button class="ctx-speak" onclick="speakText('The Tiger\'s thick armour protected the crew — but the tank weighed so much it often sank in mud.')">🔊</button>
+    </div>
+    <div class="ctx-sentence">
+      <span class="ctx-icon">💬</span>
+      <span class="ctx-text">The Sherman was the most reliable <span class="ctx-highlight">protector</span> of Allied infantry — not because it was the most powerful, but because there were 49,000 of them.</span>
+      <button class="ctx-speak" onclick="speakText('The Sherman was the most reliable protector of Allied infantry — not because it was the most powerful, but because there were 49,000 of them.')">🔊</button>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Every tank in history is a different answer to the same question: how do we protect the crew while still being able to move and fight?')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>🔭 The ⟨protect⟩ family — one base, six jobs</h3>
+    <p>The base ⟨protect⟩ keeps its spelling in every word. But suffixes give it a different job each time. Tap any row to see the word in action.</p>
+    <div class="affix-legend">
+      <div class="legend-chip legend-base"><div class="legend-dot" style="background:var(--teal)"></div>base ⟨protect⟩</div>
+      <div class="legend-chip legend-suffix"><div class="legend-dot" style="background:var(--seafoam)"></div>suffix</div>
+    </div>
+    <div class="wf-section">
+      <div class="wf-base-banner">
+        <span class="wf-base-mono">protect</span>
+        <span class="wf-base-meaning">Latin protegere · to cover in front · to keep safe</span>
+      </div>
+      <div class="wf-matrix-wrap" id="protect-matrix">
+        <div class="wf-matrix-row">
+          <div class="wf-cell wf-header">WORD</div>
+          <div class="wf-cell wf-header">WORD SUM</div>
+          <div class="wf-cell wf-header">MEANING</div>
+        </div>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Tap any word in the table to expand it.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="card">
+    <h3>🔀 Sort — what job does the suffix give ⟨protect⟩?</h3>
+    <p>Suffixes change the <em>job</em> of a word without changing its meaning. Drag each word into the right zone — does the suffix make it an <strong>action</strong>, a <strong>thing</strong>, a <strong>quality</strong>, or a <strong>person/thing that does it</strong>?</p>
+    <div class="sort-source-pool" id="protect-sort-pool"></div>
+    <div class="sort-grid">
+      <div class="sort-zone" id="protect-sort-action"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="dropSort(event,'protect-sort-action','protect')">
+        <div class="sort-zone-label">An action (verb)</div>
+        <div class="sort-items" id="protect-sort-action-items"></div>
+      </div>
+      <div class="sort-zone" id="protect-sort-thing"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="dropSort(event,'protect-sort-thing','protect')">
+        <div class="sort-zone-label">A thing, quality, or person</div>
+        <div class="sort-items" id="protect-sort-thing-items"></div>
+      </div>
+    </div>
+    <div id="protect-sort-fb" style="font-size:.87rem;min-height:1.5rem;padding:.3rem .5rem;border-radius:6px;margin-top:.4rem;font-weight:600;"></div>
+    <button class="card-read-btn" onclick="speakText('Drag each word to show what job the suffix gives it.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('arm',document.querySelectorAll('#main-nav button')[2])">← Back</button>
+    <button class="btn btn-primary" onclick="show('builder',document.querySelectorAll('#main-nav button')[4])">Next: Codebreaker →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  SEC 5 — CODEBREAKER (Word Builder)
+══════════════════════════════ -->
+<div id="sec-builder" class="section">
+  <div class="section-header">
+    <div class="section-icon">📡</div>
+    <div class="section-header-text">
+      <h2>Codebreaker — build the transmission</h2>
+      <p>WWII radio operators used short, precise words in every message. One missing piece and the whole transmission fails.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-builder" onclick="speakSection('sec-builder','srb-builder')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Radio operators and the word problem</h3>
+    <p>During World War II, tank commanders communicated by radio. The radio operator had to use <em>exact</em> words. The wrong word could mean the difference between a successful mission and a disaster.</p>
+    <p>Each transmission below has a word with a missing piece — a prefix or suffix that's been lost in static. You know the base. You know the meaning. Drag the right piece into the gap to complete the word and decode the message.</p>
+    <div class="highlight-box">
+      <span class="label">Your mission</span>
+      Each word is built from a <strong>base</strong> + one missing piece (yellow = prefix · goes before · green = suffix · goes after). Three chips appear. Only one completes the word correctly. Drag it into the gap.
+    </div>
+    <button class="card-read-btn" onclick="speakText('Each transmission has a word with a missing piece. Drag the right prefix or suffix chip to complete the word.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read instructions</button>
+  </div>
+
+  <div class="card" id="wsb-card">
+    <h3>📻 Incoming transmission — word incomplete</h3>
+    <div id="wsb-progress" class="mc-progress" style="margin-bottom:.8rem;"></div>
+
+    <div id="wsb-transmission" style="
+      background: #0d1117;
+      color: #4ade80;
+      font-family: 'DM Mono', monospace;
+      font-size: .85rem;
+      border-radius: var(--r-md);
+      padding: .9rem 1.1rem;
+      margin: .5rem 0 .7rem;
+      line-height: 2;
+      border: 1.5px solid #22c55e44;
+    "></div>
+
+    <div id="wsb-base-display" style="text-align:center;font-family:'DM Mono',monospace;font-size:1rem;font-weight:700;color:var(--teal);margin:.4rem 0 .2rem;"></div>
+    <div id="wsb-target-row" style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin:.5rem 0;flex-wrap:wrap;"></div>
+    <div id="wsb-chips" class="wsb-chips" style="justify-content:center;"></div>
+    <div id="wsb-equation" class="wsb-equation" style="margin:.4rem 0;"></div>
+    <div id="wsb-feedback" class="wsb-feedback"></div>
+    <div id="wsb-ctx" style="margin:.3rem 0;"></div>
+
+    <div style="display:none;text-align:center;margin-top:.7rem;" id="wsb-next-wrap">
+      <button class="btn btn-primary" onclick="nextWSB()">Next transmission →</button>
+    </div>
+    <button class="card-read-btn" onclick="speakCurrentWSB()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read transmission</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('protect',document.querySelectorAll('#main-nav button')[3])">← Back</button>
+    <button class="btn btn-primary" onclick="show('investigate',document.querySelectorAll('#main-nav button')[5])">Next: Field Dispatch →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+  SEC 6 — FIELD DISPATCH (Investigate)
+══════════════════════════════ -->
+<div id="sec-investigate" class="section">
+  <div class="section-header">
+    <div class="section-icon">📋</div>
+    <div class="section-header-text">
+      <h2>Field Dispatch — read and report</h2>
+      <p>You're a historian reading real battlefield dispatches. Each one uses words from the families you've studied. Read, then answer.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-investigate" onclick="speakSection('sec-investigate','srb-investigate')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>How to use a Field Dispatch</h3>
+    <p>Each dispatch is a short historical report. Read it — or tap the speaker button to hear it. Then answer the question below. Some questions are about the history. Some ask you to look closely at a word. Both kinds of noticing matter.</p>
+    <div id="inv-progress" class="mc-progress" style="margin-bottom:.5rem;margin-top:.5rem;"></div>
+  </div>
+
+  <div class="card">
+    <div id="inv-question"></div>
+    <div style="display:none;text-align:center;margin-top:.8rem;" id="inv-next-wrap">
+      <button class="btn btn-primary" onclick="nextInv()">Next dispatch →</button>
+    </div>
+    <button class="card-read-btn" onclick="speakCurrentInv()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read dispatch</button>
+  </div>
+
+  <div id="inv-complete" style="display:none;" class="card">
+    <h3>🎖 Dispatch complete — mission accomplished</h3>
+    <div id="inv-score-box" class="score-box">
+      <span class="score-label">Dispatches decoded</span>
+      <span class="score-val" id="inv-score-val">—</span>
+    </div>
+    <p style="margin-top:.8rem;font-size:.88rem;color:var(--muted);">Strong work in the field, historian. The words ⟨arm⟩ and ⟨protect⟩ and their families are woven through the entire history of tanks — and now you can see how every form is built from the same base.</p>
+    <button class="btn btn-outline" style="margin-top:.8rem;" onclick="resetInv()">↺ Review dispatches</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('builder',document.querySelectorAll('#main-nav button')[4])">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+
+<button id="summary-fab" onclick="speakText('You have completed the Iron Giants lesson. Well done, Word Scientist.')">🎖 Well done!</button>
+
+<script>
+// ════════════════════════════════════
+//  VOICE / TTS
+// ════════════════════════════════════
+let voices = [], selVoice = null, speechRate = 0.9, speaking = false;
+function loadVoices() {
+  voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  const sel = document.getElementById('voice-select');
+  if (!voices.length) return;
+  sel.innerHTML = voices.map((v,i) => `<option value="${i}">${v.name}</option>`).join('');
+  selVoice = voices[0];
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+function onVoiceChange() {
+  const i = +document.getElementById('voice-select').value;
+  selVoice = voices[i] || null;
+}
+function onRateChange(v) {
+  speechRate = +v;
+  document.getElementById('rate-val').textContent = (+v).toFixed(2) + '×';
+}
+function _utter(text) {
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  if (selVoice) u.voice = selVoice;
+  u.rate = speechRate; u.pitch = 1;
+  u.onstart = () => speaking = true;
+  u.onend = u.onerror = () => speaking = false;
+  speechSynthesis.speak(u);
+}
+function speakText(t) { stopSpeaking(); _utter(t); }
+function stopSpeaking() { speechSynthesis.cancel(); speaking = false; }
+function speakSection(secId, barId) {
+  if (speaking) { stopSpeaking(); return; }
+  const sec = document.getElementById(secId);
+  if (!sec) return;
+  const text = sec.innerText.replace(/\n+/g,' ').replace(/\s+/g,' ').trim();
+  _utter(text);
+}
+
+// ════════════════════════════════════
+//  NAV
+// ════════════════════════════════════
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if (sec) { sec.classList.add('active'); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+  if (btn) btn.classList.add('active');
+  stopSpeaking();
+}
+
+// ════════════════════════════════════
+//  TIMELINE TOGGLE
+// ════════════════════════════════════
+function toggleTL(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.tl-item').forEach(t => t.classList.remove('open'));
+  if (!wasOpen) {
+    el.classList.add('open');
+    speakText(el.querySelector('.tl-body').innerText);
+  }
+}
+
+// ════════════════════════════════════
+//  TANK DATA
+// ════════════════════════════════════
+const tankData = [
+  { id:'mark1', flag:'🇬🇧', name:'Mark I', country:'United Kingdom · 1916',
+    summary:'The first tank ever used in battle. It rumbled across the mud at the Battle of the Somme.',
+    wordchips:['armoured','tracked','invented'],
+    detail:'The British Mark I was a rhombus shape — unusual even today. It weighed 28 tonnes and moved slower than walking pace. Its armour protected the crew from small arms fire.',
+    matchDesc:'The first tank ever used in combat — a British invention from 1916.' },
+  { id:'t34', flag:'🇷🇺', name:'T-34', country:'Soviet Union · 1940',
+    summary:'Often called the most important tank of World War II. Fast, tough, and produced in huge numbers.',
+    wordchips:['mobile','protective','dominant'],
+    detail:'The T-34 had sloped armour that deflected shells rather than just absorbing them. Its design influenced almost every tank that came after it.',
+    matchDesc:'A Soviet tank with sloped armour — widely considered the most influential tank ever built.' },
+  { id:'tiger', flag:'🇩🇪', name:'Tiger I', country:'Germany · 1942',
+    summary:'A heavy German tank feared for its powerful gun and thick armour plating.',
+    wordchips:['armament','protection','invention'],
+    detail:'The Tiger I had armour up to 120mm thick. Its 88mm gun could destroy most Allied tanks at long range. However it was complex to build — Germany never had enough of them.',
+    matchDesc:'A feared German heavy tank with enormous armament and very thick armour.' },
+  { id:'sherman', flag:'🇺🇸', name:'M4 Sherman', country:'United States · 1942',
+    summary:'The most widely produced Allied tank. Reliable and fast, it could be quickly repaired in the field.',
+    wordchips:['reliable','mobile','protector'],
+    detail:'The Sherman was not the most powerful tank of World War II, but the US produced over 49,000 of them. Quantity and reliability made it a vital protector of Allied forces.',
+    matchDesc:'The most-produced Allied tank — valued for reliability rather than heavy armament.' },
+  { id:'ft17', flag:'🇫🇷', name:'Renault FT', country:'France · 1917',
+    summary:'The first tank with a fully rotating turret — an invention that changed tank design forever.',
+    wordchips:['inventor','turret','armed'],
+    detail:'The Renault FT introduced the rotating turret — now standard on all tanks. Its designer was an inventor ahead of his time. Over 3,700 were built and used by many countries.',
+    matchDesc:'The French tank that invented the rotating gun turret — a design still used today.' },
+];
+
+function renderTankGrid() {
+  const grid = document.getElementById('tank-grid');
+  if (!grid) return;
+  grid.innerHTML = tankData.map(t => `
+    <div class="tank-card" id="tc-${t.id}" onclick="toggleTank('${t.id}')">
+      <div class="tank-card-flag">${t.flag}</div>
+      <div class="tank-card-body">
+        <span class="tank-card-name">${t.name}</span>
+        <span class="tank-card-country">${t.country}</span>
+        <p style="font-size:.78rem;color:var(--muted);line-height:1.6;margin:.2rem 0 .3rem;">${t.summary}</p>
+        <div class="tank-card-detail">
+          <p style="font-size:.78rem;color:var(--text);line-height:1.65;margin-bottom:.4rem;">${t.detail}</p>
+          <div>${t.wordchips.map(w=>`<span class="word-chip">${w}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function toggleTank(id) {
+  const card = document.getElementById('tc-' + id);
+  const wasExp = card.classList.contains('expanded');
+  document.querySelectorAll('.tank-card').forEach(c => c.classList.remove('expanded','selected'));
+  if (!wasExp) {
+    card.classList.add('expanded','selected');
+    const t = tankData.find(x => x.id === id);
+    speakText(t.name + '. ' + t.detail);
+  }
+}
+
+// ════════════════════════════════════
+//  TANK MATCH (drag-drop)
+// ════════════════════════════════════
+let tankMatchAnswers = {};
+function renderTankMatch() {
+  const el = document.getElementById('tank-match');
+  if (!el) return;
+  const shuffled = [...tankData].sort(() => Math.random() - .5);
+  const sources = [...tankData].sort(() => Math.random() - .5);
+
+  el.innerHTML = `
+    <div class="dm-left" id="dm-sources">
+      ${sources.map(t => `
+        <div class="dm-source" draggable="true" id="dms-${t.id}"
+          ondragstart="dragStart(event,'${t.id}')"
+          ondragend="event.target.classList.remove('dragging')">
+          ${t.flag} <strong style="font-family:'DM Mono',monospace;">${t.name}</strong>
+        </div>`).join('')}
+    </div>
+    <div class="dm-right">
+      ${shuffled.map(t => `
+        <div class="dm-drop" id="dmd-${t.id}"
+          data-answer="${t.id}"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="dropTankMatch(event,'${t.id}')">
+          <div>
+            <div class="dm-drop-label" style="margin-bottom:.2rem;"></div>
+            <div style="font-size:.8rem;color:var(--text);">${t.matchDesc}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+let dragId = null;
+function dragStart(e, id) {
+  dragId = id;
+  e.target.classList.add('dragging');
+  e.dataTransfer.setData('text/plain', id);
+}
+function dropTankMatch(e, targetId) {
+  e.preventDefault();
+  const dropEl = document.getElementById('dmd-' + targetId);
+  dropEl.classList.remove('drag-over');
+  const sourceId = e.dataTransfer.getData('text/plain') || dragId;
+  const t = tankData.find(x => x.id === sourceId);
+  if (!t) return;
+  const correct = sourceId === targetId;
+  dropEl.classList.add(correct ? 'correct' : 'wrong');
+  dropEl.querySelector('.dm-drop-label').textContent = t.flag + ' ' + t.name;
+  if (correct) {
+    const src = document.getElementById('dms-' + sourceId);
+    if (src) src.classList.add('placed');
+    tankMatchAnswers[targetId] = true;
+  } else {
+    setTimeout(() => dropEl.classList.remove('wrong'), 900);
+  }
+  const fb = document.getElementById('tank-match-fb');
+  const done = Object.keys(tankMatchAnswers).length;
+  if (done === tankData.length) {
+    fb.textContent = '✓ All matched! Strong work, Word Scientist.';
+    speakText('All matched! Strong work, Word Scientist.');
+  } else {
+    fb.textContent = `${done} of ${tankData.length} matched.`;
+  }
+}
+
+// ════════════════════════════════════
+//  MATRIX RENDERER
+// ════════════════════════════════════
+const armMatrix = [
+  { word:'arm', sum:'arm', gloss:'weapons; to equip for battle', ctx:'The knight carried <w>arm</w>s into battle.' },
+  { word:'armed', sum:'arm + ed', gloss:'equipped with weapons', ctx:'The <w>armed</w> tank crew wore helmets.' },
+  { word:'armour', sum:'arm + our', gloss:'protective metal covering', ctx:'The tank\'s <w>armour</w> was 50mm thick.' },
+  { word:'armoured', sum:'arm + our + ed', gloss:'covered in armour', ctx:'The <w>armoured</w> vehicle crossed the river.' },
+  { word:'armament', sum:'arm + ament', gloss:'weapons and military equipment', ctx:'The ship\'s <w>armament</w> included two large guns.' },
+  { word:'disarm', sum:'dis + arm', gloss:'to remove weapons; make safe', ctx:'The treaty required both sides to <w>disarm</w>.' },
+  { word:'disarmament', sum:'dis + arm + ament', gloss:'the process of giving up weapons', ctx:'<w>Disarmament</w> talks began after the war ended.' },
+];
+const protectMatrix = [
+  { word:'protect', sum:'protect', gloss:'to keep safe', ctx:'Thick steel walls <w>protect</w> the crew.' },
+  { word:'protected', sum:'protect + ed', gloss:'was kept safe', ctx:'The crew felt <w>protected</w> inside the hull.' },
+  { word:'protecting', sum:'protect + ing', gloss:'keeping safe right now', ctx:'The tank was <w>protecting</w> the supply convoy.' },
+  { word:'protection', sum:'protect + ion', gloss:'the state of being kept safe', ctx:'Armour provides <w>protection</w> from enemy fire.' },
+  { word:'protective', sum:'protect + ive', gloss:'having the quality of protecting', ctx:'The crew wore <w>protective</w> helmets.' },
+  { word:'protector', sum:'protect + or', gloss:'one who protects', ctx:'The tank served as a <w>protector</w> for the infantry.' },
+];
+
+function renderMatrix(matrixId, data, base) {
+  const wrap = document.getElementById(matrixId);
+  if (!wrap) return;
+  data.forEach((row, i) => {
+    const ctxHtml = row.ctx
+      ? row.ctx.replace(`<w>${base}</w>`, `<span class="ctx-highlight">${base}</span>`)
+              .replace(/<w>(.*?)<\/w>/, `<span class="ctx-highlight">$1</span>`)
+      : '';
+    const rowEl = document.createElement('div');
+    rowEl.className = 'wf-matrix-row';
+    rowEl.innerHTML = `
+      <div class="wf-cell" onclick="toggleMatrixRow('${matrixId}',${i})">
+        <span class="wf-word">${row.word}</span>
+        <span class="wf-cell-ctx">${ctxHtml ? `<div class="ctx-sentence" style="margin-top:.35rem;font-size:.78rem;"><span class="ctx-icon">💬</span><span class="ctx-text">${ctxHtml}</span></div>` : ''}</span>
+      </div>
+      <div class="wf-cell" onclick="toggleMatrixRow('${matrixId}',${i})">
+        <span class="wf-sum">${row.sum}</span>
+      </div>
+      <div class="wf-cell" onclick="toggleMatrixRow('${matrixId}',${i})">
+        <span class="wf-gloss">${row.gloss}</span>
+      </div>`;
+    rowEl.dataset.idx = i;
+    wrap.appendChild(rowEl);
+  });
+}
+
+function toggleMatrixRow(matrixId, idx) {
+  const wrap = document.getElementById(matrixId);
+  const rows = wrap.querySelectorAll('.wf-matrix-row:not(:first-child)');
+  const row = rows[idx];
+  const wasActive = row.classList.contains('wf-active');
+  rows.forEach(r => r.classList.remove('wf-active'));
+  if (!wasActive) {
+    row.classList.add('wf-active');
+    const data = matrixId.startsWith('arm') ? armMatrix : protectMatrix;
+    speakText(data[idx].word + '. ' + data[idx].gloss + '. ' + (data[idx].ctx || '').replace(/<[^>]+>/g,''));
+  }
+}
+
+// ════════════════════════════════════
+//  SORT ACTIVITIES
+// ════════════════════════════════════
+const sortData = {
+  arm: {
+    words: [
+      { word:'armed', zone:'arm-sort-start', note:'arm + ed — base at the start' },
+      { word:'armour', zone:'arm-sort-start', note:'arm + our — base at the start' },
+      { word:'disarm', zone:'arm-sort-end', note:'dis + arm — base at the end' },
+      { word:'armament', zone:'arm-sort-start', note:'arm + ament — base at the start' },
+      { word:'disarmament', zone:'arm-sort-end', note:'dis + arm + ament — base is in the middle!' },
+      { word:'armoured', zone:'arm-sort-start', note:'arm + our + ed — base at the start' },
+    ]
+  },
+  protect: {
+    words: [
+      { word:'protect', zone:'protect-sort-action', note:'protect — an action (verb)' },
+      { word:'protected', zone:'protect-sort-action', note:'protect + ed — a past action (verb)' },
+      { word:'protecting', zone:'protect-sort-action', note:'protect + ing — an ongoing action (verb)' },
+      { word:'protection', zone:'protect-sort-thing', note:'protect + ion — a thing (noun)' },
+      { word:'protective', zone:'protect-sort-thing', note:'protect + ive — a quality (adjective)' },
+      { word:'protector', zone:'protect-sort-thing', note:'protect + or — a person or thing (noun)' },
+    ]
+  }
+};
+const sortAnswers = { arm:{}, protect:{} };
+
+function initSort(base) {
+  const pool = document.getElementById(base + '-sort-pool');
+  if (!pool) return;
+  const words = [...sortData[base].words].sort(() => Math.random() - .5);
+  pool.innerHTML = words.map(w => `
+    <div class="sort-chip" draggable="true" id="sc-${base}-${w.word}"
+      data-word="${w.word}" data-base="${base}" data-zone="${w.zone}"
+      ondragstart="dragSortStart(event,'${base}','${w.word}')"
+      ondragend="event.target.classList.remove('dragging')"
+      onclick="tapSort('${base}','${w.word}')">
+      ${w.word}
+    </div>`).join('');
+}
+function dragSortStart(e, base, word) {
+  e.dataTransfer.setData('sort-base', base);
+  e.dataTransfer.setData('sort-word', word);
+  e.target.classList.add('dragging');
+}
+function tapSort(base, word) {
+  // mobile fallback — cycle through zones
+  const item = sortData[base].words.find(w => w.word === word);
+  if (!item) return;
+  const zones = [...new Set(sortData[base].words.map(w => w.zone))];
+  const zoneId = item.zone;
+  const zoneEl = document.getElementById(zoneId);
+  placeSort(base, word, zoneId, zoneEl);
+}
+function dropSort(e, zoneId, base) {
+  e.preventDefault();
+  const zoneEl = document.getElementById(zoneId);
+  zoneEl.classList.remove('drag-over');
+  const word = e.dataTransfer.getData('sort-word');
+  const dragBase = e.dataTransfer.getData('sort-base');
+  if (dragBase !== base) return;
+  placeSort(base, word, zoneId, zoneEl);
+}
+function placeSort(base, word, zoneId, zoneEl) {
+  const item = sortData[base].words.find(w => w.word === word);
+  if (!item) return;
+  const chip = document.getElementById('sc-' + base + '-' + word);
+  if (!chip) return;
+  const correct = item.zone === zoneId;
+  const placed = document.createElement('div');
+  placed.className = 'sort-chip ' + (correct ? 'placed-correct' : 'placed-wrong');
+  placed.textContent = word;
+  const fb = document.getElementById(base + '-sort-fb');
+  if (correct) {
+    const itemsEl = document.getElementById(zoneId + '-items');
+    if (itemsEl) itemsEl.appendChild(placed);
+    chip.remove();
+    sortAnswers[base][word] = true;
+    // Show the word-sum note visually in the feedback bar
+    fb.style.color = 'var(--seafoam)';
+    fb.textContent = '✓ ' + item.note;
+    speakText(item.note);
+  } else {
+    const itemsEl = document.getElementById(zoneId + '-items');
+    if (itemsEl) { itemsEl.appendChild(placed); setTimeout(() => placed.remove(), 900); }
+    // Show redirect text visually — Finn may not hear it
+    fb.style.color = 'var(--amber-dk)';
+    fb.textContent = '→ Where does the base ⟨' + base + '⟩ sit in the word ' + word + '? Try again.';
+    speakText('Have another look — where does the base ' + base + ' sit in the word ' + word + '?');
+  }
+  const done = Object.keys(sortAnswers[base]).length;
+  const total = sortData[base].words.length;
+  if (done === total) {
+    fb.style.color = 'var(--seafoam)';
+    fb.textContent = '✓ Sorting complete! All ' + total + ' words placed correctly.';
+    speakText('Sorting complete! Strong noticing.');
+  }
+}
+
+// ════════════════════════════════════
+//  WORD SUM BUILDER
+// ════════════════════════════════════
+const wsbData = [
+  { base:'arm', prefix:null, suffix:'ed', result:'armed',
+    transmission:'ALLIED COMMAND · 0600 · JUNE 6 1944\nAll units are fully [arm___] and ready to advance.\nConfirm receipt. Over.',
+    equation:'<span class="base-part">arm</span> <span class="plus">+</span> <span class="affix-part">ed</span> <span class="arrow">→</span> <span class="result">armed</span>',
+    gloss:'equipped with weapons',
+    ctx:'The <w>armed</w> convoy moved through the desert.', confirm:'arm + ed → armed. The suffix ⟨-ed⟩ means it happened — they were armed and ready.' },
+  { base:'protect', prefix:null, suffix:'ion', result:'protection',
+    transmission:'TANK CREW REPORT · NORTH AFRICA · 1942\nSloped armour provides excellent [protect___]\nagainst enemy anti-tank rounds. Request more units.',
+    equation:'<span class="base-part">protect</span> <span class="plus">+</span> <span class="affix-part">ion</span> <span class="arrow">→</span> <span class="result">protection</span>',
+    gloss:'the state of being kept safe',
+    ctx:'Thick armour provides <w>protection</w> for the crew.', confirm:'protect + ion → protection. The suffix ⟨-ion⟩ turns the action into a noun — a thing you can have.' },
+  { base:'arm', prefix:'dis', suffix:null, result:'disarm',
+    transmission:'PEACE CONFERENCE · PARIS · 1919\nAll parties agree to [___arm] within 90 days.\nWeapons to be surrendered to Allied command.',
+    equation:'<span class="affix-part">dis</span> <span class="plus">+</span> <span class="base-part">arm</span> <span class="arrow">→</span> <span class="result">disarm</span>',
+    gloss:'to remove weapons; to make safe',
+    ctx:'The treaty required both sides to <w>disarm</w>.', confirm:'dis + arm → disarm. The prefix ⟨dis-⟩ reverses or removes the meaning. To disarm is to take weapons away.' },
+  { base:'protect', prefix:null, suffix:'or', result:'protector',
+    transmission:'INFANTRY DISPATCH · FRANCE · AUGUST 1944\nSherman tanks served as [protect___] for our\nadvancing infantry. Losses minimal.',
+    equation:'<span class="base-part">protect</span> <span class="plus">+</span> <span class="affix-part">or</span> <span class="arrow">→</span> <span class="result">protector</span>',
+    gloss:'one who protects',
+    ctx:'The tank was a <w>protector</w> for the soldiers beside it.', confirm:'protect + or → protector. The suffix ⟨-or⟩ means one who. A protector is one who protects — a person or thing.' },
+  { base:'arm', prefix:null, suffix:'ament', result:'armament',
+    transmission:'INTELLIGENCE REPORT · BERLIN · 1943\nEnemy [arm___] includes 88mm guns capable of\npenetrating 200mm armour at 500 metres.',
+    equation:'<span class="base-part">arm</span> <span class="plus">+</span> <span class="affix-part">ament</span> <span class="arrow">→</span> <span class="result">armament</span>',
+    gloss:'weapons and military equipment',
+    ctx:'The tank\'s <w>armament</w> included a large gun and two machine guns.', confirm:'arm + ament → armament. The suffix ⟨-ament⟩ builds a noun. Armament means the weapons and equipment of a force.' },
+  { base:'protect', prefix:null, suffix:'ive', result:'protective',
+    transmission:'ENGINEERING MEMO · SOVIET UNION · 1940\nNew [protect___] geometry of T-34 hull confirmed.\nSloped plate at 60° deflects all standard rounds.',
+    equation:'<span class="base-part">protect</span> <span class="plus">+</span> <span class="affix-part">ive</span> <span class="arrow">→</span> <span class="result">protective</span>',
+    gloss:'having the quality of protecting',
+    ctx:'The crew wore <w>protective</w> goggles inside the tank.', confirm:'protect + ive → protective. The suffix ⟨-ive⟩ creates an adjective — a describing word meaning having the quality of protecting.' },
+];
+let wsbIdx = 0, wsbAnswers = [];
+
+function initWSB() {
+  wsbIdx = 0; wsbAnswers = [];
+  renderWSBItem();
+}
+
+function renderWSBProgress() {
+  const el = document.getElementById('wsb-progress');
+  if (!el) return;
+  el.innerHTML = wsbData.map((w,i) => {
+    let cls = 'mc-dot-prog';
+    if (i < wsbIdx) cls += wsbAnswers[i] ? ' done-c' : ' done-w';
+    else if (i === wsbIdx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderWSBItem() {
+  if (wsbIdx >= wsbData.length) { showWSBComplete(); return; }
+  const item = wsbData[wsbIdx];
+  renderWSBProgress();
+
+  // Transmission display — show with [___] gap highlighted
+  const txEl = document.getElementById('wsb-transmission');
+  if (txEl) {
+    const gapWord = item.result;
+    const displayTx = item.transmission
+      .replace(/\[([^\]]+)\]/g, '<span style="color:#fbbf24;font-weight:700;letter-spacing:.05em;">[$1]</span>');
+    txEl.innerHTML = displayTx.replace(/\n/g, '<br>');
+  }
+
+  // Base display
+  document.getElementById('wsb-base-display').innerHTML =
+    `<span style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.15rem;">BASE MORPHEME</span>
+     <span style="font-size:1.3rem;color:var(--teal);">⟨${item.base}⟩</span>
+     <span style="font-size:.78rem;color:var(--muted);margin-left:.4rem;">${item.gloss}</span>`;
+
+  // Target row
+  const targetRow = document.getElementById('wsb-target-row');
+  targetRow.innerHTML = '';
+
+  if (item.prefix) {
+    // Prefix slot + base
+    const prefixTarget = document.createElement('div');
+    prefixTarget.className = 'wsb-target';
+    prefixTarget.id = 'wsb-prefix-target';
+    prefixTarget.style.minWidth = '90px';
+    prefixTarget.innerHTML = '<span style="font-size:.72rem;color:var(--muted);">prefix goes here</span>';
+    prefixTarget.ondragover = e => { e.preventDefault(); prefixTarget.classList.add('drag-over'); };
+    prefixTarget.ondragleave = () => prefixTarget.classList.remove('drag-over');
+    prefixTarget.ondrop = e => { e.preventDefault(); dropWSBChip(e,'prefix'); };
+    prefixTarget.onclick = () => tapWSBTarget('prefix');
+    targetRow.appendChild(prefixTarget);
+
+    const plus = document.createElement('span');
+    plus.textContent = '+'; plus.style.cssText = 'font-family:"DM Mono",monospace;font-weight:700;color:var(--muted);font-size:1.1rem;';
+    targetRow.appendChild(plus);
+
+    const baseSpan = document.createElement('span');
+    baseSpan.style.cssText = 'font-family:"DM Mono",monospace;font-weight:700;font-size:1.2rem;color:var(--teal);background:var(--teal-lt);padding:.3rem .7rem;border-radius:8px;border:2px solid var(--teal);';
+    baseSpan.textContent = item.base;
+    targetRow.appendChild(baseSpan);
+  } else {
+    // Base + suffix slot
+    const baseSpan = document.createElement('span');
+    baseSpan.style.cssText = 'font-family:"DM Mono",monospace;font-weight:700;font-size:1.2rem;color:var(--teal);background:var(--teal-lt);padding:.3rem .7rem;border-radius:8px;border:2px solid var(--teal);';
+    baseSpan.textContent = item.base;
+    targetRow.appendChild(baseSpan);
+
+    const plus = document.createElement('span');
+    plus.textContent = '+'; plus.style.cssText = 'font-family:"DM Mono",monospace;font-weight:700;color:var(--muted);font-size:1.1rem;';
+    targetRow.appendChild(plus);
+
+    const suffixTarget = document.createElement('div');
+    suffixTarget.className = 'wsb-target';
+    suffixTarget.id = 'wsb-suffix-target';
+    suffixTarget.style.minWidth = '90px';
+    suffixTarget.innerHTML = '<span style="font-size:.72rem;color:var(--muted);">suffix goes here</span>';
+    suffixTarget.ondragover = e => { e.preventDefault(); suffixTarget.classList.add('drag-over'); };
+    suffixTarget.ondragleave = () => suffixTarget.classList.remove('drag-over');
+    suffixTarget.ondrop = e => { e.preventDefault(); dropWSBChip(e,'suffix'); };
+    suffixTarget.onclick = () => tapWSBTarget('suffix');
+    targetRow.appendChild(suffixTarget);
+  }
+
+  // Chips — provide 3 options: 1 correct + 2 distractors
+  const correctAffix = item.prefix || item.suffix;
+  const allAffixes = ['ed','ing','ion','or','ive','ment','ament','dis','re','un','s','er'];
+  const distractors = allAffixes.filter(a => a !== correctAffix).sort(() => Math.random()-.5).slice(0,2);
+  const opts = [correctAffix, ...distractors].sort(() => Math.random() - .5);
+
+  const chipsEl = document.getElementById('wsb-chips');
+  chipsEl.innerHTML = opts.map(o => {
+    const isPrefix = item.prefix === o;
+    const isSuffix = item.suffix === o;
+    const cls = isPrefix ? 'wsb-chip prefix' : isSuffix ? 'wsb-chip suffix' : 'wsb-chip';
+    const label = item.prefix ? o + '-' : '-' + o;
+    return `<div class="${cls}" draggable="true" id="wsbc-${o}"
+      data-affix="${o}"
+      ondragstart="dragWSBChip(event,'${o}')"
+      ondragend="event.target.classList.remove('dragging')"
+      onclick="tapWSBChip('${o}')">
+      ${label}
+    </div>`;
+  }).join('');
+
+  // Clear equation/feedback/ctx/next
+  document.getElementById('wsb-equation').innerHTML = '';
+  document.getElementById('wsb-feedback').textContent = '';
+  document.getElementById('wsb-feedback').className = 'wsb-feedback';
+  document.getElementById('wsb-ctx').innerHTML = '';
+  document.getElementById('wsb-next-wrap').style.display = 'none';
+}
+
+let wsbSelectedChip = null;
+function tapWSBChip(affix) {
+  wsbSelectedChip = affix;
+  document.querySelectorAll('.wsb-chip').forEach(c => c.style.outline = 'none');
+  const chip = document.getElementById('wsbc-' + affix);
+  if (chip) chip.style.outline = '2px solid var(--teal)';
+}
+function tapWSBTarget(slot) {
+  if (wsbSelectedChip) placeWSBChip(wsbSelectedChip);
+}
+let wsbDragAffix = null;
+function dragWSBChip(e, affix) {
+  wsbDragAffix = affix;
+  e.target.classList.add('dragging');
+  e.dataTransfer.setData('wsb-affix', affix);
+}
+function dropWSBChip(e, slot) {
+  const affix = e.dataTransfer.getData('wsb-affix') || wsbDragAffix;
+  placeWSBChip(affix);
+}
+function placeWSBChip(affix) {
+  const item = wsbData[wsbIdx];
+  const correct = (item.prefix === affix) || (item.suffix === affix);
+  const fbEl = document.getElementById('wsb-feedback');
+  const eqEl = document.getElementById('wsb-equation');
+
+  if (correct) {
+    // Disable all chips
+    document.querySelectorAll('.wsb-chip').forEach(c => { c.classList.add('used'); c.style.outline='none'; });
+    const chipEl = document.getElementById('wsbc-' + affix);
+    if (chipEl) chipEl.style.opacity = '1';
+
+    // Fill target
+    const target = document.getElementById(item.prefix ? 'wsb-prefix-target' : 'wsb-suffix-target');
+    if (target) {
+      target.classList.add('correct');
+      target.innerHTML = `<span style="font-family:'DM Mono',monospace;font-weight:700;font-size:1.1rem;color:var(--seafoam);">${affix}</span>`;
+    }
+
+    eqEl.innerHTML = item.equation;
+    fbEl.innerHTML = '<strong>✓ ' + item.gloss + '</strong><br><span style="font-size:.82rem;color:var(--teal);font-weight:400;">' + item.confirm + '</span>';
+    fbEl.className = 'wsb-feedback correct';
+
+    // Context sentence
+    const ctxHtml = item.ctx.replace(/<w>(.*?)<\/w>/, `<span class="ctx-highlight">$1</span>`);
+    document.getElementById('wsb-ctx').innerHTML = `
+      <div class="ctx-sentence">
+        <span class="ctx-icon">💬</span>
+        <span class="ctx-text">${ctxHtml}</span>
+        <button class="ctx-speak" onclick="speakText('${item.ctx.replace(/<[^>]+>/g,'')}')">🔊</button>
+      </div>`;
+
+    wsbAnswers.push(true);
+    document.getElementById('wsb-next-wrap').style.display = 'block';
+    const nb = document.getElementById('wsb-next-wrap').querySelector('button');
+    if (nb) nb.textContent = wsbIdx + 1 >= wsbData.length ? 'See results ✓' : 'Next word →';
+    speakText(item.confirm);
+  } else {
+    fbEl.textContent = '→ Look at the base. What would complete the meaning?';
+    fbEl.className = 'wsb-feedback wrong';
+    const target = document.getElementById(item.prefix ? 'wsb-prefix-target' : 'wsb-suffix-target');
+    if (target) {
+      target.classList.add('wrong');
+      setTimeout(() => target.classList.remove('wrong'), 600);
+    }
+    speakText('Have another look at the base — what would complete the word?');  }
+  wsbSelectedChip = null;
+}
+
+function nextWSB() {
+  wsbIdx++;
+  renderWSBItem();
+}
+function showWSBComplete() {
+  const correct = wsbAnswers.filter(Boolean).length;
+  const card = document.getElementById('wsb-card');
+  card.innerHTML = `
+    <h3>🎉 Word Builder complete!</h3>
+    <div class="score-box"><span class="score-label">Words built</span><span class="score-val">${correct} / ${wsbData.length}</span></div>
+    <p style="margin-top:.8rem;font-size:.88rem;color:var(--muted);">Strong building, Word Scientist. Every word you built carries the meaning of its base right through to the end.</p>
+    <button class="btn btn-outline" style="margin-top:.8rem;" onclick="initWSB()">↺ Build again</button>`;
+  speakText('Word Builder complete. ' + correct + ' of ' + wsbData.length + ' words built. Strong work.');
+}
+function speakCurrentWSB() {
+  if (wsbIdx < wsbData.length) {
+    const item = wsbData[wsbIdx];
+    speakText('Build the word. The base is ' + item.base + '. ' + item.gloss + '.');
+  }
+}
+
+// ════════════════════════════════════
+//  INVESTIGATE (MC)
+// ════════════════════════════════════
+const invData = [
+  { dispatch:'📋 DISPATCH · BATTLE OF CAMBRAI · NOVEMBER 1917\n\nBritish command launched 474 tanks in a concentrated assault. The armoured vehicles punched through German lines in hours — something infantry had failed to do in months.\n\nThe attack proved that armoured fighting vehicles, when used in mass, could break through even the strongest defences.',
+    prompt:'The dispatch uses the word "armoured." What does the base ⟨arm⟩ mean in this word?',
+    opts:['a body part used for lifting','weapons and the tools of war','metal that is very heavy','a vehicle with wheels'],
+    answer:'weapons and the tools of war',
+    confirm:'Correct. The base ⟨arm⟩ comes from Latin arma — weapons. Armoured means covered with the material that protects against weapons. The base stays the same in arm, armed, armour, armament.',
+    redirect:'The base ⟨arm⟩ is not about the human body part — it means weapons and war tools. What does armoured mean in this context?' },
+  { dispatch:'📋 DISPATCH · NORTH AFRICA · JUNE 1942\n\nGerman Panzer tanks broke through the British defensive line at Tobruk. British commanders reported that their tanks lacked sufficient protection against the German 88mm gun, which could destroy a Sherman at over 1,500 metres.\n\nA protector that can be destroyed at long range is no longer protecting anyone.',
+    prompt:'The dispatch ends: "A protector that can be destroyed at long range is no longer protecting anyone." What does the suffix ⟨-or⟩ tell you about the word "protector"?',
+    opts:['it means the word happened in the past','it means one who does the action','it makes the word an adjective','it reverses the meaning'],
+    answer:'it means one who does the action',
+    confirm:'Yes — the suffix ⟨-or⟩ means one who. A protector is one who protects. The same suffix appears in commander, operator, inventor. The tank was meant to be the one who protects — but it failed at long range.',
+    redirect:'Think about what a protector does. The suffix ⟨-or⟩ turns an action into a person or thing that does it.' },
+  { dispatch:'📋 DISPATCH · PARIS PEACE CONFERENCE · 1919\n\nFollowing the armistice, Allied leaders debated the disarmament of Germany. The German army, once one of the most heavily armed forces in history, was required to reduce its armament to a tiny fraction of wartime levels.\n\nFor the next 20 years, the question of rearmament — whether Germany would rebuild its military — haunted European politics.',
+    prompt:'The dispatch mentions "disarmament" and "rearmament." The prefix ⟨dis-⟩ means to remove or reverse. What does the prefix ⟨re-⟩ most likely mean?',
+    opts:['to do again or restore','the opposite of','before it happened','one who does it'],
+    answer:'to do again or restore',
+    confirm:'Exactly right. The prefix ⟨re-⟩ means again or back. Rearmament means the process of arming again. Knowing one prefix helps you work out the next one — that\'s the power of morphological thinking.',
+    redirect:'If ⟨dis-⟩ means to remove, and rearmament means rebuilding weapons — what does ⟨re-⟩ add to the meaning?' },
+  { dispatch:'📋 FIELD REPORT · SOVIET UNION · JULY 1943 · BATTLE OF KURSK\n\nThe Battle of Kursk was the largest tank battle in history — over 6,000 tanks on both sides. The Soviet T-34\'s protective geometry — sloped armour — gave it a critical advantage. German shells struck the sloped plates and deflected.\n\nThe protective design of the T-34 had been copied from earlier experiments and refined over three years of war.',
+    prompt:'The report uses "protective" and "protection" to describe the T-34\'s armour design. Which word sum correctly builds "protective"?',
+    opts:['pro + tect + ive','protect + ive','protect + ion','pro + tective'],
+    answer:'protect + ive',
+    confirm:'Correct — protect + ive → protective. The base is ⟨protect⟩ and the suffix is ⟨-ive⟩. The suffix ⟨-ive⟩ creates an adjective meaning having the quality of. Protective geometry means geometry that has the quality of protecting.',
+    redirect:'The whole base is ⟨protect⟩. Look for the suffix that creates a describing word — an adjective.' },
+  { dispatch:'📋 ENGINEERING MEMO · UNITED STATES · 1944\n\nThe M4 Sherman was not the most powerful tank in the war. Its armament — a 75mm gun — was outclassed by the German 88mm. Its armour was thinner than the Tiger or Panther.\n\nBut the US produced 49,234 Shermans. Germany produced 1,347 Tigers. Quantity, reliability, and the ability to disarm the enemy through sheer numbers won the war — not the size of any single gun.',
+    prompt:'The memo says the Sherman\'s "armament" was outclassed. Based on everything you know about the base ⟨arm⟩, what does "armament" mean?',
+    opts:['the speed of a vehicle','the weapons and military equipment of a force','the protective plating on the hull','the crew members inside the tank'],
+    answer:'the weapons and military equipment of a force',
+    confirm:'Yes — armament means the weapons and military equipment. The word sum is arm + ament. The base ⟨arm⟩ means weapons; the suffix ⟨-ament⟩ creates a noun referring to the collection of those weapons.',
+    redirect:'Think about the base ⟨arm⟩ — it means weapons. The suffix ⟨-ament⟩ makes it a noun. What kind of noun would come from the idea of weapons?' },
+  { dispatch:'📋 HISTORIAN\'S NOTE · TANK MUSEUM, BOVINGTON · 2024\n\nThe first tank ever built — "Little Willie," completed in 1915 — is still on display here. It never fired in combat. It was only a prototype.\n\nBut it was the ancestor of every armed fighting vehicle that followed. From Little Willie to the M1 Abrams, the core idea has never changed: build something armoured enough to survive, armed enough to fight, and mobile enough to matter.',
+    prompt:'The note ends: "armed enough to fight." What is the word sum for "armed"?',
+    opts:['arm + ed','a + rmed','arm + ing','ar + med'],
+    answer:'arm + ed',
+    confirm:'arm + ed → armed. The base ⟨arm⟩ means equipped with weapons. The suffix ⟨-ed⟩ shows it\'s already happened — it\'s equipped. The base stays spelled the same in every word of the family: arm, arms, armed, armour, armament, disarm.',
+    redirect:'The base is ⟨arm⟩. Which suffix means it already happened — it\'s done?' },
+];
+
+let invIdx = 0, invAnswers = [], invWaiting = false;
+
+function initInv() { invIdx = 0; invAnswers = []; invWaiting = false; renderInvItem(); }
+function renderInvProgress() {
+  const el = document.getElementById('inv-progress');
+  if (!el) return;
+  el.innerHTML = invData.map((q,i) => {
+    let cls = 'mc-dot-prog';
+    if (i < invIdx) cls += invAnswers[i] ? ' done-c' : ' done-w';
+    else if (i === invIdx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+function renderInvItem() {
+  if (invIdx >= invData.length) { showInvComplete(); return; }
+  const q = invData[invIdx];
+  renderInvProgress();
+  const el = document.getElementById('inv-question');
+  const dispatchHtml = q.dispatch
+    ? `<div style="
+        background:#0d1117;color:#e2e8f0;
+        font-family:'DM Mono',monospace;font-size:.8rem;
+        border-radius:var(--r-md);padding:.9rem 1.1rem;
+        margin-bottom:.9rem;line-height:1.9;
+        border:1.5px solid #334155;">
+        ${q.dispatch.replace(/\n/g,'<br>').replace(/⟨([^⟩]+)⟩/g,'<span style="color:#4ade80;font-weight:700;">⟨$1⟩</span>')}
+        <button class="ctx-speak" style="display:block;margin-top:.6rem;" onclick="speakText('${q.dispatch.replace(/'/g,"\\'")}')">🔊 Read dispatch</button>
+      </div>` : '';
+  el.innerHTML = `
+    ${dispatchHtml}
+    <div class="mc-prompt" style="margin-bottom:.65rem;">${q.prompt}</div>
+    <div class="mc-opts">
+      ${q.opts.map((o,i) => `
+        <button class="mc-opt" onclick="answerInv(${i})" id="inv-opt-${i}">
+          <div class="mc-dot"></div>
+          <span>${o}</span>
+        </button>`).join('')}
+    </div>
+    <div class="mc-feedback" id="inv-fb"></div>`;
+  document.getElementById('inv-next-wrap').style.display = 'none';
+  invWaiting = false;
+  el.classList.add('fade-up');
+}
+function answerInv(i) {
+  if (invWaiting) return;
+  const q = invData[invIdx];
+  const correct = q.opts[i] === q.answer;
+  invAnswers.push(correct);
+  invWaiting = true;
+  document.querySelectorAll('.mc-opt').forEach((btn,j) => {
+    if (q.opts[j] === q.answer) btn.classList.add('mc-correct');
+    else if (j === i && !correct) btn.classList.add('mc-wrong');
+    btn.disabled = true;
+  });
+  const fb = document.getElementById('inv-fb');
+  fb.textContent = correct ? '✓ ' + q.confirm : '→ ' + q.redirect;
+  fb.className = 'mc-feedback show' + (correct ? '' : ' wrong-fb');
+  const nw = document.getElementById('inv-next-wrap');
+  const nb = nw.querySelector('button');
+  nw.style.display = 'block';
+  nb.textContent = invIdx + 1 >= invData.length ? 'See results ✓' : 'Next question →';
+  speakText((correct ? '' : 'Let\'s look at that together. ') + (correct ? q.confirm : q.redirect));
+}
+function nextInv() {
+  invIdx++;
+  renderInvItem();
+}
+function showInvComplete() {
+  const correct = invAnswers.filter(Boolean).length;
+  document.getElementById('inv-question').innerHTML = '';
+  document.getElementById('inv-next-wrap').style.display = 'none';
+  const completeEl = document.getElementById('inv-complete');
+  completeEl.style.display = 'block';
+  document.getElementById('inv-score-val').textContent = correct + ' / ' + invData.length;
+  renderInvProgress();
+  speakText('Investigation complete. ' + correct + ' of ' + invData.length + ' correct. Strong noticing, Word Scientist.');
+}
+function resetInv() {
+  document.getElementById('inv-complete').style.display = 'none';
+  initInv();
+}
+function speakCurrentInv() {
+  if (invIdx < invData.length) {
+    const q = invData[invIdx];
+    speakText((q.dispatch ? q.dispatch + ' — ' : '') + q.prompt);
+  }
+}
+
+// ════════════════════════════════════
+//  INIT
+// ════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderTankGrid();
+  renderTankMatch();
+  renderMatrix('arm-matrix', armMatrix, 'arm');
+  renderMatrix('protect-matrix', protectMatrix, 'protect');
+  initSort('arm');
+  initSort('protect');
+  initWSB();
+  initInv();
+});
+</script>
+</body>
+</html>
