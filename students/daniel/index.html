@@ -3,1391 +3,230 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lesson 9 — Life in Ashcroft, Colorado</title>
+  <title>Daniel's Lessons — Lokahi Connect</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    @font-face {
-      font-family: 'OpenDyslexic';
-      src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
-      font-weight: normal;
-    }
-    @font-face {
-      font-family: 'OpenDyslexic';
-      src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
-      font-weight: bold;
-    }
-  </style>
-  <style>
     :root {
-      --teal:        #0d4f5c;
-      --teal-mid:    #1a7a6e;
-      --teal-light:  #e6f4f2;
-      --amber:       #e8a040;
-      --amber-light: #fff4e0;
-      --bg:          #f5f7f9;
-      --card:        #ffffff;
-      --text:        #1c2b2e;
-      --muted:       #5a7278;
-      --border:      #dce8ea;
-      --success:     #1a7a6e;
-      --success-bg:  #e6f4f2;
-      --error-bg:    #fdeaea;
-      --error:       #b91c1c;
-      --shadow:      0 8px 28px rgba(13,79,92,0.10);
-      --radius:      20px;
+      --teal:       #0d4f5c;
+      --teal-mid:   #1a7a6e;
+      --teal-light: #e6f4f2;
+      --amber:      #e8a040;
+      --amber-light:#fff4e0;
+      --bg:         #f5f7f9;
+      --card:       #ffffff;
+      --text:       #1c2b2e;
+      --muted:      #5a7278;
+      --border:     #dce8ea;
+      --shadow:     0 8px 28px rgba(13,79,92,0.10);
+      --radius:     20px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.65;
-      font-size: 1rem;
-    }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 28px 16px 56px;
-    }
-    .lesson-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      overflow: hidden;
+      min-height: 100vh;
     }
     .header {
       background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 100%);
-      padding: 32px 28px 26px;
+      padding: 40px 28px 36px;
+      text-align: center;
       color: white;
+      position: relative;
+      overflow: hidden;
     }
-    .eyebrow {
-      font-size: 0.85rem;
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(232,160,64,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header .eyebrow {
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      opacity: 0.75;
+      opacity: 0.65;
       margin-bottom: 10px;
     }
     .header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      line-height: 1.25;
-      margin-bottom: 10px;
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
-    .header p {
-      opacity: 0.85;
-      font-size: 1rem;
-      margin-bottom: 18px;
+    .header .subtitle { opacity: 0.8; font-size: 1rem; }
+    .header .wave { font-size: 2rem; display: block; margin-bottom: 10px; }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 16px 60px;
     }
-    .goals-list {
-      list-style: none;
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      padding-left: 2px;
+    }
+    .lessons {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 16px;
+      margin-bottom: 40px;
     }
-    .goals-list li {
-      opacity: 0.92;
-      font-size: 0.97rem;
-      padding-left: 20px;
-      position: relative;
-    }
-    .goals-list li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--amber);
-      font-weight: 700;
-    }
-    .progress-bar-wrap {
-      background: #e9eef0;
-      height: 5px;
-      width: 100%;
-    }
-    .progress-bar-fill {
-      height: 5px;
-      background: var(--amber);
-      transition: width 0.4s ease;
-    }
-    .slide {
-      display: none;
-      padding: 32px 28px 28px;
-      animation: fadeIn 0.3s ease;
-    }
-    .slide.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .stop-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--teal-light);
-      color: var(--teal);
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      border: 1px solid #b2d8d3;
-    }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
-      color: var(--teal);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--teal);
-      margin-bottom: 8px;
-    }
-    .lead {
-      color: var(--muted);
-      margin-bottom: 20px;
-      font-size: 1rem;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .card {
+    .lesson-card {
       background: var(--card);
       border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .card.teal-tint { background: var(--teal-light); border-color: #b2d8d3; }
-    .card.amber-tint { background: var(--amber-light); border-color: #f5d498; }
-    .word-card {
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      background: white;
+    .lesson-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--teal-mid);
+      border-radius: 4px 0 0 4px;
+      transition: width 0.18s ease;
     }
-    .word-card .word-title {
+    .lesson-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(13,79,92,0.14);
+      border-color: #b2d8d3;
+    }
+    .lesson-card:hover::before { width: 6px; }
+    .lesson-icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      background: var(--teal-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lesson-body { flex: 1; }
+    .lesson-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--teal);
       margin-bottom: 4px;
+      line-height: 1.3;
     }
-    .word-card .morpheme-hint {
-      font-size: 0.82rem;
-      color: var(--amber);
-      font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: 0.04em;
-    }
-    .word-definition {
-      display: none;
-      margin-top: 8px;
-      font-size: 0.95rem;
-      color: var(--text);
-      border-top: 1px dashed var(--border);
-      padding-top: 10px;
-    }
-    .word-definition.show { display: block; }
-    .word-sum-inline {
-      display: inline-block;
-      background: var(--amber-light);
-      border: 1px solid #f5d498;
-      border-radius: 8px;
-      padding: 4px 10px;
-      font-family: monospace;
-      font-size: 0.9rem;
-      color: var(--teal);
-      margin-top: 6px;
-    }
-    button {
-      border: none;
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-size: 0.97rem;
-      font-weight: 700;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-    button:hover { transform: translateY(-1px); }
-    button:disabled { opacity: 0.55; cursor: default; transform: none; }
-    button.primary {
-      background: var(--teal);
-      color: white;
-      box-shadow: 0 4px 12px rgba(13,79,92,0.25);
-    }
-    button.secondary {
-      background: var(--teal-light);
-      color: var(--teal);
-      border: 1.5px solid #b2d8d3;
-    }
-    button.ghost {
-      background: #edf0f2;
-      color: var(--text);
-    }
-    button.reveal-btn {
-      background: var(--amber-light);
-      color: var(--teal);
-      border: 1.5px solid #f5d498;
-      font-size: 0.9rem;
-      padding: 8px 14px;
-    }
-    button.choice {
-      background: white;
-      border: 2px solid var(--border);
-      color: var(--text);
-      min-width: 110px;
-      font-size: 0.95rem;
-    }
-    button.choice.correct {
-      background: var(--success-bg);
-      border-color: var(--success);
-      color: var(--success);
-    }
-    button.choice.incorrect {
-      background: var(--error-bg);
-      border-color: var(--error);
-      color: var(--error);
-    }
-    .nav {
+    .lesson-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 32px;
       gap: 12px;
       flex-wrap: wrap;
     }
-    .question-card {
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      background: white;
-    }
-    .question-card .q-text {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-    .question-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .feedback {
-      margin-top: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 8px 12px;
-      display: none;
-    }
-    .feedback.show { display: block; }
-    .feedback.correct-fb { background: var(--success-bg); color: var(--success); }
-    .feedback.incorrect-fb { background: var(--error-bg); color: var(--error); }
-    .passage {
-      background: #fafcfc;
-      border: 1.5px solid var(--border);
-      border-left: 4px solid var(--teal-mid);
-      border-radius: 12px;
-      padding: 22px 24px;
-      margin: 16px 0 22px;
-      line-height: 1.9;
-      font-size: 1rem;
-    }
-    .passage p { margin-bottom: 14px; }
-    .passage p:last-child { margin-bottom: 0; }
-    .base   { background: #cff5ee; border-bottom: 2px solid var(--teal-mid); border-radius: 3px; padding: 0 2px; }
-    .suffix { background: #fff0cc; border-bottom: 2px solid var(--amber);    border-radius: 3px; padding: 0 2px; }
-    .prefix { background: #e8e0ff; border-bottom: 2px solid #7c5cbf;          border-radius: 3px; padding: 0 2px; }
-    .morpheme-key {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-      font-size: 0.88rem;
-    }
-    .morpheme-key span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-    .key-swatch {
-      width: 14px; height: 14px;
-      border-radius: 3px;
-      display: inline-block;
-    }
-    .word-sum-box {
-      background: var(--amber-light);
-      border: 1.5px solid #f5d498;
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin: 14px 0;
-    }
-    .word-sum-box h4 {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .sum-row {
-      font-family: monospace;
-      font-size: 1rem;
-      color: var(--teal);
-      margin-bottom: 5px;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin: 16px 0 22px;
-    }
-    .stat {
-      background: var(--teal-light);
-      border: 1px solid #b2d8d3;
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--teal);
-    }
-    .venn {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
-      margin: 18px 0 24px;
-    }
-    .venn-circle {
-      border-radius: 18px;
-      padding: 18px 16px;
-      border: 2px solid var(--border);
-    }
-    .venn-circle.left   { background: #f5f3ff; border-color: #c4b5fd; }
-    .venn-circle.middle { background: var(--teal-light); border-color: #b2d8d3; }
-    .venn-circle.right  { background: var(--amber-light); border-color: #f5d498; }
-    .venn-circle h3 { font-size: 0.95rem; margin-bottom: 10px; }
-    .venn-circle ul {
-      padding-left: 16px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .venn-circle li { margin-bottom: 5px; }
-    .burger-layer {
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
-      background: white;
-    }
-    .layer-badge {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      margin-bottom: 10px;
-    }
-    .layer-badge.bun-top    { background: #fef3c7; color: #92400e; }
-    .layer-badge.detail-1   { background: #dcfce7; color: #166534; }
-    .layer-badge.detail-2   { background: #fce7f3; color: #9d174d; }
-    .layer-badge.detail-3   { background: #e0e7ff; color: #3730a3; }
-    .layer-badge.bun-bottom { background: #fef3c7; color: #92400e; }
-    textarea {
-      width: 100%;
-      min-height: 90px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.97rem;
-      color: var(--text);
-      resize: vertical;
-      background: #fafcfc;
-      margin-top: 8px;
-    }
-    textarea:focus {
-      outline: none;
-      border-color: var(--teal-mid);
-    }
-    .summary-card {
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-    .summary-card ul { padding-left: 20px; }
-    .summary-card li { margin-bottom: 8px; }
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 24px 0;
-    }
-    .footer-note {
-      text-align: center;
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-top: 20px;
-    }
-    .label-tag {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 3px 9px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-    }
-    .label-tag.teal   { background: var(--teal-light); color: var(--teal); }
-    .label-tag.amber  { background: var(--amber-light); color: #92400e; }
-
-    /* ══════════════════════════════════════
-       SECTION TTS BUTTON
-    ══════════════════════════════════════ */
-    .section-tts-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--teal-light);
-      color: var(--teal);
-      border: 1.5px solid #b2d8d3;
-      border-radius: 999px;
-      padding: 5px 14px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.1s;
-      vertical-align: middle;
-      margin-left: 10px;
-      white-space: nowrap;
+    .lesson-meta span { display: inline-flex; align-items: center; gap: 4px; }
+    .lesson-arrow {
+      font-size: 1.2rem;
+      color: var(--teal-mid);
+      opacity: 0.5;
       flex-shrink: 0;
+      transition: opacity 0.15s, transform 0.15s;
     }
-    .section-tts-btn:hover {
-      background: #c4e8e2;
-      box-shadow: 0 2px 8px rgba(13,79,92,0.15);
-      transform: translateY(-1px);
-    }
-    .section-tts-btn.playing {
+    .lesson-card:hover .lesson-arrow { opacity: 1; transform: translateX(3px); }
+    .badge-new {
+      display: inline-block;
       background: var(--amber);
-      color: var(--teal);
-      border-color: var(--amber);
-    }
-    /* Row wrapper so heading and button sit on the same line */
-    .section-heading-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .section-heading-row h2,
-    .section-heading-row h3 {
-      margin-bottom: 0;
-    }
-
-    /* ══════════════════════════════════════
-       DYSLEXIA SUPPORT TOOLBAR
-    ══════════════════════════════════════ */
-    #a11y-bar {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--teal);
-      border-radius: 999px;
-      padding: 10px 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 24px rgba(13,79,92,0.35);
-      z-index: 9999;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 96vw;
-    }
-    #a11y-bar .bar-label {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.75rem;
+      color: white;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      white-space: nowrap;
-      padding-right: 4px;
-    }
-    #a11y-bar button {
-      background: rgba(255,255,255,0.12);
-      color: white;
-      border: 1.5px solid rgba(255,255,255,0.25);
+      padding: 2px 8px;
       border-radius: 999px;
-      padding: 7px 14px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .footer {
+      text-align: center;
       font-size: 0.85rem;
-      font-weight: 700;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      white-space: nowrap;
+      color: var(--muted);
+      padding: 0 16px 32px;
     }
-    #a11y-bar button:hover { background: rgba(255,255,255,0.22); }
-    #a11y-bar button.on { background: var(--amber); color: var(--teal); border-color: var(--amber); }
-    .tts-word {
-      background: #ffe066;
-      border-radius: 3px;
-      padding: 0 1px;
-      transition: background 0.1s;
-    }
-    #tint-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    #tint-overlay.show { opacity: 1; }
-    #ruler {
-      position: fixed;
-      left: 0;
-      width: 100%;
-      height: 44px;
-      pointer-events: none;
-      z-index: 9997;
-      display: none;
-      background: rgba(232,160,64,0.22);
-      border-top: 2px solid var(--amber);
-      border-bottom: 2px solid var(--amber);
-      transition: top 0.05s;
-    }
-    body.dyslexic-font,
-    body.dyslexic-font p,
-    body.dyslexic-font li,
-    body.dyslexic-font h2,
-    body.dyslexic-font h3,
-    body.dyslexic-font textarea,
-    body.dyslexic-font .word-title,
-    body.dyslexic-font .sum-row,
-    body.dyslexic-font button {
-      font-family: 'OpenDyslexic', sans-serif !important;
-    }
-    body.wide-spacing p,
-    body.wide-spacing li,
-    body.wide-spacing .q-text,
-    body.wide-spacing .passage p {
-      line-height: 2.2 !important;
-      letter-spacing: 0.06em !important;
-      word-spacing: 0.18em !important;
-    }
-    body.large-text { font-size: 1.2rem !important; }
-    body.large-text h2 { font-size: 1.85rem !important; }
-    #tts-btn.playing { background: #ff6b6b; color: white; border-color: #ff6b6b; }
-
-    @media (max-width: 680px) {
-      .grid-2, .grid-3, .venn { grid-template-columns: 1fr; }
-      h2 { font-size: 1.4rem; }
-      .slide, .header { padding: 22px 18px; }
-      .section-heading-row { flex-direction: column; align-items: flex-start; }
+    .footer a { color: var(--teal-mid); text-decoration: none; }
+    @media (max-width: 540px) {
+      .header h1 { font-size: 1.7rem; }
+      .lesson-card { padding: 16px 18px; gap: 14px; }
+      .lesson-icon { width: 44px; height: 44px; font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="lesson-card">
-    <!-- Header -->
-    <div class="header">
-      <div class="eyebrow">Lokahi Connect · Meaning-First Literacy™ · Grade 3 · Lesson 9</div>
-      <h1>Life in Ashcroft, Colorado</h1>
-      <p>Get ready to be a Word Scientist — and a writer. 🔬✍️</p>
-      <ul class="goals-list">
-        <li>Investigate the meaning hidden inside big words from the passage</li>
-        <li>Spot the difference between a fact and an opinion</li>
-        <li>Read and explore a real ghost town in Colorado</li>
-        <li>Build a strong paragraph using the Hamburger model</li>
-      </ul>
+
+  <div class="header">
+    <span class="wave">🔬</span>
+    <div class="eyebrow">Lokahi Connect · Meaning-First Literacy™</div>
+    <h1>Daniel's Lessons</h1>
+    <p class="subtitle">Your Word Scientist assignments — tap any lesson to begin</p>
+  </div>
+
+  <div class="container">
+    <div class="section-label">📚 Your Assignments</div>
+    <div class="lessons">
+
+      <a class="lesson-card" href="lesson-9-life-in-ashcroft/index.html">
+        <div class="lesson-icon">🏔️</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Life in Ashcroft, Colorado</div>
+          <div class="lesson-meta">
+            <span>📖 Informational Text</span>
+            <span>🔬 Morpheme Investigation</span>
+            <span>✍️ Hamburger Writing</span>
+          </div>
+        </div>
+        <div class="lesson-arrow">→</div>
+      </a>
+
+      <a class="lesson-card" href="over-under-kelp-forest/index.html">
+        <div class="lesson-icon">🦦</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Over and Under the Kelp Forest</div>
+          <div class="lesson-meta">
+            <span>🌊 Journey Narrative</span>
+            <span>🔬 Morpheme Investigation</span>
+            <span>✍️ Over/Under Writing</span>
+          </div>
+        </div>
+        <div class="lesson-arrow">→</div>
+      </a>
+
+      <a class="lesson-card" href="moon-daniel.html">
+        <div class="lesson-icon">🌕</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Journey to the Moon <span class="badge-new">New</span></div>
+          <div class="lesson-meta">
+            <span>🚀 Science · Chapter 7</span>
+            <span>🔭 Word Scientist</span>
+          </div>
+        </div>
+        <div class="lesson-arrow">→</div>
+      </a>
+
     </div>
-    <!-- Progress bar -->
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
-    </div>
+  </div>
 
-    <!-- ════════════════════════════════════════
-         SLIDE 1 — Word Investigation Wall
-    ════════════════════════════════════════ -->
-    <section class="slide active" data-slide="0">
-      <div class="stop-label">🧱 Stop 1 of 6 — Word Investigation Wall</div>
+  <div class="footer">
+    <p>Lokahi Connect · <a href="https://lokahiconnect.org" target="_blank">lokahiconnect.org</a></p>
+  </div>
 
-      <div class="section-heading-row">
-        <h2>What's hiding inside these words?</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide1-intro')" aria-label="Listen to this section">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide1-intro">These words appear in today's passage. Before you read, let's investigate what they mean — using the parts inside them as clues. Tap each word to reveal its meaning and structure.</p>
-
-      <div class="section-heading-row" style="margin-top: 18px;">
-        <h3>Word Cards</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide1-words')" aria-label="Listen to all word cards">🔊 Listen</button>
-      </div>
-      <div class="grid-2" id="slide1-words">
-        <div class="word-card">
-          <div class="word-title">established</div>
-          <div class="morpheme-hint">🔍 Look at the base: &lt;establish&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> set up or started officially<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">establish + ed → established</span><br><br>
-            <em>The suffix &lt;-ed&gt; tells us this happened in the past.</em>
-          </div>
-        </div>
-        <div class="word-card">
-          <div class="word-title">abandoned</div>
-          <div class="morpheme-hint">🔍 Look at the base: &lt;abandon&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> left completely; no longer used or lived in<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">abandon + ed → abandoned</span><br><br>
-            <em>The suffix &lt;-ed&gt; tells us this happened in the past.</em>
-          </div>
-        </div>
-        <div class="word-card">
-          <div class="word-title">occupied</div>
-          <div class="morpheme-hint">🔍 Look at the base: &lt;occupy&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> lived in or used by people<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">occupy + ed → occupied</span><br><br>
-            <em>Notice: &lt;y&gt; changed to &lt;i&gt; at the join — that's a convention called a <strong>Change</strong>.</em>
-          </div>
-        </div>
-        <div class="word-card">
-          <div class="word-title">discovered</div>
-          <div class="morpheme-hint">🔍 Look at the parts: &lt;dis-&gt; + &lt;cover&gt; + &lt;-ed&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> found something that was not known before<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">dis + cover + ed → discovered</span><br><br>
-            <em>The prefix &lt;dis-&gt; means "apart" or "away." To dis-cover is to uncover — to take the cover away from something hidden.</em>
-          </div>
-        </div>
-        <div class="word-card">
-          <div class="word-title">attracted</div>
-          <div class="morpheme-hint">🔍 Look at the parts: &lt;at-&gt; + &lt;tract&gt; + &lt;-ed&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> drew people toward something<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">at + tract + ed → attracted</span><br><br>
-            <em>The bound base &lt;tract&gt; means "pull." To attract is to pull toward. You can also see it in: tractor, distract, contract.</em>
-          </div>
-        </div>
-        <div class="word-card">
-          <div class="word-title">expository</div>
-          <div class="morpheme-hint">🔍 Look at the base: &lt;expose&gt; / &lt;posit&gt;</div>
-          <button class="reveal-btn" onclick="toggleDef(this)">👆 Tap to investigate</button>
-          <div class="word-definition">
-            <strong>Meaning:</strong> writing that exposes (makes visible) information<br><br>
-            <strong>Word sum:</strong><br>
-            <span class="word-sum-inline">ex + posit + ory → expository</span><br><br>
-            <em>The prefix &lt;ex-&gt; means "out." The bound base &lt;posit&gt; means "put" or "place." Expository writing puts ideas out into the open.</em>
-          </div>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="ghost" disabled>← Back</button>
-        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         SLIDE 2 — Fact vs. Opinion
-    ════════════════════════════════════════ -->
-    <section class="slide" data-slide="1">
-      <div class="stop-label">🧐 Stop 2 of 6 — Fact vs. Opinion</div>
-
-      <div class="section-heading-row">
-        <h2>Fact or Opinion?</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide2-intro')" aria-label="Listen to this section">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide2-intro">Before we read, you need one important tool: being able to tell a fact from an opinion.</p>
-
-      <div class="section-heading-row" style="margin-top: 4px;">
-        <h3>What's the difference?</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide2-cards')" aria-label="Listen to fact and opinion definitions">🔊 Listen</button>
-      </div>
-      <div class="grid-2" id="slide2-cards" style="margin-bottom: 22px;">
-        <div class="card teal-tint">
-          <div class="label-tag teal">✅ FACT</div>
-          <ul style="padding-left: 18px; font-size: 0.97rem; color: var(--text);">
-            <li>Can be proven true</li>
-            <li>Based on research or measurement</li>
-            <li>Uses numbers, names, dates</li>
-          </ul>
-          <p style="margin-top: 12px; font-style: italic; font-size: 0.93rem; color: var(--muted);">"Lima is the capital of Peru."</p>
-        </div>
-        <div class="card amber-tint">
-          <div class="label-tag amber">💬 OPINION</div>
-          <ul style="padding-left: 18px; font-size: 0.97rem; color: var(--text);">
-            <li>Is someone's personal view</li>
-            <li>Cannot be proven true or false</li>
-            <li>Often uses: best, worst, beautiful, scary</li>
-          </ul>
-          <p style="margin-top: 12px; font-style: italic; font-size: 0.93rem; color: var(--muted);">"Pizza is the best food."</p>
-        </div>
-      </div>
-
-      <div class="section-heading-row">
-        <h3>Now you try! 🎯</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide2-questions')" aria-label="Listen to the questions">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide2-questions" style="margin-top: 6px;">Tap FACT or OPINION for each sentence.</p>
-      <div class="grid-2">
-        <div class="question-card">
-          <p class="q-text">Timothy has two cats and three dogs.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'fact')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'fact')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">The best ice cream flavor is pistachio.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'opinion')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'opinion')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">They are from the capital of Peru, Lima.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'fact')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'fact')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">Orange is the worst color.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'opinion')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'opinion')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">We walked five blocks to visit the toy store.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'fact')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'fact')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">Lemonade is better than iced tea.</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkAnswer(this, 'fact', 'opinion')">FACT</button>
-            <button class="choice" onclick="checkAnswer(this, 'opinion', 'opinion')">OPINION</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
-        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         SLIDE 3 — Read & Explore
-    ════════════════════════════════════════ -->
-    <section class="slide" data-slide="2">
-      <div class="stop-label">📖 Stop 3 of 6 — Read &amp; Explore</div>
-
-      <div class="section-heading-row">
-        <h2>Life in Ashcroft, Colorado 🏔️</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide3-stats')" aria-label="Listen to the Ashcroft facts">🔊 Listen</button>
-      </div>
-      <div class="stats" id="slide3-stats">
-        <div class="stat">📅 Founded: 1880</div>
-        <div class="stat">⛏️ Started as: Silver mining camp</div>
-        <div class="stat">👻 Now: Ghost town</div>
-        <div class="stat">🏚️ Buildings left: 9 total</div>
-        <div class="stat">☀️ Summer visitors: about 75 per day</div>
-      </div>
-
-      <div class="section-heading-row">
-        <h3>Reading Passage</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide3-passage')" aria-label="Listen to the reading passage">🔊 Listen</button>
-      </div>
-      <div class="morpheme-key">
-        <span><span class="key-swatch" style="background:#cff5ee; border-bottom: 2px solid var(--teal-mid);"></span> Base morpheme</span>
-        <span><span class="key-swatch" style="background:#fff0cc; border-bottom: 2px solid var(--amber);"></span> Suffix</span>
-        <span><span class="key-swatch" style="background:#e8e0ff; border-bottom: 2px solid #7c5cbf;"></span> Prefix</span>
-      </div>
-      <div class="passage" id="slide3-passage">
-        <p>I went to Ashcroft for a class trip. It was amazing. When I arrived, I thought, "Wow! This place looks scary and quiet." My teacher, Mrs. Matthews, smiled and said, "That's because Ashcroft is a ghost town."</p>
-        <p>The class gasped. "Are there really ghosts here?" asked my friend Taylor. Mrs. Matthews laughed and told us that a ghost town is actually just an <span class="prefix">aban</span><span class="base">don</span><span class="suffix">ed</span> city or town that was once <span class="base">occup</span><span class="suffix">ied</span> by people.</p>
-        <p>Mrs. Matthews explained to the class that in 1880, Ashcroft was <span class="base">establish</span><span class="suffix">ed</span> as a silver mining camp. Silver was used in photography and medicine. "Sadly, the town's success didn't last long. People left Ashcroft after <span class="prefix">dis</span><span class="base">cover</span><span class="suffix">ing</span> new silver in Aspen. People were <span class="prefix">at</span><span class="base">tract</span><span class="suffix">ed</span> to bigger towns," said Mrs. Matthews.</p>
-        <p><em>As the sun set across the sky, the class imagined life in Ashcroft. We danced, laughed, and ran into the fields. It was wonderful.</em></p>
-      </div>
-
-      <div class="section-heading-row">
-        <h3>🔬 Word Scientist Spotlight</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide3-wordsums')" aria-label="Listen to the word sums">🔊 Listen</button>
-      </div>
-      <div class="word-sum-box" id="slide3-wordsums">
-        <h4>Words from the passage</h4>
-        <div class="sum-row">abandon + ed → abandoned &nbsp;&nbsp; (the suffix -ed tells us this happened in the past)</div>
-        <div class="sum-row">occup(y) + ed → occupied &nbsp;&nbsp;&nbsp; (y changes to i at the join)</div>
-        <div class="sum-row">establish + ed → established (the suffix -ed tells us this happened in the past)</div>
-        <div class="sum-row">dis + cover + ing → discovering (no join change needed)</div>
-        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp; (the base tract means pull)</div>
-      </div>
-
-      <div class="section-heading-row" style="margin-top: 16px;">
-        <h3>💡 Think About It</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide3-think')" aria-label="Listen to the think about it question">🔊 Listen</button>
-      </div>
-      <div class="card" id="slide3-think">
-        <p style="margin-bottom: 12px;">The last sentence says <em>"It was wonderful."</em> — is that a fact or an opinion?</p>
-        <div class="question-actions">
-          <button class="choice" onclick="checkSingle(this, 'fo-fb', false, 'That sentence includes a personal feeling, so it is an opinion — not something that can be proven.')">Fact</button>
-          <button class="choice" onclick="checkSingle(this, 'fo-fb', true, 'Correct! "It was wonderful" is an opinion. It expresses how the writer felt — it cannot be proven true or false.')">Opinion</button>
-        </div>
-        <div class="feedback" id="fo-fb"></div>
-      </div>
-
-      <div class="nav">
-        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
-        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         SLIDE 4 — Text Types
-    ════════════════════════════════════════ -->
-    <section class="slide" data-slide="3">
-      <div class="stop-label">📚 Stop 4 of 6 — Two Kinds of Text</div>
-
-      <div class="section-heading-row">
-        <h2>Literature vs. Informational Text</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide4-intro')" aria-label="Listen to this section">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide4-intro">The Ashcroft passage mixed both kinds of writing. Can you tell which parts were informational and which were literature?</p>
-
-      <div class="section-heading-row">
-        <h3>How are they different?</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide4-venn')" aria-label="Listen to the comparison chart">🔊 Listen</button>
-      </div>
-      <div class="venn" id="slide4-venn">
-        <div class="venn-circle left">
-          <h3>📖 Literature Text</h3>
-          <ul>
-            <li>Imaginary characters</li>
-            <li>Read for pleasure</li>
-            <li>Can include opinions &amp; feelings</li>
-            <li>Stories, novels, plays</li>
-          </ul>
-        </div>
-        <div class="venn-circle middle">
-          <h3>🔗 Both</h3>
-          <ul>
-            <li>Use language conventions</li>
-            <li>Have settings</li>
-            <li>Can tell a story</li>
-          </ul>
-        </div>
-        <div class="venn-circle right">
-          <h3>🗞️ Informational Text</h3>
-          <ul>
-            <li>Real people &amp; events</li>
-            <li>Tells facts about the world</li>
-            <li>No personal opinions</li>
-            <li>Expository writing</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section-heading-row">
-        <h3>💡 Quick Match</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide4-match-intro')" aria-label="Listen to the quick match instructions">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide4-match-intro" style="margin-top: 4px;">Decide: is each text type Literature or Informational?</p>
-      <div class="grid-2">
-        <div class="question-card">
-          <p class="q-text">📖 <em>The Wonderful Wizard of Oz</em> — a story about a girl named Dorothy who travels to a magical land</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkSingle(this, 'm1', true, 'Correct! This is literature — Dorothy is an imaginary character in a fictional story.')">Literature</button>
-            <button class="choice" onclick="checkSingle(this, 'm1', false, 'Not quite. Dorothy is an imaginary character — this is literature, not informational text.')">Informational</button>
-          </div>
-          <div class="feedback" id="m1"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">🗞️ An article about the history of Ashcroft, Colorado — when it was founded, why people left, and what it looks like today</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkSingle(this, 'm2', false, 'Not quite. This article uses real facts about a real place — that makes it informational text.')">Literature</button>
-            <button class="choice" onclick="checkSingle(this, 'm2', true, 'Correct! This is informational text — it gives real facts about a real place.')">Informational</button>
-          </div>
-          <div class="feedback" id="m2"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">🐉 A story about a dragon who learns to read and discovers the school library</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkSingle(this, 'm3', true, 'Correct! A dragon who reads is an imaginary character — this is literature.')">Literature</button>
-            <button class="choice" onclick="checkSingle(this, 'm3', false, 'Not quite. A dragon who reads is imaginary — this is literature, not informational text.')">Informational</button>
-          </div>
-          <div class="feedback" id="m3"></div>
-        </div>
-        <div class="question-card">
-          <p class="q-text">🐋 A field guide about blue whales — their size, diet, migration routes, and habitat</p>
-          <div class="question-actions">
-            <button class="choice" onclick="checkSingle(this, 'm4', false, 'Not quite. A field guide uses real facts about real animals — that is informational text.')">Literature</button>
-            <button class="choice" onclick="checkSingle(this, 'm4', true, 'Correct! A field guide uses real facts — this is informational text.')">Informational</button>
-          </div>
-          <div class="feedback" id="m4"></div>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
-        <button class="primary" onclick="changeSlide(1)">Next ➜</button>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         SLIDE 5 — Hamburger Writing
-    ════════════════════════════════════════ -->
-    <section class="slide" data-slide="4">
-      <div class="stop-label">✍️ Stop 5 of 6 — Hamburger Writing</div>
-
-      <div class="section-heading-row">
-        <h2>Build a Strong Paragraph 🍔</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide5-intro')" aria-label="Listen to the hamburger introduction">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide5-intro">Every strong expository paragraph is built like a hamburger — a strong top, juicy middle, and a solid bottom. You investigated the words. You read the passage. Now let's write.</p>
-
-      <div class="section-heading-row">
-        <h3>The Hamburger Model</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide5-model')" aria-label="Listen to the hamburger model description">🔊 Listen</button>
-      </div>
-      <div class="grid-2" id="slide5-model" style="margin-bottom: 22px;">
-        <div class="burger-layer">
-          <span class="layer-badge bun-top">🍞 Introduction — Top Bun</span>
-          <p style="font-size: 0.95rem; color: var(--muted);">Your main idea — what is this paragraph about? This sentence tells the reader what to expect.</p>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-1">🥬 Supporting Detail 1</span>
-          <p style="font-size: 0.95rem; color: var(--muted);">First piece of evidence or information from the text</p>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-2">🍅 Supporting Detail 2</span>
-          <p style="font-size: 0.95rem; color: var(--muted);">Second piece of evidence or example</p>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-3">🥩 Supporting Detail 3</span>
-          <p style="font-size: 0.95rem; color: var(--muted);">Third piece of evidence or example</p>
-        </div>
-        <div class="burger-layer" style="grid-column: 1 / -1;">
-          <span class="layer-badge bun-bottom">🍞 Conclusion — Bottom Bun</span>
-          <p style="font-size: 0.95rem; color: var(--muted);">Wrap it up — restate your main idea in a new way.</p>
-        </div>
-      </div>
-      <hr class="divider" />
-
-      <div class="section-heading-row">
-        <h3>Your Turn: Write About Ashcroft 📝</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide5-prompts')" aria-label="Listen to the writing prompts">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide5-prompts" style="margin-top: 4px;">Use what you learned in the passage. You can write bullet points or full sentences — whatever works for you.</p>
-      <div class="grid-2">
-        <div class="burger-layer">
-          <span class="layer-badge bun-top">🍞 TOP BUN — My main idea about Ashcroft</span>
-          <textarea placeholder="Example: Ashcroft, Colorado is a ghost town with an interesting history."></textarea>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-1">🥬 Detail 1 — What was Ashcroft established as?</span>
-          <textarea placeholder="Example: In 1880, Ashcroft was established as a silver mining camp."></textarea>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-2">🍅 Detail 2 — Why did people leave?</span>
-          <textarea placeholder="Example: People left because they discovered new silver in Aspen and were attracted to bigger towns."></textarea>
-        </div>
-        <div class="burger-layer">
-          <span class="layer-badge detail-3">🥩 Detail 3 — What is Ashcroft like today?</span>
-          <textarea placeholder="Example: Today Ashcroft is abandoned, but about 75 visitors come each summer to see its 9 remaining buildings."></textarea>
-        </div>
-        <div class="burger-layer" style="grid-column: 1 / -1;">
-          <span class="layer-badge bun-bottom">🍞 BOTTOM BUN — Wrap it up</span>
-          <textarea placeholder="Example: Ashcroft may be abandoned today, but it still has stories to tell."></textarea>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="ghost" onclick="changeSlide(-1)">← Back</button>
-        <button class="primary" onclick="changeSlide(1)">Finish Lesson ➜</button>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         SLIDE 6 — Complete
-    ════════════════════════════════════════ -->
-    <section class="slide" data-slide="5">
-      <div class="stop-label">🎉 Lesson Complete!</div>
-
-      <div class="section-heading-row">
-        <h2>Amazing Work, Word Scientist! ⭐</h2>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide6-intro')" aria-label="Listen to the completion message">🔊 Listen</button>
-      </div>
-      <p class="lead" id="slide6-intro">You finished Lesson 9 — Fact vs. Opinion · Text Types · Morpheme Investigation · Hamburger Writing</p>
-
-      <div class="section-heading-row">
-        <h3>🔬 In This Lesson You Investigated:</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide6-summary')" aria-label="Listen to the lesson summary">🔊 Listen</button>
-      </div>
-      <div class="summary-card" id="slide6-summary" style="border-color: #b2d8d3; background: var(--teal-light);">
-        <ul>
-          <li><strong>Morphemes</strong> hiding inside words like <em>discovered</em>, <em>attracted</em>, and <em>established</em></li>
-          <li>The bound base <strong>&lt;tract&gt;</strong> means "pull" — it appears in: attract, distract, contract, tractor</li>
-          <li>The prefix <strong>&lt;dis-&gt;</strong> means "apart" or "away" — to discover = to un-cover, to pull the cover away</li>
-          <li>The suffix <strong>&lt;-ed&gt;</strong> tells us something happened in the past</li>
-          <li>A <strong>fact</strong> can be proven. An <strong>opinion</strong> is what someone thinks or feels.</li>
-          <li><strong>Literature</strong> uses imaginary characters. <strong>Informational text</strong> tells about real people and events.</li>
-          <li>Strong <strong>expository paragraphs</strong> have a top bun, supporting details, and a bottom bun.</li>
-        </ul>
-      </div>
-
-      <div class="section-heading-row" style="margin-top: 0;">
-        <h3>🧠 Reflection Prompt</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide6-reflection')" aria-label="Listen to the reflection prompt">🔊 Listen</button>
-      </div>
-      <div class="summary-card" id="slide6-reflection">
-        <p style="margin-bottom: 10px;">How is writing a narrative essay different from writing an expository paragraph? Use what you learned today.</p>
-        <textarea placeholder="Write your reflection here..."></textarea>
-      </div>
-
-      <div class="section-heading-row" style="margin-top: 18px;">
-        <h3>🔍 Bonus Inquiry — Can you find more &lt;tract&gt; words?</h3>
-        <button class="section-tts-btn" onclick="readSection(this, 'slide6-bonus')" aria-label="Listen to the bonus inquiry">🔊 Listen</button>
-      </div>
-      <div class="word-sum-box" id="slide6-bonus">
-        <div class="sum-row">at + tract + ed → attracted &nbsp;&nbsp;(pulled toward)</div>
-        <div class="sum-row">dis + tract + ed → distracted &nbsp;(pulled apart or away)</div>
-        <div class="sum-row">con + tract → contract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pulled together)</div>
-        <div class="sum-row">ex + tract → extract &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pulled out)</div>
-        <p style="margin-top: 10px; font-size: 0.9rem; color: var(--muted);">What do all of these words have in common? How does "pull" fit in each one? 🤔</p>
-      </div>
-
-      <div class="nav">
-        <button class="secondary" onclick="goToSlide(0)">🔁 Start Over</button>
-        <button class="ghost" onclick="goToSlide(4)">← Review Writing</button>
-      </div>
-    </section>
-  </div><!-- end lesson-card -->
-  <p class="footer-note">Lokahi Connect · Meaning-First Literacy™ · Grade 3 · Lesson 9 · lokahiconnect.org</p>
-</div><!-- end container -->
-
-<!-- Tint overlay -->
-<div id="tint-overlay"></div>
-<!-- Reading ruler -->
-<div id="ruler"></div>
-
-<!-- Dyslexia support toolbar -->
-<div id="a11y-bar" role="toolbar" aria-label="Reading support tools">
-  <span class="bar-label">🔧 Reading Tools</span>
-  <button id="tts-btn" onclick="toggleTTS()" title="Read whole slide aloud">🔊 Read Page</button>
-  <button id="font-btn" onclick="toggleFont()" title="Switch to dyslexia-friendly font">Aa Font</button>
-  <button id="spacing-btn" onclick="toggleSpacing()" title="Increase letter and line spacing">↔ Spacing</button>
-  <button id="size-btn" onclick="toggleSize()" title="Larger text">🔠 Bigger</button>
-  <button id="tint-btn" onclick="cycleTint()" title="Tint the screen to reduce glare">🎨 Tint</button>
-  <button id="ruler-btn" onclick="toggleRuler()" title="Follow-along reading ruler">📏 Ruler</button>
-</div>
-
-<script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll(".slide");
-  const total = slides.length;
-
-  function updateProgress() {
-    const pct = (currentSlide / (total - 1)) * 100;
-    document.getElementById("progressBar").style.width = pct + "%";
-  }
-  function showSlide(index) {
-    slides.forEach((s, i) => s.classList.toggle("active", i === index));
-    currentSlide = index;
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    updateProgress();
-  }
-  function changeSlide(dir) {
-    stopAllSectionTTS();
-    stopTTSIfActive();
-    const next = currentSlide + dir;
-    if (next >= 0 && next < total) showSlide(next);
-  }
-  function goToSlide(index) {
-    stopAllSectionTTS();
-    stopTTSIfActive();
-    if (index >= 0 && index < total) showSlide(index);
-  }
-  function toggleDef(btn) {
-    const def = btn.nextElementSibling;
-    def.classList.toggle("show");
-    btn.textContent = def.classList.contains("show") ? "Hide ▲" : "👆 Tap to investigate";
-  }
-  function checkAnswer(button, selected, correct) {
-    const card = button.closest(".question-card");
-    const buttons = card.querySelectorAll(".choice");
-    const feedback = card.querySelector(".feedback");
-    buttons.forEach(btn => {
-      btn.disabled = true;
-      const val = btn.textContent.trim().toLowerCase();
-      if (val === correct) btn.classList.add("correct");
-      else if (btn === button) btn.classList.add("incorrect");
-    });
-    if (selected === correct) {
-      feedback.textContent = "✅ Correct!";
-      feedback.className = "feedback show correct-fb";
-    } else {
-      feedback.textContent = correct === "fact"
-        ? "This is a fact — it can be proven true."
-        : "This is an opinion — it expresses a personal judgment.";
-      feedback.className = "feedback show incorrect-fb";
-    }
-  }
-  function checkSingle(button, feedbackId, isCorrect, message) {
-    const wrapper = button.parentElement;
-    const buttons = wrapper.querySelectorAll(".choice");
-    const feedback = document.getElementById(feedbackId);
-    buttons.forEach(btn => { btn.disabled = true; });
-    button.classList.add(isCorrect ? "correct" : "incorrect");
-    feedback.textContent = message;
-    feedback.className = "feedback show " + (isCorrect ? "correct-fb" : "incorrect-fb");
-  }
-  updateProgress();
-
-  /* ══════════════════════════════════════
-     SECTION-LEVEL TTS
-  ══════════════════════════════════════ */
-  let activeSectionBtn = null;
-  let activeSectionUtterance = null;
-
-  function readSection(btn, sectionId) {
-    if (!('speechSynthesis' in window)) {
-      alert('Sorry, your browser does not support text-to-speech.');
-      return;
-    }
-
-    // If this button is already playing, stop it
-    if (activeSectionBtn === btn) {
-      window.speechSynthesis.cancel();
-      btn.textContent = '🔊 Listen';
-      btn.classList.remove('playing');
-      activeSectionBtn = null;
-      return;
-    }
-
-    // Stop any other section currently playing
-    stopAllSectionTTS();
-    // Also stop the full-page TTS if running
-    stopTTSIfActive();
-
-    const el = document.getElementById(sectionId);
-    if (!el) return;
-    const text = el.innerText.trim();
-    if (!text) return;
-
-    activeSectionBtn = btn;
-    btn.textContent = '⏹ Stop';
-    btn.classList.add('playing');
-
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.rate = 0.88;
-    utt.pitch = 1;
-    utt.lang = 'en-US';
-    activeSectionUtterance = utt;
-
-    utt.onend = function() {
-      btn.textContent = '🔊 Listen';
-      btn.classList.remove('playing');
-      if (activeSectionBtn === btn) activeSectionBtn = null;
-    };
-    utt.onerror = function() {
-      btn.textContent = '🔊 Listen';
-      btn.classList.remove('playing');
-      if (activeSectionBtn === btn) activeSectionBtn = null;
-    };
-
-    window.speechSynthesis.speak(utt);
-  }
-
-  function stopAllSectionTTS() {
-    if (activeSectionBtn) {
-      window.speechSynthesis.cancel();
-      activeSectionBtn.textContent = '🔊 Listen';
-      activeSectionBtn.classList.remove('playing');
-      activeSectionBtn = null;
-    }
-  }
-
-  /* ══════════════════════════════════════
-     FULL-PAGE TTS (toolbar button)
-  ══════════════════════════════════════ */
-  let ttsActive = false;
-  let fontOn = false;
-  let spacingOn = false;
-  let sizeOn = false;
-  let rulerOn = false;
-  const tints = [
-    null,
-    'rgba(255,243,176,0.38)',
-    'rgba(194,230,208,0.38)',
-    'rgba(204,229,255,0.38)',
-    'rgba(255,213,200,0.38)',
-  ];
-  let tintIndex = 0;
-
-  function getReadableText() {
-    const passage = document.querySelector('.slide.active .passage');
-    if (passage) return passage.innerText;
-    return document.querySelector('.slide.active').innerText || '';
-  }
-  function toggleTTS() {
-    if (!('speechSynthesis' in window)) {
-      alert('Sorry, your browser does not support text-to-speech.');
-      return;
-    }
-    const btn = document.getElementById('tts-btn');
-    if (ttsActive) {
-      window.speechSynthesis.cancel();
-      ttsActive = false;
-      btn.textContent = '🔊 Read Page';
-      btn.classList.remove('on','playing');
-      clearWordHighlights();
-      return;
-    }
-    // Stop section TTS if running
-    stopAllSectionTTS();
-
-    const text = getReadableText();
-    if (!text.trim()) return;
-    ttsActive = true;
-    btn.textContent = '⏹ Stop';
-    btn.classList.add('on','playing');
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.rate = 0.88;
-    utt.pitch = 1;
-    utt.lang = 'en-US';
-    utt.onboundary = function(e) {
-      if (e.name === 'word') highlightWord(text, e.charIndex, e.charLength);
-    };
-    utt.onend = function() {
-      ttsActive = false;
-      btn.textContent = '🔊 Read Page';
-      btn.classList.remove('on','playing');
-      clearWordHighlights();
-    };
-    window.speechSynthesis.speak(utt);
-  }
-  function highlightWord(fullText, charIndex, charLen) {
-    const passage = document.querySelector('.slide.active .passage');
-    if (!passage) return;
-    clearWordHighlights();
-    let offset = 0;
-    const walker = document.createTreeWalker(passage, NodeFilter.SHOW_TEXT);
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      const len = node.nodeValue.length;
-      if (offset + len > charIndex) {
-        const start = charIndex - offset;
-        const range = document.createRange();
-        range.setStart(node, Math.max(0, start));
-        range.setEnd(node, Math.min(len, start + (charLen || 1)));
-        const mark = document.createElement('mark');
-        mark.className = 'tts-word';
-        try { range.surroundContents(mark); } catch(e) {}
-        break;
-      }
-      offset += len;
-    }
-  }
-  function clearWordHighlights() {
-    document.querySelectorAll('.tts-word').forEach(m => {
-      if (m.parentNode) {
-        m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
-        m.parentNode && m.parentNode.normalize();
-      }
-    });
-  }
-  function stopTTSIfActive() {
-    if (ttsActive) {
-      window.speechSynthesis.cancel();
-      ttsActive = false;
-      const btn = document.getElementById('tts-btn');
-      if (btn) { btn.textContent = '🔊 Read Page'; btn.classList.remove('on','playing'); }
-      clearWordHighlights();
-    }
-  }
-
-  // ── Font ──
-  function toggleFont() {
-    fontOn = !fontOn;
-    document.body.classList.toggle('dyslexic-font', fontOn);
-    const btn = document.getElementById('font-btn');
-    btn.textContent = fontOn ? 'Aa Font ✓' : 'Aa Font';
-    btn.classList.toggle('on', fontOn);
-  }
-  // ── Spacing ──
-  function toggleSpacing() {
-    spacingOn = !spacingOn;
-    document.body.classList.toggle('wide-spacing', spacingOn);
-    const btn = document.getElementById('spacing-btn');
-    btn.textContent = spacingOn ? '↔ Spacing ✓' : '↔ Spacing';
-    btn.classList.toggle('on', spacingOn);
-  }
-  // ── Size ──
-  function toggleSize() {
-    sizeOn = !sizeOn;
-    document.body.classList.toggle('large-text', sizeOn);
-    const btn = document.getElementById('size-btn');
-    btn.textContent = sizeOn ? '🔠 Bigger ✓' : '🔠 Bigger';
-    btn.classList.toggle('on', sizeOn);
-  }
-  // ── Tint ──
-  function cycleTint() {
-    tintIndex = (tintIndex + 1) % tints.length;
-    const overlay = document.getElementById('tint-overlay');
-    const btn = document.getElementById('tint-btn');
-    if (tints[tintIndex]) {
-      overlay.style.background = tints[tintIndex];
-      overlay.classList.add('show');
-      const names = ['','Yellow','Green','Blue','Peach'];
-      btn.textContent = '🎨 ' + names[tintIndex] + ' ✓';
-      btn.classList.add('on');
-    } else {
-      overlay.classList.remove('show');
-      btn.textContent = '🎨 Tint';
-      btn.classList.remove('on');
-    }
-  }
-  // ── Ruler ──
-  function toggleRuler() {
-    rulerOn = !rulerOn;
-    const ruler = document.getElementById('ruler');
-    const btn = document.getElementById('ruler-btn');
-    ruler.style.display = rulerOn ? 'block' : 'none';
-    btn.textContent = rulerOn ? '📏 Ruler ✓' : '📏 Ruler';
-    btn.classList.toggle('on', rulerOn);
-    if (rulerOn) document.addEventListener('mousemove', moveRuler);
-    else document.removeEventListener('mousemove', moveRuler);
-  }
-  function moveRuler(e) {
-    document.getElementById('ruler').style.top = (e.clientY - 22) + 'px';
-  }
-</script>
 </body>
 </html>
