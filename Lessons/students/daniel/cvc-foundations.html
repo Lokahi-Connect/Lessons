@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVC Foundations — Meaning-First Literacy™ · Lokahi Connect</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:       #0d4f5c;
+  --teal-mid:   #165f6e;
+  --seafoam:    #1a7a6e;
+  --amber:      #e8a040;
+  --amber-dk:   #b87830;
+  --amber-lt:   #fef3e2;
+  --teal-lt:    #e8f4f6;
+  --seafoam-lt: #e6f5f3;
+  --sand:       #faf8f4;
+  --sand-dk:    #f2ede4;
+  --white:      #ffffff;
+  --text:       #1c2e33;
+  --muted:      #5a7a82;
+  --border:     #c8dfe3;
+  --correct:    #1a7a6e;
+  --incorrect:  #c0392b;
+  --purple-lt:  #f0edfb;
+  --purple:     #7c5cbf;
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --shadow-sm:  0 1px 4px rgba(13,79,92,.07);
+  --shadow-md:  0 3px 12px rgba(13,79,92,.10);
+  --shadow-lg:  0 8px 28px rgba(13,79,92,.13);
+  --trans:      all .2s cubic-bezier(.4,0,.2,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+/* ─── HEADER ─────────────────────────── */
+header {
+  background: var(--teal);
+  padding: 1.4rem 2rem;
+  display: flex; align-items: center; gap: 1.2rem;
+  position: relative; overflow: hidden;
+}
+header::after {
+  content:'';
+  position:absolute; right:-40px; top:-40px;
+  width:200px; height:200px;
+  background: radial-gradient(circle, rgba(232,160,64,.18) 0%, transparent 70%);
+  pointer-events:none;
+}
+.logo-wheel { width:44px; height:44px; flex-shrink:0; }
+header h1 {
+  font-family:'Playfair Display',serif;
+  color:var(--white); font-size:1.45rem; font-weight:700;
+}
+header p { color:rgba(255,255,255,.65); font-size:.8rem; margin-top:.1rem; }
+.header-badge {
+  margin-left:auto; background:rgba(232,160,64,.22);
+  border:1px solid rgba(232,160,64,.4);
+  color:var(--amber); font-size:.75rem; font-weight:600;
+  border-radius:20px; padding:.2rem .7rem; white-space:nowrap;
+  font-family:'DM Mono',monospace; letter-spacing:.04em;
+}
+
+/* ─── NAV ────────────────────────────── */
+nav#main-nav {
+  background: var(--white);
+  border-bottom: 2px solid var(--border);
+  display:flex; flex-wrap:wrap; gap:.25rem;
+  padding:.55rem 1rem;
+  position:sticky; top:0; z-index:100;
+  box-shadow: 0 2px 8px rgba(13,79,92,.06);
+}
+nav#main-nav button {
+  background:none; border:none;
+  padding:.38rem .8rem;
+  border-radius:20px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem; font-weight:500;
+  color:var(--muted); cursor:pointer;
+  transition:var(--trans);
+  white-space:nowrap;
+}
+nav#main-nav button:hover { background:var(--teal-lt); color:var(--teal); }
+nav#main-nav button.active {
+  background:var(--teal); color:white; font-weight:600;
+  box-shadow: 0 2px 6px rgba(13,79,92,.2);
+}
+
+/* ─── VOICE BAR ──────────────────────── */
+.voice-bar {
+  display:flex; align-items:center; flex-wrap:wrap; gap:.6rem;
+  background:var(--teal-lt); border-bottom:1px solid var(--border);
+  padding:.5rem 1.4rem; font-size:.8rem;
+}
+.voice-bar label { color:var(--teal); font-weight:600; }
+.voice-bar select {
+  border:1px solid var(--border); border-radius:6px;
+  padding:.22rem .5rem; font-size:.8rem;
+  font-family:'DM Sans',sans-serif; background:white; color:var(--text);
+  max-width:180px;
+}
+.voice-bar input[type=range] { width:80px; accent-color:var(--teal); }
+.voice-rate-val { color:var(--teal); font-weight:600; min-width:2.6rem; font-family:'DM Mono',monospace; }
+.voice-test-btn {
+  background:var(--teal); color:white; border:none; border-radius:6px;
+  padding:.25rem .7rem; font-size:.76rem; font-weight:600;
+  font-family:'DM Sans',sans-serif; cursor:pointer;
+  transition:var(--trans);
+}
+.voice-test-btn:hover { background:var(--teal-mid); }
+
+/* ─── MAIN ───────────────────────────── */
+main { max-width:780px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+
+/* ─── SECTION ────────────────────────── */
+.section { display:none; animation:fadeUp .3s ease; }
+.section.active { display:block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.section-header { display:flex; gap:1rem; align-items:flex-start; margin-bottom:1.4rem; }
+.section-icon {
+  font-size:1.8rem; flex-shrink:0;
+  background:var(--teal-lt); width:54px; height:54px;
+  border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--shadow-sm);
+}
+.section-header-text h2 {
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem; color:var(--teal);
+}
+.section-header-text p { color:var(--muted); font-size:.9rem; margin-top:.2rem; }
+
+/* ─── READ BAR ───────────────────────── */
+.section-read-bar {
+  display:flex; align-items:center; gap:.75rem;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--seafoam) 100%);
+  border-radius:var(--radius-md); padding:.7rem 1rem;
+  margin-bottom:1.4rem; cursor:pointer; transition:var(--trans);
+  box-shadow:var(--shadow-sm);
+}
+.section-read-bar:hover { box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.srb-icon {
+  width:34px; height:34px;
+  background:rgba(255,255,255,.18); border:2px solid rgba(255,255,255,.3);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:var(--trans);
+}
+.srb-icon svg { fill:white; width:15px; height:15px; }
+.section-read-bar.reading .srb-icon { background:var(--amber); border-color:var(--amber); }
+.srb-title { color:white; font-weight:600; font-size:.88rem; display:block; }
+.srb-sub { color:rgba(255,255,255,.65); font-size:.74rem; display:block; margin-top:.1rem; }
+.srb-stop {
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.28);
+  color:white; border-radius:6px; padding:.22rem .6rem;
+  font-size:.74rem; font-weight:600; cursor:pointer;
+  font-family:'DM Sans',sans-serif; white-space:nowrap; margin-left:auto;
+}
+
+/* ─── CARD ───────────────────────────── */
+.card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:var(--radius-md); padding:1.3rem 1.5rem;
+  margin-bottom:1.2rem; box-shadow:var(--shadow-sm);
+}
+.card h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem; color:var(--teal); margin-bottom:.65rem;
+}
+.card h4 { font-size:.93rem; color:var(--teal); margin-bottom:.4rem; font-weight:600; }
+
+/* ─── CARD READ BTN ──────────────────── */
+.card-read-btn {
+  display:inline-flex; align-items:center; gap:.35rem;
+  background:var(--teal-lt); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); color:var(--teal);
+  font-size:.76rem; font-weight:600; padding:.26rem .62rem;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:var(--trans);
+  margin-top:.6rem;
+}
+.card-read-btn:hover { background:#d0ecf2; border-color:var(--teal); }
+.card-read-btn svg { fill:var(--teal); width:12px; height:12px; }
+
+/* ─── DISCOVERY / NOTICE BOXES ──────── */
+.discovery-box {
+  display:flex; gap:.75rem; align-items:flex-start;
+  background:var(--amber-lt); border:1px solid #f0c070;
+  border-radius:var(--radius-sm); padding:.75rem 1rem; margin-top:.8rem;
+}
+.discovery-box p { font-size:.88rem; line-height:1.65; }
+.di-icon { font-size:1.15rem; flex-shrink:0; margin-top:.05rem; }
+
+.notice-box {
+  display:flex; gap:.75rem; align-items:flex-start;
+  background:var(--purple-lt); border:1px solid #c5b4ef;
+  border-radius:var(--radius-sm); padding:.75rem 1rem; margin-top:.8rem;
+}
+.notice-box p { font-size:.86rem; line-height:1.65; color:#3d2a6e; }
+
+/* ─── HIGHLIGHT BOX ──────────────────── */
+.highlight-box {
+  background:var(--teal); color:white; border-radius:var(--radius-sm);
+  padding:1rem 1.2rem; margin:.8rem 0; line-height:1.8;
+}
+.highlight-box .label {
+  opacity:.65; font-size:.74rem; display:block; margin-bottom:.25rem;
+  letter-spacing:.08em; font-weight:700;
+}
+
+/* ─── GRAPHEME BADGES ────────────────── */
+.gb {
+  display:inline-block; font-family:'DM Mono',monospace;
+  font-size:1rem; font-weight:700; background:var(--teal);
+  color:white; border-radius:7px; padding:.15rem .5rem;
+  margin:.08rem .1rem; vertical-align:middle;
+}
+.gb.sea   { background:var(--seafoam); }
+.gb.amber { background:var(--amber); color:#5a3000; }
+.gb.lt    { background:var(--teal-lt); color:var(--teal); border:1.5px solid var(--teal); }
+.gb.purple { background:var(--purple); }
+
+/* ─── WORD CHIP ──────────────────────── */
+.word-chip {
+  font-family:'DM Mono',monospace; font-size:.88rem; font-weight:500;
+  border-radius:6px; padding:.2rem .5rem; display:inline-block;
+}
+.wc-c  { background:#e8f4f6; border:1.5px solid var(--teal); color:var(--teal); }
+.wc-k  { background:var(--seafoam-lt); border:1.5px solid var(--seafoam); color:var(--seafoam); }
+.wc-ck { background:var(--amber-lt); border:1.5px solid var(--amber); color:#7a4e00; }
+.wc-kc { background:var(--purple-lt); border:1.5px solid var(--purple); color:var(--purple); }
+.wc-neutral { background:var(--teal-lt); border:1.5px solid var(--border); color:var(--text); }
+
+/* ─── CVC DIAGRAM ────────────────────── */
+.cvc-diagram {
+  display:flex; gap:.6rem; align-items:flex-end; justify-content:center;
+  margin:1.1rem 0;
+}
+.cvc-slot { text-align:center; }
+.cvc-slot .slot-label {
+  font-size:.68rem; font-weight:700; letter-spacing:.1em;
+  color:var(--muted); display:block; margin-bottom:.25rem;
+}
+.cvc-slot .slot-box {
+  font-family:'DM Mono',monospace; font-size:2rem; font-weight:700;
+  border-radius:10px; padding:.4rem .65rem;
+  display:block; min-width:64px; text-align:center;
+  transition:var(--trans);
+}
+.cvc-slot.c1 .slot-box { background:var(--teal-lt); color:var(--teal); border:2px solid var(--teal); }
+.cvc-slot.v  .slot-box { background:var(--amber-lt); color:#8a5000; border:2px solid var(--amber); }
+.cvc-slot.c2 .slot-box { background:var(--seafoam-lt); color:var(--seafoam); border:2px solid var(--seafoam); }
+.cvc-slot .slot-sub { font-size:.7rem; color:var(--muted); margin-top:.25rem; display:block; }
+
+/* ─── INTERACTIVE: COMPLETION TAP ────── */
+.completion-prompt {
+  background:var(--sand-dk); border:1.5px solid var(--border);
+  border-radius:var(--radius-md); padding:1rem 1.2rem;
+  margin:.75rem 0; position:relative;
+}
+.completion-prompt .stem {
+  font-size:1rem; font-weight:600; color:var(--text);
+  margin-bottom:.75rem; line-height:1.6;
+}
+.completion-prompt .stem .blank {
+  display:inline-block; min-width:52px; border-bottom:3px solid var(--teal);
+  text-align:center; font-family:'DM Mono',monospace; font-size:1.1rem;
+  vertical-align:bottom; margin:0 .2rem; color:var(--teal); font-weight:700;
+  transition:var(--trans);
+}
+.completion-opts {
+  display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.25rem;
+}
+.comp-opt {
+  font-family:'DM Mono',monospace; font-size:1rem; font-weight:700;
+  background:white; border:2.5px solid var(--border);
+  border-radius:var(--radius-sm); padding:.35rem .9rem;
+  cursor:pointer; transition:var(--trans); color:var(--text);
+  min-width:52px; text-align:center;
+}
+.comp-opt:hover { border-color:var(--teal); background:var(--teal-lt); color:var(--teal); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+.comp-opt.selected-correct {
+  border-color:var(--correct); background:var(--seafoam-lt);
+  color:var(--correct); pointer-events:none;
+  animation:popIn .25s ease;
+}
+.comp-opt.selected-wrong {
+  border-color:var(--incorrect); background:#fdecea;
+  color:var(--incorrect); animation:shake .3s ease;
+}
+.comp-opt.show-correct {
+  border-color:var(--correct); background:var(--seafoam-lt);
+  color:var(--correct); pointer-events:none;
+}
+.comp-opt.disabled { opacity:.35; pointer-events:none; }
+.completion-feedback {
+  margin-top:.65rem; font-size:.86rem; font-weight:600;
+  min-height:1.4em; color:var(--seafoam); display:none;
+}
+.completion-feedback.show { display:block; animation:fadeUp .2s ease; }
+.completion-feedback.wrong { color:var(--teal); }
+
+/* ─── INTERACTIVE: CHUNKED REVEAL ────── */
+.chunked-table { margin:.6rem 0; }
+.chunk-row {
+  display:grid; grid-template-columns:1fr 1.2fr 2fr;
+  gap:.5rem; align-items:center;
+  padding:.65rem .9rem;
+  border-radius:var(--radius-sm); margin-bottom:.4rem;
+  opacity:0; transform:translateY(6px);
+  transition: opacity .3s ease, transform .3s ease;
+  background:white; border:1.5px solid var(--border);
+}
+.chunk-row.revealed { opacity:1; transform:translateY(0); }
+.chunk-row:nth-child(even) { background:var(--teal-lt); }
+.chunk-row .cr-grapheme {
+  font-family:'DM Mono',monospace; font-size:1.1rem;
+  font-weight:700; color:var(--teal);
+}
+.chunk-row .cr-label {
+  font-size:.8rem; font-weight:600; color:var(--muted);
+}
+.chunk-row .cr-words { display:flex; flex-wrap:wrap; gap:.3rem; }
+.chunk-btn {
+  display:flex; align-items:center; gap:.5rem;
+  background:var(--teal); color:white; border:none;
+  border-radius:var(--radius-sm); padding:.5rem 1.1rem;
+  font-family:'DM Sans',sans-serif; font-size:.88rem; font-weight:600;
+  cursor:pointer; margin-top:.6rem; transition:var(--trans);
+  box-shadow:var(--shadow-sm);
+}
+.chunk-btn:hover { background:var(--teal-mid); box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.chunk-btn:disabled { opacity:.4; cursor:default; transform:none; box-shadow:none; }
+.chunk-btn .cb-arrow { transition:transform .2s ease; }
+
+/* ─── INTERACTIVE: WORD FAMILY BUILDER ── */
+.wfb-container {
+  background:var(--sand-dk); border-radius:var(--radius-md);
+  padding:1.1rem 1.2rem; margin:.75rem 0;
+  border:1.5px solid var(--border);
+}
+.wfb-base-display {
+  display:flex; align-items:center; gap:.5rem;
+  margin-bottom:.9rem;
+}
+.wfb-base-word {
+  font-family:'DM Mono',monospace; font-size:1.5rem; font-weight:700;
+  color:var(--teal); background:white; border:2.5px solid var(--teal);
+  border-radius:10px; padding:.3rem .9rem; display:inline-block;
+  min-width:90px; text-align:center;
+}
+.wfb-plus { font-size:1.3rem; color:var(--muted); font-weight:700; }
+.wfb-suffix-slot {
+  font-family:'DM Mono',monospace; font-size:1.5rem; font-weight:700;
+  color:var(--muted); background:white; border:2.5px dashed var(--border);
+  border-radius:10px; padding:.3rem .9rem; min-width:80px; text-align:center;
+  transition:var(--trans);
+}
+.wfb-suffix-slot.filled {
+  color:var(--seafoam); border-color:var(--seafoam); border-style:solid;
+  background:var(--seafoam-lt); animation:popIn .2s ease;
+}
+.wfb-suffix-chips { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:.8rem; }
+.wfb-chip {
+  font-family:'DM Mono',monospace; font-size:.95rem; font-weight:700;
+  background:white; border:2.5px solid var(--seafoam);
+  color:var(--seafoam); border-radius:var(--radius-sm);
+  padding:.32rem .75rem; cursor:pointer; transition:var(--trans);
+  user-select:none;
+}
+.wfb-chip:hover { background:var(--seafoam-lt); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+.wfb-chip.used { opacity:.3; pointer-events:none; }
+.wfb-result {
+  font-family:'DM Mono',monospace; font-size:1rem;
+  padding:.5rem .75rem; border-radius:var(--radius-sm);
+  background:var(--teal-lt); border:1px solid var(--border);
+  min-height:2.4rem; display:flex; flex-wrap:wrap; gap:.4rem; align-items:center;
+}
+.wfb-result-item {
+  background:white; border:1.5px solid var(--teal);
+  color:var(--teal); border-radius:6px; padding:.15rem .5rem;
+  font-size:.9rem; animation:popIn .2s ease;
+}
+.wfb-sum {
+  font-size:.82rem; color:var(--muted); font-family:'DM Mono',monospace;
+  margin-top:.4rem; min-height:1.3em;
+}
+
+/* ─── INTERACTIVE: ONE-AT-A-TIME SORT ── */
+.oaat-container {
+  background:var(--sand-dk); border:1.5px solid var(--border);
+  border-radius:var(--radius-md); padding:1.1rem 1.2rem; margin:.75rem 0;
+}
+.oaat-word-display {
+  text-align:center; margin:.4rem 0 1rem;
+}
+.oaat-word {
+  font-family:'DM Mono',monospace; font-size:2.2rem; font-weight:700;
+  color:var(--text); display:inline-block;
+  padding:.4rem 1.2rem; background:white;
+  border:2.5px solid var(--border); border-radius:12px;
+  transition:var(--trans); box-shadow:var(--shadow-sm);
+}
+.oaat-word.correct { border-color:var(--correct); color:var(--correct); background:var(--seafoam-lt); }
+.oaat-word.incorrect { border-color:var(--incorrect); color:var(--incorrect); background:#fdecea; animation:shake .3s ease; }
+.oaat-btns { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
+.oaat-btn {
+  font-family:'DM Sans',sans-serif; font-size:.9rem; font-weight:600;
+  padding:.55rem 1.3rem; border-radius:10px; cursor:pointer;
+  border:2.5px solid transparent; transition:var(--trans);
+  min-width:120px; text-align:center;
+}
+.oaat-btn.content-btn {
+  background:var(--teal-lt); border-color:var(--teal); color:var(--teal);
+}
+.oaat-btn.content-btn:hover { background:var(--teal); color:white; box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.oaat-btn.function-btn {
+  background:var(--seafoam-lt); border-color:var(--seafoam); color:var(--seafoam);
+}
+.oaat-btn.function-btn:hover { background:var(--seafoam); color:white; box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.oaat-btn:disabled { opacity:.35; cursor:default; transform:none; box-shadow:none; }
+.oaat-feedback {
+  text-align:center; margin-top:.7rem; font-size:.88rem; font-weight:600;
+  min-height:1.6em; transition:var(--trans);
+}
+.oaat-progress {
+  display:flex; gap:.35rem; justify-content:center; margin-bottom:.9rem;
+}
+.oaat-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--border); transition:var(--trans);
+}
+.oaat-dot.done-correct { background:var(--seafoam); }
+.oaat-dot.done-wrong   { background:var(--incorrect); }
+.oaat-dot.current { background:var(--amber); transform:scale(1.3); }
+.oaat-count { font-size:.78rem; color:var(--muted); text-align:center; margin-bottom:.5rem; }
+
+/* ─── INTERACTIVE: MORPHEME SPLIT ───── */
+.morph-split-container {
+  background:var(--sand-dk); border:1.5px solid var(--border);
+  border-radius:var(--radius-md); padding:1.1rem 1.3rem; margin:.75rem 0;
+}
+.split-word-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:.0rem; margin:1rem 0; flex-wrap:nowrap;
+}
+.split-part {
+  font-family:'DM Mono',monospace; font-size:1.9rem; font-weight:700;
+  padding:.4rem .5rem; border-radius:8px; transition:var(--trans);
+  cursor:pointer; user-select:none;
+  border:2.5px solid transparent;
+}
+.split-part:hover { background:var(--teal-lt); border-color:var(--teal); }
+.split-part.selected-prefix {
+  background:var(--amber-lt); border-color:var(--amber); color:#7a4000;
+  animation:popIn .2s ease;
+}
+.split-part.selected-base {
+  background:var(--teal-lt); border-color:var(--teal); color:var(--teal);
+  animation:popIn .2s ease;
+}
+.split-divider {
+  width:3px; height:2.4rem; background:var(--muted);
+  border-radius:2px; margin:0 .15rem;
+  opacity:0; transition:var(--trans);
+}
+.split-divider.visible { opacity:1; background:var(--amber); }
+.split-labels {
+  display:flex; gap:.5rem; justify-content:center; margin-bottom:.4rem;
+  font-size:.76rem; font-weight:700; color:var(--muted);
+  opacity:0; transition:var(--trans);
+}
+.split-labels.visible { opacity:1; }
+.split-label-prefix { color:#9a5000; }
+.split-label-base   { color:var(--teal); }
+.split-instruction {
+  text-align:center; font-size:.86rem; color:var(--muted);
+  margin-bottom:.5rem;
+}
+.split-feedback {
+  text-align:center; font-size:.88rem; font-weight:600;
+  margin-top:.6rem; min-height:1.4em; transition:var(--trans);
+}
+
+/* ─── INTERACTIVE: YES/NO TAP ─────────── */
+.yesno-item {
+  background:white; border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); padding:.7rem 1rem;
+  margin-bottom:.55rem; display:flex;
+  align-items:center; gap:.8rem; transition:var(--trans);
+}
+.yesno-word {
+  font-family:'DM Mono',monospace; font-size:1rem;
+  font-weight:700; color:var(--text); flex:1;
+}
+.yesno-btns { display:flex; gap:.4rem; }
+.yn-btn {
+  font-family:'DM Mono',monospace; font-size:.82rem; font-weight:700;
+  padding:.28rem .65rem; border-radius:6px; cursor:pointer; border:2px solid;
+  transition:var(--trans);
+}
+.yn-yes { border-color:var(--seafoam); color:var(--seafoam); background:var(--seafoam-lt); }
+.yn-yes:hover { background:var(--seafoam); color:white; }
+.yn-no  { border-color:var(--muted); color:var(--muted); background:white; }
+.yn-no:hover { background:var(--sand-dk); }
+.yn-btn.chosen-correct { background:var(--seafoam); color:white; border-color:var(--seafoam); pointer-events:none; }
+.yn-btn.chosen-wrong   { background:var(--incorrect); color:white; border-color:var(--incorrect); pointer-events:none; }
+.yn-btn.show-correct   { background:var(--seafoam); color:white; border-color:var(--seafoam); pointer-events:none; }
+.yn-btn.disabled-btn   { opacity:.3; pointer-events:none; }
+.yesno-item.answered-correct { background:var(--seafoam-lt); border-color:var(--seafoam); }
+.yesno-item.answered-wrong   { background:#fdecea; border-color:var(--incorrect); }
+.yesno-result { font-size:.78rem; font-weight:600; color:var(--seafoam); margin-left:.3rem; }
+.yesno-result.wrong-result { color:var(--incorrect); }
+
+/* ─── PRACTICE: ONE AT A TIME ─────────── */
+.practice-card {
+  background:white; border:1.5px solid var(--border);
+  border-radius:var(--radius-md); padding:1.3rem 1.4rem;
+  box-shadow:var(--shadow-sm); animation:fadeUp .25s ease;
+}
+.practice-card .pq-num {
+  font-size:.74rem; font-weight:700; color:var(--muted);
+  letter-spacing:.07em; margin-bottom:.4rem; display:block;
+}
+.practice-card .pq-text {
+  font-size:1rem; font-weight:600; color:var(--text);
+  line-height:1.65; margin-bottom:.9rem;
+}
+.practice-opts { display:flex; flex-direction:column; gap:.45rem; }
+.prac-opt {
+  display:flex; align-items:center; gap:.75rem;
+  background:var(--sand-dk); border:2px solid var(--border);
+  border-radius:var(--radius-sm); padding:.55rem .9rem;
+  cursor:pointer; transition:var(--trans); text-align:left;
+  font-family:'DM Sans',sans-serif; font-size:.94rem;
+}
+.prac-opt:hover:not(:disabled) { border-color:var(--teal); background:var(--teal-lt); transform:translateX(3px); }
+.prac-opt .opt-letter {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  background:var(--border); display:flex; align-items:center; justify-content:center;
+  font-size:.78rem; font-weight:700; color:var(--muted); transition:var(--trans);
+  font-family:'DM Mono',monospace;
+}
+.prac-opt:hover:not(:disabled) .opt-letter { background:var(--teal); color:white; }
+.prac-opt.correct { background:var(--seafoam-lt); border-color:var(--seafoam); }
+.prac-opt.correct .opt-letter { background:var(--seafoam); color:white; }
+.prac-opt.incorrect { background:#fdecea; border-color:var(--incorrect); }
+.prac-opt.incorrect .opt-letter { background:var(--incorrect); color:white; }
+.prac-opt.show-answer { background:var(--seafoam-lt); border-color:var(--seafoam); }
+.prac-opt.show-answer .opt-letter { background:var(--seafoam); color:white; }
+.prac-opt:disabled { cursor:default; }
+.prac-explanation {
+  margin-top:.75rem; padding:.6rem .8rem;
+  background:var(--teal-lt); border-radius:var(--radius-sm);
+  font-size:.85rem; line-height:1.65; color:var(--teal);
+  display:none; animation:fadeUp .2s ease;
+}
+.prac-explanation.show { display:block; }
+.prac-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:1.1rem; padding-top:.9rem; border-top:1px solid var(--border);
+}
+.prac-dots { display:flex; gap:.3rem; }
+.prac-dot {
+  width:9px; height:9px; border-radius:50%;
+  background:var(--border); transition:var(--trans);
+}
+.prac-dot.answered-correct { background:var(--seafoam); }
+.prac-dot.answered-wrong   { background:var(--amber); }
+.prac-dot.current { background:var(--teal); transform:scale(1.4); }
+
+/* ─── SCORE BOX ──────────────────────── */
+.score-box {
+  text-align:center; padding:2rem;
+  background:linear-gradient(135deg,var(--teal-lt),var(--seafoam-lt));
+  border-radius:var(--radius-lg); border:2px solid var(--teal);
+  margin-top:1.5rem; box-shadow:var(--shadow-md);
+  animation:fadeUp .4s ease;
+}
+.score-num {
+  font-family:'Playfair Display',serif; font-size:3rem; color:var(--teal);
+  display:block; line-height:1;
+}
+.score-sub { font-size:.9rem; color:var(--muted); margin:.4rem 0 .2rem; }
+
+/* ─── WORD FAMILY DISPLAY ─────────────── */
+.wf-card {
+  background:var(--teal-lt); border:2px solid var(--teal);
+  border-radius:var(--radius-sm); padding:.85rem 1rem; margin-bottom:.6rem;
+}
+.wf-base { font-family:'DM Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--teal); }
+.wf-meaning { font-size:.82rem; color:var(--muted); margin-bottom:.5rem; }
+.wf-row {
+  display:flex; align-items:center; gap:.4rem;
+  font-family:'DM Mono',monospace; font-size:.85rem; margin-bottom:.25rem;
+}
+.wf-arrow { color:var(--teal); font-weight:700; }
+
+/* ─── BTN ROW ────────────────────────── */
+.btn-row { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.1rem; }
+.btn {
+  padding:.52rem 1.2rem; border-radius:var(--radius-sm);
+  font-family:'DM Sans',sans-serif; font-size:.9rem; font-weight:600;
+  cursor:pointer; transition:var(--trans); border:none;
+}
+.btn-primary { background:var(--teal); color:white; box-shadow:var(--shadow-sm); }
+.btn-primary:hover { background:var(--teal-mid); box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.btn-outline { background:white; border:2px solid var(--teal); color:var(--teal); }
+.btn-outline:hover { background:var(--teal-lt); }
+
+/* ─── PROGRESS BAR ───────────────────── */
+.progress-wrap { height:6px; background:var(--border); border-radius:3px; margin-bottom:1.4rem; overflow:hidden; }
+.progress-fill { height:6px; background:linear-gradient(90deg,var(--teal),var(--seafoam)); border-radius:3px; transition:width .4s ease; }
+
+/* ─── ANIMATIONS ─────────────────────── */
+@keyframes popIn {
+  0%   { transform:scale(.88); opacity:.7; }
+  60%  { transform:scale(1.06); }
+  100% { transform:scale(1); opacity:1; }
+}
+@keyframes shake {
+  0%,100%{ transform:translateX(0); }
+  25%    { transform:translateX(-5px); }
+  75%    { transform:translateX(5px); }
+}
+
+/* ─── CONTEXT SENTENCE ───────────────── */
+.ctx-sentence {
+  background: var(--amber-lt);
+  border-left: 4px solid var(--amber);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: .55rem .9rem .55rem .85rem;
+  margin: .6rem 0 .5rem;
+  font-size: .92rem;
+  line-height: 1.75;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  animation: fadeUp .2s ease;
+}
+.ctx-sentence .ctx-icon {
+  flex-shrink: 0;
+  font-size: .95rem;
+  margin-top: .15rem;
+  color: var(--amber-dk);
+}
+.ctx-sentence .ctx-text { flex: 1; }
+.ctx-sentence .ctx-highlight {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  color: var(--teal);
+  background: rgba(13,79,92,.08);
+  border-radius: 4px;
+  padding: .05rem .3rem;
+}
+.ctx-sentence .ctx-highlight-2 {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  color: var(--seafoam);
+  background: rgba(26,122,110,.08);
+  border-radius: 4px;
+  padding: .05rem .3rem;
+}
+.ctx-speak-btn {
+  flex-shrink: 0;
+  background: none;
+  border: 1.5px solid var(--amber);
+  border-radius: 6px;
+  color: var(--amber-dk);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .2rem .5rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: var(--trans);
+  white-space: nowrap;
+  margin-top: .15rem;
+}
+.ctx-speak-btn:hover { background: var(--amber-lt); border-color: var(--amber-dk); }
+
+/* OAAT context strip — appears below the big word display */
+.oaat-ctx {
+  min-height: 3.2rem;
+  margin: .1rem .5rem .3rem;
+  transition: all .25s ease;
+}
+.oaat-ctx .ctx-sentence { margin: 0; }
+
+/* ─── SENTENCE PAIR STRIP (OAAT) ─────── */
+.ctx-pair {
+  background: var(--amber-lt);
+  border-left: 4px solid var(--amber);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: .5rem .9rem .5rem .85rem;
+  margin: .4rem .5rem .2rem;
+  animation: fadeUp .22s ease;
+}
+.ctx-pair-row {
+  display: flex; align-items: flex-start; gap: .55rem;
+  font-size: .88rem; line-height: 1.75; color: var(--text);
+}
+.ctx-pair-row + .ctx-pair-row { margin-top: .25rem; }
+.ctx-pair-icon { flex-shrink:0; font-size:.8rem; margin-top:.22rem; color:var(--amber-dk); }
+.ctx-pair-text { flex:1; }
+.ctx-pair-actions { display:flex; gap:.4rem; justify-content:flex-end; margin-top:.35rem; }
+.ctx-pair-speak {
+  background:none; border:1.5px solid var(--amber);
+  border-radius:6px; color:var(--amber-dk);
+  font-size:.7rem; font-weight:700; padding:.18rem .5rem;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:var(--trans);
+}
+.ctx-pair-speak:hover { background:var(--amber-lt); border-color:var(--amber-dk); }
+
+/* ─── INVESTIGATION CARD ─────────────── */
+.invest-card {
+  background: linear-gradient(135deg, #f0f8fa 0%, var(--seafoam-lt) 100%);
+  border: 2px solid var(--seafoam);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.4rem;
+  margin: 1rem 0 .5rem;
+  box-shadow: var(--shadow-sm);
+}
+.invest-header { display:flex; align-items:center; gap:.7rem; margin-bottom:.9rem; }
+.invest-badge {
+  background: var(--teal); color:white;
+  font-size:.68rem; font-weight:700; letter-spacing:.07em;
+  border-radius:20px; padding:.2rem .65rem;
+  font-family:'DM Mono',monospace; white-space:nowrap;
+}
+.invest-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--teal); font-weight:700; }
+.invest-sentences { margin-bottom:1rem; }
+.invest-sent-row {
+  display:flex; align-items:flex-start; gap:.55rem;
+  padding:.42rem .6rem; border-radius:var(--radius-sm);
+  margin-bottom:.3rem; transition:var(--trans);
+  background:white; border:1.5px solid var(--border);
+  font-size:.92rem; line-height:1.72;
+}
+.invest-sent-row:nth-child(even) { background:var(--teal-lt); border-color:transparent; }
+.invest-sent-num { font-family:'DM Mono',monospace; font-size:.72rem; font-weight:700; color:var(--muted); flex-shrink:0; margin-top:.25rem; min-width:1.2rem; }
+.invest-sent-text { flex:1; }
+.invest-sent-speak { background:none; border:1px solid var(--border); border-radius:5px; color:var(--muted); font-size:.68rem; padding:.15rem .4rem; cursor:pointer; font-family:'DM Sans',sans-serif; transition:var(--trans); flex-shrink:0; margin-top:.18rem; }
+.invest-sent-speak:hover { border-color:var(--teal); color:var(--teal); }
+.invest-prompt { font-size:.9rem; font-weight:600; color:var(--teal); margin-bottom:.65rem; line-height:1.6; }
+.invest-prompt .invest-base { font-family:'DM Mono',monospace; background:var(--teal-lt); border-radius:5px; padding:.05rem .35rem; }
+.invest-options { display:flex; flex-direction:column; gap:.38rem; }
+.invest-opt {
+  display:flex; align-items:center; gap:.65rem;
+  padding:.5rem .8rem; border-radius:var(--radius-sm);
+  background:white; border:2px solid var(--border);
+  cursor:pointer; transition:var(--trans);
+  font-size:.88rem; text-align:left; font-family:'DM Sans',sans-serif;
+}
+.invest-opt:hover:not(:disabled) { border-color:var(--seafoam); background:var(--seafoam-lt); transform:translateX(3px); }
+.invest-opt .io-dot { width:20px; height:20px; border-radius:50%; flex-shrink:0; border:2px solid var(--border); background:white; transition:var(--trans); }
+.invest-opt:hover:not(:disabled) .io-dot { border-color:var(--seafoam); }
+.invest-opt.io-correct { border-color:var(--seafoam); background:var(--seafoam-lt); pointer-events:none; }
+.invest-opt.io-correct .io-dot { background:var(--seafoam); border-color:var(--seafoam); }
+.invest-opt.io-wrong { border-color:var(--border); background:var(--sand-dk); animation:shake .3s ease; pointer-events:none; }
+.invest-opt.io-wrong .io-dot { background:var(--border); }
+.invest-opt.io-show { border-color:var(--seafoam); background:var(--seafoam-lt); pointer-events:none; }
+.invest-opt.io-show .io-dot { background:var(--seafoam); border-color:var(--seafoam); }
+.invest-opt:disabled { pointer-events:none; }
+.invest-confirmation { margin-top:.75rem; padding:.65rem .85rem; background:var(--teal); color:white; border-radius:var(--radius-sm); font-size:.87rem; line-height:1.65; display:none; animation:fadeUp .25s ease; }
+.invest-confirmation.show { display:block; }
+
+/* ─── SESSION SUMMARY OVERLAY ────────── */
+#summary-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(13,79,92,.55);
+  z-index: 200;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+}
+#summary-overlay.open { display: block; }
+#summary-panel {
+  background: white;
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 2.2rem 2.5rem;
+  box-shadow: var(--shadow-lg);
+}
+.sum-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--teal-lt);
+}
+.sum-logo-row { display:flex; align-items:center; gap:.7rem; }
+.sum-logo-text h1 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--teal); margin:0; }
+.sum-logo-text p { font-size:.75rem; color:var(--muted); margin:0; }
+.sum-close-btn {
+  background:none; border:1.5px solid var(--border);
+  border-radius:8px; padding:.3rem .7rem;
+  font-size:.8rem; color:var(--muted); cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:var(--trans);
+  white-space:nowrap; flex-shrink:0;
+}
+.sum-close-btn:hover { border-color:var(--teal); color:var(--teal); }
+.sum-student-row {
+  display: flex; gap: 1.2rem; flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+.sum-field {
+  display: flex; flex-direction: column; gap: .25rem; flex: 1; min-width: 160px;
+}
+.sum-field label {
+  font-size:.72rem; font-weight:700; letter-spacing:.07em;
+  color:var(--muted); text-transform:uppercase;
+}
+.sum-field input {
+  border: 1.5px solid var(--border); border-radius:7px;
+  padding:.45rem .75rem; font-size:.9rem;
+  font-family:'DM Sans',sans-serif; color:var(--text);
+  background:var(--sand); transition:var(--trans);
+}
+.sum-field input:focus { outline:none; border-color:var(--teal); background:white; }
+.sum-section-block {
+  margin-bottom: 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.sum-section-head {
+  background: var(--teal-lt);
+  padding: .5rem .9rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sum-section-title { font-weight:700; font-size:.88rem; color:var(--teal); }
+.sum-score-badge {
+  font-family:'DM Mono',monospace; font-size:.78rem; font-weight:700;
+  padding:.15rem .55rem; border-radius:20px;
+  background:var(--teal); color:white;
+}
+.sum-score-badge.perfect { background:var(--seafoam); }
+.sum-score-badge.partial { background:var(--amber-dk); }
+.sum-score-badge.na { background:var(--muted); }
+.sum-section-body { padding:.65rem .9rem; }
+.sum-row {
+  display:flex; align-items:center; gap:.6rem;
+  padding:.32rem 0; border-bottom:1px solid var(--teal-lt);
+  font-size:.84rem;
+}
+.sum-row:last-child { border-bottom:none; }
+.sum-row-icon { font-size:.85rem; flex-shrink:0; }
+.sum-row-label { flex:1; color:var(--text); }
+.sum-row-result { font-family:'DM Mono',monospace; font-size:.78rem; font-weight:700; flex-shrink:0; }
+.sum-row-result.correct { color:var(--seafoam); }
+.sum-row-result.wrong { color:var(--incorrect); }
+.sum-row-result.na { color:var(--muted); }
+.sum-actions {
+  display:flex; gap:.8rem; justify-content:flex-end;
+  margin-top:1.5rem; padding-top:1rem;
+  border-top:1.5px solid var(--teal-lt);
+  flex-wrap:wrap;
+}
+.sum-overall {
+  background:var(--teal);
+  color:white;
+  border-radius:var(--radius-md);
+  padding:.8rem 1.1rem;
+  margin-bottom:1.2rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.sum-overall-label { font-size:.85rem; font-weight:600; }
+.sum-overall-score { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; }
+
+/* ─── SUMMARY BUTTON (fixed bottom-right) ─ */
+#summary-fab {
+  position: fixed; bottom: 1.4rem; right: 1.4rem;
+  background: var(--teal); color:white;
+  border:none; border-radius:28px;
+  padding:.65rem 1.2rem; font-size:.82rem; font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  box-shadow:var(--shadow-lg); cursor:pointer;
+  z-index:100; transition:var(--trans);
+  display:flex; align-items:center; gap:.5rem;
+}
+#summary-fab:hover { background:var(--teal-mid); transform:translateY(-2px); }
+
+/* ─── PRINT STYLES ───────────────────── */
+@media print {
+  body > *:not(#summary-overlay) { display:none !important; }
+  #summary-overlay { display:block !important; position:static !important; background:none !important; padding:0 !important; }
+  #summary-panel { box-shadow:none !important; border-radius:0 !important; padding:1.2rem !important; max-width:100% !important; }
+  #summary-overlay .sum-close-btn,
+  #summary-overlay .sum-actions { display:none !important; }
+  #summary-fab { display:none !important; }
+  #summary-overlay .sum-field input { border:1px solid #ccc !important; background:white !important; }
+  @page { margin: 1.5cm; }
+}
+
+/* ─── FOOTER ─────────────────────────── */
+footer {
+  text-align:center; padding:1.2rem;
+  font-size:.75rem; color:var(--muted);
+  border-top:1px solid var(--border); margin-top:2rem;
+}
+footer a { color:var(--teal); text-decoration:none; }
+
+@media(max-width:600px){
+  header h1 { font-size:1.1rem; }
+  main { padding:1.2rem .9rem 4rem; }
+  .oaat-word { font-size:1.7rem; }
+  .split-part { font-size:1.5rem; }
+  .cvc-slot .slot-box { font-size:1.5rem; min-width:50px; }
+  .prac-opt { font-size:.88rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="logo-wheel" viewBox="0 0 80 80" fill="none">
+    <circle cx="40" cy="40" r="38" stroke="#e8a040" stroke-width="3" fill="none"/>
+    <circle cx="40" cy="40" r="8" fill="#e8a040"/>
+    <line x1="40" y1="6"  x2="40" y2="22" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="40" y1="58" x2="40" y2="74" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="6"  y1="40" x2="22" y2="40" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="58" y1="40" x2="74" y2="40" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="14" y1="14" x2="25" y2="25" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="55" y1="55" x2="66" y2="66" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="66" y1="14" x2="55" y2="25" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+    <line x1="25" y1="55" x2="14" y2="66" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <h1>CVC Foundations</h1>
+    <p>Meaning-First Literacy™ · Lokahi Connect</p>
+  </div>
+  <span class="header-badge">Pre-Entry Module</span>
+</header>
+
+<nav id="main-nav">
+  <button class="active" onclick="show('cvc',this)">🧱 CVC Words</button>
+  <button onclick="show('ck',this)">🔤 C / K / CK / TCH</button>
+  <button onclick="show('flsz',this)">✌️ FLSZ</button>
+  <button onclick="show('cf',this)">📦 Content &amp; Function</button>
+  <button onclick="show('sh',this)">〰️ ⟨sh⟩</button>
+  <button onclick="show('th',this)">⚖️ ⟨th⟩</button>
+  <button onclick="show('practice',this)">✨ Practice</button>
+</nav>
+
+<div class="voice-bar">
+  <label>🔊 Voice</label>
+  <select id="voice-select" onchange="onVoiceChange()"><option>Loading…</option></select>
+  <label>Speed</label>
+  <input type="range" id="rate-slider" min="0.5" max="1.5" step="0.05" value="0.9" oninput="onRateChange(this.value)">
+  <span class="voice-rate-val" id="rate-val">0.9×</span>
+  <button class="voice-test-btn" onclick="speakText('In the word ship, the grapheme S H occupies one consonant position — one spelling unit, not two separate letters.')">▶ Test</button>
+  <span id="voice-no-support" style="display:none;color:var(--incorrect);font-size:.8rem;">TTS not available.</span>
+</div>
+
+<main>
+<!-- ══════════════════════════════════════
+  SEC 1 — CVC WORDS
+══════════════════════════════════════ -->
+<div id="sec-cvc" class="section active">
+  <div class="section-header">
+    <div class="section-icon">🧱</div>
+    <div class="section-header-text">
+      <h2>What is a CVC Word?</h2>
+      <p>Before words grow into families, they start as a single base — the core unit of meaning.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-cvc" onclick="speakSection('sec-cvc','srb-cvc')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Three positions — tap a word to see it fill the diagram</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Each position is filled by a <strong>grapheme</strong> — a spelling unit that may be one letter or two letters working as a team.</p>
+    <div class="cvc-diagram" id="cvc-diagram">
+      <div class="cvc-slot c1">
+        <span class="slot-label">C — consonant</span>
+        <span class="slot-box" id="cvc-c1">_</span>
+        <span class="slot-sub" id="cvc-c1-sub"></span>
+      </div>
+      <div class="cvc-slot v">
+        <span class="slot-label">V — vowel</span>
+        <span class="slot-box" id="cvc-v">_</span>
+        <span class="slot-sub" id="cvc-v-sub"></span>
+      </div>
+      <div class="cvc-slot c2">
+        <span class="slot-label">C — consonant</span>
+        <span class="slot-box" id="cvc-c2">_</span>
+        <span class="slot-sub" id="cvc-c2-sub"></span>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:.5rem 0 .8rem;" id="cvc-word-btns"></div>
+    <div id="cvc-meaning" style="text-align:center;font-size:.88rem;color:var(--muted);min-height:1.4em;transition:all .2s;"></div>
+    <div id="cvc-ctx" class="oaat-ctx" style="margin:.3rem 0 0;"></div>
+    <button class="card-read-btn" onclick="speakCVCCard()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>🔑 Bases are stable</h3>
+    <p>A CVC base is the foundation of a word family. When suffixes join, the base keeps its spelling. Tap a base to watch its family grow.</p>
+    <div id="cvc-wfb"></div>
+    <div id="invest-cvc-wfb"></div>
+    <button class="card-read-btn" onclick="speakText('A base is the foundation of a word family. When suffixes join, the base keeps its spelling. The base cat stays the same in cats. The base ship stays the same in ships and shipment.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="show('ck',document.querySelectorAll('#main-nav button')[1])">Next: C / K / CK →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SEC 2 — C / K / CK
+══════════════════════════════════════ -->
+<div id="sec-ck" class="section">
+  <div class="section-header">
+    <div class="section-icon">🔤</div>
+    <div class="section-header-text">
+      <h2>C, K, CK, and TCH — Positional Conventions</h2>
+      <p>The choice is determined by what comes next or what came before — a visual pattern, not a sound rule.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-ck" onclick="speakSection('sec-ck','srb-ck')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Reveal the patterns — one at a time</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Tap <strong>Show next pattern</strong> to reveal each convention. Look at the words — what do they have in common?</p>
+    <div class="chunked-table" id="ck-chunk-table"></div>
+    <button class="chunk-btn" id="ck-chunk-btn" onclick="revealCKChunk()">
+      <span>Show next pattern</span><span class="cb-arrow">→</span>
+    </button>
+    <button class="card-read-btn" onclick="speakText('The four C K patterns. Before A, O, U: use C. Examples: cat, cot, cup. Before E, I: use K. Examples: kit, keg. After a single vowel grapheme at the end of a base: use C K. Examples: back, duck, lock. After a consonant at the end: use single K. Examples: milk, desk.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read all patterns</button>
+  </div>
+
+  <div class="card">
+    <h3>Complete the pattern — one at a time</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Tap the grapheme that fits. The next prompt appears when you're ready.</p>
+    <div id="ck-completions"></div>
+    <button class="card-read-btn" id="ck-comp-read" onclick="speakCurrentCKComp()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read current prompt</button>
+  </div>
+
+  <div class="card">
+    <h3>Is this ⟨ck⟩ or ⟨k⟩? — tap for each word</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">Which final convention applies? Think about what comes just before the final consonant.</p>
+    <div id="ck-yesno"></div>
+  </div>
+
+  <div class="card">
+    <h3>Is this ⟨tch⟩ or ⟨ch⟩? — the same positional logic, new phoneme</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.75rem;">⟨tch⟩ follows the same pattern as ⟨ck⟩. Think about what comes just before the final consonant — then decide.</p>
+    <div id="tch-yesno"></div>
+  </div>
+
+  <div class="card">
+    <h3>Word family builder — ⟨tch⟩ stays stable</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.8rem;">Build the word family. Notice how ⟨tch⟩ stays in every derived form.</p>
+    <div id="tch-wfb"></div>
+    <div id="invest-tch-wfb"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('cvc',document.querySelectorAll('#main-nav button')[0])">← Back</button>
+    <button class="btn btn-primary" onclick="show('flsz',document.querySelectorAll('#main-nav button')[2])">Next: FLSZ →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SEC 3 — FLSZ
+══════════════════════════════════════ -->
+<div id="sec-flsz" class="section">
+  <div class="section-header">
+    <div class="section-icon">✌️</div>
+    <div class="section-header-text">
+      <h2>The FLSZ Convention</h2>
+      <p>After a single vowel grapheme at the end of a single-morpheme content base, the letters ⟨f⟩, ⟨l⟩, ⟨s⟩, ⟨z⟩ are doubled.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-flsz" onclick="speakSection('sec-flsz','srb-flsz')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>The convention</h3>
+    <div class="highlight-box">
+      <span class="label">FLSZ CONVENTION</span>
+      After a <strong>single vowel grapheme</strong>, at the <strong>end</strong> of a <strong>single-morpheme content base</strong>:<br>
+      <span class="gb lt">f</span> → <span class="gb">ff</span> &nbsp;·&nbsp;
+      <span class="gb lt">l</span> → <span class="gb">ll</span> &nbsp;·&nbsp;
+      <span class="gb lt">s</span> → <span class="gb">ss</span> &nbsp;·&nbsp;
+      <span class="gb lt">z</span> → <span class="gb">zz</span>
+    </div>
+    <p style="font-size:.88rem;margin-top:.5rem;">This is a <strong>positional, visual pattern</strong> — not a sound rule. The doubled grapheme belongs to the base and stays stable across the word family.</p>
+    <button class="card-read-btn" onclick="speakText('The FLSZ convention. After a single vowel grapheme, at the end of a single-morpheme content base, the letters F, L, S, and Z are doubled. F becomes F F. L becomes L L. S becomes S S. Z becomes Z Z. This is a positional, visual pattern. The doubled grapheme belongs to the base and stays stable across the whole word family.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>FLSZ or not? — one word at a time</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Does this word follow the FLSZ convention? Think: is it a content base? Is there a single vowel grapheme right before the final letter?</p>
+    <div class="oaat-container" id="flsz-oaat">
+      <div class="oaat-progress" id="flsz-dots"></div>
+      <div class="oaat-count" id="flsz-count"></div>
+      <div class="oaat-word-display"><span class="oaat-word" id="flsz-word">—</span></div>
+      <div class="oaat-ctx" id="flsz-ctx"></div>
+      <div class="oaat-btns">
+        <button class="oaat-btn content-btn" onclick="flszAnswer('yes')" style="min-width:140px;">✓ FLSZ applies</button>
+        <button class="oaat-btn function-btn" onclick="flszAnswer('no')" style="min-width:140px;">✗ Not FLSZ</button>
+      </div>
+      <div class="oaat-feedback" id="flsz-feedback"></div>
+      <div id="flsz-next-wrap" style="display:none;text-align:center;margin-top:.8rem;">
+        <button class="btn btn-primary" onclick="flszNext()" id="flsz-next-btn">Next word →</button>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakFlszWord()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read current word</button>
+  </div>
+
+  <div class="card">
+    <h3>Word family builder — ⟨ff⟩, ⟨ll⟩, ⟨ss⟩, ⟨zz⟩ stay stable</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.8rem;">Tap a suffix to add it to the base. Watch the doubled grapheme stay in every form.</p>
+    <div id="flsz-wfb"></div>
+    <div id="invest-flsz-wfb"></div>
+    <button class="card-read-btn" onclick="speakText('The doubled grapheme belongs to the base and stays stable. In cliff, cliffs, and clifftop, the F F stays every time. In hill, hills, and hillside, the L L stays every time. This is the word family evidence.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('ck',document.querySelectorAll('#main-nav button')[1])">← Back</button>
+    <button class="btn btn-primary" onclick="show('cf',document.querySelectorAll('#main-nav button')[3])">Next: Content &amp; Function →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SEC 4 — CONTENT & FUNCTION
+══════════════════════════════════════ -->
+<div id="sec-cf" class="section">
+  <div class="section-header">
+    <div class="section-icon">📦</div>
+    <div class="section-header-text">
+      <h2>Content Words and Function Words</h2>
+      <p>Word class shapes spelling. This is why ⟨grass⟩ ends in ⟨ss⟩ but ⟨his⟩ ends in ⟨s⟩.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-cf" onclick="speakSection('sec-cf','srb-cf')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>What kind of word is it?</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0;">
+      <div style="background:var(--teal-lt);border:2px solid var(--teal);border-radius:12px;padding:.9rem 1rem;">
+        <div style="font-weight:700;color:var(--teal);font-size:.92rem;margin-bottom:.35rem;">📦 Content word</div>
+        <p style="font-size:.85rem;line-height:1.65;">Carries meaning. Can anchor a word family — suffixes build related words from it.</p>
+        <div style="font-family:'DM Mono',monospace;font-size:.82rem;margin-top:.4rem;line-height:1.9;color:var(--teal);">grass → grassy<br>miss → missing<br>off → offset</div>
+      </div>
+      <div style="background:var(--seafoam-lt);border:2px solid var(--seafoam);border-radius:12px;padding:.9rem 1rem;">
+        <div style="font-weight:700;color:var(--seafoam);font-size:.92rem;margin-bottom:.35rem;">🔗 Function word</div>
+        <p style="font-size:.85rem;line-height:1.65;">Operates grammatically. Doesn't build suffix families. Carries a simpler, shorter spelling.</p>
+        <div style="font-family:'DM Mono',monospace;font-size:.82rem;margin-top:.4rem;line-height:1.9;color:var(--seafoam);">his · this · was<br>of · if · as<br>the · them · then</div>
+      </div>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Two kinds of words. Content words carry meaning and anchor word families. Examples: grass gives grassy. Miss gives missing. Off gives offset. Function words operate grammatically and do not build suffix families. They carry simpler spellings. Examples: his, this, was, of, if, as.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>Sort each word — content or function? One at a time.</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Tap the category that fits. If you're not sure, try building a family — does it have one?</p>
+    <div class="oaat-container" id="cf-oaat">
+      <div class="oaat-progress" id="cf-dots"></div>
+      <div class="oaat-count" id="cf-count"></div>
+      <div class="oaat-word-display"><span class="oaat-word" id="cf-word">—</span></div>
+      <div class="oaat-ctx" id="cf-ctx"></div>
+      <div class="oaat-btns">
+        <button class="oaat-btn content-btn" onclick="cfAnswer('content')">📦 Content word</button>
+        <button class="oaat-btn function-btn" onclick="cfAnswer('function')">🔗 Function word</button>
+      </div>
+      <div class="oaat-feedback" id="cf-feedback"></div>
+    </div>
+    <button class="card-read-btn" onclick="speakCFWord()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read current word</button>
+  </div>
+
+  <div class="card">
+    <h3>The clearest pair: ⟨off⟩ and ⟨of⟩</h3>
+    <p style="font-size:.88rem;margin-bottom:.7rem;">Two words that look nearly identical. Tap each to reveal what the spelling tells us.</p>
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:130px;">
+        <button class="comp-opt" style="width:100%;font-size:1.4rem;margin-bottom:.4rem;" onclick="revealOffOf('off',this)">off</button>
+        <div id="off-reveal" style="display:none;font-size:.83rem;background:var(--teal-lt);border-radius:8px;padding:.6rem .8rem;color:var(--teal);">
+          <strong>Content word</strong> — adverb/particle<br>
+          Builds a family: offset, offside, offbeat<br>
+          → FLSZ applies → ⟨ff⟩ ✓
+        </div>
+      </div>
+      <div style="flex:1;min-width:130px;">
+        <button class="comp-opt" style="width:100%;font-size:1.4rem;margin-bottom:.4rem;" onclick="revealOffOf('of',this)">of</button>
+        <div id="of-reveal" style="display:none;font-size:.83rem;background:var(--seafoam-lt);border-radius:8px;padding:.6rem .8rem;color:var(--seafoam);">
+          <strong>Function word</strong> — preposition<br>
+          No suffix family<br>
+          → simpler spelling → ⟨f⟩ ✓
+        </div>
+      </div>
+    </div>
+    <button class="card-read-btn" style="margin-top:.8rem;" onclick="speakText('Off and of. Off is a content word — an adverb and particle — that builds a family: offset, offside, offbeat. The FLSZ convention applies, so it ends in F F. Of is a function word — a preposition — with no suffix family. It carries the simpler single F spelling. The spelling tells you which kind of word it is.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('flsz',document.querySelectorAll('#main-nav button')[2])">← Back</button>
+    <button class="btn btn-primary" onclick="show('sh',document.querySelectorAll('#main-nav button')[4])">Next: ⟨sh⟩ →</button>
+  </div>
+</div>
+<!-- ══════════════════════════════════════
+  SEC 5 — ⟨sh⟩
+══════════════════════════════════════ -->
+<div id="sec-sh" class="section">
+  <div class="section-header">
+    <div class="section-icon">〰️</div>
+    <div class="section-header-text">
+      <h2>The grapheme ⟨sh⟩</h2>
+      <p>Two letters. One spelling unit. It occupies a single consonant position.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-sh" onclick="speakSection('sec-sh','srb-sh')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>⟨sh⟩ in initial and final position — tap a word</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Watch how ⟨sh⟩ fills one slot in the CVC diagram — as a two-letter unit, not two separate graphemes.</p>
+    <div class="cvc-diagram">
+      <div class="cvc-slot c1"><span class="slot-label">C — initial</span><span class="slot-box" id="sh-c1">_</span></div>
+      <div class="cvc-slot v"><span class="slot-label">V</span><span class="slot-box" id="sh-v">_</span></div>
+      <div class="cvc-slot c2"><span class="slot-label">C — final</span><span class="slot-box" id="sh-c2">_</span></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:.7rem 0 .4rem;" id="sh-word-btns"></div>
+    <div id="sh-note" style="text-align:center;font-size:.84rem;color:var(--muted);min-height:1.3em;"></div>
+    <div id="sh-ctx" class="oaat-ctx" style="margin:.3rem 0 0;"></div>
+    <button class="card-read-btn" onclick="speakText('The grapheme S H occupies one consonant position — either initial or final. In ship: S H occupies the initial position, I is the vowel, P is the final consonant. In fish: F is the initial consonant, I is the vowel, S H occupies the final position.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>Word family builder — ⟨sh⟩ stays stable</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.8rem;">Tap a suffix. Watch the ⟨sh⟩ stay exactly the same in every family member.</p>
+    <div id="sh-wfb"></div>
+    <div id="invest-sh-wfb"></div>
+    <button class="card-read-btn" onclick="speakText('The grapheme S H belongs to the base and stays stable. In ship, ships, shipment — the S H is always there. In dish, dishes, dishcloth — the S H is always there.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="card">
+    <h3>🔭 ⟨sh⟩ or morpheme boundary? — guided split</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.3rem;">Follow the steps. The tool will guide you through each part.</p>
+    <div class="morph-split-container" id="split-container"></div>
+    <div class="notice-box" style="margin-top:.9rem;">
+      <span style="font-size:1.1rem;flex-shrink:0;">🔭</span>
+      <p><strong>The principle:</strong> Always ask <em>"How is it built?"</em> before investigating graphemes. Structure comes first — then grapheme function.</p>
+    </div>
+    <button class="card-read-btn" onclick="speakText('Some words look like they contain S H but investigation reveals a morpheme boundary. In mishap, the prefix mis means wrongly and the base hap means luck. The S belongs to the prefix and the H belongs to the base. There is no S H grapheme — there is a morpheme boundary. The same applies to dishonest: the prefix dis joins the base honest.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('cf',document.querySelectorAll('#main-nav button')[3])">← Back</button>
+    <button class="btn btn-primary" onclick="show('th',document.querySelectorAll('#main-nav button')[5])">Next: ⟨th⟩ →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SEC 6 — ⟨th⟩
+══════════════════════════════════════ -->
+<div id="sec-th" class="section">
+  <div class="section-header">
+    <div class="section-icon">⚖️</div>
+    <div class="section-header-text">
+      <h2>The grapheme ⟨th⟩</h2>
+      <p>One grapheme — appearing in two very different groups of words. Content vs. function word class explains the pattern.</p>
+    </div>
+  </div>
+
+  <div class="section-read-bar" id="srb-th" onclick="speakSection('sec-th','srb-th')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Sort ⟨th⟩ words — one at a time</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.9rem;">Is it a content word or a function word? Try to think of its word family — does it have one?</p>
+    <div class="oaat-container" id="th-oaat">
+      <div class="oaat-progress" id="th-dots"></div>
+      <div class="oaat-count" id="th-count"></div>
+      <div class="oaat-word-display"><span class="oaat-word" id="th-word">—</span></div>
+      <div class="oaat-ctx" id="th-ctx"></div>
+      <div class="oaat-btns">
+        <button class="oaat-btn content-btn" onclick="thAnswer('content')">📦 Content word</button>
+        <button class="oaat-btn function-btn" onclick="thAnswer('function')">🔗 Function word</button>
+      </div>
+      <div class="oaat-feedback" id="th-feedback"></div>
+    </div>
+    <button class="card-read-btn" onclick="speakThWord()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read current word</button>
+  </div>
+
+  <div class="card">
+    <h3>Build the family — content ⟨th⟩ words</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.8rem;">Content words build families — and ⟨th⟩ stays stable in every member. Tap suffixes to build.</p>
+    <div id="th-wfb"></div>
+    <div id="invest-th-wfb"></div>
+    <button class="card-read-btn" onclick="speakText('Content T H words build families, and the T H stays stable in every member. Thin builds thinner, thinly, and thinness. Bath builds baths and bathroom. Compare with the, this, that, them — these function words do not build suffix families.')"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg> Read this card</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('sh',document.querySelectorAll('#main-nav button')[4])">← Back</button>
+    <button class="btn btn-primary" onclick="show('practice',document.querySelectorAll('#main-nav button')[6])">Next: Practice →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SEC 7 — PRACTICE
+══════════════════════════════════════ -->
+<div id="sec-practice" class="section">
+  <div class="section-header">
+    <div class="section-icon">✨</div>
+    <div class="section-header-text">
+      <h2>Word Scientist Practice</h2>
+      <p>One question at a time. No time limit. Tap the answer that fits your thinking.</p>
+    </div>
+  </div>
+  <div class="section-read-bar" id="srb-practice" onclick="speakSection('sec-practice','srb-practice')">
+    <div class="srb-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>
+    <div class="srb-text"><span class="srb-title">🔊 Read this section aloud</span><span class="srb-sub">Tap to start · tap again to stop</span></div>
+    <button class="srb-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="prac-bar" style="width:0%"></div></div>
+  <div id="practice-container"></div>
+  <div id="practice-score" style="display:none;" class="score-box">
+    <span class="score-num" id="score-display">0 / 0</span>
+    <p class="score-sub">Nice noticing, Word Scientist! 🌊</p>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:.3rem;">Every answer — right or still-investigating — builds your understanding.</p>
+    <div class="btn-row" style="justify-content:center;margin-top:1.2rem;">
+      <button class="btn btn-primary" onclick="resetPractice()">Try Again ↺</button>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer>
+  <a href="https://lokahiconnect.org">lokahiconnect.org</a> &nbsp;·&nbsp;
+  Meaning-First Literacy™ · CVC Foundations · Pre-entry module &nbsp;·&nbsp;
+  © Lokahi Connect 501(c)(3)
+</footer>
+<script>
+// ════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  stopSpeaking();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════
+//  TTS
+// ════════════════════════════════════
+let selectedVoice = null, selectedRate = 0.9;
+
+function populateVoices() {
+  const sel = document.getElementById('voice-select');
+  if (!window.speechSynthesis) { document.getElementById('voice-no-support').style.display='inline'; return; }
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return;
+  sel.innerHTML = '';
+  const en = voices.filter(v=>v.lang.startsWith('en')), other = voices.filter(v=>!v.lang.startsWith('en'));
+  if (en.length) { const g=document.createElement('optgroup'); g.label='English voices'; en.forEach(v=>{ const o=document.createElement('option'); o.value=v.name; o.textContent=`${v.name} (${v.lang})`; if(v.default)o.selected=true; g.appendChild(o); }); sel.appendChild(g); }
+  if (other.length) { const g=document.createElement('optgroup'); g.label='Other languages'; other.forEach(v=>{ const o=document.createElement('option'); o.value=v.name; o.textContent=`${v.name} (${v.lang})`; g.appendChild(o); }); sel.appendChild(g); }
+  selectedVoice = voices.find(v=>v.default) || voices[0];
+}
+if (window.speechSynthesis) { window.speechSynthesis.onvoiceschanged=populateVoices; populateVoices(); }
+function onVoiceChange() { const n=document.getElementById('voice-select').value; selectedVoice=window.speechSynthesis.getVoices().find(v=>v.name===n)||null; }
+function onRateChange(v) { selectedRate=parseFloat(v); document.getElementById('rate-val').textContent=selectedRate.toFixed(2).replace(/\.?0+$/,'')+'×'; }
+function stopSpeaking() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.querySelectorAll('.section-read-bar.reading').forEach(b=>b.classList.remove('reading'));
+}
+function _utter(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate=selectedRate; u.pitch=1.0;
+  if (selectedVoice) u.voice=selectedVoice;
+  if (onEnd) u.onend=onEnd;
+  window.speechSynthesis.speak(u);
+}
+function speakText(text) { stopSpeaking(); _utter(text); }
+function speakSection(secId, barId) {
+  const bar = document.getElementById(barId);
+  if (bar && bar.classList.contains('reading')) { stopSpeaking(); return; }
+  stopSpeaking();
+  const sec = document.getElementById(secId); if (!sec) return;
+  const skip = new Set(['SCRIPT','STYLE','BUTTON','SELECT','INPUT','OPTION','OPTGROUP']);
+  const skipC = ['card-read-btn','srb-stop','voice-test-btn','srb-sub'];
+  function ex(el) {
+    if (!el) return '';
+    if (el.nodeType===Node.TEXT_NODE) return el.textContent.replace(/\s+/g,' ');
+    if (skip.has(el.tagName)) return '';
+    if (el.style && el.style.display==='none') return '';
+    if (skipC.some(c=>el.classList&&el.classList.contains(c))) return '';
+    let o=''; el.childNodes.forEach(c=>{o+=ex(c);});
+    if (new Set(['H1','H2','H3','H4','P','LI','TD','DIV']).has(el.tagName)) o+='. ';
+    return o;
+  }
+  const raw = ex(sec).replace(/\.\s*\.\s*/g,'. ').replace(/\s{2,}/g,' ').replace(/[→+⟨⟩]/g,' ').replace(/[📦🔗🔍💡🔭🌊✨⚖️〰️✌️🔤🧱]/gu,'').trim();
+  if (!raw) return;
+  if (bar) bar.classList.add('reading');
+  _utter(raw, ()=>{ if(bar) bar.classList.remove('reading'); });
+}
+
+// ════════════════════════════════════
+//  HELPER: make read button svg
+// ════════════════════════════════════
+const SPK = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+// ════════════════════════════════════
+//  CONTEXT SENTENCE RENDERER
+// ════════════════════════════════════
+// ctx string uses <w>word</w> for primary highlight and <w2>word</w2> for secondary
+function renderCtxHtml(ctx, focusWord) {
+  if (!ctx) return '';
+  const plain = ctx.replace(/<\/?w2?>/g, '');
+  const html = ctx
+    .replace(/<w2>(.*?)<\/w2>/g, '<span class="ctx-highlight-2">$1</span>')
+    .replace(/<w>(.*?)<\/w>/g, '<span class="ctx-highlight">$1</span>');
+  return `<div class="ctx-sentence">
+    <span class="ctx-icon">💬</span>
+    <span class="ctx-text">${html}</span>
+    <button class="ctx-speak-btn" onclick="speakText(${JSON.stringify(plain)})">🔊</button>
+  </div>`;
+}
+function renderCtx(containerId, ctx, focusWord) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!ctx) { el.innerHTML = ''; return; }
+  el.innerHTML = renderCtxHtml(ctx, focusWord);
+}
+
+// ════════════════════════════════════
+//  SENTENCE PAIR (OAAT upgrade)
+// ════════════════════════════════════
+// pairs: [{sent, plain}] — rendered as a compact two-sentence strip
+function renderCtxPair(containerId, pairs) {
+  const el = document.getElementById(containerId);
+  if (!el || !pairs || !pairs.length) return;
+  const rows = pairs.map(p => {
+    const plain = p.replace(/<\/?w2?>/g, '');
+    const html = p
+      .replace(/<w2>(.*?)<\/w2>/g, '<span class="ctx-highlight-2">$1</span>')
+      .replace(/<w>(.*?)<\/w>/g, '<span class="ctx-highlight">$1</span>');
+    return `<div class="ctx-pair-row">
+      <span class="ctx-pair-icon">💬</span>
+      <span class="ctx-pair-text">${html}</span>
+      <button class="ctx-pair-speak" onclick="speakText(${JSON.stringify(plain)})">🔊</button>
+    </div>`;
+  }).join('');
+  const allPlain = pairs.map(p => p.replace(/<\/?w2?>/g,'')).join(' ');
+  el.innerHTML = `<div class="ctx-pair">${rows}<div class="ctx-pair-actions"><button class="ctx-pair-speak" onclick="speakText(${JSON.stringify(allPlain)})">🔊 Read both</button></div></div>`;
+}
+
+// ════════════════════════════════════
+//  INVESTIGATION CARD
+// ════════════════════════════════════
+// spec: { id, base, sentences:[{text,plain}], prompt, opts:[{text,correct,confirm}] }
+function renderInvestigation(containerId, spec) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const sentHtml = spec.sentences.map((s,i) => {
+    const html = s.text
+      .replace(/<w2>(.*?)<\/w2>/g,'<span class="ctx-highlight-2">$1</span>')
+      .replace(/<w>(.*?)<\/w>/g,'<span class="ctx-highlight">$1</span>');
+    const plain = s.text.replace(/<\/?w2?>/g,'');
+    return `<div class="invest-sent-row">
+      <span class="invest-sent-num">${i+1}</span>
+      <span class="invest-sent-text">${html}</span>
+      <button class="invest-sent-speak" onclick="speakText(${JSON.stringify(plain)})">🔊</button>
+    </div>`;
+  }).join('');
+  const allPlain = spec.sentences.map(s=>s.text.replace(/<\/?w2?>/g,'')).join(' ');
+  const optsHtml = spec.opts.map((o,oi) =>
+    `<button class="invest-opt" onclick="answerInvest(${JSON.stringify(spec.id)},${oi})">
+       <span class="io-dot"></span><span>${o.text}</span>
+     </button>`
+  ).join('');
+  el.innerHTML = `<div class="invest-card">
+    <div class="invest-header">
+      <span class="invest-badge">🔭 WORD SCIENTIST</span>
+      <span class="invest-title">${spec.title || 'What do you notice?'}</span>
+    </div>
+    <div class="invest-sentences" id="inv-sents-${spec.id}">
+      ${sentHtml}
+      <div style="margin-top:.3rem;"><button class="ctx-pair-speak" onclick="speakText(${JSON.stringify(allPlain)})">🔊 Read all sentences</button></div>
+    </div>
+    <div class="invest-prompt">What do you notice about <span class="invest-base">⟨${spec.base}⟩</span> across these sentences?<br><span style="font-size:.8rem;font-weight:400;color:var(--muted);">Tap everything that seems true — then we'll confirm together.</span></div>
+    <div class="invest-options" id="inv-opts-${spec.id}">${optsHtml}</div>
+    <div class="invest-confirmation" id="inv-conf-${spec.id}"></div>
+  </div>`;
+  window['_investSpec_'+spec.id] = spec;
+}
+
+function answerInvest(id, oi) {
+  const spec = window['_investSpec_'+id];
+  if (!spec) return;
+  const opt = spec.opts[oi];
+  const container = document.getElementById('inv-opts-'+id);
+  const conf = document.getElementById('inv-conf-'+id);
+  const btns = container.querySelectorAll('.invest-opt');
+  if (opt.correct) {
+    btns.forEach((b,i) => {
+      b.disabled = true;
+      if (i === oi) b.classList.add('io-correct');
+    });
+    conf.innerHTML = `<strong>✓ ${opt.confirm}</strong>`;
+    conf.classList.add('show');
+    speakText(opt.confirm);
+  } else {
+    // Wrong — shake and re-enable after brief pause; show a nudge
+    btns[oi].classList.add('io-wrong');
+    conf.innerHTML = `<em>${opt.redirect || 'Have another look at the sentences — where is ⟨'+spec.base+'⟩ in each word?'}</em>`;
+    conf.classList.add('show');
+    conf.style.background = 'var(--amber-dk)';
+    speakText(opt.redirect || 'Have another look. Where does the base appear in each word?');
+    setTimeout(() => {
+      btns[oi].classList.remove('io-wrong');
+      btns[oi].disabled = false;
+      conf.classList.remove('show');
+      conf.style.background = '';
+    }, 2200);
+  }
+}
+
+// ════════════════════════════════════
+//  WORD FAMILY BUILDER component
+// ════════════════════════════════════
+function makeWFB(containerId, bases) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  let activeBi = 0;
+  function renderBase(bi) {
+    const b = bases[bi];
+    el.innerHTML = `
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem;">
+        ${bases.map((bb,i)=>`<button class="wfb-chip" style="${i===bi?'background:var(--teal);color:white;border-color:var(--teal);':''}" onclick="(function(){window._wfb_${containerId}(${i});})()">⟨${bb.base}⟩</button>`).join('')}
+      </div>
+      <div class="wfb-container">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:.45rem;"><strong>${b.base}</strong> — ${b.meaning}</p>
+        ${b.ctx ? renderCtxHtml(b.ctx, b.base) : ''}
+        <div class="wfb-base-display" style="margin-top:.5rem;">
+          <span class="wfb-base-word" id="${containerId}-bw">${b.base}</span>
+          <span class="wfb-plus">+</span>
+          <span class="wfb-suffix-slot" id="${containerId}-ss">___</span>
+          <span style="font-size:1.3rem;color:var(--muted);font-weight:700;">→</span>
+          <span style="font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--text);min-width:120px;" id="${containerId}-result">?</span>
+        </div>
+        <div class="wfb-suffix-chips" id="${containerId}-chips">
+          ${b.suffixes.map(s=>`<button class="wfb-chip" id="${containerId}-chip-${s.suf}" onclick="(function(){window._wfbsuf_${containerId}(${JSON.stringify(s)});})()">-${s.suf}</button>`).join('')}
+        </div>
+        <div class="wfb-sum" id="${containerId}-sum"></div>
+        <div id="${containerId}-word-ctx" style="min-height:0;transition:all .2s;"></div>
+        <div class="wfb-result" id="${containerId}-built"></div>
+      </div>`;
+    window[`_wfb_${containerId}`] = (i) => { activeBi = i; renderBase(i); };
+    window[`_wfbsuf_${containerId}`] = (s) => {
+      document.getElementById(`${containerId}-ss`).textContent = s.suf;
+      document.getElementById(`${containerId}-ss`).classList.add('filled');
+      document.getElementById(`${containerId}-result`).textContent = s.result;
+      document.getElementById(`${containerId}-sum`).textContent = s.sum;
+      const chip = document.getElementById(`${containerId}-chip-${s.suf}`);
+      if (chip) chip.classList.add('used');
+      // show context sentence for this derived form
+      const ctxEl = document.getElementById(`${containerId}-word-ctx`);
+      if (ctxEl && s.ctx) {
+        ctxEl.innerHTML = renderCtxHtml(s.ctx, s.result);
+      } else if (ctxEl) {
+        ctxEl.innerHTML = '';
+      }
+      const builtEl = document.getElementById(`${containerId}-built`);
+      const item = document.createElement('span');
+      item.className = 'wfb-result-item'; item.textContent = s.result;
+      builtEl.appendChild(item);
+      speakText(`${s.sum}. The base stays stable.` + (s.ctx ? ' ' + s.ctx.replace(/<\/?w2?>/g,'') : ''));
+      // check if all suffixes for this base are now used → reveal investigation card
+      const remaining = b.suffixes.filter(sx => {
+        const chip = document.getElementById(`${containerId}-chip-${sx.suf}`);
+        return chip && !chip.classList.contains('used');
+      });
+      if (remaining.length === 0 && b.investigation) {
+        const investEl = document.getElementById('invest-' + containerId);
+        if (investEl && !investEl.querySelector('.invest-card')) {
+          renderInvestigation(investEl, b.investigation);
+          investEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+      }
+    };
+  }
+  renderBase(activeBi);
+}
+
+// ════════════════════════════════════
+//  SEC 1 — CVC DIAGRAM
+// ════════════════════════════════════
+const cvcWords = [
+  { w:'cat',  c1:'c',  v:'a', c2:'t',  meaning:'a small furry animal',        c1note:'one letter',        vnote:'', c2note:'one letter',
+    ctx:'The <w>cat</w> curled up on the warm rug.' },
+  { w:'ship', c1:'sh', v:'i', c2:'p',  meaning:'a large vessel for water travel', c1note:'two-letter grapheme', vnote:'', c2note:'one letter',
+    ctx:'The <w>ship</w> left the harbour at dawn.' },
+  { w:'duck', c1:'d',  v:'u', c2:'ck', meaning:'a waterbird',                  c1note:'one letter',        vnote:'', c2note:'two-letter grapheme',
+    ctx:'A <w>duck</w> swam in circles on the pond.' },
+  { w:'fish', c1:'f',  v:'i', c2:'sh', meaning:'an animal that lives in water', c1note:'one letter',       vnote:'', c2note:'two-letter grapheme',
+    ctx:'The <w>fish</w> darted past the coral reef.' },
+  { w:'lock', c1:'l',  v:'o', c2:'ck', meaning:'a fastening device',           c1note:'one letter',        vnote:'', c2note:'two-letter grapheme',
+    ctx:'She turned the key in the <w>lock</w>.' },
+  { w:'thin', c1:'th', v:'i', c2:'n',  meaning:'not thick',                    c1note:'two-letter grapheme', vnote:'', c2note:'one letter',
+    ctx:'The ice was too <w>thin</w> to walk on safely.' },
+];
+function renderCVCBtns() {
+  const btns = document.getElementById('cvc-word-btns');
+  if (!btns) return;
+  btns.innerHTML = cvcWords.map((w,i)=>
+    `<button class="comp-opt" onclick="fillCVC(${i})" style="font-size:1rem;font-family:'DM Mono',monospace;">${w.w}</button>`
+  ).join('');
+}
+function fillCVC(i) {
+  const w = cvcWords[i];
+  ['c1','v','c2'].forEach(k => {
+    const el = document.getElementById('cvc-'+k);
+    if (el) { el.textContent = w[k]; el.style.animation='none'; void el.offsetWidth; el.style.animation='popIn .25s ease'; }
+  });
+  document.getElementById('cvc-c1-sub').textContent = w.c1note;
+  document.getElementById('cvc-v-sub').textContent = w.vnote;
+  document.getElementById('cvc-c2-sub').textContent = w.c2note;
+  document.getElementById('cvc-meaning').textContent = '→ ' + w.meaning;
+  renderCtx('cvc-ctx', w.ctx, w.w);
+  speakText(`In the word ${w.w}: the initial consonant is ${w.c1 === 'sh' || w.c1 === 'th' ? 'the grapheme ' + w.c1 : w.c1}. The vowel is ${w.v}. The final consonant is ${w.c2 === 'ck' || w.c2 === 'sh' ? 'the grapheme ' + w.c2 : w.c2}.`);
+}
+function speakCVCCard() {
+  speakText('Tap a word to see it fill the three positions. Each consonant position holds one grapheme — a spelling unit that may be one letter or two letters working as a team.');
+}
+
+// ════════════════════════════════════
+//  SEC 2 — C/K/CK
+// ════════════════════════════════════
+const ckChunks = [
+  { grapheme:'⟨c⟩', label:'before ⟨a⟩, ⟨o⟩, ⟨u⟩', words:['cat','cot','cup','cap','cob'],
+    spk:'Before A, O, U, we write C. Examples: cat, cot, cup, cap, cob.',
+    ctx:'The <w>cat</w> sat beside the <w>cup</w> on the windowsill.' },
+  { grapheme:'⟨k⟩', label:'before ⟨e⟩, ⟨i⟩', words:['kit','keg','kin','kid'],
+    spk:'Before E and I, we write K. Examples: kit, keg, kin, kid.',
+    ctx:'She opened the repair <w>kit</w> and checked every item.' },
+  { grapheme:'⟨ck⟩', label:'final — after a single vowel grapheme', words:['back','duck','lock','tick','neck'],
+    spk:'At the end after a single vowel grapheme, we write C K. Examples: back, duck, lock, tick, neck.',
+    ctx:'The <w>duck</w> waddled <w>back</w> to the pond.' },
+  { grapheme:'⟨k⟩', label:'final — after a consonant', words:['milk','desk','risk','mask'],
+    spk:'At the end after a consonant, we write single K. Examples: milk, desk, risk, mask.',
+    ctx:'A glass of cold <w>milk</w> sat on the <w>desk</w>.' },
+  { grapheme:'⟨tch⟩', label:'final — after a single vowel grapheme (same rule as ⟨ck⟩)', words:['catch','fetch','stitch','notch','hutch'],
+    spk:'At the end of a base after a single vowel grapheme, the T C H grapheme represents the sound. Examples: catch, fetch, stitch, notch, hutch. Same positional rule as C K.',
+    ctx:'She had to <w>fetch</w> the key before we could open the <w>hutch</w>.' },
+  { grapheme:'⟨ch⟩', label:'final — after a consonant or long vowel', words:['bench','arch','coach','teach','torch'],
+    spk:'After a consonant or a long vowel at the end, we write C H. Examples: bench, arch, coach, teach, torch. Same positional rule as single K.',
+    ctx:'The <w>coach</w> sat on the <w>bench</w> and watched the match.' },
+];
+let ckChunkIdx = 0;
+function renderCKChunkTable() {
+  const el = document.getElementById('ck-chunk-table');
+  if (!el) return;
+  el.innerHTML = ckChunks.map((c,i)=>`
+    <div class="chunk-row" id="ck-cr-${i}">
+      <div class="cr-grapheme">${c.grapheme}</div>
+      <div class="cr-label">${c.label}</div>
+      <div class="cr-words">${c.words.map(w=>`<span class="word-chip wc-neutral">${w}</span>`).join('')}</div>
+    </div>
+    <div id="ck-ctx-${i}" style="display:none;margin:-.3rem 0 .5rem;animation:fadeUp .25s ease;"></div>`).join('');
+}
+function revealCKChunk() {
+  if (ckChunkIdx >= ckChunks.length) return;
+  const chunk = ckChunks[ckChunkIdx];
+  const row = document.getElementById('ck-cr-' + ckChunkIdx);
+  if (row) row.classList.add('revealed');
+  const ctxEl = document.getElementById('ck-ctx-' + ckChunkIdx);
+  if (ctxEl && chunk.ctx) {
+    ctxEl.innerHTML = renderCtxHtml(chunk.ctx, '');
+    ctxEl.style.display = 'block';
+  }
+  speakText(chunk.spk);
+  ckChunkIdx++;
+  const btn = document.getElementById('ck-chunk-btn');
+  if (ckChunkIdx >= ckChunks.length) { btn.disabled = true; btn.querySelector('span').textContent = 'All patterns revealed ✓'; }
+  else { btn.querySelector('span').textContent = `Show next pattern (${ckChunkIdx+1} of ${ckChunks.length})`; }
+}
+
+// Completion taps for C/K/CK
+const ckCompletions = [
+  { stem:'Before ⟨a⟩, ⟨o⟩, ⟨u⟩ — we write:', opts:['c','k','ck'], answer:'c', feedback:'⟨c⟩ is the conventional spelling before the back vowels ⟨a⟩, ⟨o⟩, ⟨u⟩.' },
+  { stem:'Before ⟨e⟩, ⟨i⟩ — we write:', opts:['c','k','ck'], answer:'k', feedback:'⟨k⟩ is the conventional spelling before the front vowels ⟨e⟩ and ⟨i⟩.' },
+  { stem:'Final, after a single vowel grapheme — /k/ is written:', opts:['k','ck','c'], answer:'ck', feedback:'⟨ck⟩ is the two-letter grapheme used at the end of a base after a single vowel grapheme: back, duck, lock.' },
+  { stem:'Final, after a consonant — /k/ is written:', opts:['ck','c','k'], answer:'k', feedback:'Single ⟨k⟩ follows a consonant at the end of a base: milk, desk, risk.' },
+  { stem:'Final, after a single vowel grapheme — the /tʃ/ phoneme is written:', opts:['ch','tch','tsh'], answer:'tch', feedback:'⟨tch⟩ is the three-letter grapheme used after a single vowel grapheme: catch, fetch, stitch. Same positional rule as ⟨ck⟩.' },
+  { stem:'Final, after a consonant — the /tʃ/ phoneme is written:', opts:['tch','ch','tsh'], answer:'ch', feedback:'⟨ch⟩ follows a consonant or long vowel at the end of a base: bench, arch, coach. Same positional rule as single ⟨k⟩.' },
+];
+let ckCompIdx = 0;
+function renderCKCompletions() {
+  ckCompIdx = 0;
+  renderNextCKComp();
+}
+function renderNextCKComp() {
+  const el = document.getElementById('ck-completions');
+  if (!el) return;
+  if (ckCompIdx >= ckCompletions.length) {
+    el.innerHTML += `<div style="text-align:center;margin-top:.6rem;font-size:.88rem;font-weight:600;color:var(--seafoam);">✓ All six patterns practised!</div>`;
+    return;
+  }
+  const q = ckCompletions[ckCompIdx];
+  const i = ckCompIdx;
+  const div = document.createElement('div');
+  div.className = 'completion-prompt';
+  div.id = 'ck-cp-' + i;
+  div.style.animation = 'fadeUp .25s ease';
+  div.innerHTML = `
+    <div style="font-size:.76rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-bottom:.4rem;">PATTERN ${i+1} OF ${ckCompletions.length}</div>
+    <div class="stem">${q.stem} <span class="blank" id="ck-blank-${i}">?</span></div>
+    <div class="completion-opts">${q.opts.map(o=>`<button class="comp-opt" onclick="answerCKComp(${i},'${o}')">${o}</button>`).join('')}</div>
+    <div class="completion-feedback" id="ck-cf-${i}"></div>`;
+  el.appendChild(div);
+  speakText(q.stem.replace(':', '') + '. Options: ' + q.opts.join(', '));
+}
+function speakCurrentCKComp() {
+  if (ckCompIdx < ckCompletions.length) speakText(ckCompletions[ckCompIdx].stem.replace(':','') + '. Options: ' + ckCompletions[ckCompIdx].opts.join(', '));
+}
+function answerCKComp(i, chosen) {
+  const q = ckCompletions[i];
+  const correct = chosen === q.answer;
+  const cp = document.getElementById('ck-cp-' + i);
+  cp.querySelectorAll('.comp-opt').forEach(btn => {
+    btn.classList.add('disabled');
+    if (btn.textContent === q.answer) btn.classList.add(correct && btn.textContent===chosen ? 'selected-correct' : 'show-correct');
+    else if (btn.textContent === chosen && !correct) btn.classList.add('selected-wrong');
+  });
+  document.getElementById('ck-blank-' + i).textContent = q.answer;
+  const fb = document.getElementById('ck-cf-' + i);
+  fb.textContent = (correct ? '✓ ' : '→ ') + q.feedback;
+  fb.className = 'completion-feedback show' + (correct ? '' : ' wrong');
+  speakText(q.feedback);
+  ckCompIdx++;
+  setTimeout(() => renderNextCKComp(), 1800);
+}
+
+// Yes/No: ck vs k
+const ckYN = [
+  { w:'back',  ans:'ck', note:'single vowel grapheme ⟨a⟩ before the final — ⟨ck⟩' },
+  { w:'milk',  ans:'k',  note:'consonant ⟨l⟩ before the final — single ⟨k⟩' },
+  { w:'lock',  ans:'ck', note:'single vowel grapheme ⟨o⟩ before the final — ⟨ck⟩' },
+  { w:'desk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩' },
+  { w:'duck',  ans:'ck', note:'single vowel grapheme ⟨u⟩ before the final — ⟨ck⟩' },
+  { w:'risk',  ans:'k',  note:'consonant ⟨s⟩ before the final — single ⟨k⟩' },
+];
+function renderCKYN() {
+  const el = document.getElementById('ck-yesno');
+  if (!el) return;
+  el.innerHTML = ckYN.map((item,i)=>`
+    <div class="yesno-item" id="ckyn-${i}">
+      <span class="yesno-word">${item.w}</span>
+      <div class="yesno-btns">
+        <button class="yn-btn yn-yes" onclick="answerCKYN(${i},'ck')">⟨ck⟩</button>
+        <button class="yn-btn yn-no"  onclick="answerCKYN(${i},'k')">⟨k⟩</button>
+      </div>
+      <span class="yesno-result" id="ckyn-r-${i}"></span>
+    </div>`).join('');
+}
+function answerCKYN(i, chosen) {
+  const item = ckYN[i];
+  const correct = chosen === item.ans;
+  const row = document.getElementById('ckyn-' + i);
+  row.querySelectorAll('.yn-btn').forEach(btn => {
+    btn.classList.add('disabled-btn');
+    if (btn.textContent === '⟨'+item.ans+'⟩') btn.classList.add('chosen-correct');
+    else if (btn.textContent === '⟨'+chosen+'⟩' && !correct) btn.classList.add('chosen-wrong');
+  });
+  row.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  document.getElementById('ckyn-r-' + i).textContent = item.note;
+  document.getElementById('ckyn-r-' + i).className = 'yesno-result' + (correct ? '' : ' wrong-result');
+  speakText(item.note);
+}
+
+// ════════════════════════════════════
+//  SEC 2b — ⟨tch⟩ vs ⟨ch⟩ sorter
+// ════════════════════════════════════
+const tchYN = [
+  { w:'catch',  ans:'tch', note:'single vowel grapheme ⟨a⟩ before the final — ⟨tch⟩',
+    pairs:['She reached up to <w>catch</w> the ball.',
+           'The <w2>catcher</w2> crouched behind the plate — same base ⟨catch⟩, ⟨tch⟩ stable.'] },
+  { w:'bench',  ans:'ch',  note:'consonant ⟨n⟩ before the final — ⟨ch⟩',
+    pairs:['The coach sat on the <w>bench</w>.',
+           'Players waited on the <w2>benches</w2> — same base, ⟨ch⟩ stays.'] },
+  { w:'fetch',  ans:'tch', note:'single vowel grapheme ⟨e⟩ before the final — ⟨tch⟩',
+    pairs:['Can you <w>fetch</w> the key from the hook?',
+           'She is <w2>fetching</w2> water from the well — ⟨tch⟩ stable in both.'] },
+  { w:'arch',   ans:'ch',  note:'consonant ⟨r⟩ before the final — ⟨ch⟩',
+    pairs:['They walked through the stone <w>arch</w>.',
+           'The <w2>arched</w2> doorway was very old — ⟨ch⟩ stays.'] },
+  { w:'notch',  ans:'tch', note:'single vowel grapheme ⟨o⟩ before the final — ⟨tch⟩',
+    pairs:['He cut a <w>notch</w> in the wooden post.',
+           'Two <w2>notches</w2> marked the height — same base, ⟨tch⟩ stable.'] },
+  { w:'torch',  ans:'ch',  note:'consonant ⟨r⟩ before the final — ⟨ch⟩',
+    pairs:['She shone the <w>torch</w> into the cave.',
+           'We carried <w2>torches</w2> through the tunnel — ⟨ch⟩ stays.'] },
+];
+function renderTCHYN() {
+  const el = document.getElementById('tch-yesno');
+  if (!el) return;
+  el.innerHTML = tchYN.map((item,i)=>`
+    <div class="yesno-item" id="tchyn-${i}">
+      <span class="yesno-word">${item.w}</span>
+      <div style="margin:.25rem 0 .35rem;" id="tchyn-ctx-${i}"></div>
+      <div class="yesno-btns">
+        <button class="yn-btn yn-yes" onclick="answerTCHYN(${i},'tch')">⟨tch⟩</button>
+        <button class="yn-btn yn-no"  onclick="answerTCHYN(${i},'ch')">⟨ch⟩</button>
+      </div>
+      <span class="yesno-result" id="tchyn-r-${i}"></span>
+    </div>`).join('');
+  // show first pair immediately
+  renderCtxPair('tchyn-ctx-0', tchYN[0].pairs);
+}
+function answerTCHYN(i, chosen) {
+  const item = tchYN[i];
+  const correct = chosen === item.ans;
+  const row = document.getElementById('tchyn-' + i);
+  row.querySelectorAll('.yn-btn').forEach(btn => {
+    btn.classList.add('disabled-btn');
+    if (btn.textContent === '⟨'+item.ans+'⟩') btn.classList.add('chosen-correct');
+    else if (btn.textContent === '⟨'+chosen+'⟩' && !correct) btn.classList.add('chosen-wrong');
+  });
+  row.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  document.getElementById('tchyn-r-' + i).textContent = item.note;
+  document.getElementById('tchyn-r-' + i).className = 'yesno-result' + (correct ? '' : ' wrong-result');
+  speakText(item.note);
+  // reveal next word's pair sentence
+  if (i + 1 < tchYN.length) {
+    renderCtxPair('tchyn-ctx-' + (i+1), tchYN[i+1].pairs);
+  }
+}
+const flszYN = [
+  { w:'off',   ans:'yes', note:'Content word. Single vowel grapheme ⟨o⟩ before the final ⟨f⟩ → ⟨ff⟩. Family: offset, offside.',
+    pairs:['The lid fell <w>off</w> the jar.',
+           'He set <w2>off</w2> at sunrise — same base ⟨off⟩, same ⟨ff⟩.'] },
+  { w:'his',   ans:'no',  note:'Function word — pronoun. No suffix family. Single ⟨s⟩.',
+    pairs:['She found <w>his</w> coat on the bench.',
+           '<w>His</w> is a pronoun — it doesn\'t build a suffix family.'] },
+  { w:'hill',  ans:'yes', note:'Content word. Single vowel grapheme ⟨i⟩ before the final ⟨l⟩ → ⟨ll⟩. Family: hills, hillside.',
+    pairs:['They climbed to the top of the <w>hill</w>.',
+           'The <w2>hillside</w2> was covered in heather — base ⟨hill⟩, ⟨ll⟩ stable.'] },
+  { w:'if',    ans:'no',  note:'Function word — conjunction. No suffix family. Single ⟨f⟩.',
+    pairs:['We can go <w>if</w> the rain stops.',
+           '<w>If</w> is a conjunction — a function word, no suffix family.'] },
+  { w:'buzz',  ans:'yes', note:'Content word. Single vowel grapheme ⟨u⟩ before the final ⟨z⟩ → ⟨zz⟩. Family: buzzing, buzzword.',
+    pairs:['A bee began to <w>buzz</w> near the flowers.',
+           'The <w2>buzzing</w2> filled the garden — same base ⟨buzz⟩, ⟨zz⟩ stays.'] },
+  { w:'this',  ans:'no',  note:'Function word — pronoun. No suffix family. Single ⟨s⟩.',
+    pairs:['Can you carry <w>this</w> box for me?',
+           '<w>This</w> is a pronoun — function word, no suffix family.'] },
+  { w:'miss',  ans:'yes', note:'Content word. Single vowel grapheme ⟨i⟩ before the final ⟨s⟩ → ⟨ss⟩. Family: misses, missing.',
+    pairs:['I did not want to <w>miss</w> the start of the film.',
+           'We are <w2>missing</w2> one piece — base ⟨miss⟩, ⟨ss⟩ stable in both.'] },
+  { w:'pal',   ans:'no',  note:'Worth investigating: pal → pally, pals. The ⟨l⟩ doesn\'t double — not the full FLSZ environment.',
+    pairs:['She asked her <w>pal</w> to sit beside her.',
+           '<w>Pal</w> → pals, pally. Why no double ⟨l⟩? Worth investigating.'] },
+  { w:'cliff', ans:'yes', note:'Content word. Single vowel grapheme ⟨i⟩ before the final ⟨f⟩ → ⟨ff⟩. Family: cliffs, clifftop.',
+    pairs:['A puffin perched on the edge of the <w>cliff</w>.',
+           'The <w2>clifftop</w2> path was narrow — base ⟨cliff⟩, ⟨ff⟩ stable.'] },
+  { w:'was',   ans:'no',  note:'Function word — auxiliary verb. No suffix family. Single ⟨s⟩.',
+    pairs:['The door <w>was</w> already open when we arrived.',
+           '<w>Was</w> is an auxiliary verb — function word, no family.'] },
+];
+let flszIdx = 0, flszAnswers = [], flszWaiting = false;
+function renderFLSZOAAT() {
+  flszIdx = 0; flszAnswers = []; flszWaiting = false;
+  updateFLSZDisplay();
+}
+// keep old name so init call still works
+function renderFLSZYN() { renderFLSZOAAT(); }
+function updateFLSZDisplay() {
+  const dotsEl = document.getElementById('flsz-dots');
+  const countEl = document.getElementById('flsz-count');
+  const wordEl = document.getElementById('flsz-word');
+  const fbEl = document.getElementById('flsz-feedback');
+  const nextWrap = document.getElementById('flsz-next-wrap');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = flszYN.map((w,i)=>`<div class="oaat-dot ${i<flszIdx?flszAnswers[i]?'done-correct':'done-wrong':i===flszIdx?'current':''}"></div>`).join('');
+  if (flszIdx >= flszYN.length) {
+    wordEl.textContent = '✓ Done!'; wordEl.className = 'oaat-word correct';
+    countEl.textContent = `${flszAnswers.filter(Boolean).length} of ${flszYN.length} correct`;
+    fbEl.textContent = 'All words checked! Well done.';
+    if (nextWrap) nextWrap.style.display = 'none';
+    document.querySelectorAll('#flsz-oaat .oaat-btn').forEach(b=>b.disabled=true); return;
+  }
+  wordEl.textContent = flszYN[flszIdx].w; wordEl.className = 'oaat-word';
+  countEl.textContent = `Word ${flszIdx+1} of ${flszYN.length}`;
+  fbEl.textContent = '';
+  if (nextWrap) nextWrap.style.display = 'none';
+  flszWaiting = false;
+  renderCtxPair('flsz-ctx', flszYN[flszIdx].pairs);
+  document.querySelectorAll('#flsz-oaat .oaat-btn').forEach(b=>b.disabled=false);
+}
+function flszAnswer(chosen) {
+  if (flszWaiting) return;
+  const item = flszYN[flszIdx];
+  const correct = chosen === item.ans;
+  flszAnswers.push(correct);
+  flszWaiting = true;
+  document.getElementById('flsz-word').className = 'oaat-word ' + (correct ? 'correct' : 'incorrect');
+  const fbEl = document.getElementById('flsz-feedback');
+  fbEl.textContent = (correct ? '✓ ' : '→ ') + item.note;
+  fbEl.style.color = correct ? 'var(--seafoam)' : 'var(--teal)';
+  document.querySelectorAll('#flsz-oaat .oaat-btn').forEach(b=>b.disabled=true);
+  speakText(item.note);
+  const nextWrap = document.getElementById('flsz-next-wrap');
+  const nextBtn = document.getElementById('flsz-next-btn');
+  if (nextWrap) {
+    nextWrap.style.display = 'block';
+    if (nextBtn) nextBtn.textContent = flszIdx + 1 >= flszYN.length ? 'See results ✓' : 'Next word →';
+  }
+}
+function flszNext() {
+  flszIdx++;
+  updateFLSZDisplay();
+}
+function speakFlszWord() { if (flszIdx < flszYN.length) speakText(flszYN[flszIdx].w); }
+
+// ════════════════════════════════════
+//  SEC 4 — CONTENT/FUNCTION OAAT
+// ════════════════════════════════════
+const cfWords = [
+  { w:'grass', cat:'content', family:'grassy, grassland', note:'Content word — noun. Builds a family. FLSZ applies → ⟨ss⟩.',
+    pairs:['The children lay on the cool <w>grass</w>.',
+           'The <w2>grassy</w2> field stretched to the trees — base ⟨grass⟩, meaning carried through.'] },
+  { w:'his',   cat:'function', note:'Function word — pronoun. No suffix family. Single ⟨s⟩.',
+    pairs:['He left <w>his</w> bag by the door.',
+           '<w>His</w> stands alone — no derivatives, no suffix family.'] },
+  { w:'miss',  cat:'content', family:'misses, missing', note:'Content word — verb. Builds a family. FLSZ applies → ⟨ss⟩.',
+    pairs:['Did you <w>miss</w> the bus this morning?',
+           'We are <w2>missing</w2> one key — base ⟨miss⟩ carries the meaning in both.'] },
+  { w:'was',   cat:'function', note:'Function word — auxiliary verb. No suffix family.',
+    pairs:['The path <w>was</w> covered in fallen leaves.',
+           '<w>Was</w> is an auxiliary — function word, no suffix family.'] },
+  { w:'hill',  cat:'content', family:'hills, hillside, hilly', note:'Content word — noun. Builds a family. FLSZ applies → ⟨ll⟩.',
+    pairs:['We walked up the steep <w>hill</w> together.',
+           'It was a <w2>hilly</w2> part of the country — base ⟨hill⟩ travels across both.'] },
+  { w:'the',   cat:'function', note:'Function word — article. No suffix family.',
+    pairs:['We sat under <w>the</w> old oak tree.',
+           '<w>The</w> is an article — function word, it never builds a suffix family.'] },
+  { w:'cliff', cat:'content', family:'cliffs, clifftop', note:'Content word — noun. Builds a family. FLSZ applies → ⟨ff⟩.',
+    pairs:['A gannet dived from the <w>cliff</w> into the sea.',
+           'The <w2>clifftop</w2> path was narrow — base ⟨cliff⟩, same meaning, same ⟨ff⟩.'] },
+  { w:'them',  cat:'function', note:'Function word — pronoun. No suffix family.',
+    pairs:['She called out to <w>them</w> across the yard.',
+           '<w>Them</w> is a pronoun — function word, no suffix family.'] },
+  { w:'buzz',  cat:'content', family:'buzzing, buzzword', note:'Content word — verb/noun. Builds a family. FLSZ applies → ⟨zz⟩.',
+    pairs:['We heard the <w>buzz</w> of the bees in the hive.',
+           'The <w2>buzzing</w2> grew louder — base ⟨buzz⟩ carries the meaning in both.'] },
+  { w:'if',    cat:'function', note:'Function word — conjunction. No suffix family.',
+    pairs:['We can go swimming <w>if</w> the sun comes out.',
+           '<w>If</w> is a conjunction — function word, no suffix family.'] },
+];
+let cfIdx = 0, cfAnswers = [], cfWaiting = false;
+function renderCFOAAT() {
+  cfIdx = 0; cfAnswers = []; cfWaiting = false;
+  // inject next-button wrap if not present
+  const oaat = document.getElementById('cf-oaat');
+  if (oaat && !document.getElementById('cf-next-wrap')) {
+    const wrap = document.createElement('div');
+    wrap.id = 'cf-next-wrap';
+    wrap.style.cssText = 'display:none;text-align:center;margin-top:.8rem;';
+    wrap.innerHTML = '<button class="btn btn-primary" id="cf-next-btn" onclick="cfNext()">Next word →</button>';
+    oaat.appendChild(wrap);
+  }
+  updateCFDisplay();
+}
+function updateCFDisplay() {
+  const dotsEl = document.getElementById('cf-dots');
+  const countEl = document.getElementById('cf-count');
+  const wordEl = document.getElementById('cf-word');
+  const fbEl = document.getElementById('cf-feedback');
+  const nextWrap = document.getElementById('cf-next-wrap');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = cfWords.map((w,i)=>`<div class="oaat-dot ${i<cfIdx?cfAnswers[i]?'done-correct':'done-wrong':i===cfIdx?'current':''}"></div>`).join('');
+  if (cfIdx >= cfWords.length) {
+    wordEl.textContent = '✓ Done!'; wordEl.className = 'oaat-word correct';
+    countEl.textContent = `${cfAnswers.filter(Boolean).length} of ${cfWords.length} correct`;
+    fbEl.textContent = 'All words sorted! Well done.';
+    if (nextWrap) nextWrap.style.display = 'none';
+    document.querySelectorAll('#cf-oaat .oaat-btn').forEach(b=>b.disabled=true);
+    return;
+  }
+  wordEl.textContent = cfWords[cfIdx].w;
+  wordEl.className = 'oaat-word';
+  countEl.textContent = `Word ${cfIdx+1} of ${cfWords.length}`;
+  fbEl.textContent = '';
+  if (nextWrap) nextWrap.style.display = 'none';
+  cfWaiting = false;
+  renderCtxPair('cf-ctx', cfWords[cfIdx].pairs);
+  document.querySelectorAll('#cf-oaat .oaat-btn').forEach(b=>b.disabled=false);
+}
+function cfAnswer(chosen) {
+  if (cfWaiting) return;
+  const item = cfWords[cfIdx];
+  const correct = chosen === item.cat;
+  cfAnswers.push(correct);
+  cfWaiting = true;
+  const wordEl = document.getElementById('cf-word');
+  const fbEl = document.getElementById('cf-feedback');
+  wordEl.className = 'oaat-word ' + (correct ? 'correct' : 'incorrect');
+  fbEl.textContent = (correct ? '✓ ' : '→ ') + item.note + (item.family ? ` Family: ${item.family}.` : '');
+  fbEl.style.color = correct ? 'var(--seafoam)' : 'var(--teal)';
+  document.querySelectorAll('#cf-oaat .oaat-btn').forEach(b=>b.disabled=true);
+  speakText(item.note + (item.family ? ` Family includes: ${item.family}.` : ''));
+  const nextWrap = document.getElementById('cf-next-wrap');
+  const nextBtn = document.getElementById('cf-next-btn');
+  if (nextWrap) {
+    nextWrap.style.display = 'block';
+    if (nextBtn) nextBtn.textContent = cfIdx + 1 >= cfWords.length ? 'See results ✓' : 'Next word →';
+  }
+}
+function cfNext() { cfIdx++; updateCFDisplay(); }
+function speakCFWord() { if (cfIdx < cfWords.length) speakText(cfWords[cfIdx].w); }
+
+function revealOffOf(word, btn) {
+  document.getElementById(word + '-reveal').style.display = 'block';
+  btn.style.borderColor = word === 'off' ? 'var(--teal)' : 'var(--seafoam)';
+  speakText(word === 'off' ?
+    'Off is a content word — adverb and particle. It builds offset, offside, and offbeat. FLSZ applies, so it ends in F F.' :
+    'Of is a function word — a preposition. It has no suffix family and carries the simpler single F spelling.'
+  );
+}
+
+// ════════════════════════════════════
+//  SEC 5 — ⟨sh⟩ DIAGRAM
+// ════════════════════════════════════
+const shWords = [
+  { w:'ship', c1:'sh', v:'i', c2:'p',  note:'⟨sh⟩ in the initial consonant position',
+    ctx:'The <w>ship</w> sailed past the rocky cliffs.' },
+  { w:'shop', c1:'sh', v:'o', c2:'p',  note:'⟨sh⟩ in the initial consonant position',
+    ctx:'We stopped at the <w>shop</w> to buy bread.' },
+  { w:'shed', c1:'sh', v:'e', c2:'d',  note:'⟨sh⟩ in the initial consonant position',
+    ctx:'The tools were kept in the old <w>shed</w>.' },
+  { w:'fish', c1:'f',  v:'i', c2:'sh', note:'⟨sh⟩ in the final consonant position',
+    ctx:'A large <w>fish</w> leapt out of the river.' },
+  { w:'dish', c1:'d',  v:'i', c2:'sh', note:'⟨sh⟩ in the final consonant position',
+    ctx:'She set each <w>dish</w> carefully on the table.' },
+  { w:'rush', c1:'r',  v:'u', c2:'sh', note:'⟨sh⟩ in the final consonant position',
+    ctx:'There was no need to <w>rush</w> — we had time.' },
+];
+function renderSHBtns() {
+  const btns = document.getElementById('sh-word-btns');
+  if (!btns) return;
+  btns.innerHTML = shWords.map((w,i)=>`<button class="comp-opt" onclick="fillSH(${i})" style="font-size:.95rem;font-family:'DM Mono',monospace;">${w.w}</button>`).join('');
+}
+function fillSH(i) {
+  const w = shWords[i];
+  ['c1','v','c2'].forEach(k => {
+    const el = document.getElementById('sh-'+k);
+    if (el) { el.textContent = w[k]; el.style.animation='none'; void el.offsetWidth; el.style.animation='popIn .25s ease'; }
+  });
+  document.getElementById('sh-note').textContent = w.note;
+  renderCtx('sh-ctx', w.ctx, w.w);
+  speakText(`In the word ${w.w}: ${w.note}.`);
+}
+
+// ════════════════════════════════════
+//  SEC 5 — MORPHEME SPLIT
+// ════════════════════════════════════
+const splitWords = [
+  {
+    display: 'mishap',
+    parts: [{text:'mis', type:'prefix', label:'prefix mis- (wrongly/badly)'}, {text:'hap', type:'base', label:'base ⟨hap⟩ (luck, fortune)'}],
+    spk: 'Mishap = prefix mis, meaning wrongly, plus base hap, meaning luck. The S ends the prefix. The H starts the base. There is no S H grapheme — there is a morpheme boundary.',
+    ctx:'It was just a small <w>mishap</w> — no one was hurt.',
+    ctx2:'The word means a stroke of bad luck: mis (wrongly) + hap (chance).',
+  },
+  {
+    display: 'dishonest',
+    parts: [{text:'dis', type:'prefix', label:'prefix dis- (not/away)'}, {text:'honest', type:'base', label:'base ⟨honest⟩'}],
+    spk: 'Dishonest = prefix dis, meaning not, plus base honest. The S ends the prefix. The H starts the base. No S H grapheme here — a morpheme boundary.',
+    ctx:'It would be <w>dishonest</w> to pretend you didn\'t see it.',
+    ctx2:'The word means not honest: dis (not) + honest.',
+  },
+];
+let splitIdx = 0, splitPhase = 0;
+function renderSplit() {
+  const el = document.getElementById('split-container');
+  if (!el) return;
+  const word = splitWords[splitIdx];
+  splitPhase = 0;
+  const ctxHtml = word.ctx ? renderCtxHtml(word.ctx, word.display) + (word.ctx2 ? `<div style="font-size:.82rem;color:var(--muted);margin:-.2rem 0 .4rem .5rem;font-style:italic;">${word.ctx2}</div>` : '') : '';
+  el.innerHTML = `
+    <div style="display:flex;gap:.6rem;justify-content:center;margin-bottom:.6rem;">
+      ${splitWords.map((w,i)=>`<button class="comp-opt" onclick="setSplitWord(${i})" style="${i===splitIdx?'border-color:var(--teal);background:var(--teal-lt);':''}">${w.display}</button>`).join('')}
+    </div>
+    ${ctxHtml}
+    <div id="split-step-prompt" style="text-align:center;font-size:.9rem;font-weight:600;color:var(--teal);margin:.5rem 0 .3rem;min-height:1.5em;transition:all .2s;">
+      Step 1 of 2 — Tap the <span style="background:var(--amber-lt);border-radius:5px;padding:.1rem .4rem;color:#7a4000;font-family:'DM Mono',monospace;">prefix</span>
+    </div>
+    <div class="split-labels" id="split-labels-row">
+      <span class="split-label-prefix" id="split-lbl-prefix" style="min-width:120px;"></span>
+      <span style="flex:1"></span>
+      <span class="split-label-base" id="split-lbl-base" style="min-width:120px;text-align:right;"></span>
+    </div>
+    <div class="split-word-row" id="split-row">
+      ${word.parts.map((p,i)=>`
+        <span class="split-part" id="split-part-${i}" onclick="tapSplitPart(${i})" title="Tap to label">${p.text}</span>
+        ${i<word.parts.length-1?'<div class="split-divider" id="split-div-0"></div>':''}
+      `).join('')}
+    </div>
+    <div class="split-feedback" id="split-feedback" style="margin-top:.6rem;min-height:1.4em;text-align:center;font-size:.88rem;font-weight:600;transition:all .2s;"></div>`;
+}
+function setSplitWord(i) { splitIdx = i; renderSplit(); }
+function tapSplitPart(i) {
+  const word = splitWords[splitIdx];
+  const part = word.parts[i];
+  const el = document.getElementById('split-part-' + i);
+  const labelsRow = document.getElementById('split-labels-row');
+  const stepPrompt = document.getElementById('split-step-prompt');
+  const feedback = document.getElementById('split-feedback');
+
+  // Determine what we expect at this phase
+  const expectedType = splitPhase === 0 ? 'prefix' : 'base';
+  if (part.type !== expectedType) {
+    // Wrong part tapped — gentle redirect
+    el.style.animation = 'shake .3s ease';
+    setTimeout(() => { el.style.animation = ''; }, 350);
+    feedback.textContent = splitPhase === 0
+      ? '← Try the left part first — that\'s the prefix'
+      : '→ Now tap the right part — that\'s the base';
+    feedback.style.color = 'var(--amber-dk)';
+    speakText(splitPhase === 0 ? 'Try tapping the left part first — that is the prefix.' : 'Now tap the right part — that is the base.');
+    return;
+  }
+
+  el.className = 'split-part selected-' + part.type;
+  if (part.type === 'prefix') {
+    document.getElementById('split-lbl-prefix').textContent = part.label;
+    labelsRow.classList.add('visible');
+    const div = document.getElementById('split-div-0');
+    if (div) div.classList.add('visible');
+    splitPhase = 1;
+    if (stepPrompt) stepPrompt.innerHTML = `Step 2 of 2 — Now tap the <span style="background:var(--teal-lt);border-radius:5px;padding:.1rem .4rem;color:var(--teal);font-family:'DM Mono',monospace;">base</span>`;
+    feedback.textContent = '✓ Prefix found. Now tap the base.';
+    feedback.style.color = 'var(--seafoam)';
+    speakText(part.label + '. Now tap the base.');
+  } else {
+    document.getElementById('split-lbl-base').textContent = part.label;
+    splitPhase = 2;
+    if (stepPrompt) stepPrompt.innerHTML = `✓ Complete — <span style="color:var(--seafoam);">both parts identified!</span>`;
+    feedback.textContent = '→ The ⟨s⟩ and ⟨h⟩ belong to different morphemes. No ⟨sh⟩ digraph here.';
+    feedback.style.color = 'var(--teal)';
+    speakText(word.spk);
+  }
+}
+
+// ════════════════════════════════════
+//  SEC 6 — ⟨th⟩ OAAT
+// ════════════════════════════════════
+const thWords = [
+  { w:'thick',  cat:'content',  note:'Content word — adjective. Family: thicker, thickly, thickness.',
+    pairs:['The walls of the castle were very <w>thick</w>.',
+           'A <w2>thicker</w2> coat would keep out the cold — base ⟨thick⟩ carries the meaning in both.'] },
+  { w:'the',    cat:'function', note:'Function word — article. No suffix family.',
+    pairs:['We watched <w>the</w> waves break on the shore.',
+           '<w>The</w> is an article — function word, no suffix family.'] },
+  { w:'path',   cat:'content',  note:'Content word — noun. Family: paths, pathway.',
+    pairs:['A narrow <w>path</w> wound through the forest.',
+           'The <w2>pathway</w2> was edged with stones — same base ⟨path⟩, same meaning.'] },
+  { w:'them',   cat:'function', note:'Function word — pronoun. No suffix family.',
+    pairs:['Leave a note for <w>them</w> on the table.',
+           '<w>Them</w> is a pronoun — function word, no suffix family.'] },
+  { w:'thank',  cat:'content',  note:'Content word — verb. Family: thanks, thankful, thankless.',
+    pairs:['I want to <w>thank</w> you for your help.',
+           'She felt <w2>thankful</w2> for the warm meal — base ⟨thank⟩ stable across both.'] },
+  { w:'this',   cat:'function', note:'Function word — demonstrative pronoun. No suffix family.',
+    pairs:['<w>This</w> is the book I was telling you about.',
+           '<w>This</w> is a demonstrative pronoun — function word, no suffix family.'] },
+  { w:'cloth',  cat:'content',  note:'Content word — noun. Family: cloths, clothe, clothing.',
+    pairs:['She wiped the table with a damp <w>cloth</w>.',
+           'He sorted through the pile of <w2>clothing</w2> — base ⟨cloth⟩ carries meaning in both.'] },
+  { w:'that',   cat:'function', note:'Function word — demonstrative. No suffix family.',
+    pairs:['Is <w>that</w> the house at the end of the lane?',
+           '<w>That</w> is a demonstrative — function word, no suffix family.'] },
+  { w:'truth',  cat:'content',  note:'Content word — noun. Family: truths, truthful, truthfully.',
+    pairs:['It was important to him to tell the <w>truth</w>.',
+           'She gave a <w2>truthful</w2> answer — base ⟨truth⟩ carries the meaning in both.'] },
+  { w:'then',   cat:'function', note:'Function word — adverb/conjunction. No suffix family.',
+    pairs:['We ate lunch and <w>then</w> went for a walk.',
+           '<w>Then</w> is a conjunction — function word, no suffix family.'] },
+];
+let thIdx = 0, thAnswers = [], thWaiting = false;
+function renderTHOAAT() {
+  thIdx=0; thAnswers=[]; thWaiting=false;
+  const oaat = document.getElementById('th-oaat');
+  if (oaat && !document.getElementById('th-next-wrap')) {
+    const wrap = document.createElement('div');
+    wrap.id = 'th-next-wrap';
+    wrap.style.cssText = 'display:none;text-align:center;margin-top:.8rem;';
+    wrap.innerHTML = '<button class="btn btn-primary" id="th-next-btn" onclick="thNext()">Next word →</button>';
+    oaat.appendChild(wrap);
+  }
+  updateTHDisplay();
+}
+function updateTHDisplay() {
+  const dotsEl = document.getElementById('th-dots');
+  const countEl = document.getElementById('th-count');
+  const wordEl = document.getElementById('th-word');
+  const fbEl = document.getElementById('th-feedback');
+  const nextWrap = document.getElementById('th-next-wrap');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = thWords.map((w,i)=>`<div class="oaat-dot ${i<thIdx?thAnswers[i]?'done-correct':'done-wrong':i===thIdx?'current':''}"></div>`).join('');
+  if (thIdx >= thWords.length) {
+    wordEl.textContent='✓ Done!'; wordEl.className='oaat-word correct';
+    countEl.textContent=`${thAnswers.filter(Boolean).length} of ${thWords.length} correct`;
+    fbEl.textContent='All ⟨th⟩ words sorted! Nice noticing.';
+    if (nextWrap) nextWrap.style.display='none';
+    document.querySelectorAll('#th-oaat .oaat-btn').forEach(b=>b.disabled=true); return;
+  }
+  wordEl.textContent=thWords[thIdx].w; wordEl.className='oaat-word';
+  countEl.textContent=`Word ${thIdx+1} of ${thWords.length}`;
+  fbEl.textContent='';
+  if (nextWrap) nextWrap.style.display='none';
+  thWaiting=false;
+  renderCtxPair('th-ctx', thWords[thIdx].pairs);
+  document.querySelectorAll('#th-oaat .oaat-btn').forEach(b=>b.disabled=false);
+}
+function thAnswer(chosen) {
+  if (thWaiting) return;
+  const item = thWords[thIdx];
+  const correct = chosen === item.cat;
+  thAnswers.push(correct);
+  thWaiting = true;
+  document.getElementById('th-word').className='oaat-word '+(correct?'correct':'incorrect');
+  const fbEl = document.getElementById('th-feedback');
+  fbEl.textContent=(correct?'✓ ':'→ ')+item.note;
+  fbEl.style.color=correct?'var(--seafoam)':'var(--teal)';
+  document.querySelectorAll('#th-oaat .oaat-btn').forEach(b=>b.disabled=true);
+  speakText(item.note);
+  const nextWrap = document.getElementById('th-next-wrap');
+  const nextBtn = document.getElementById('th-next-btn');
+  if (nextWrap) {
+    nextWrap.style.display='block';
+    if (nextBtn) nextBtn.textContent = thIdx + 1 >= thWords.length ? 'See results ✓' : 'Next word →';
+  }
+}
+function thNext() { thIdx++; updateTHDisplay(); }
+function speakThWord() { if (thIdx < thWords.length) speakText(thWords[thIdx].w); }
+
+// ════════════════════════════════════
+//  PRACTICE — one at a time
+// ════════════════════════════════════
+const practiceData = [
+  { q:'Which grapheme fits the gap? ca_t — this word means a small furry animal.', opts:['c','k','ck','kk'], answer:'c', exp:'Before ⟨a⟩, the convention is ⟨c⟩. So we write cat — not kat.' },
+  { q:'Which grapheme fits? _it — a small set of tools.', opts:['c','k','ck','ch'], answer:'k', exp:'Before ⟨i⟩, the convention is ⟨k⟩. So we write kit — not cit.' },
+  { q:'The word "back" ends in ⟨ck⟩ because…', opts:['it follows a single vowel grapheme','it follows a consonant','ck is always used at the end','it is a function word'], answer:'it follows a single vowel grapheme', exp:'⟨ck⟩ comes after a single vowel grapheme at the end of a base: b-a-ck. After a consonant (like milk), we use single ⟨k⟩.' },
+  { q:'"Milk" ends in single ⟨k⟩ because…', opts:['it follows a vowel','it follows the consonant ⟨l⟩','k is always used after m','it is a function word'], answer:'it follows the consonant ⟨l⟩', exp:'⟨k⟩ follows a consonant at the end. In milk: the consonant ⟨l⟩ comes before the final ⟨k⟩.' },
+  { q:'The FLSZ convention applies to…', opts:['any word ending in f, l, s, z','single-morpheme content bases','function words like "of"','words from Latin'], answer:'single-morpheme content bases', exp:'FLSZ applies to single-morpheme content bases: cliff, hill, grass, buzz. Function words carry simpler spellings.' },
+  { q:'"Grass" ends in ⟨ss⟩ but "his" ends in ⟨s⟩. Why?', opts:['grass has two syllables','grass is a content word; his is a function word','his is an exception','the vowels are different'], answer:'grass is a content word; his is a function word', exp:'Grass builds a family: grassy, grassland. FLSZ applies → ⟨ss⟩. His is a pronoun — a function word — with no family. Single ⟨s⟩.' },
+  { q:'In the word "ship", how many graphemes fill the initial consonant slot?', opts:['two — S and H separately','one — ⟨sh⟩ as a single unit','zero','three'], answer:'one — ⟨sh⟩ as a single unit', exp:'⟨sh⟩ is a two-letter grapheme — one spelling unit occupying one consonant position. Not two separate graphemes.' },
+  { q:'In "mishap", is there a ⟨sh⟩ grapheme?', opts:['Yes — it is in the middle','No — mis + hap is a morpheme boundary','Yes — all words with s and h have ⟨sh⟩','It depends on how fast you say it'], answer:'No — mis + hap is a morpheme boundary', exp:'Mishap = prefix mis- (wrongly) + base hap (luck). The ⟨s⟩ ends the prefix. The ⟨h⟩ starts the base. No ⟨sh⟩ digraph.' },
+  { q:'Which ⟨th⟩ word is a content word that builds a word family?', opts:['the','them','thick','that'], answer:'thick', exp:'Thick is an adjective — a content word. It builds thicker, thickly, thickness. The others are function words with no suffix families.' },
+  { q:'"Off" ends in ⟨ff⟩ and "of" ends in ⟨f⟩. The spelling difference signals…', opts:['off is longer','off is content; of is function','of is an exception','they have different vowels'], answer:'off is content; of is function', exp:'Off builds a family: offset, offside, offbeat. FLSZ applies → ⟨ff⟩. Of is a preposition — a function word — with no family. Single ⟨f⟩.' },
+  { q:'Which grapheme fills the gap? ca__  — to grab something moving.', opts:['ch','tch','ck','k'], answer:'tch', exp:'After a single vowel grapheme ⟨a⟩ at the end of a base, we write ⟨tch⟩ — same positional rule as ⟨ck⟩. We write catch, not cach or cack.' },
+  { q:'Which grapheme fills the gap? ben__  — a long seat.', opts:['tch','ck','ch','k'], answer:'ch', exp:'After the consonant ⟨n⟩ at the end of a base, we write ⟨ch⟩ — same positional rule as single ⟨k⟩. We write bench, not bentch.' },
+];
+let pracIdx = 0, pracAnswers = [];
+function renderPractice() {
+  pracIdx=0; pracAnswers=[];
+  document.getElementById('practice-score').style.display='none';
+  renderPracQ();
+}
+function renderPracQ() {
+  const el = document.getElementById('practice-container');
+  if (!el) return;
+  updatePracBar();
+  if (pracIdx >= practiceData.length) {
+    el.innerHTML='';
+    document.getElementById('practice-score').style.display='block';
+    document.getElementById('score-display').textContent=`${pracAnswers.filter(Boolean).length} / ${practiceData.length}`;
+    speakText(`You scored ${pracAnswers.filter(Boolean).length} out of ${practiceData.length}. Nice noticing, Word Scientist!`);
+    return;
+  }
+  const q = practiceData[pracIdx];
+  const letters = ['A','B','C','D'];
+  el.innerHTML = `
+    <div class="practice-card">
+      <span class="pq-num">QUESTION ${pracIdx+1} OF ${practiceData.length}</span>
+      <button class="card-read-btn" onclick="speakText(${JSON.stringify(q.q+' Options: '+q.opts.join('. '))})" style="margin-bottom:.7rem;">${SPK} Read question</button>
+      <div class="pq-text">${q.q}</div>
+      <div class="practice-opts" id="prac-opts"></div>
+      <div class="prac-explanation" id="prac-exp"></div>
+      <div class="prac-nav">
+        <div class="prac-dots">${practiceData.map((_,i)=>`<div class="prac-dot ${i<pracIdx?(pracAnswers[i]?'answered-correct':'answered-wrong'):i===pracIdx?'current':''}"></div>`).join('')}</div>
+        <span style="font-size:.78rem;color:var(--muted);">Tap an answer to continue</span>
+      </div>
+    </div>`;
+  const optsEl = document.getElementById('prac-opts');
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'prac-opt';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${opt}`;
+    btn.onclick = () => answerPrac(opt);
+    optsEl.appendChild(btn);
+  });
+}
+function answerPrac(chosen) {
+  const q = practiceData[pracIdx];
+  const correct = chosen === q.answer;
+  pracAnswers.push(correct);
+  document.querySelectorAll('.prac-opt').forEach(btn => {
+    btn.disabled = true;
+    const text = btn.textContent.replace(/^[ABCD]/,'');
+    if (text === q.answer) btn.classList.add('show-answer');
+    else if (text === chosen && !correct) btn.classList.add('incorrect');
+  });
+  const expEl = document.getElementById('prac-exp');
+  expEl.textContent = (correct ? '✓ ' : '→ ') + q.exp;
+  expEl.className = 'prac-explanation show';
+  speakText(q.exp);
+  updatePracBar();
+  // Replace "tap to continue" hint with an explicit Next button — learner controls the pace
+  const nav = document.querySelector('.prac-nav');
+  if (nav) {
+    const isLast = pracIdx + 1 >= practiceData.length;
+    nav.innerHTML = `
+      <div class="prac-dots">${practiceData.map((_,i)=>`<div class="prac-dot ${i<pracIdx+1?(pracAnswers[i]?'answered-correct':'answered-wrong'):i===pracIdx+1?'current':''}"></div>`).join('')}</div>
+      <button class="btn btn-primary" onclick="pracNext()" style="font-size:.84rem;padding:.4rem 1rem;">
+        ${isLast ? 'See my results ✓' : 'Next question →'}
+      </button>`;
+  }
+}
+function pracNext() {
+  pracIdx++;
+  renderPracQ();
+}
+function updatePracBar() {
+  document.getElementById('prac-bar').style.width = `${(pracIdx/practiceData.length)*100}%`;
+}
+function resetPractice() { renderPractice(); }
+
+// ════════════════════════════════════
+//  INIT
+// ════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderCVCBtns();
+  makeWFB('cvc-wfb', [
+    { base:'cat', meaning:'a small domesticated animal',
+      ctx:'The <w>cat</w> stretched out on the warm stone step.',
+      suffixes:[
+        {suf:'s',   result:'cats',   sum:'cat + s → cats',   ctx:'Two <w>cats</w> sat side by side on the fence.'},
+        {suf:'nap', result:'catnap', sum:'cat + nap → catnap', ctx:'She took a quick <w>catnap</w> before dinner.'},
+      ],
+      investigation:{
+        id:'cvc-cat', base:'cat', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'The <w>cat</w> naps in the sun.'},
+          {text:'Those <w2>cats</w2> nap on the wall.'},
+          {text:'Fluffy likes <w2>catnip</w2> — the base means the same thing.'},
+          {text:'Dad is taking a <w2>catnap</w2> on the sofa.'},
+        ],
+        prompt:'How is the meaning of',
+        opts:[
+          {text:'The spelling of ⟨cat⟩ changes in each word', correct:false,
+           redirect:'Look at the highlighted words again — can you spot ⟨cat⟩ inside each one?'},
+          {text:'⟨cat⟩ keeps its spelling in every word — cats, catnip, catnap all carry the same base', correct:true,
+           confirm:'Yes! The base ⟨cat⟩ is spelled the same way in every word. The meaning — small furry animal — travels through the whole family. That\'s what makes a word family: one stable base, one stable meaning.'},
+          {text:'Each word has a completely different meaning', correct:false,
+           redirect:'Look at the meaning: what does ⟨cat⟩ contribute to catnap? To catnip?'},
+        ],
+      }},
+    { base:'ship', meaning:'a large vessel for water',
+      ctx:'The tall <w>ship</w> sailed out of the harbour.',
+      suffixes:[
+        {suf:'s',     result:'ships',     sum:'ship + s → ships',     ctx:'Several <w>ships</w> were anchored in the bay.'},
+        {suf:'ment',  result:'shipment',  sum:'ship + ment → shipment', ctx:'The <w>shipment</w> arrived two days early.'},
+        {suf:'wreck', result:'shipwreck', sum:'ship + wreck → shipwreck', ctx:'Divers explored the old <w>shipwreck</w> on the seabed.'},
+      ],
+      investigation:{
+        id:'cvc-ship', base:'ship', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'The <w>ship</w> left the harbour.'},
+          {text:'Several <w2>ships</w2> were anchored in the bay.'},
+          {text:'The <w2>shipment</w2> of supplies arrived safely.'},
+          {text:'Divers found an old <w2>shipwreck</w2> on the seabed.'},
+        ],
+        opts:[
+          {text:'⟨ship⟩ keeps its spelling in every word — ships, shipment, shipwreck all carry the same base', correct:true,
+           confirm:'Exactly right. The base ⟨ship⟩ is spelled identically in every word. The meaning — large vessel — travels through the whole family unchanged. Bases are stable.'},
+          {text:'The meaning of ⟨ship⟩ is different in each word', correct:false,
+           redirect:'What does each word have to do with water travel? What does ⟨ship⟩ contribute to shipment? To shipwreck?'},
+          {text:'⟨ship⟩ only appears in words about the sea', correct:false,
+           redirect:'What about shipment — is that always about the sea? Or is the base meaning broader?'},
+        ],
+      }},
+  ]);
+  renderCKChunkTable();
+  renderCKCompletions();
+  renderCKYN();
+  renderTCHYN();
+  makeWFB('tch-wfb', [
+    { base:'catch', meaning:'to grab something moving',
+      ctx:'She reached up to <w>catch</w> the ball.',
+      suffixes:[
+        {suf:'es',  result:'catches',  sum:'catch + es → catches',  ctx:'He <w>catches</w> every ball thrown to him.'},
+        {suf:'ing', result:'catching', sum:'catch + ing → catching', ctx:'She is <w>catching</w> up fast.'},
+        {suf:'er',  result:'catcher',  sum:'catch + er → catcher',  ctx:'The <w>catcher</w> crouched behind the plate.'},
+      ],
+      investigation:{
+        id:'tch-catch', base:'catch', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'She reached up to <w>catch</w> the ball.'},
+          {text:'He <w2>catches</w2> every ball thrown to him.'},
+          {text:'She is <w2>catching</w2> up fast.'},
+          {text:'The <w2>catcher</w2> crouched behind the plate.'},
+        ],
+        opts:[
+          {text:'⟨catch⟩ keeps its spelling — including ⟨tch⟩ — in every word', correct:true,
+           confirm:'Yes. The base ⟨catch⟩ is spelled identically in catches, catching, and catcher. The ⟨tch⟩ is part of the base — it travels through the whole family unchanged. Bases are stable.'},
+          {text:'⟨tch⟩ disappears when a suffix is added', correct:false,
+           redirect:'Look at catches and catching — is ⟨tch⟩ still there inside each word?'},
+          {text:'Catcher doesn\'t carry the meaning of catch', correct:false,
+           redirect:'A catcher is someone who catches. Where is the base ⟨catch⟩ inside the word ⟨catcher⟩?'},
+        ],
+      }},
+    { base:'fetch', meaning:'to go and get something',
+      ctx:'Can you <w>fetch</w> the key from the hook?',
+      suffixes:[
+        {suf:'es',  result:'fetches',  sum:'fetch + es → fetches',  ctx:'She <w>fetches</w> water from the well each morning.'},
+        {suf:'ing', result:'fetching', sum:'fetch + ing → fetching', ctx:'The dog keeps <w>fetching</w> the stick.'},
+      ],
+      investigation:{
+        id:'tch-fetch', base:'fetch', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'Can you <w>fetch</w> the key from the hook?'},
+          {text:'She <w2>fetches</w2> water from the well each morning.'},
+          {text:'The dog keeps <w2>fetching</w2> the stick.'},
+        ],
+        opts:[
+          {text:'⟨fetch⟩ keeps its spelling — including ⟨tch⟩ — in fetches and fetching', correct:true,
+           confirm:'Yes. The base ⟨fetch⟩ is spelled identically in every form. The ⟨tch⟩ is part of the base — it doesn\'t change when suffixes are added.'},
+          {text:'⟨tch⟩ changes to ⟨ch⟩ when a suffix is added', correct:false,
+           redirect:'Look carefully at fetches and fetching — can you still see ⟨tch⟩ inside each word?'},
+          {text:'Fetching means something completely different from fetch', correct:false,
+           redirect:'Fetching means in the act of fetching. Where is the base ⟨fetch⟩ inside the word ⟨fetching⟩?'},
+        ],
+      }},
+  ]);
+  renderFLSZYN();
+  makeWFB('flsz-wfb', [
+    { base:'cliff', meaning:'a steep rock face',
+      ctx:'A seabird perched on the edge of the <w>cliff</w>.',
+      suffixes:[
+        {suf:'s',   result:'cliffs',   sum:'cliff + s → cliffs',   ctx:'The white <w>cliffs</w> glowed in the morning light.'},
+        {suf:'top', result:'clifftop', sum:'cliff + top → clifftop', ctx:'They stood on the <w>clifftop</w> and looked out to sea.'},
+      ],
+      investigation:{
+        id:'flsz-cliff', base:'cliff', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'A gannet dived from the <w>cliff</w>.'},
+          {text:'The white <w2>cliffs</w2> glowed in the morning light.'},
+          {text:'The <w2>clifftop</w2> path was narrow and exposed.'},
+        ],
+        opts:[
+          {text:'⟨cliff⟩ keeps its spelling — including ⟨ff⟩ — in every word', correct:true,
+           confirm:'Yes. The base ⟨cliff⟩ is spelled identically each time — ⟨ff⟩ and all. The FLSZ spelling is part of the base, and the base stays stable across the whole family.'},
+          {text:'The ⟨ff⟩ spelling disappears when suffixes are added', correct:false,
+           redirect:'Look at cliffs and clifftop — is the ⟨ff⟩ still there in both words?'},
+          {text:'Each word means something completely different', correct:false,
+           redirect:'What does each word have to do with a steep rocky face? What does ⟨cliff⟩ contribute to each one?'},
+        ],
+      }},
+    { base:'hill', meaning:'a raised area of land',
+      ctx:'A path wound slowly up the side of the <w>hill</w>.',
+      suffixes:[
+        {suf:'s',    result:'hills',    sum:'hill + s → hills',    ctx:'The <w>hills</w> in the distance were covered in snow.'},
+        {suf:'side', result:'hillside', sum:'hill + side → hillside', ctx:'Sheep grazed on the open <w>hillside</w>.'},
+        {suf:'y',    result:'hilly',    sum:'hill + y → hilly',    ctx:'The road was <w>hilly</w> and the cycling was hard work.'},
+      ],
+      investigation:{
+        id:'flsz-hill', base:'hill', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'They climbed to the top of the <w>hill</w>.'},
+          {text:'The <w2>hills</w2> in the distance were covered in snow.'},
+          {text:'Sheep grazed on the open <w2>hillside</w2>.'},
+          {text:'It was a <w2>hilly</w2> part of the country.'},
+        ],
+        opts:[
+          {text:'⟨hill⟩ keeps its spelling — including ⟨ll⟩ — across all four words', correct:true,
+           confirm:'Exactly. The base ⟨hill⟩ appears identically in hill, hills, hillside, and hilly. The ⟨ll⟩ is part of the base, not an addition. Bases are stable.'},
+          {text:'⟨ll⟩ only appears in the base form — it changes in the longer words', correct:false,
+           redirect:'Look carefully at hillside and hilly — is the ⟨ll⟩ still there in both?'},
+          {text:'Hilly doesn\'t carry the meaning of hill', correct:false,
+           redirect:'Hilly means full of hills. Where is the base ⟨hill⟩ inside the word ⟨hilly⟩?'},
+        ],
+      }},
+    { base:'grass', meaning:'the green ground cover',
+      ctx:'We sat on the cool <w>grass</w> in the shade of the tree.',
+      suffixes:[
+        {suf:'y',    result:'grassy',    sum:'grass + y → grassy',    ctx:'The <w>grassy</w> bank sloped gently down to the stream.'},
+        {suf:'land', result:'grassland', sum:'grass + land → grassland', ctx:'Herds of animals roamed the open <w>grassland</w>.'},
+      ],
+      investigation:{
+        id:'flsz-grass', base:'grass', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'The children lay on the cool <w>grass</w>.'},
+          {text:'The <w2>grassy</w2> bank sloped down to the stream.'},
+          {text:'Herds of animals roamed the open <w2>grassland</w2>.'},
+        ],
+        opts:[
+          {text:'⟨grass⟩ keeps its spelling — including ⟨ss⟩ — in every word', correct:true,
+           confirm:'Yes! The base ⟨grass⟩ is spelled identically in all three words. The ⟨ss⟩ is part of the base — it travels with it. Bases are stable.'},
+          {text:'⟨ss⟩ disappears when a suffix is added', correct:false,
+           redirect:'Look at grassy and grassland — is the ⟨ss⟩ still visible in both words?'},
+          {text:'Grassland means something completely unrelated to grass', correct:false,
+           redirect:'What kind of land is grassland? Where is the base ⟨grass⟩ inside it?'},
+        ],
+      }},
+  ]);
+  renderCFOAAT();
+  renderSHBtns();
+  makeWFB('sh-wfb', [
+    { base:'ship', meaning:'a large vessel for water',
+      ctx:'The <w>ship</w> sailed past the lighthouse at dusk.',
+      suffixes:[
+        {suf:'s',   result:'ships',    sum:'ship + s → ships',    ctx:'A fleet of <w>ships</w> filled the harbour.'},
+        {suf:'ment',result:'shipment', sum:'ship + ment → shipment', ctx:'The <w>shipment</w> of supplies arrived on time.'},
+      ],
+      investigation:{
+        id:'sh-ship', base:'ship', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'The <w>ship</w> left the harbour at dawn.'},
+          {text:'A fleet of <w2>ships</w2> filled the bay.'},
+          {text:'The <w2>shipment</w2> of supplies arrived safely.'},
+        ],
+        opts:[
+          {text:'⟨sh⟩ stays in every word — ⟨ship⟩ is spelled the same in ships and shipment', correct:true,
+           confirm:'Yes. The grapheme ⟨sh⟩ is part of the base ⟨ship⟩, and the base is spelled identically in every derived word. The ⟨sh⟩ doesn\'t move or change — it belongs to the base.'},
+          {text:'⟨sh⟩ is only in ship — it disappears in the other words', correct:false,
+           redirect:'Look at ships and shipment — can you see ⟨sh⟩ at the start of each word?'},
+          {text:'Shipment doesn\'t really have anything to do with ships', correct:false,
+           redirect:'Shipment means the act of shipping goods. What does ⟨ship⟩ contribute to that meaning?'},
+        ],
+      }},
+    { base:'dish', meaning:'a container for food',
+      ctx:'She placed each <w>dish</w> carefully on the shelf.',
+      suffixes:[
+        {suf:'es',    result:'dishes',    sum:'dish + es → dishes',    ctx:'He washed all the <w>dishes</w> after the meal.'},
+        {suf:'cloth', result:'dishcloth', sum:'dish + cloth → dishcloth', ctx:'She wiped the counter with a clean <w>dishcloth</w>.'},
+      ],
+      investigation:{
+        id:'sh-dish', base:'dish', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'She placed the <w>dish</w> on the shelf.'},
+          {text:'He washed all the <w2>dishes</w2> after the meal.'},
+          {text:'She wiped the counter with a clean <w2>dishcloth</w2>.'},
+        ],
+        opts:[
+          {text:'⟨dish⟩ keeps its spelling — including ⟨sh⟩ — in every word', correct:true,
+           confirm:'Exactly right. The base ⟨dish⟩ is spelled identically in dish, dishes, and dishcloth. The ⟨sh⟩ is part of the base — it travels with it through the whole family.'},
+          {text:'⟨sh⟩ changes position in different words', correct:false,
+           redirect:'Look at where ⟨sh⟩ appears in dish, dishes, and dishcloth — is it in the same position in all three?'},
+          {text:'Dishcloth has nothing to do with dishes', correct:false,
+           redirect:'What is a dishcloth used for? Where is the base ⟨dish⟩ inside the word?'},
+        ],
+      }},
+  ]);
+  renderSplit();
+  renderTHOAAT();
+  makeWFB('th-wfb', [
+    { base:'thin', meaning:'not thick; having little depth',
+      ctx:'The ice was too <w>thin</w> to bear any weight.',
+      suffixes:[
+        {suf:'ner',  result:'thinner',  sum:'thin + ner → thinner',  ctx:'The ice grew <w>thinner</w> each day as the sun warmed it.'},
+        {suf:'ly',   result:'thinly',   sum:'thin + ly → thinly',    ctx:'She spread the butter <w>thinly</w> on the bread.'},
+        {suf:'ness', result:'thinness', sum:'thin + ness → thinness', ctx:'The <w>thinness</w> of the ice made it dangerous.'},
+      ],
+      investigation:{
+        id:'th-thin', base:'thin', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'The ice was too <w>thin</w> to stand on.'},
+          {text:'It grew <w2>thinner</w2> each day as the sun warmed it.'},
+          {text:'She spread the butter <w2>thinly</w2> on the bread.'},
+          {text:'The <w2>thinness</w2> of the walls let in the cold.'},
+        ],
+        opts:[
+          {text:'⟨thin⟩ keeps its spelling in every word — thinner, thinly, thinness all carry the same base', correct:true,
+           confirm:'Yes! The base ⟨thin⟩ is spelled identically in every word. The ⟨th⟩ is part of the base — it doesn\'t change. The meaning — not thick — travels through the whole family.'},
+          {text:'The ⟨th⟩ spelling changes in the longer words', correct:false,
+           redirect:'Look at thinner, thinly, thinness — is ⟨th⟩ at the start of each one?'},
+          {text:'Thinness doesn\'t carry the meaning of thin', correct:false,
+           redirect:'Thinness means the quality of being thin. Where is the base ⟨thin⟩ inside the word ⟨thinness⟩?'},
+        ],
+      }},
+    { base:'bath', meaning:'washing the body in water',
+      ctx:'She filled the <w>bath</w> with warm water.',
+      suffixes:[
+        {suf:'s',    result:'baths',    sum:'bath + s → baths',    ctx:'The old house had two <w>baths</w> on the upper floor.'},
+        {suf:'room', result:'bathroom', sum:'bath + room → bathroom', ctx:'The <w>bathroom</w> tiles were a cool shade of blue.'},
+      ],
+      investigation:{
+        id:'th-bath', base:'bath', title:'Word Scientist Investigation',
+        sentences:[
+          {text:'She filled the <w>bath</w> with warm water.'},
+          {text:'The old house had two <w2>baths</w2> upstairs.'},
+          {text:'The <w2>bathroom</w2> tiles were a cool shade of blue.'},
+        ],
+        opts:[
+          {text:'⟨bath⟩ keeps its spelling — including ⟨th⟩ — in every word', correct:true,
+           confirm:'Yes. The base ⟨bath⟩ is spelled identically in bath, baths, and bathroom. The ⟨th⟩ is part of the base — it travels with it through the family.'},
+          {text:'⟨th⟩ only appears in the base form', correct:false,
+           redirect:'Look at baths and bathroom — is the ⟨th⟩ still there in both?'},
+          {text:'Bathroom doesn\'t carry the meaning of bath', correct:false,
+           redirect:'What is a bathroom for? Where is the base ⟨bath⟩ inside the word ⟨bathroom⟩?'},
+        ],
+      }},
+  ]);
+  renderPractice();
+});
+
+// ════════════════════════════════════
+//  SESSION SUMMARY
+// ════════════════════════════════════
+
+// State collectors — each section records into these as the student works
+const sessionData = {
+  cvcWords:      { tapped: new Set() },           // which words tapped
+  ckChunks:      { revealed: 0 },                 // how many chunks revealed
+  ckCompletions: { total:0, correct:0 },          // completion taps
+  ckYN:          { answers: {} },                 // word → chosen
+  tchYN:         { answers: {} },
+  flsz:          { total:0, correct:0 },
+  cf:            { total:0, correct:0 },
+  th:            { total:0, correct:0 },
+  shWords:       { tapped: new Set() },
+  morphSplit:    { completed: new Set() },
+  wfbSuffixes:   {},                              // containerId → { base, tapped:[] }
+  investigations:{ },                             // investId → { base, correct:bool|null }
+  practice:      { total:0, correct:0 },
+};
+
+// ── Patch all answer functions to also record into sessionData ──
+
+// Wrap flszAnswer
+const _flszAnswerOrig = flszAnswer;
+window.flszAnswer = function(chosen) {
+  _flszAnswerOrig(chosen);
+  const item = flszYN[flszIdx - 1] || flszYN[flszIdx];
+  // flszIdx already incremented inside original? No — it increments in flszNext.
+  // Record at answer time: flszIdx is still current word index
+  sessionData.flsz.total++;
+  sessionData.flsz.correct += (chosen === flszYN[flszIdx]?.ans) ? 1 : 0;
+};
+// Simpler: hook into the answer functions via the existing variables
+// Actually patch by observing flszAnswers array length after each call
+// Use a cleaner approach: patch answerCKComp, answerCKYN, flszAnswer, cfAnswer, thAnswer, answerPrac at source
+
+// Patch answerCKComp to record
+const _answerCKCompOrig = answerCKComp;
+window.answerCKComp = function(i, chosen) {
+  _answerCKCompOrig(i, chosen);
+  sessionData.ckCompletions.total++;
+  if (chosen === ckCompletions[i].answer) sessionData.ckCompletions.correct++;
+};
+
+// Patch answerCKYN
+const _answerCKYNOrig = answerCKYN;
+window.answerCKYN = function(i, chosen) {
+  _answerCKYNOrig(i, chosen);
+  sessionData.ckYN.answers[ckYN[i].w] = { chosen, correct: chosen === ckYN[i].ans };
+};
+
+// Patch answerTCHYN
+const _answerTCHYNOrig = answerTCHYN;
+window.answerTCHYN = function(i, chosen) {
+  _answerTCHYNOrig(i, chosen);
+  sessionData.tchYN.answers[tchYN[i].w] = { chosen, correct: chosen === tchYN[i].ans };
+};
+
+// Patch cfAnswer
+const _cfAnswerOrig = cfAnswer;
+window.cfAnswer = function(chosen) {
+  const before = cfAnswers.length;
+  _cfAnswerOrig(chosen);
+  if (cfAnswers.length > before) {
+    sessionData.cf.total++;
+    if (cfAnswers[cfAnswers.length-1]) sessionData.cf.correct++;
+  }
+};
+
+// Patch thAnswer
+const _thAnswerOrig = thAnswer;
+window.thAnswer = function(chosen) {
+  const before = thAnswers.length;
+  _thAnswerOrig(chosen);
+  if (thAnswers.length > before) {
+    sessionData.th.total++;
+    if (thAnswers[thAnswers.length-1]) sessionData.th.correct++;
+  }
+};
+
+// Patch answerInvest to record
+const _answerInvestOrig = answerInvest;
+window.answerInvest = function(id, oi) {
+  _answerInvestOrig(id, oi);
+  const spec = window['_investSpec_'+id];
+  if (spec && spec.opts[oi].correct) {
+    sessionData.investigations[id] = { base: spec.base, correct: true };
+  } else if (!sessionData.investigations[id]?.correct) {
+    sessionData.investigations[id] = { base: spec?.base, correct: false };
+  }
+};
+
+// Patch fillCVC and fillSH to record taps
+const _fillCVCOrig = fillCVC;
+window.fillCVC = function(i) { _fillCVCOrig(i); sessionData.cvcWords.tapped.add(cvcWords[i].w); };
+const _fillSHOrig = fillSH;
+window.fillSH = function(i) { _fillSHOrig(i); sessionData.shWords.tapped.add(shWords[i].w); };
+
+// Patch setSplitWord / tapSplitPart
+const _tapSplitPartOrig = tapSplitPart;
+window.tapSplitPart = function(i) {
+  _tapSplitPartOrig(i);
+  if (splitPhase === 2) sessionData.morphSplit.completed.add(splitWords[splitIdx].display);
+};
+
+// Patch revealCKChunk
+const _revealCKChunkOrig = revealCKChunk;
+window.revealCKChunk = function() { _revealCKChunkOrig(); sessionData.ckChunks.revealed = ckChunkIdx; };
+
+// Patch practice answer
+const _answerPracOrig = answerPrac;
+window.answerPrac = function(chosen) {
+  const before = pracAnswers.length;
+  _answerPracOrig(chosen);
+  if (pracAnswers.length > before) {
+    sessionData.practice.total++;
+    if (pracAnswers[pracAnswers.length-1]) sessionData.practice.correct++;
+  }
+};
+
+// ── Build and open summary ──
+function openSummary() {
+  buildSummary();
+  // pre-fill date
+  const d = new Date();
+  document.getElementById('sum-date').value =
+    d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+  document.getElementById('summary-overlay').classList.add('open');
+  window.scrollTo(0,0);
+}
+function closeSummary() {
+  document.getElementById('summary-overlay').classList.remove('open');
+}
+
+function scoreBadge(correct, total) {
+  if (total === 0) return '<span class="sum-score-badge na">Not attempted</span>';
+  const pct = correct / total;
+  const cls = pct === 1 ? 'perfect' : pct >= 0.7 ? '' : 'partial';
+  return `<span class="sum-score-badge ${cls}">${correct} / ${total}</span>`;
+}
+function naTag() { return '<span class="sum-score-badge na">—</span>'; }
+
+function buildSummary() {
+  const el = document.getElementById('sum-sections');
+  let totalCorrect = 0, totalItems = 0;
+  let html = '';
+
+  // ── Section 1: CVC Words ──
+  const cvcTapped = sessionData.cvcWords.tapped.size;
+  html += sectionBlock('🧱 CVC Words', naTag(), `
+    ${sumRow('🔵', 'Words explored', `${cvcTapped} of ${cvcWords.length}`, cvcTapped > 0 ? 'correct' : 'na')}
+    ${sumRow('🔵', 'Word family builder (cat, ship)', sessionData.wfbSuffixes['cvc-wfb'] ? summariseWFB('cvc-wfb') : '—', 'na')}
+  `);
+
+  // ── Section 2: C/K/CK/TCH ──
+  const ckC = sessionData.ckCompletions.correct, ckT = sessionData.ckCompletions.total;
+  const ckYNentries = Object.values(sessionData.ckYN.answers);
+  const ckYNc = ckYNentries.filter(e=>e.correct).length;
+  const tchEntries = Object.values(sessionData.tchYN.answers);
+  const tchC = tchEntries.filter(e=>e.correct).length;
+  if (ckT > 0) { totalCorrect += ckC; totalItems += ckT; }
+  if (ckYNentries.length) { totalCorrect += ckYNc; totalItems += ckYNentries.length; }
+  if (tchEntries.length) { totalCorrect += tchC; totalItems += tchEntries.length; }
+  html += sectionBlock('🔤 C / K / CK / TCH',
+    scoreBadge(ckC + ckYNc + tchC, ckT + ckYNentries.length + tchEntries.length), `
+    ${sumRow('📊', 'Patterns revealed', `${sessionData.ckChunks.revealed} of ${ckChunks.length}`, sessionData.ckChunks.revealed > 0 ? 'correct' : 'na')}
+    ${sumRow('✏️', 'Pattern completions', ckT > 0 ? `${ckC} / ${ckT}` : '—', ckT > 0 ? (ckC===ckT?'correct':'wrong') : 'na')}
+    ${sumRow('🔀', '⟨ck⟩ vs ⟨k⟩ sort', ckYNentries.length ? `${ckYNc} / ${ckYNentries.length}` : '—', ckYNentries.length ? (ckYNc===ckYNentries.length?'correct':'wrong') : 'na')}
+    ${sumRow('🔀', '⟨tch⟩ vs ⟨ch⟩ sort', tchEntries.length ? `${tchC} / ${tchEntries.length}` : '—', tchEntries.length ? (tchC===tchEntries.length?'correct':'wrong') : 'na')}
+    ${investRow('tch-catch')} ${investRow('tch-fetch')}
+  `);
+
+  // ── Section 3: FLSZ ──
+  const flszC = sessionData.flsz.correct, flszT = sessionData.flsz.total;
+  if (flszT > 0) { totalCorrect += flszC; totalItems += flszT; }
+  html += sectionBlock('✌️ FLSZ Convention',
+    scoreBadge(flszC, flszT), `
+    ${sumRow('🔀', 'FLSZ sorter', flszT > 0 ? `${flszC} / ${flszT}` : '—', flszT > 0 ? (flszC===flszT?'correct':'wrong') : 'na')}
+    ${investRow('flsz-cliff')} ${investRow('flsz-hill')} ${investRow('flsz-grass')}
+  `);
+
+  // ── Section 4: Content & Function ──
+  const cfC = sessionData.cf.correct, cfT = sessionData.cf.total;
+  if (cfT > 0) { totalCorrect += cfC; totalItems += cfT; }
+  html += sectionBlock('📦 Content &amp; Function Words',
+    scoreBadge(cfC, cfT), `
+    ${sumRow('🔀', 'Content/Function sorter', cfT > 0 ? `${cfC} / ${cfT}` : '—', cfT > 0 ? (cfC===cfT?'correct':'wrong') : 'na')}
+  `);
+
+  // ── Section 5: ⟨sh⟩ ──
+  const shTapped = sessionData.shWords.tapped.size;
+  const morphDone = sessionData.morphSplit.completed.size;
+  html += sectionBlock('〰️ ⟨sh⟩ Digraph', naTag(), `
+    ${sumRow('🔵', 'Words explored', `${shTapped} of ${shWords.length}`, shTapped > 0 ? 'correct' : 'na')}
+    ${sumRow('🔬', 'Morpheme split completed', morphDone > 0 ? splitWords.slice(0,morphDone).map(w=>w.display).join(', ') : '—', morphDone > 0 ? 'correct' : 'na')}
+    ${investRow('sh-ship')} ${investRow('sh-dish')}
+  `);
+
+  // ── Section 6: ⟨th⟩ ──
+  const thC = sessionData.th.correct, thT = sessionData.th.total;
+  if (thT > 0) { totalCorrect += thC; totalItems += thT; }
+  html += sectionBlock('⚖️ ⟨th⟩ Digraph',
+    scoreBadge(thC, thT), `
+    ${sumRow('🔀', '⟨th⟩ sorter', thT > 0 ? `${thC} / ${thT}` : '—', thT > 0 ? (thC===thT?'correct':'wrong') : 'na')}
+    ${investRow('th-thin')} ${investRow('th-bath')}
+  `);
+
+  // ── Section 7: Practice quiz ──
+  const pC = sessionData.practice.correct, pT = sessionData.practice.total;
+  if (pT > 0) { totalCorrect += pC; totalItems += pT; }
+  html += sectionBlock('✨ Practice Quiz',
+    scoreBadge(pC, pT), `
+    ${sumRow('❓', 'Questions answered', pT > 0 ? `${pC} correct, ${pT - pC} still investigating` : '—', pT > 0 ? (pC===pT?'correct':'wrong') : 'na')}
+  `);
+
+  // ── CVC WFB investigation ──
+  html += `<div style="margin-bottom:.5rem;">`;
+  html += investRow('cvc-cat'); html += investRow('cvc-ship');
+  html += `</div>`;
+
+  el.innerHTML = html;
+
+  // Overall score
+  const overall = totalItems > 0
+    ? `${totalCorrect} / ${totalItems} scored items`
+    : 'No scored items completed yet';
+  document.getElementById('sum-overall-score').textContent = overall;
+}
+
+function sectionBlock(title, badge, bodyHtml) {
+  return `<div class="sum-section-block">
+    <div class="sum-section-head">
+      <span class="sum-section-title">${title}</span>${badge}
+    </div>
+    <div class="sum-section-body">${bodyHtml}</div>
+  </div>`;
+}
+function sumRow(icon, label, result, cls) {
+  return `<div class="sum-row">
+    <span class="sum-row-icon">${icon}</span>
+    <span class="sum-row-label">${label}</span>
+    <span class="sum-row-result ${cls}">${result}</span>
+  </div>`;
+}
+function investRow(id) {
+  const d = sessionData.investigations[id];
+  if (!d) return sumRow('🔭', `Investigation: ⟨${id.split('-').slice(1).join('/')}⟩`, '—', 'na');
+  return sumRow('🔭',
+    `Investigation: ⟨${d.base}⟩ base stability`,
+    d.correct ? '✓ Noticed' : '~ Still investigating',
+    d.correct ? 'correct' : 'wrong');
+}
+function summariseWFB(id) {
+  const el = document.getElementById(id);
+  if (!el) return '—';
+  const used = el.querySelectorAll('.wfb-chip.used');
+  return used.length > 0 ? `${used.length} form(s) built` : '—';
+}
+</script>
+<!-- ══════════════════════════════════════
+  SESSION SUMMARY OVERLAY
+══════════════════════════════════════ -->
+<div id="summary-overlay">
+  <div id="summary-panel">
+
+    <div class="sum-header">
+      <div class="sum-logo-row">
+        <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="38" stroke="#e8a040" stroke-width="3" fill="none"/>
+          <circle cx="40" cy="40" r="8" fill="#e8a040"/>
+          <line x1="40" y1="6"  x2="40" y2="22" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+          <line x1="40" y1="58" x2="40" y2="74" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+          <line x1="6"  y1="40" x2="22" y2="40" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+          <line x1="58" y1="40" x2="74" y2="40" stroke="#e8a040" stroke-width="4" stroke-linecap="round"/>
+          <line x1="14" y1="14" x2="26" y2="26" stroke="#e8a040" stroke-width="3" stroke-linecap="round"/>
+          <line x1="54" y1="54" x2="66" y2="66" stroke="#e8a040" stroke-width="3" stroke-linecap="round"/>
+          <line x1="66" y1="14" x2="54" y2="26" stroke="#e8a040" stroke-width="3" stroke-linecap="round"/>
+          <line x1="26" y1="54" x2="14" y2="66" stroke="#e8a040" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="sum-logo-text">
+          <h1>CVC Foundations — Session Summary</h1>
+          <p>Meaning-First Literacy™ · Lokahi Connect</p>
+        </div>
+      </div>
+      <button class="sum-close-btn" onclick="closeSummary()">✕ Close</button>
+    </div>
+
+    <div class="sum-student-row">
+      <div class="sum-field">
+        <label>Student name</label>
+        <input type="text" id="sum-student" placeholder="e.g. Daniel">
+      </div>
+      <div class="sum-field">
+        <label>Date</label>
+        <input type="text" id="sum-date" placeholder="">
+      </div>
+      <div class="sum-field">
+        <label>Educator</label>
+        <input type="text" id="sum-educator" placeholder="e.g. Ms. Steph">
+      </div>
+    </div>
+
+    <div class="sum-overall" id="sum-overall-row">
+      <span class="sum-overall-label">Overall session score</span>
+      <span class="sum-overall-score" id="sum-overall-score">—</span>
+    </div>
+
+    <div id="sum-sections"></div>
+
+    <div class="sum-actions">
+      <button class="btn btn-outline sum-close-btn" onclick="closeSummary()">← Back to assignment</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Fixed summary button -->
+<button id="summary-fab" onclick="openSummary()">📋 Session Summary</button>
+
+</body>
+</html>
