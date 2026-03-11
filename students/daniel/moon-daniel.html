@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey to the Moon — Daniel's Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────── */
+:root {
+  --teal:     #0d4f5c;
+  --teal-mid: #165f6e;
+  --teal-lt:  #e8f4f6;
+  --seafoam:  #1a7a6e;
+  --seafoam-lt:#e6f5f3;
+  --amber:    #e8a040;
+  --amber-lt: #fef3e2;
+  --sand:     #faf8f4;
+  --muted:    #6b7280;
+  --border:   #d1d5db;
+  --text:     #1a1a2e;
+  --space:    #0a0e1a;
+  --r-md: 14px; --r-lg: 20px;
+  --shadow-md: 0 4px 16px rgba(13,79,92,.12);
+  --shadow-lg: 0 8px 32px rgba(13,79,92,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text);min-height:100vh;}
+
+/* ─── TOP HEADER ─────────────────────────────── */
+#site-header {
+  background: linear-gradient(135deg,var(--space) 0%,#1a2744 60%,#0d4f5c 100%);
+  padding:1.2rem 1.2rem .9rem;
+  text-align:center; color:#fff; position:relative; overflow:hidden;
+}
+#site-header::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 30%,rgba(232,160,64,.15) 0%,transparent 65%);
+  pointer-events:none;
+}
+.header-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:.4rem;}
+.header-title{font-family:'Playfair Display',serif;font-size:1.9rem;line-height:1.2;margin-bottom:.3rem;}
+.header-sub{font-size:.92rem;opacity:.75;}
+.stars{font-size:1.6rem;display:block;margin-bottom:.4rem;letter-spacing:.3rem;}
+
+/* ─── VOICE BAR ──────────────────────────────── */
+#voice-bar{
+  background:var(--teal);color:#fff;
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  padding:.55rem 1rem;font-size:.82rem;font-weight:600;
+}
+#voice-bar select{
+  background:#fff;color:var(--teal);border:none;border-radius:6px;
+  padding:.25rem .5rem;font-size:.8rem;font-weight:700;cursor:pointer;
+}
+#voice-bar button{
+  background:var(--amber);color:var(--teal);border:none;border-radius:6px;
+  padding:.3rem .7rem;font-size:.8rem;font-weight:700;cursor:pointer;
+}
+#voice-bar button:hover{background:#d4902e;}
+#voice-bar .stop-btn{background:#dc2626;color:#fff;}
+#voice-bar .stop-btn:hover{background:#b91c1c;}
+.vb-label{opacity:.8;}
+
+/* ─── NAV ────────────────────────────────────── */
+#main-nav{
+  display:flex;gap:.4rem;flex-wrap:wrap;padding:.8rem 1rem;
+  background:#fff;border-bottom:1.5px solid var(--border);
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+#main-nav button{
+  font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;
+  border:1.5px solid var(--border);border-radius:20px;
+  padding:.3rem .75rem;background:#fff;color:var(--muted);cursor:pointer;
+  transition:.15s;white-space:nowrap;
+}
+#main-nav button.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+#main-nav button:hover:not(.active){background:var(--teal-lt);border-color:var(--teal);color:var(--teal);}
+
+/* ─── MAIN / SECTIONS ────────────────────────── */
+main{max-width:780px;margin:0 auto;padding:1.2rem 1rem 3rem;}
+.section{display:none;animation:fadeUp .35s ease;}
+.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── SECTION HEADER ─────────────────────────── */
+.sec-header{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-mid) 100%);
+  color:#fff;border-radius:var(--r-lg);padding:1.3rem 1.4rem 1.1rem;
+  margin-bottom:1.1rem;position:relative;overflow:hidden;
+}
+.sec-header::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 40%,rgba(232,160,64,.15) 0%,transparent 65%);
+  pointer-events:none;
+}
+.sec-icon{font-size:2.2rem;margin-bottom:.4rem;display:block;}
+.sec-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;line-height:1.2;margin-bottom:.3rem;}
+.sec-header p{font-size:.9rem;opacity:.85;line-height:1.5;}
+
+/* ─── CARDS ──────────────────────────────────── */
+.card{
+  background:#fff;border-radius:var(--r-lg);padding:1.2rem 1.3rem;
+  margin-bottom:1rem;box-shadow:var(--shadow-md);border:1.5px solid var(--border);
+}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--teal);margin-bottom:.7rem;}
+
+/* ─── BIG IMAGE ──────────────────────────────── */
+.big-img{
+  width:100%;border-radius:var(--r-md);margin:0 0 .8rem;
+  display:block;object-fit:cover;max-height:320px;
+  background:#e0e8ec;
+}
+.img-caption{
+  font-size:.78rem;color:var(--muted);text-align:center;
+  margin-top:-.4rem;margin-bottom:.8rem;font-style:italic;
+}
+
+/* ─── FACT BOXES ─────────────────────────────── */
+.fact-box{
+  border-radius:var(--r-md);padding:.9rem 1rem;margin:.6rem 0;
+  display:flex;align-items:flex-start;gap:.75rem;
+}
+.fact-box.teal{background:var(--teal-lt);border-left:4px solid var(--teal);}
+.fact-box.amber{background:var(--amber-lt);border-left:4px solid var(--amber);}
+.fact-box.seafoam{background:var(--seafoam-lt);border-left:4px solid var(--seafoam);}
+.fact-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem;}
+.fact-body{}
+.fact-title{font-weight:700;color:var(--teal);font-size:.92rem;margin-bottom:.2rem;}
+.fact-text{font-size:.9rem;line-height:1.55;color:var(--text);}
+
+/* ─── COMPARISON BLOCKS ──────────────────────── */
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.7rem 0;}
+.compare-box{
+  border-radius:var(--r-md);padding:.9rem;text-align:center;
+  border:2px solid var(--border);
+}
+.compare-box.earth{border-color:#3b82f6;background:#eff6ff;}
+.compare-box.moon{border-color:#8b5cf6;background:#f5f3ff;}
+.compare-box .cb-icon{font-size:2rem;margin-bottom:.4rem;}
+.compare-box .cb-label{font-weight:700;font-size:.85rem;margin-bottom:.3rem;}
+.compare-box .cb-val{font-size:1.1rem;font-weight:700;color:var(--teal);}
+.compare-box .cb-sub{font-size:.78rem;color:var(--muted);margin-top:.2rem;}
+
+/* ─── JUMP INTERACTIVE ───────────────────────── */
+.jump-demo{
+  background:linear-gradient(180deg,#1a2744 0%,#0d4f5c 100%);
+  border-radius:var(--r-lg);padding:1.2rem;margin:.8rem 0;
+  text-align:center;color:#fff;position:relative;overflow:hidden;
+}
+.jump-figure{font-size:3rem;transition:transform .6s cubic-bezier(.25,1.5,.5,1);display:inline-block;}
+.jump-figure.earth-jump{transform:translateY(0);}
+.jump-figure.moon-jump{transform:translateY(-80px);}
+.jump-labels{display:flex;justify-content:space-around;margin-top:.5rem;}
+.jump-label{font-size:.78rem;font-weight:700;opacity:.8;}
+.jump-btn-row{display:flex;gap:.7rem;justify-content:center;margin-top:.8rem;flex-wrap:wrap;}
+.jump-btn{
+  background:var(--amber);color:var(--teal);border:none;border-radius:20px;
+  padding:.45rem 1.1rem;font-size:.85rem;font-weight:700;cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+}
+.jump-btn:hover{background:#d4902e;}
+#jump-result{font-size:.88rem;margin-top:.6rem;min-height:1.4rem;font-weight:600;}
+
+/* ─── PHASES GALLERY ─────────────────────────── */
+.phases-strip{
+  display:flex;gap:.5rem;overflow-x:auto;padding:.3rem .2rem .7rem;
+  scroll-snap-type:x mandatory;
+}
+.phase-card{
+  flex-shrink:0;width:120px;scroll-snap-align:start;
+  background:#fff;border-radius:var(--r-md);padding:.6rem;
+  border:2px solid var(--border);cursor:pointer;transition:.15s;
+  text-align:center;
+}
+.phase-card:hover,.phase-card.selected{border-color:var(--teal);background:var(--teal-lt);}
+.phase-emoji{font-size:2rem;display:block;margin-bottom:.3rem;}
+.phase-name{font-size:.75rem;font-weight:700;color:var(--teal);line-height:1.2;}
+.phase-detail{
+  background:var(--teal-lt);border-radius:var(--r-md);padding:.9rem 1rem;
+  margin:.5rem 0;min-height:60px;border-left:4px solid var(--teal);
+  font-size:.88rem;line-height:1.55;display:none;
+}
+.phase-detail.visible{display:block;}
+
+/* ─── ECLIPSE TABS ───────────────────────────── */
+.eclipse-tabs{display:flex;gap:.4rem;margin-bottom:.7rem;}
+.etab{
+  flex:1;padding:.5rem;border:2px solid var(--border);border-radius:10px;
+  background:#fff;font-weight:700;font-size:.85rem;cursor:pointer;text-align:center;
+  transition:.15s;font-family:'DM Sans',sans-serif;
+}
+.etab.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.eclipse-panel{display:none;}
+.eclipse-panel.active{display:block;}
+
+/* ─── CAUSE/EFFECT ───────────────────────────── */
+.ce-row{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:.5rem;margin:.6rem 0;
+}
+.ce-box{
+  border-radius:var(--r-md);padding:.7rem .8rem;font-size:.87rem;
+  font-weight:600;line-height:1.4;text-align:center;
+}
+.ce-cause{background:#fff3cd;border:2px solid #f59e0b;color:#92400e;}
+.ce-effect{background:#d1fae5;border:2px solid #10b981;color:#064e3b;}
+.ce-arrow{font-size:1.5rem;color:var(--muted);flex-shrink:0;}
+
+/* ─── VOCAB GRID ─────────────────────────────── */
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.6rem 0;}
+.vocab-card{
+  background:#fff;border-radius:var(--r-md);padding:.8rem;
+  border:2px solid var(--border);cursor:pointer;transition:.15s;
+}
+.vocab-card:hover{border-color:var(--teal);background:var(--teal-lt);}
+.vocab-word{font-family:'DM Mono',monospace;font-size:.95rem;font-weight:700;color:var(--teal);}
+.vocab-img{font-size:2rem;display:block;margin:.3rem 0;}
+.vocab-def{font-size:.8rem;color:var(--muted);display:none;line-height:1.45;margin-top:.3rem;}
+.vocab-card.open .vocab-def{display:block;}
+.vocab-card.open{border-color:var(--teal);background:var(--teal-lt);}
+
+/* ─── READ BAR ───────────────────────────────── */
+.read-bar{
+  display:flex;align-items:center;gap:.7rem;background:var(--teal-lt);
+  border:1.5px solid var(--teal);border-radius:10px;padding:.55rem .8rem;
+  margin:.7rem 0;cursor:pointer;user-select:none;
+}
+.read-bar:hover{background:#d0eaee;}
+.read-bar svg{width:20px;height:20px;fill:var(--teal);flex-shrink:0;}
+.read-bar-text{flex:1;}
+.read-bar-title{font-size:.82rem;font-weight:700;color:var(--teal);}
+.read-bar-sub{font-size:.72rem;color:var(--muted);}
+.read-stop{
+  background:var(--teal);color:#fff;border:none;border-radius:6px;
+  padding:.25rem .6rem;font-size:.75rem;cursor:pointer;font-weight:700;
+}
+
+/* ─── BTN ROW ────────────────────────────────── */
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:1.3rem;flex-wrap:wrap;gap:.5rem;}
+.btn{
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.88rem;
+  border-radius:22px;padding:.5rem 1.2rem;cursor:pointer;border:none;transition:.15s;
+}
+.btn-primary{background:var(--teal);color:#fff;}
+.btn-primary:hover{background:var(--teal-mid);}
+.btn-outline{background:#fff;color:var(--teal);border:2px solid var(--teal);}
+.btn-outline:hover{background:var(--teal-lt);}
+
+/* ─── HIGHLIGHT ──────────────────────────────── */
+.hl{background:var(--amber-lt);border-radius:4px;padding:.1rem .3rem;font-weight:700;color:var(--teal);}
+
+/* ─── QUIZ ───────────────────────────────────── */
+.quiz-q{font-size:.95rem;font-weight:700;margin-bottom:.7rem;line-height:1.5;}
+.quiz-opts{display:flex;flex-direction:column;gap:.5rem;}
+.quiz-opt{
+  background:#fff;border:2px solid var(--border);border-radius:10px;
+  padding:.7rem .9rem;font-size:.88rem;cursor:pointer;text-align:left;
+  font-family:'DM Sans',sans-serif;font-weight:500;transition:.15s;display:flex;align-items:center;gap:.6rem;
+}
+.quiz-opt:hover:not(:disabled){border-color:var(--teal);background:var(--teal-lt);}
+.quiz-opt.correct{background:#d1fae5;border-color:#10b981;color:#064e3b;}
+.quiz-opt.wrong{background:#fee2e2;border-color:#ef4444;color:#7f1d1d;}
+.quiz-opt .q-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;}
+.quiz-opt.correct .q-dot{background:#10b981;border-color:#10b981;}
+.quiz-opt.wrong .q-dot{background:#ef4444;border-color:#ef4444;}
+.quiz-fb{border-radius:10px;padding:.75rem 1rem;margin:.6rem 0;font-size:.87rem;line-height:1.5;font-weight:600;display:none;}
+.quiz-fb.show{display:block;}
+.quiz-fb.correct-fb{background:#d1fae5;border-left:4px solid #10b981;color:#064e3b;}
+.quiz-fb.wrong-fb{background:#fef3c7;border-left:4px solid var(--amber);color:#78350f;}
+.quiz-next{display:none;margin-top:.6rem;}
+.quiz-next.show{display:block;}
+.quiz-progress{display:flex;gap:.35rem;margin-bottom:.8rem;flex-wrap:wrap;}
+.qp-dot{width:14px;height:14px;border-radius:50%;background:var(--border);}
+.qp-dot.done-c{background:#10b981;}
+.qp-dot.done-w{background:var(--amber);}
+.qp-dot.current{background:var(--teal);}
+
+/* ─── COMPLETE ───────────────────────────────── */
+.complete-card{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-mid) 100%);
+  color:#fff;border-radius:var(--r-lg);padding:1.6rem;text-align:center;margin:.5rem 0;
+}
+.complete-card h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem;}
+.complete-card p{opacity:.85;font-size:.9rem;line-height:1.55;}
+.score-pill{
+  display:inline-block;background:var(--amber);color:var(--teal);
+  border-radius:20px;padding:.4rem 1.2rem;font-size:1.1rem;font-weight:700;margin:.8rem 0;
+}
+
+@media(max-width:540px){
+  .compare-row{grid-template-columns:1fr;}
+  .vocab-grid{grid-template-columns:1fr;}
+  .ce-row{grid-template-columns:1fr;gap:.3rem;}
+  .ce-arrow{transform:rotate(90deg);text-align:center;}
+  .phases-strip{gap:.4rem;}
+  .phase-card{width:100px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════ -->
+<header id="site-header">
+  <span class="stars">🌙 ⭐ 🪐</span>
+  <div class="header-eyebrow">Lokahi Connect · Meaning-First Literacy™</div>
+  <h1 class="header-title">Journey to the Moon</h1>
+  <p class="header-sub">Daniel's Science Lesson · Chapter 7 Review</p>
+</header>
+
+<!-- ══ VOICE BAR ════════════════════════════ -->
+<div id="voice-bar">
+  <span class="vb-label">🔊 Voice:</span>
+  <select id="voice-select" onchange="changeVoice()">
+    <option value="">Loading…</option>
+  </select>
+  <button onclick="speakText('Hello! The sound is working.')">🔊 Test sound</button>
+  <button onclick="speakCurrent()">▶ Read this page</button>
+  <button class="stop-btn" onclick="stopSpeaking()">■ Stop</button>
+</div>
+
+<!-- ══ NAV ══════════════════════════════════ -->
+<nav id="main-nav">
+  <button onclick="show('launch',this)" class="active">🚀 Launch</button>
+  <button onclick="show('surface',this)">🌑 Surface</button>
+  <button onclick="show('gravity',this)">⚖️ Gravity</button>
+  <button onclick="show('phases',this)">🌘 Phases</button>
+  <button onclick="show('eclipses',this)">🌗 Eclipses</button>
+  <button onclick="show('vocab',this)">📖 Words</button>
+  <button onclick="show('quiz',this)">✅ Check-In</button>
+</nav>
+
+<main>
+
+<!-- ══ SEC 1: LAUNCH ════════════════════════ -->
+<div id="sec-launch" class="section active">
+  <div class="sec-header">
+    <span class="sec-icon">🚀</span>
+    <h2>Mission briefing — your journey begins</h2>
+    <p>You are about to visit the Moon. Let's explore what you'll find there — one stop at a time.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakText('Welcome, scientist. You are about to journey to the Moon. This lesson has six stops. You control the pace. Tap next when you are ready.')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Tap to hear this page</div><div class="read-bar-sub">Tap again or press Stop to pause</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <img class="big-img" src="https://science.nasa.gov/wp-content/uploads/2023/09/moon.jpg" alt="Full Moon photograph from Earth" onerror="imgFail(this,'🌕','Full Moon — NASA photograph')">
+    <p class="img-caption">The full Moon — photographed from Earth. NASA / public domain.</p>
+    <div class="fact-box teal">
+      <div class="fact-icon">🌕</div>
+      <div class="fact-body">
+        <div class="fact-title">What is the Moon?</div>
+        <div class="fact-text">The Moon is a <span class="hl">satellite</span> — an object in space that orbits something else. It orbits Earth. The Moon is Earth's only natural satellite.</div>
+      </div>
+    </div>
+    <div class="fact-box amber">
+      <div class="fact-icon">🔭</div>
+      <div class="fact-body">
+        <div class="fact-title">The word <em>satellite</em></div>
+        <div class="fact-text">The base comes from Latin <em>satelles</em> — meaning <em>attendant</em> or <em>companion</em>. The Moon is Earth's companion in space. We also use <em>satellite</em> for human-made objects we launch into orbit.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Your six stops on this journey</h3>
+    <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.4rem;">
+      <div class="fact-box seafoam" style="cursor:pointer;" onclick="show('surface',document.querySelectorAll('#main-nav button')[1])">
+        <div class="fact-icon">🌑</div>
+        <div class="fact-body"><div class="fact-title">Stop 1 — The Surface</div><div class="fact-text">What does the Moon look like up close? Maria, highlands, craters.</div></div>
+      </div>
+      <div class="fact-box teal" style="cursor:pointer;" onclick="show('gravity',document.querySelectorAll('#main-nav button')[2])">
+        <div class="fact-icon">⚖️</div>
+        <div class="fact-body"><div class="fact-title">Stop 2 — Gravity & Mass</div><div class="fact-text">Why would you bounce on the Moon?</div></div>
+      </div>
+      <div class="fact-box amber" style="cursor:pointer;" onclick="show('phases',document.querySelectorAll('#main-nav button')[3])">
+        <div class="fact-icon">🌘</div>
+        <div class="fact-body"><div class="fact-title">Stop 3 — Phases</div><div class="fact-text">Why does the Moon look different every night?</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <span></span>
+    <button class="btn btn-primary" onclick="show('surface',document.querySelectorAll('#main-nav button')[1])">Next: The Surface →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 2: SURFACE ════════════════════════ -->
+<div id="sec-surface" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">🌑</span>
+    <h2>Stop 1 — The Surface</h2>
+    <p>The Moon looks grey and rocky from Earth. Up close, it is one of the most dramatic landscapes in the solar system.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakSection('surface')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read this section aloud</div><div class="read-bar-sub">Tap to start · tap again to stop</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Three things you would see</h3>
+    <img class="big-img" src="https://science.nasa.gov/wp-content/uploads/2023/09/lunar-reconnaissance-orbiter-lro-1.jpg" alt="Moon surface showing maria, highlands and craters" onerror="imgFail(this,'🌑','Moon Surface — NASA LRO image')">
+    <p class="img-caption">The Moon's surface from above — you can see the dark flat areas and bright rocky regions.</p>
+
+    <div class="fact-box teal">
+      <div class="fact-icon">⬛</div>
+      <div class="fact-body">
+        <div class="fact-title">Maria — dark flat plains</div>
+        <div class="fact-text"><span class="hl">Maria</span> (MAH-ree-ah) are huge flat basins on the Moon. They look dark. The word <em>maria</em> comes from the Latin word for <em>seas</em> — early astronomers thought they were oceans. There is no water in them.</div>
+      </div>
+    </div>
+
+    <div class="fact-box amber">
+      <div class="fact-icon">⛰️</div>
+      <div class="fact-body">
+        <div class="fact-title">Highlands — bright rocky areas</div>
+        <div class="fact-text"><span class="hl">Highlands</div> are high, rocky, mountainous areas on the Moon. They look bright. They are older and rougher than the maria.</div>
+      </div>
+    </div>
+
+    <div class="fact-box seafoam">
+      <div class="fact-icon">💥</div>
+      <div class="fact-body">
+        <div class="fact-title">Craters — bowl-shaped holes</div>
+        <div class="fact-text"><span class="hl">Craters</span> are circular holes caused by rocks from space — called asteroids and comets — slamming into the surface. The Moon is covered in them.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The footprint that is still there</h3>
+    <img class="big-img" src="https://www.nasa.gov/wp-content/uploads/2023/03/as11-40-5878.jpg" alt="Apollo 11 astronaut bootprint in lunar regolith 1969" onerror="imgFail(this,'👣','Apollo 11 Bootprint — NASA 1969')">
+    <p class="img-caption">Apollo 11, 1969 — an astronaut's bootprint in the Moon's surface dust. NASA public domain.</p>
+
+    <div class="fact-box teal">
+      <div class="fact-icon">👣</div>
+      <div class="fact-body">
+        <div class="fact-title">Regolith — the Moon's "soil"</div>
+        <div class="fact-text"><span class="hl">Regolith</span> is a layer of fine powder and broken rock that covers the Moon's surface. It was created by billions of years of space rocks hitting the surface and grinding it into dust. The footprint in this photo is still on the Moon today — there is no wind or rain to erase it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔭 Word noticing — <em>highland</em></h3>
+    <div class="fact-box amber">
+      <div class="fact-icon">🔬</div>
+      <div class="fact-body">
+        <div class="fact-title">Built from two free bases</div>
+        <div class="fact-text">The word <em>highland</em> is made of two parts: <span class="hl">high</span> + <span class="hl">land</span>. Each part carries its own meaning. High = elevated. Land = ground. Together: elevated ground. This kind of word is called a <strong>compound word</strong>.</div>
+      </div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:.95rem;text-align:center;padding:.6rem;background:var(--teal-lt);border-radius:10px;color:var(--teal);font-weight:700;">
+      high + land → highland
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('launch',document.querySelectorAll('#main-nav button')[0])">← Back</button>
+    <button class="btn btn-primary" onclick="show('gravity',document.querySelectorAll('#main-nav button')[2])">Next: Gravity →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 3: GRAVITY ════════════════════════ -->
+<div id="sec-gravity" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">⚖️</span>
+    <h2>Stop 2 — Gravity & Mass</h2>
+    <p>On the Moon you would weigh 6 times less than on Earth — and you could jump 6 times higher.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakSection('gravity')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read this section aloud</div><div class="read-bar-sub">Tap to start · tap again to stop</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Why is the Moon's gravity weaker?</h3>
+    <div class="compare-row">
+      <div class="compare-box earth">
+        <div class="cb-icon">🌍</div>
+        <div class="cb-label">Earth</div>
+        <div class="cb-val">Bigger · More mass</div>
+        <div class="cb-sub">Stronger gravity pull</div>
+      </div>
+      <div class="compare-box moon">
+        <div class="cb-icon">🌕</div>
+        <div class="cb-label">Moon</div>
+        <div class="cb-val">Smaller · Less mass</div>
+        <div class="cb-sub">Weaker gravity pull</div>
+      </div>
+    </div>
+    <div class="fact-box teal">
+      <div class="fact-icon">📏</div>
+      <div class="fact-body">
+        <div class="fact-title">What is mass?</div>
+        <div class="fact-text"><span class="hl">Mass</span> is how much matter — how much stuff — an object is made of. The Moon has less mass than Earth. Less mass means less gravity. Gravity is the pull that holds you to the ground.</div>
+      </div>
+    </div>
+    <div class="fact-box amber">
+      <div class="fact-icon">6️⃣</div>
+      <div class="fact-body">
+        <div class="fact-title">Six times weaker</div>
+        <div class="fact-text">The Moon's gravity is about <span class="hl">6 times weaker</span> than Earth's. That means if you weigh 60 pounds on Earth, you would only weigh 10 pounds on the Moon.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Try the jump experiment</h3>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:.7rem;">See what happens when you jump on Earth vs. the Moon. Tap a button.</p>
+    <div class="jump-demo">
+      <div id="jump-person" class="jump-figure">🧑‍🚀</div>
+      <div class="jump-labels">
+        <span class="jump-label" id="jump-loc-label">📍 Earth</span>
+      </div>
+      <div id="jump-result"></div>
+    </div>
+    <div class="jump-btn-row">
+      <button class="jump-btn" onclick="doJump('earth')">Jump on 🌍 Earth</button>
+      <button class="jump-btn" onclick="doJump('moon')">Jump on 🌕 Moon</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Apollo astronauts really did bounce</h3>
+    <img class="big-img" src="https://www.nasa.gov/wp-content/uploads/2023/03/as11-40-5931.jpg" alt="Buzz Aldrin on the Moon during Apollo 11 mission 1969" onerror="imgFail(this,'🧑‍🚀','Buzz Aldrin on the Moon — Apollo 11')">
+    <p class="img-caption">Buzz Aldrin on the Moon, Apollo 11, 1969. NASA public domain.</p>
+    <div class="fact-box seafoam">
+      <div class="fact-icon">🚶</div>
+      <div class="fact-body">
+        <div class="fact-title">Why astronauts moved slowly</div>
+        <div class="fact-text">The astronauts on the Moon wore heavy spacesuits. But because of low gravity, they still felt lighter than on Earth. They moved in slow, bouncy strides. Every step sent them floating slightly upward before coming back down.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('surface',document.querySelectorAll('#main-nav button')[1])">← Back</button>
+    <button class="btn btn-primary" onclick="show('phases',document.querySelectorAll('#main-nav button')[3])">Next: Phases →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 4: PHASES ═════════════════════════ -->
+<div id="sec-phases" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">🌘</span>
+    <h2>Stop 3 — Moon Phases</h2>
+    <p>Every night the Moon looks a little different. That's because of light — not because the Moon is changing shape.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakSection('phases')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read this section aloud</div><div class="read-bar-sub">Tap to start · tap again to stop</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Why the Moon looks different each night</h3>
+    <img class="big-img" src="https://science.nasa.gov/wp-content/uploads/2023/09/phases-of-moon.jpg" alt="Eight phases of the Moon in a circle showing new moon to full moon cycle" onerror="imgFail(this,'🌘🌕🌒','The 8 Phases of the Moon')">
+    <p class="img-caption">The 8 phases of the Moon — one complete cycle takes about 28 days.</p>
+
+    <div class="fact-box teal">
+      <div class="fact-icon">☀️</div>
+      <div class="fact-body">
+        <div class="fact-title">The Moon does not make its own light</div>
+        <div class="fact-text">The Moon <span class="hl">reflects</span> light from the Sun. When the Sun shines on the Moon, one side is bright. The other side is dark. As the Moon travels around Earth, we see different amounts of the bright side. That is what creates the phases.</div>
+      </div>
+    </div>
+
+    <div class="fact-box amber">
+      <div class="fact-icon">🔄</div>
+      <div class="fact-body">
+        <div class="fact-title">One cycle = about 28 days</div>
+        <div class="fact-text">The Moon takes about <span class="hl">28 days</span> to complete one full orbit around Earth. That is why the phases repeat every 28 days — roughly once a month.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tap each phase to learn about it</h3>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:.7rem;">Scroll left and right through the phases.</p>
+    <div class="phases-strip" id="phases-strip"></div>
+    <div class="phase-detail" id="phase-detail"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔭 Word noticing — <em>illuminate</em></h3>
+    <div class="fact-box amber">
+      <div class="fact-icon">💡</div>
+      <div class="fact-body">
+        <div class="fact-title">To illuminate = to light up</div>
+        <div class="fact-text">The Sun <span class="hl">illuminates</span> the Moon. <em>Illuminate</em> comes from Latin <em>lumen</em> — meaning <em>light</em>. You can see the same base in: <em>illuminated, luminous, luminescence</em>. The base always carries the idea of light.</div>
+      </div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:.9rem;text-align:center;padding:.6rem;background:var(--teal-lt);border-radius:10px;color:var(--teal);font-weight:700;">
+      illuminate · illuminated · luminous · luminescence
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('gravity',document.querySelectorAll('#main-nav button')[2])">← Back</button>
+    <button class="btn btn-primary" onclick="show('eclipses',document.querySelectorAll('#main-nav button')[4])">Next: Eclipses →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 5: ECLIPSES ═══════════════════════ -->
+<div id="sec-eclipses" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">🌗</span>
+    <h2>Stop 4 — Eclipses</h2>
+    <p>An eclipse happens when the Sun, Earth, and Moon line up in just the right way. They are rare — and spectacular.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakSection('eclipses')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read this section aloud</div><div class="read-bar-sub">Tap to start · tap again to stop</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <h3>Two kinds of eclipse — tap to explore</h3>
+    <div class="eclipse-tabs">
+      <button class="etab active" onclick="switchEclipse('solar',this)">🌑 Solar Eclipse</button>
+      <button class="etab" onclick="switchEclipse('lunar',this)">🔴 Lunar Eclipse</button>
+    </div>
+
+    <div class="eclipse-panel active" id="ep-solar">
+      <img class="big-img" src="https://www.nasa.gov/wp-content/uploads/2023/03/total-solar-eclipse-2017.jpg" alt="Total solar eclipse showing corona around dark Moon blocking the Sun" onerror="imgFail(this,'🌑','Total Solar Eclipse — NASA photograph')">
+      <p class="img-caption">A total solar eclipse — the Moon completely blocks the Sun. Rare and dramatic.</p>
+      <div class="fact-box teal">
+        <div class="fact-icon">🌑</div>
+        <div class="fact-body">
+          <div class="fact-title">Solar eclipse — the Moon blocks the Sun</div>
+          <div class="fact-text">During a <span class="hl">solar eclipse</span>, the Moon moves directly between the Sun and Earth. The Moon's shadow falls on Earth. It gets dark outside — even in the middle of the day. This can only happen during a <strong>new moon</strong>.</div>
+        </div>
+      </div>
+      <div class="fact-box amber">
+        <div class="fact-icon">❓</div>
+        <div class="fact-body">
+          <div class="fact-title">Why doesn't it happen every month?</div>
+          <div class="fact-text">The Moon's orbit is tilted at a slight angle compared to Earth's orbit around the Sun. Most months, the Moon passes above or below the Sun from our view — not directly in front of it. A solar eclipse only happens when the alignment is exact.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eclipse-panel" id="ep-lunar">
+      <img class="big-img" src="https://www.nasa.gov/wp-content/uploads/2023/03/lunar-eclipse-2022.jpg" alt="Total lunar eclipse showing the Moon as a red blood moon" onerror="imgFail(this,'🔴','Total Lunar Eclipse — Blood Moon')">
+      <p class="img-caption">A total lunar eclipse — the Moon turns red as it passes through Earth's shadow.</p>
+      <div class="fact-box seafoam">
+        <div class="fact-icon">🔴</div>
+        <div class="fact-body">
+          <div class="fact-title">Lunar eclipse — Earth blocks the Sun's light</div>
+          <div class="fact-text">During a <span class="hl">lunar eclipse</span>, Earth moves between the Sun and the Moon. Earth's shadow falls on the Moon. The Moon turns a reddish colour — because some sunlight bends around Earth and hits the Moon. This can only happen during a <strong>full moon</strong>.</div>
+        </div>
+      </div>
+      <div class="fact-box teal">
+        <div class="fact-icon">🌍</div>
+        <div class="fact-body">
+          <div class="fact-title">Easier to see than solar eclipses</div>
+          <div class="fact-text">A lunar eclipse can be seen by anyone on the night side of Earth. A solar eclipse is only visible from a narrow path on Earth's surface — that's why solar eclipses feel so rare.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Cause → Effect — how eclipses work</h3>
+    <div class="ce-row">
+      <div class="ce-box ce-cause">The Moon moves between the Sun and Earth during a new moon</div>
+      <div class="ce-arrow">→</div>
+      <div class="ce-effect">A solar eclipse — the Moon's shadow falls on Earth</div>
+    </div>
+    <div class="ce-row">
+      <div class="ce-box ce-cause">Earth moves between the Sun and the Moon during a full moon</div>
+      <div class="ce-arrow">→</div>
+      <div class="ce-effect">A lunar eclipse — Earth's shadow falls on the Moon</div>
+    </div>
+    <div class="ce-row">
+      <div class="ce-box ce-cause">The Moon's orbit is tilted 5° compared to Earth's orbit</div>
+      <div class="ce-arrow">→</div>
+      <div class="ce-effect">Eclipses don't happen every month — the alignment must be exact</div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('phases',document.querySelectorAll('#main-nav button')[3])">← Back</button>
+    <button class="btn btn-primary" onclick="show('vocab',document.querySelectorAll('#main-nav button')[5])">Next: Key Words →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 6: VOCAB ══════════════════════════ -->
+<div id="sec-vocab" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">📖</span>
+    <h2>Stop 5 — Key Words</h2>
+    <p>Tap each word card to see its meaning and a picture clue.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakText('This is the key words section. Tap each word card to see its meaning and a visual clue.')">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read instructions</div><div class="read-bar-sub">Tap any card to flip it open</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card">
+    <div class="vocab-grid" id="vocab-grid"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('eclipses',document.querySelectorAll('#main-nav button')[4])">← Back</button>
+    <button class="btn btn-primary" onclick="show('quiz',document.querySelectorAll('#main-nav button')[6])">Next: Check-In →</button>
+  </div>
+</div>
+
+<!-- ══ SEC 7: QUIZ ═══════════════════════════ -->
+<div id="sec-quiz" class="section">
+  <div class="sec-header">
+    <span class="sec-icon">✅</span>
+    <h2>Check-In — what did you notice?</h2>
+    <p>Six questions. Take your time. There is no timer.</p>
+  </div>
+
+  <div class="read-bar" onclick="speakCurrentQ()">
+    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    <div class="read-bar-text"><div class="read-bar-title">🔊 Read this question aloud</div><div class="read-bar-sub">Tap to hear the current question</div></div>
+    <button class="read-stop" onclick="event.stopPropagation();stopSpeaking()">■ Stop</button>
+  </div>
+
+  <div class="card" id="quiz-card">
+    <div class="quiz-progress" id="quiz-progress"></div>
+    <div id="quiz-body"></div>
+  </div>
+
+  <div id="quiz-complete" class="complete-card" style="display:none;">
+    <div style="font-size:2.5rem;margin-bottom:.5rem;">🌕</div>
+    <h3>Mission complete — well done, scientist!</h3>
+    <div class="score-pill" id="quiz-score-pill">— / 6</div>
+    <p>You have explored the Moon's surface, its gravity, its phases, and its eclipses. Strong noticing throughout this lesson.</p>
+    <button class="btn btn-outline" style="margin-top:1rem;background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4);" onclick="resetQuiz()">↺ Try again</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="show('vocab',document.querySelectorAll('#main-nav button')[5])">← Back</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════
+// VOICE SYSTEM — robust cross-browser
+// ════════════════════════════════════════════
+let voices = [], selectedVoice = null, voicesReady = false;
+
+function loadVoices(){
+  const all = speechSynthesis.getVoices();
+  if(!all.length) return;
+  voices = all.filter(v => v.lang.startsWith('en'));
+  if(!voices.length) voices = all; // fallback: all languages
+  voicesReady = true;
+
+  const sel = document.getElementById('voice-select');
+  sel.innerHTML = '';
+  voices.forEach((v,i) => {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = v.name + (v.localService ? ' ★' : '');
+    sel.appendChild(o);
+  });
+  const pref = voices.findIndex(v => /Samantha|Daniel|Karen|Moira|Tessa|Google US English|Microsoft Zira/i.test(v.name));
+  const idx = pref >= 0 ? pref : 0;
+  sel.value = idx;
+  selectedVoice = voices[idx];
+}
+
+// Load voices — browsers differ on when they're available
+if(speechSynthesis.getVoices().length > 0){
+  loadVoices();
+} else {
+  speechSynthesis.addEventListener('voiceschanged', loadVoices);
+  // Fallback timeout for some browsers
+  setTimeout(loadVoices, 500);
+  setTimeout(loadVoices, 1500);
+}
+
+function changeVoice(){
+  const i = document.getElementById('voice-select').value;
+  selectedVoice = voices[i] || null;
+}
+
+function speakText(text){
+  if(!text || !text.trim()) return;
+  // Must cancel before speaking — required on iOS/Safari
+  speechSynthesis.cancel();
+
+  // Small delay after cancel — required on some browsers
+  setTimeout(() => {
+    const clean = text.replace(/[⟨⟩★→]/g,'').replace(/\s+/g,' ').trim();
+    const u = new SpeechSynthesisUtterance(clean);
+    if(selectedVoice) u.voice = selectedVoice;
+    u.rate = 0.90;
+    u.pitch = 1.0;
+    u.volume = 1.0;
+    u.onerror = (e) => console.warn('TTS error:', e.error);
+    speechSynthesis.speak(u);
+  }, 120);
+}
+
+function stopSpeaking(){
+  speechSynthesis.cancel();
+}
+
+// ─── Section text map ────────────────────────
+const sectionTexts = {
+  surface: `Stop 1: The Surface. The Moon's surface has three main features. First, the maria — flat dark plains. The word maria comes from Latin for seas, but there is no water there. Second, the highlands — bright, mountainous, rocky regions. Third, craters — bowl-shaped holes made by asteroids and comets hitting the surface. The Moon is also covered in a layer of fine dust called regolith. A footprint made on the Moon in 1969 is still there today — there is no wind or rain to erase it.`,
+  gravity: `Stop 2: Gravity and Mass. The Moon has less mass than Earth. Mass is how much matter an object contains. Less mass means weaker gravity. The Moon's gravity is about 6 times weaker than Earth's gravity. If you weigh 60 pounds on Earth, you would weigh only 10 pounds on the Moon. Astronauts on the Moon moved in slow bouncy strides because of the low gravity.`,
+  phases: `Stop 3: Moon Phases. The Moon does not make its own light. It reflects light from the Sun. As the Moon travels around Earth, we see different amounts of the lit side. This creates the 8 phases of the Moon. The full cycle takes about 28 days — roughly one month. The phases are: new moon, waxing crescent, first quarter, waxing gibbous, full moon, waning gibbous, third quarter, and waning crescent.`,
+  eclipses: `Stop 4: Eclipses. There are two kinds of eclipse. A solar eclipse happens when the Moon moves between the Sun and Earth during a new moon. The Moon blocks the Sun and a shadow falls on Earth. A lunar eclipse happens when Earth moves between the Sun and the Moon during a full moon. Earth's shadow falls on the Moon, which turns reddish. Eclipses are rare because the Moon's orbit is tilted slightly, so the alignment has to be exact.`,
+};
+
+function speakSection(id){
+  if(sectionTexts[id]) speakText(sectionTexts[id]);
+}
+
+function speakCurrent(){
+  const active = document.querySelector('.section.active');
+  if(!active) return;
+  const id = active.id.replace('sec-','');
+  if(sectionTexts[id]) speakText(sectionTexts[id]);
+  else {
+    const text = active.innerText.replace(/\n+/g,' ').substring(0,1200);
+    speakText(text);
+  }
+}
+
+// ════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════
+function show(id, btn){
+  stopSpeaking();
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
+  const sec = document.getElementById('sec-'+id);
+  if(sec){ sec.classList.add('active'); sec.scrollIntoView({behavior:'smooth',block:'start'}); }
+  if(btn) btn.classList.add('active');
+}
+
+// ════════════════════════════════════════════
+// JUMP DEMO
+// ════════════════════════════════════════════
+function doJump(location){
+  const fig = document.getElementById('jump-person');
+  const res = document.getElementById('jump-result');
+  const loc = document.getElementById('jump-loc-label');
+  fig.style.transition = 'none';
+  fig.style.transform = 'translateY(0)';
+  setTimeout(()=>{
+    fig.style.transition = 'transform .5s cubic-bezier(.25,1.5,.5,1)';
+    if(location === 'earth'){
+      fig.style.transform = 'translateY(-30px)';
+      loc.textContent = '📍 Earth';
+      res.textContent = 'On Earth — a normal jump. About 0.5 metres high.';
+    } else {
+      fig.style.transform = 'translateY(-100px)';
+      loc.textContent = '📍 Moon';
+      res.textContent = 'On the Moon — same jump, 6× higher! About 3 metres.';
+    }
+    speakText(location === 'earth' ? 'On Earth, you jump about half a metre.' : 'On the Moon, the same jump takes you 3 metres into the air — 6 times higher!');
+    setTimeout(()=>{
+      fig.style.transition = 'transform .7s ease-in';
+      fig.style.transform = 'translateY(0)';
+    }, 1200);
+  }, 50);
+}
+
+// ════════════════════════════════════════════
+// PHASES STRIP
+// ════════════════════════════════════════════
+const phaseData = [
+  { name:'New Moon', emoji:'🌑',
+    detail:'The Moon is between Earth and the Sun. The side facing us is dark. We cannot see it in the sky. A solar eclipse can only happen at new moon.' },
+  { name:'Waxing Crescent', emoji:'🌒',
+    detail:'A tiny sliver of light appears on the right side. The word waxing means growing. The lit area is getting bigger each night.' },
+  { name:'First Quarter', emoji:'🌓',
+    detail:'Half of the Moon is lit — the right half. It is called "first quarter" because the Moon has completed one quarter of its orbit around Earth.' },
+  { name:'Waxing Gibbous', emoji:'🌔',
+    detail:'More than half the Moon is lit. Gibbous means more than half but not full. The lit area keeps growing toward full moon.' },
+  { name:'Full Moon', emoji:'🌕',
+    detail:'The entire face of the Moon is lit. Earth is between the Sun and the Moon. A lunar eclipse can only happen at full moon.' },
+  { name:'Waning Gibbous', emoji:'🌖',
+    detail:'The lit area starts to shrink. Waning means getting smaller. The right side is now starting to darken.' },
+  { name:'Third Quarter', emoji:'🌗',
+    detail:'Half the Moon is lit — now the left half. The Moon has completed three quarters of its orbit around Earth.' },
+  { name:'Waning Crescent', emoji:'🌘',
+    detail:'Only a thin sliver of light remains on the left side. The cycle is almost complete. Soon it will return to new moon.' },
+];
+
+function buildPhasesStrip(){
+  const strip = document.getElementById('phases-strip');
+  phaseData.forEach((p,i) => {
+    const div = document.createElement('div');
+    div.className = 'phase-card';
+    div.innerHTML = `<span class="phase-emoji">${p.emoji}</span><div class="phase-name">${p.name}</div>`;
+    div.onclick = () => selectPhase(i, div);
+    strip.appendChild(div);
+  });
+}
+
+function selectPhase(i, card){
+  document.querySelectorAll('.phase-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const detail = document.getElementById('phase-detail');
+  detail.textContent = phaseData[i].name + ': ' + phaseData[i].detail;
+  detail.classList.add('visible');
+  speakText(phaseData[i].name + '. ' + phaseData[i].detail);
+}
+
+buildPhasesStrip();
+
+// ════════════════════════════════════════════
+// ECLIPSE TABS
+// ════════════════════════════════════════════
+function switchEclipse(type, btn){
+  document.querySelectorAll('.etab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.eclipse-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ep-'+type).classList.add('active');
+  speakText(type === 'solar'
+    ? 'Solar eclipse. The Moon moves between the Sun and Earth. The Moon blocks the Sun. This creates a shadow on Earth and happens only during a new moon.'
+    : 'Lunar eclipse. Earth moves between the Sun and the Moon. Earth\'s shadow falls on the Moon, turning it red. This can only happen during a full moon.');
+}
+
+// ════════════════════════════════════════════
+// VOCAB GRID
+// ════════════════════════════════════════════
+const vocabData = [
+  { word:'satellite', img:'🛸', def:'An object that orbits something else in space. The Moon is Earth\'s natural satellite. The word comes from Latin — meaning companion.' },
+  { word:'orbit', img:'🔄', def:'The curved path an object takes around another object in space. The Moon orbits Earth. Earth orbits the Sun.' },
+  { word:'maria', img:'⬛', def:'Dark flat plains on the Moon\'s surface. From the Latin word for seas — but there is no water. Pronounced: MAH-ree-ah.' },
+  { word:'highlands', img:'⛰️', def:'Bright, rocky, mountainous areas on the Moon. The word is built from two parts: high + land.' },
+  { word:'crater', img:'💥', def:'A bowl-shaped hole in the ground made by a rock from space hitting the surface. The Moon is covered in craters.' },
+  { word:'regolith', img:'🪨', def:'The layer of fine dust and broken rock that covers the Moon\'s surface. Created by billions of years of impacts.' },
+  { word:'waxing', img:'📈', def:'Growing larger — used to describe a moon phase when the lit area is increasing. Opposite of waning.' },
+  { word:'waning', img:'📉', def:'Getting smaller — used to describe a moon phase when the lit area is decreasing. Opposite of waxing.' },
+  { word:'eclipse', img:'🌑', def:'When the Sun, Earth, and Moon line up so that one body blocks the light to another.' },
+  { word:'reflect', img:'🪞', def:'To bounce light back. The Moon does not make its own light — it reflects sunlight toward Earth.' },
+];
+
+function buildVocabGrid(){
+  const grid = document.getElementById('vocab-grid');
+  vocabData.forEach((v,i) => {
+    const div = document.createElement('div');
+    div.className = 'vocab-card';
+    div.innerHTML = `<div class="vocab-word">⟨${v.word}⟩</div><span class="vocab-img">${v.img}</span><div class="vocab-def">${v.def}</div>`;
+    div.onclick = () => {
+      div.classList.toggle('open');
+      speakText(v.word + '. ' + v.def);
+    };
+    grid.appendChild(div);
+  });
+}
+buildVocabGrid();
+
+// ════════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════════
+const quizData = [
+  { q:'The Moon\'s surface has dark flat plains called…',
+    img:'🌑',
+    opts:['Highlands','Maria','Craters','Regolith'],
+    answer:'Maria',
+    confirm:'Correct! Maria are the dark flat plains. The word comes from the Latin word for seas — early astronomers thought they were oceans.',
+    redirect:'The dark flat areas have a name that comes from the Latin word for seas. Look back at Stop 1.' },
+  { q:'The Moon\'s gravity is how many times weaker than Earth\'s gravity?',
+    img:'⚖️',
+    opts:['2 times','4 times','6 times','10 times'],
+    answer:'6 times',
+    confirm:'Correct! The Moon\'s gravity is about 6 times weaker. That is because the Moon has much less mass than Earth.',
+    redirect:'Think about the jump experiment. How high could the astronaut jump on the Moon compared to Earth?' },
+  { q:'Why does the Moon go through phases?',
+    img:'🌘',
+    opts:['The Moon changes shape','Clouds cover the Moon','We see different amounts of the Moon\'s lit side','The Moon moves away from Earth'],
+    answer:'We see different amounts of the Moon\'s lit side',
+    confirm:'Exactly right! The Moon reflects sunlight. As it orbits Earth we see different amounts of the illuminated side — that creates the phases.',
+    redirect:'Remember: the Moon does not make its own light. It reflects the Sun\'s light. As it orbits, we see different amounts of the lit side.' },
+  { q:'A solar eclipse can ONLY happen during a…',
+    img:'🌑',
+    opts:['Full Moon','Waxing Crescent','Third Quarter','New Moon'],
+    answer:'New Moon',
+    confirm:'Correct! A solar eclipse requires the Moon to be between Earth and the Sun — that only happens during a new moon.',
+    redirect:'Which phase puts the Moon directly between Earth and the Sun?' },
+  { q:'What is regolith?',
+    img:'🪨',
+    opts:['A large mountain on the Moon','Fine dust and broken rock covering the Moon\'s surface','A type of crater','The Moon\'s dark flat plains'],
+    answer:'Fine dust and broken rock covering the Moon\'s surface',
+    confirm:'Yes! Regolith is the layer of fine powder and crushed rock covering the Moon. Apollo astronaut footprints are still preserved in it.',
+    redirect:'Think about why footprints from 1969 are still on the Moon. What kind of surface would preserve them perfectly?' },
+  { q:'During a lunar eclipse, what colour does the Moon turn?',
+    img:'🔴',
+    opts:['White','Blue','Black','Red'],
+    answer:'Red',
+    confirm:'Correct! During a lunar eclipse the Moon turns reddish. This happens because some sunlight bends around Earth\'s atmosphere and hits the Moon — giving it that red glow.',
+    redirect:'Think about the lunar eclipse photo. What colour was the Moon when Earth\'s shadow covered it?' },
+];
+
+let qIdx=0, qAnswers=[], qWaiting=false;
+
+function buildQuiz(){ qIdx=0; qAnswers=[]; qWaiting=false; renderQ(); }
+
+function renderQProgress(){
+  const el = document.getElementById('quiz-progress');
+  el.innerHTML = quizData.map((q,i) => {
+    let cls = 'qp-dot';
+    if(i < qIdx) cls += qAnswers[i] ? ' done-c' : ' done-w';
+    else if(i === qIdx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderQ(){
+  if(qIdx >= quizData.length){ showQuizComplete(); return; }
+  const q = quizData[qIdx];
+  renderQProgress();
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = `
+    <div class="quiz-q">${q.img} ${q.q}</div>
+    <div class="quiz-opts">
+      ${q.opts.map((o,i) => `
+        <button class="quiz-opt" onclick="answerQ(${i})" id="qo-${i}">
+          <div class="q-dot"></div><span>${o}</span>
+        </button>`).join('')}
+    </div>
+    <div class="quiz-fb" id="q-fb"></div>
+    <button class="btn btn-primary quiz-next" id="q-next" onclick="nextQ()">Next question →</button>`;
+  qWaiting = false;
+  // Note: no auto-speak here — user taps the read bar to hear the question
+}
+
+function answerQ(i){
+  if(qWaiting) return;
+  qWaiting = true;
+  const q = quizData[qIdx];
+  const correct = q.opts[i] === q.answer;
+  qAnswers[qIdx] = correct;
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  const chosen = document.getElementById('qo-'+i);
+  chosen.classList.add(correct ? 'correct' : 'wrong');
+  if(!correct){
+    document.querySelectorAll('.quiz-opt').forEach(b => {
+      if(b.querySelector('span').textContent === q.answer) b.classList.add('correct');
+    });
+  }
+  const fb = document.getElementById('q-fb');
+  fb.className = 'quiz-fb show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  fb.textContent = correct ? '✓ ' + q.confirm : '→ ' + q.redirect;
+  const nxt = document.getElementById('q-next');
+  nxt.classList.add('show');
+  nxt.textContent = qIdx < quizData.length-1 ? 'Next question →' : 'See my results →';
+  speakText(correct ? q.confirm : q.redirect);
+}
+
+function nextQ(){
+  qIdx++;
+  renderQ();
+}
+
+function showQuizComplete(){
+  document.getElementById('quiz-card').style.display='none';
+  const comp = document.getElementById('quiz-complete');
+  comp.style.display='block';
+  const score = qAnswers.filter(Boolean).length;
+  document.getElementById('quiz-score-pill').textContent = score + ' / ' + quizData.length;
+  speakText('Mission complete! You answered ' + score + ' out of ' + quizData.length + ' questions correctly. Strong work, scientist.');
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-card').style.display='block';
+  document.getElementById('quiz-complete').style.display='none';
+  buildQuiz();
+}
+
+function speakCurrentQ(){
+  if(qIdx < quizData.length) speakText(quizData[qIdx].q + ' ' + quizData[qIdx].opts.join('. '));
+}
+
+buildQuiz();
+
+// Image fallback — if NASA URL fails, show illustrated placeholder
+function imgFail(el, emoji, label){
+  el.style.display = 'none';
+  const ph = document.createElement('div');
+  ph.style.cssText = 'width:100%;height:220px;background:linear-gradient(135deg,#0d4f5c,#1a7a6e);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:.8rem;';
+  ph.innerHTML = '<span style="font-size:4rem;margin-bottom:.5rem">' + emoji + '</span><span style="color:#fff;font-size:.85rem;font-weight:700;opacity:.85">' + label + '</span>';
+  el.parentNode.insertBefore(ph, el);
+}
+
+</script>
+</body>
+</html>
