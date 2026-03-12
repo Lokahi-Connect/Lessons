@@ -1103,6 +1103,139 @@ function imgFail(el, emoji, label){
   el.parentNode.insertBefore(ph, el);
 }
 
+
+// ── SESSION SUMMARY ──────────────────────────────
+function openSummary(){
+  const d = new Date();
+  document.getElementById('sum-date').value =
+    d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const score = qAnswers.filter(Boolean).length;
+  const attempted = qAnswers.filter(a => a !== undefined).length;
+  const scoreEl = document.getElementById('sum-quiz-score');
+  const badgeEl = document.getElementById('sum-quiz-score-badge');
+  if(attempted > 0){
+    scoreEl.textContent = score + ' / ' + quizData.length;
+    const cls = score === quizData.length ? 'perfect' : score >= 4 ? '' : 'partial';
+    badgeEl.textContent = score + ' / ' + quizData.length;
+    badgeEl.className = 'sum-score-badge ' + cls;
+  } else {
+    scoreEl.textContent = 'Not attempted yet';
+    badgeEl.textContent = '—';
+    badgeEl.className = 'sum-score-badge na';
+  }
+  const rowsEl = document.getElementById('sum-quiz-rows');
+  rowsEl.innerHTML = quizData.map((q,i) => {
+    const ans = qAnswers[i];
+    const icon = ans === undefined ? '⬜' : ans ? '✅' : '🔁';
+    const result = ans === undefined ? '—' : ans ? 'Correct' : 'Still investigating';
+    const cls = ans === undefined ? 'na' : ans ? 'correct' : 'wrong';
+    const label = q.q.replace(/^[\u{1F311}\u{2696}\u{1F318}\u{1F317}\u{1F4D6}\u{2705}\u{1F680}\u{1F52D}\s]+/u,'');
+    return '<div class="sum-row">'
+      + '<span class="sum-row-icon">' + icon + '</span>'
+      + '<span class="sum-row-label">' + label + '</span>'
+      + '<span class="sum-row-result ' + cls + '">' + result + '</span>'
+      + '</div>';
+  }).join('');
+  document.getElementById('summary-overlay').classList.add('open');
+  window.scrollTo(0,0);
+}
+function closeSummary(){
+  document.getElementById('summary-overlay').classList.remove('open');
+}
+
 </script>
+
+<style>
+#summary-overlay{display:none;position:fixed;inset:0;background:rgba(13,79,92,.55);z-index:300;overflow-y:auto;padding:2rem 1rem;}
+#summary-overlay.open{display:block;}
+#summary-panel{background:white;border-radius:20px;max-width:660px;margin:0 auto;padding:2rem 2.2rem 2.5rem;box-shadow:0 8px 28px rgba(13,79,92,.18);}
+.sum-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:2px solid #e6f4f2;}
+.sum-logo-text h2{font-family:'Playfair Display',serif;font-size:1.15rem;color:#0d4f5c;margin:0;}
+.sum-logo-text p{font-size:.75rem;color:#5a7278;margin:.15rem 0 0;}
+.sum-close-btn{background:none;border:1.5px solid #dce8ea;border-radius:8px;padding:.3rem .7rem;font-size:.8rem;color:#5a7278;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0;}
+.sum-close-btn:hover{border-color:#0d4f5c;color:#0d4f5c;}
+.sum-student-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.sum-field{display:flex;flex-direction:column;gap:.25rem;flex:1;min-width:150px;}
+.sum-field label{font-size:.72rem;font-weight:700;letter-spacing:.07em;color:#5a7278;text-transform:uppercase;}
+.sum-field input{border:1.5px solid #dce8ea;border-radius:7px;padding:.45rem .75rem;font-size:.9rem;font-family:'DM Sans',sans-serif;color:#1c2b2e;background:#faf8f4;}
+.sum-field input:focus{outline:none;border-color:#0d4f5c;background:white;}
+.sum-overall{background:#0d4f5c;color:white;border-radius:14px;padding:.8rem 1.1rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.sum-overall-label{font-size:.85rem;font-weight:600;}
+.sum-overall-score{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;}
+.sum-section-block{margin-bottom:1rem;border:1.5px solid #dce8ea;border-radius:14px;overflow:hidden;}
+.sum-section-head{background:#e6f4f2;padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;}
+.sum-section-title{font-weight:700;font-size:.88rem;color:#0d4f5c;}
+.sum-score-badge{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:700;padding:.15rem .55rem;border-radius:20px;background:#0d4f5c;color:white;}
+.sum-score-badge.perfect{background:#1a7a6e;}
+.sum-score-badge.partial{background:#b87830;}
+.sum-score-badge.na{background:#5a7278;}
+.sum-section-body{padding:.65rem .9rem;}
+.sum-row{display:flex;align-items:flex-start;gap:.6rem;padding:.35rem 0;border-bottom:1px solid #e6f4f2;font-size:.84rem;}
+.sum-row:last-child{border-bottom:none;}
+.sum-row-icon{font-size:.85rem;flex-shrink:0;margin-top:.1rem;}
+.sum-row-label{flex:1;color:#1c2b2e;line-height:1.45;}
+.sum-row-result{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:700;flex-shrink:0;white-space:nowrap;}
+.sum-row-result.correct{color:#1a7a6e;}
+.sum-row-result.wrong{color:#c0392b;}
+.sum-row-result.na{color:#5a7278;}
+.sum-actions{display:flex;gap:.8rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1.5px solid #e6f4f2;flex-wrap:wrap;}
+.sum-btn-outline{background:white;border:2px solid #0d4f5c;color:#0d4f5c;padding:.52rem 1.2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;}
+.sum-btn-outline:hover{background:#e6f4f2;}
+.sum-btn-primary{background:#0d4f5c;color:white;border:none;padding:.52rem 1.2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;}
+.sum-btn-primary:hover{background:#165f6e;}
+#summary-fab{position:fixed;bottom:1.4rem;right:1.4rem;background:#0d4f5c;color:white;border:none;border-radius:28px;padding:.65rem 1.2rem;font-size:.82rem;font-weight:700;font-family:'DM Sans',sans-serif;box-shadow:0 8px 28px rgba(13,79,92,.2);cursor:pointer;z-index:200;display:flex;align-items:center;gap:.5rem;transition:all .18s ease;}
+#summary-fab:hover{background:#165f6e;transform:translateY(-2px);}
+@media print{
+  body > *:not(#summary-overlay){display:none !important;}
+  #summary-overlay{display:block !important;position:static !important;background:none !important;padding:0 !important;}
+  #summary-panel{box-shadow:none !important;border-radius:0 !important;padding:1.2rem !important;max-width:100% !important;}
+  .sum-close-btn,.sum-actions,#summary-fab{display:none !important;}
+  .sum-field input{border:1px solid #ccc !important;background:white !important;}
+  @page{margin:1.5cm;}
+}
+</style>
+
+<div id="summary-overlay">
+  <div id="summary-panel">
+    <div class="sum-header">
+      <div class="sum-logo-text">
+        <h2>🌕 Journey to the Moon — Session Summary</h2>
+        <p>Meaning-First Literacy™ · Lokahi Connect</p>
+      </div>
+      <button class="sum-close-btn" onclick="closeSummary()">✕ Close</button>
+    </div>
+    <div class="sum-student-row">
+      <div class="sum-field"><label>Student name</label><input type="text" id="sum-student" placeholder="e.g. Daniel"></div>
+      <div class="sum-field"><label>Date</label><input type="text" id="sum-date"></div>
+      <div class="sum-field"><label>Educator</label><input type="text" id="sum-educator" placeholder="e.g. Ms. Steph"></div>
+    </div>
+    <div class="sum-overall">
+      <span class="sum-overall-label">✅ Check-In score</span>
+      <span class="sum-overall-score" id="sum-quiz-score">—</span>
+    </div>
+    <div class="sum-section-block">
+      <div class="sum-section-head">
+        <span class="sum-section-title">✅ Check-In — Question by Question</span>
+        <span id="sum-quiz-score-badge" class="sum-score-badge na">—</span>
+      </div>
+      <div class="sum-section-body" id="sum-quiz-rows">
+        <div class="sum-row"><span class="sum-row-icon">⬜</span><span class="sum-row-label">Complete the Check-In to see results here.</span></div>
+      </div>
+    </div>
+    <div class="sum-section-block">
+      <div class="sum-section-head"><span class="sum-section-title">📝 Educator Notes</span></div>
+      <div class="sum-section-body">
+        <textarea id="sum-notes" placeholder="Observations, next steps, follow-up questions…" style="width:100%;min-height:90px;border:1.5px solid #dce8ea;border-radius:8px;padding:.6rem .8rem;font-family:'DM Sans',sans-serif;font-size:.88rem;color:#1c2b2e;resize:vertical;background:#faf8f4;"></textarea>
+      </div>
+    </div>
+    <div class="sum-actions">
+      <button class="sum-btn-outline" onclick="closeSummary()">← Back to lesson</button>
+      <button class="sum-btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+    </div>
+  </div>
+</div>
+
+<button id="summary-fab" onclick="openSummary()">📋 Session Summary</button>
+
 </body>
 </html>
