@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Words, Three Meanings — Daniel | Lokahi Connect</title>
+<style>
+  :root {
+    --teal: #0d4f5c;
+    --seafoam: #1a7a6e;
+    --amber: #e8a040;
+    --amber-light: #fdf0d8;
+    --cream: #f9f6f0;
+    --text: #1c2b2f;
+    --muted: #5a7a82;
+    --white: #ffffff;
+    --success: #2d7a4f;
+    --success-bg: #e8f5ee;
+    --border: #c5dde0;
+    --shadow: rgba(13,79,92,0.12);
+    --font: 'Georgia', serif;
+    --ui-font: 'Segoe UI', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 18px;
+    line-height: 1.9;
+    min-height: 100vh;
+  }
+
+  /* ── DYSLEXIA TOOLBAR ── */
+  #toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--teal);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  #toolbar label { font-family: var(--ui-font); font-size: 13px; color: #a8d8de; }
+  #toolbar button {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: var(--ui-font);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #toolbar button:hover { background: rgba(255,255,255,0.28); }
+  #toolbar button.active { background: var(--amber); color: var(--text); border-color: var(--amber); }
+  #toolbar select {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-family: var(--ui-font);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  #toolbar select option { background: var(--teal); }
+  .toolbar-group { display: flex; align-items: center; gap: 6px; }
+  #speed-range { width: 80px; accent-color: var(--amber); }
+  #tint-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 50; opacity: 0; transition: opacity 0.3s;
+  }
+  #reading-ruler {
+    position: fixed; left: 0; width: 100%; height: 38px;
+    background: rgba(232,160,64,0.22); border-top: 2px solid var(--amber);
+    border-bottom: 2px solid var(--amber);
+    pointer-events: none; z-index: 55; display: none; top: 200px;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 820px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .lesson-header {
+    text-align: center;
+    padding: 32px 24px 28px;
+    background: linear-gradient(135deg, var(--teal) 0%, var(--seafoam) 100%);
+    border-radius: 16px;
+    color: white;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .lesson-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: var(--ui-font);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .lesson-header h1 { font-size: 2rem; font-weight: normal; margin-bottom: 10px; }
+  .lesson-header p { font-family: var(--ui-font); font-size: 15px; opacity: 0.88; line-height: 1.6; }
+
+  /* ── SECTIONS ── */
+  .section {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 28px 30px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 10px var(--shadow);
+    border-left: 5px solid var(--teal);
+  }
+  .section.amber-accent { border-left-color: var(--amber); }
+  .section.seafoam-accent { border-left-color: var(--seafoam); }
+
+  .section-label {
+    font-family: var(--ui-font);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  h2 { font-size: 1.4rem; color: var(--teal); margin-bottom: 16px; font-weight: normal; }
+  h3 { font-size: 1.1rem; color: var(--seafoam); margin-bottom: 10px; font-weight: normal; }
+
+  /* ── LISTEN BUTTON ── */
+  .listen-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--teal); color: white;
+    border: none; border-radius: 8px;
+    padding: 7px 14px; font-family: var(--ui-font); font-size: 14px;
+    cursor: pointer; margin-bottom: 14px; transition: background 0.2s;
+  }
+  .listen-btn:hover { background: var(--seafoam); }
+  .listen-btn svg { width: 16px; height: 16px; }
+
+  /* ── WORD FAMILY CARDS ── */
+  .family-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 20px 0; }
+  @media (max-width: 600px) { .family-grid { grid-template-columns: 1fr; } }
+
+  .family-card {
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid transparent;
+  }
+  .family-card.place { background: #e8f3fb; border-color: #5b9cc4; }
+  .family-card.contraction { background: #fdf0d8; border-color: var(--amber); }
+  .family-card.belonging { background: #e8f5ee; border-color: #4a9e6b; }
+
+  .family-icon { font-size: 2.8rem; margin-bottom: 8px; display: block; }
+  .family-word {
+    font-size: 1.7rem; font-weight: bold; display: block; margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+  .family-card.place .family-word { color: #2a6496; }
+  .family-card.contraction .family-word { color: #b87010; }
+  .family-card.belonging .family-word { color: #276540; }
+  .family-meaning { font-family: var(--ui-font); font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  /* ── WORD FAMILY CONSTELLATION ── */
+  .constellation { margin: 20px 0; }
+  .constellation-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .const-center {
+    background: var(--teal); color: white; border-radius: 10px;
+    padding: 8px 18px; font-size: 1.1rem; font-weight: bold; letter-spacing: 0.04em;
+  }
+  .const-arrow { color: var(--muted); font-size: 1.2rem; }
+  .const-related {
+    border-radius: 8px; padding: 6px 14px;
+    font-family: var(--ui-font); font-size: 15px; font-weight: 600;
+    border: 2px solid;
+  }
+  .const-related.place { background: #e8f3fb; border-color: #5b9cc4; color: #2a6496; }
+  .const-related.contraction { background: #fdf0d8; border-color: var(--amber); color: #b87010; }
+  .const-related.belonging { background: #e8f5ee; border-color: #4a9e6b; color: #276540; }
+  .const-note { font-family: var(--ui-font); font-size: 13px; color: var(--muted); margin-left: 6px; }
+
+  /* ── WORD SUM DISPLAY ── */
+  .word-sum-box {
+    background: var(--cream);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.05rem;
+    margin: 14px 0;
+    line-height: 2.2;
+  }
+  .morpheme-base { color: var(--teal); font-weight: bold; }
+  .morpheme-affix { color: var(--seafoam); font-weight: bold; }
+  .morpheme-join { color: var(--amber); font-weight: bold; }
+  .sum-arrow { color: var(--muted); }
+
+  /* ── VISUAL MEANING ANCHOR ── */
+  .meaning-anchor {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--cream); border-radius: 12px;
+    padding: 18px 20px; margin: 16px 0;
+    border: 1px solid var(--border);
+  }
+  .anchor-icon { font-size: 2.4rem; flex-shrink: 0; }
+  .anchor-content h4 { color: var(--teal); margin-bottom: 4px; font-size: 1rem; }
+  .anchor-content p { font-family: var(--ui-font); font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CONTRACTION VISUAL ── */
+  .contraction-visual {
+    display: flex; align-items: center; gap: 14px;
+    flex-wrap: wrap; margin: 16px 0;
+  }
+  .cv-part {
+    background: #fdf0d8; border: 2px solid var(--amber);
+    border-radius: 8px; padding: 8px 16px;
+    font-size: 1.2rem; font-weight: bold; color: #b87010;
+  }
+  .cv-plus { font-size: 1.4rem; color: var(--muted); }
+  .cv-equals { font-size: 1.4rem; color: var(--muted); }
+  .cv-result {
+    background: var(--amber); border-radius: 8px;
+    padding: 8px 18px; font-size: 1.3rem; font-weight: bold; color: var(--text);
+  }
+  .apostrophe-note {
+    font-family: var(--ui-font); font-size: 14px;
+    background: #fff8ec; border-left: 4px solid var(--amber);
+    padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0;
+    color: var(--text);
+  }
+
+  /* ── DRAG AND DROP ── */
+  .drag-instructions {
+    font-family: var(--ui-font); font-size: 14px;
+    color: var(--muted); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px; background: var(--cream);
+    border: 2px dashed var(--border); border-radius: 10px;
+    margin-bottom: 18px; min-height: 56px;
+  }
+  .drag-chip {
+    background: var(--white);
+    border: 2px solid var(--teal);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem; font-weight: bold;
+    cursor: grab; user-select: none;
+    color: var(--teal);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+    touch-action: none;
+  }
+  .drag-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 10px var(--shadow); }
+  .drag-chip.dragging { opacity: 0.5; cursor: grabbing; }
+  .drag-chip.used { opacity: 0.3; pointer-events: none; }
+
+  .sentence-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .sentence-text { font-size: 1.05rem; }
+  .drop-zone {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 110px; height: 40px; padding: 0 10px;
+    border: 2px dashed var(--border); border-radius: 8px;
+    background: var(--cream); font-size: 1rem; font-weight: bold;
+    color: var(--teal); transition: all 0.2s; cursor: pointer;
+    font-family: var(--font);
+  }
+  .drop-zone.drag-over {
+    border-color: var(--amber); background: var(--amber-light);
+    transform: scale(1.04);
+  }
+  .drop-zone.correct { border-color: var(--success); background: var(--success-bg); color: var(--success); border-style: solid; }
+  .drop-zone.incorrect { border-color: #c0392b; background: #fdf0f0; color: #c0392b; border-style: solid; }
+  .drop-zone.filled { border-style: solid; border-color: var(--teal); background: #eaf4f6; }
+
+  .check-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .btn-check {
+    background: var(--teal); color: white; border: none;
+    border-radius: 8px; padding: 10px 22px;
+    font-family: var(--ui-font); font-size: 15px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-check:hover { background: var(--seafoam); }
+  .btn-reset {
+    background: transparent; color: var(--muted); border: 2px solid var(--border);
+    border-radius: 8px; padding: 10px 18px;
+    font-family: var(--ui-font); font-size: 15px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--text); }
+
+  .feedback-msg {
+    font-family: var(--ui-font); font-size: 15px;
+    padding: 12px 16px; border-radius: 8px; margin-top: 10px;
+    display: none;
+  }
+  .feedback-msg.show { display: block; }
+  .feedback-msg.great { background: var(--success-bg); color: var(--success); border-left: 4px solid var(--success); }
+  .feedback-msg.keep-going { background: #fdf8ec; color: #9a6200; border-left: 4px solid var(--amber); }
+
+  /* ── FILL IN THE BLANK ── */
+  .fitb-sentence {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; margin-bottom: 14px;
+    font-size: 1.05rem; line-height: 2.2;
+  }
+  .fitb-input {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 5px 12px; font-size: 1rem; font-family: var(--font);
+    color: var(--text); background: var(--white);
+    width: 120px; outline: none; transition: border-color 0.2s;
+  }
+  .fitb-input:focus { border-color: var(--teal); }
+  .fitb-input.correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+  .fitb-input.incorrect { border-color: #c0392b; background: #fdf0f0; color: #c0392b; }
+
+  /* ── SORT INTO FAMILIES ── */
+  .sort-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+  @media (max-width: 600px) { .sort-grid { grid-template-columns: 1fr; } }
+
+  .sort-column {
+    border-radius: 12px; padding: 14px;
+    border: 2px solid; min-height: 120px;
+  }
+  .sort-column.place { background: #eaf3fb; border-color: #5b9cc4; }
+  .sort-column.contraction { background: #fdf5e4; border-color: var(--amber); }
+  .sort-column.belonging { background: #eaf5ee; border-color: #4a9e6b; }
+
+  .sort-column-title {
+    font-family: var(--ui-font); font-size: 13px; font-weight: bold;
+    margin-bottom: 10px; text-align: center; letter-spacing: 0.04em;
+  }
+  .sort-column.place .sort-column-title { color: #2a6496; }
+  .sort-column.contraction .sort-column-title { color: #b87010; }
+  .sort-column.belonging .sort-column-title { color: #276540; }
+
+  .sort-drop-area {
+    min-height: 60px; border-radius: 8px;
+    border: 2px dashed rgba(0,0,0,0.15);
+    padding: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start;
+  }
+  .sort-drop-area.drag-over { border-style: solid; border-width: 2px; }
+  .sort-column.place .sort-drop-area.drag-over { border-color: #2a6496; background: #d6e9f8; }
+  .sort-column.contraction .sort-drop-area.drag-over { border-color: var(--amber); background: #fce8c0; }
+  .sort-column.belonging .sort-drop-area.drag-over { border-color: #4a9e6b; background: #ceebda; }
+
+  /* ── REFLECTION ── */
+  .reflection-box {
+    background: var(--amber-light);
+    border: 2px solid var(--amber);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin: 20px 0;
+  }
+  .reflection-box h3 { color: #7a5000; margin-bottom: 10px; }
+  .reflection-textarea {
+    width: 100%; border: 2px solid var(--amber);
+    border-radius: 8px; padding: 12px;
+    font-family: var(--font); font-size: 16px;
+    line-height: 1.8; background: var(--white);
+    resize: vertical; min-height: 80px;
+    color: var(--text); outline: none;
+    transition: border-color 0.2s;
+  }
+  .reflection-textarea:focus { border-color: #b87010; }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap { background: var(--cream); border-radius: 8px; height: 8px; margin: 16px 0; overflow: hidden; }
+  .progress-bar { height: 8px; background: linear-gradient(90deg, var(--seafoam), var(--teal)); border-radius: 8px; transition: width 0.5s; }
+
+  /* ── SECTION NAV ── */
+  .nav-dots {
+    display: flex; justify-content: center; gap: 8px; margin-bottom: 28px;
+  }
+  .nav-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--border); cursor: pointer; transition: all 0.2s;
+  }
+  .nav-dot.active { background: var(--teal); transform: scale(1.3); }
+  .nav-dot.done { background: var(--seafoam); }
+
+  /* ── CHOICE ── */
+  .choice-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+  .choice-btn {
+    background: var(--white); color: var(--teal);
+    border: 2px solid var(--teal); border-radius: 10px;
+    padding: 10px 20px; font-family: var(--font); font-size: 1rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .choice-btn:hover { background: #eaf4f6; }
+  .choice-btn.selected { background: var(--teal); color: white; }
+
+  /* ── WORD SENSE PICS ── */
+  .sense-visual {
+    display: flex; gap: 18px; margin: 18px 0; flex-wrap: wrap;
+  }
+  .sense-card {
+    flex: 1; min-width: 150px;
+    border-radius: 12px; padding: 18px 16px;
+    text-align: center; border: 2px solid;
+  }
+  .sense-card.place { background: #e8f3fb; border-color: #5b9cc4; }
+  .sense-card.contraction { background: #fdf0d8; border-color: var(--amber); }
+  .sense-card.belonging { background: #e8f5ee; border-color: #4a9e6b; }
+  .sense-emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
+  .sense-word { font-size: 1.4rem; font-weight: bold; display: block; margin-bottom: 6px; }
+  .sense-card.place .sense-word { color: #2a6496; }
+  .sense-card.contraction .sense-word { color: #b87010; }
+  .sense-card.belonging .sense-word { color: #276540; }
+  .sense-clue {
+    font-family: var(--ui-font); font-size: 13px; color: var(--muted);
+    background: rgba(255,255,255,0.7); border-radius: 6px;
+    padding: 5px 8px; display: inline-block;
+  }
+
+  /* ── DYSLEXIC FONT ── */
+  body.dyslexic-font, body.dyslexic-font * { font-family: 'OpenDyslexic', 'Comic Sans MS', cursive !important; }
+  body.wide-spacing * { letter-spacing: 0.12em !important; word-spacing: 0.2em !important; }
+
+  /* ── TOOLTIP ── */
+  .tooltip-wrap { position: relative; display: inline-block; }
+  .tooltip-wrap .tip {
+    display: none; position: absolute; bottom: 110%;
+    left: 50%; transform: translateX(-50%);
+    background: var(--teal); color: white; border-radius: 6px;
+    padding: 6px 10px; font-family: var(--ui-font); font-size: 13px;
+    white-space: nowrap; z-index: 200;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .tooltip-wrap:hover .tip { display: block; }
+
+  /* ── MISC ── */
+  .divider { border: none; border-top: 2px solid var(--border); margin: 24px 0; }
+  .notice-box {
+    background: #eaf4f6; border-left: 4px solid var(--teal);
+    border-radius: 0 10px 10px 0; padding: 14px 18px;
+    font-family: var(--ui-font); font-size: 14px; margin: 14px 0;
+    color: var(--text); line-height: 1.6;
+  }
+  .emoji-label { font-size: 1.1rem; margin-right: 4px; }
+
+  .completion-banner {
+    display: none; background: linear-gradient(135deg, var(--seafoam), var(--teal));
+    color: white; border-radius: 14px; padding: 28px;
+    text-align: center; margin-top: 28px;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .completion-banner.show { display: block; }
+  .completion-banner h2 { font-size: 1.6rem; margin-bottom: 10px; }
+  .completion-banner p { font-family: var(--ui-font); opacity: 0.9; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<!-- TINT OVERLAY + RULER -->
+<div id="tint-overlay"></div>
+<div id="reading-ruler"></div>
+
+<!-- ── TOOLBAR ── -->
+<div id="toolbar" role="toolbar" aria-label="Accessibility tools">
+  <div class="toolbar-group">
+    <button id="btn-tts" title="Read page aloud">🔊 Read Aloud</button>
+    <label>Speed</label>
+    <input type="range" id="speed-range" min="0.6" max="1.4" step="0.1" value="0.9">
+  </div>
+  <div class="toolbar-group">
+    <button id="btn-dyslexic" title="Toggle OpenDyslexic font">Aa Font</button>
+    <button id="btn-spacing" title="Toggle wide letter spacing">↔ Spacing</button>
+  </div>
+  <div class="toolbar-group">
+    <label>Tint</label>
+    <select id="tint-select">
+      <option value="none">None</option>
+      <option value="rgba(255,255,200,0.28)">Yellow</option>
+      <option value="rgba(200,240,220,0.28)">Green</option>
+      <option value="rgba(210,230,255,0.28)">Blue</option>
+      <option value="rgba(255,210,200,0.28)">Pink</option>
+    </select>
+  </div>
+  <div class="toolbar-group">
+    <button id="btn-ruler" title="Toggle reading ruler">📏 Ruler</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="lesson-header">
+    <div class="badge">🔬 Word Scientist — Daniel</div>
+    <h1>Three Words, Three Meanings</h1>
+    <p>Investigating <strong>there</strong>, <strong>their</strong>, and <strong>they're</strong><br>
+    Each spelling carries a different meaning — and each one has a word family to prove it.</p>
+  </div>
+
+  <div class="nav-dots" id="nav-dots">
+    <div class="nav-dot active" data-section="0" title="Meet the three words"></div>
+    <div class="nav-dot" data-section="1" title="Word families"></div>
+    <div class="nav-dot" data-section="2" title="Sort into families"></div>
+    <div class="nav-dot" data-section="3" title="Drag and Drop — Part 1"></div>
+    <div class="nav-dot" data-section="4" title="Drag and Drop — Part 2"></div>
+    <div class="nav-dot" data-section="5" title="Fill in the blank"></div>
+    <div class="nav-dot" data-section="6" title="Your own words"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 0 — MEET THE THREE WORDS
+  ═══════════════════════════════════════════ -->
+  <div class="section" id="sec-0">
+    <div class="section-label">Part 1 of 7</div>
+    <h2>Three spellings. Three meanings.</h2>
+    <button class="listen-btn" onclick="speakSection('sec-0-text')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen
+    </button>
+    <div id="sec-0-text">
+      <p style="margin-bottom:16px;">These three words sound the same when you say them aloud. But look carefully — they are spelled differently. That difference is a clue. Each spelling belongs to a different word family, with a different meaning.</p>
+    </div>
+
+    <div class="sense-visual">
+      <div class="sense-card place">
+        <span class="sense-emoji">📍</span>
+        <span class="sense-word">there</span>
+        <span class="sense-clue">a place or location</span>
+      </div>
+      <div class="sense-card contraction">
+        <span class="sense-emoji">🔗</span>
+        <span class="sense-word">they're</span>
+        <span class="sense-clue">they + are joined together</span>
+      </div>
+      <div class="sense-card belonging">
+        <span class="sense-emoji">🏠</span>
+        <span class="sense-word">their</span>
+        <span class="sense-clue">belonging to them</span>
+      </div>
+    </div>
+
+    <div class="notice-box">
+      <strong>🔬 Word Scientist notice:</strong> Sound alone cannot tell these apart. Their <em>spellings</em> carry the meaning. That is why spelling matters — it is the system working exactly as it should.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1 — WORD FAMILIES
+  ═══════════════════════════════════════════ -->
+  <div class="section seafoam-accent" id="sec-1">
+    <div class="section-label">Part 2 of 7</div>
+    <h2>Each word has a family</h2>
+    <button class="listen-btn" onclick="speakSection('sec-1-text')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen
+    </button>
+    <div id="sec-1-text">
+      <p style="margin-bottom:18px;">Words that share a spelling pattern — especially a shared meaningful piece — are related, like cousins in a family. Look at the spelling clues hiding in each word.</p>
+    </div>
+
+    <!-- THERE family -->
+    <div style="margin-bottom:28px;">
+      <h3>📍 The <em>place</em> family — words that carry <strong>&lt;here&gt;</strong></h3>
+      <button class="listen-btn" onclick="speak('The place family. There, here, and where all carry the spelling h-e-r-e. They are all about location.')">🔊 Listen</button>
+      <div class="constellation">
+        <div class="constellation-row">
+          <span class="const-center">here</span>
+          <span class="const-arrow">→</span>
+          <span class="const-related place">there</span>
+          <span class="const-note">t + here = a place over that way</span>
+        </div>
+        <div class="constellation-row">
+          <span class="const-center">here</span>
+          <span class="const-arrow">→</span>
+          <span class="const-related place">where</span>
+          <span class="const-note">wh + ere = at what place?</span>
+        </div>
+      </div>
+      <div class="meaning-anchor">
+        <span class="anchor-icon">🔍</span>
+        <div class="anchor-content">
+          <h4>The hidden piece: &lt;here&gt;</h4>
+          <p>Look at the word <strong>there</strong>. Can you see <strong>here</strong> hiding inside it? <br>
+          <strong>t + here = there</strong><br>
+          The spelling &lt;here&gt; connects these words to the same meaning: <em>a place, a location</em>. That's why they're spelled the way they are.</p>
+        </div>
+      </div>
+      <div class="word-sum-box">
+        <span class="morpheme-base">t</span> + <span class="morpheme-base">here</span> <span class="sum-arrow">→</span> <strong>there</strong>
+        <br>
+        <span class="morpheme-base">wh</span> + <span class="morpheme-base">ere</span> <span class="sum-arrow">→</span> <strong>where</strong>
+        <br>
+        <em style="color:var(--muted); font-size:0.9rem;">All three: location words. The spelling &lt;here&gt; / &lt;ere&gt; is the shared meaning thread.</em>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- THEY'RE family -->
+    <div style="margin-bottom:28px;">
+      <h3>🔗 The <em>contraction</em> family — <strong>&lt;they&gt;</strong> + <strong>&lt;are&gt;</strong></h3>
+      <button class="listen-btn" onclick="speak('The contraction family. They apostrophe r e is a contraction. It is two words joined together: they and are. The apostrophe marks the join.')">🔊 Listen</button>
+      <div class="contraction-visual">
+        <span class="cv-part">they</span>
+        <span class="cv-plus">+</span>
+        <span class="cv-part">are</span>
+        <span class="cv-equals">=</span>
+        <span class="cv-result">they're</span>
+      </div>
+      <div class="apostrophe-note">
+        <strong>The apostrophe ( ' ) is a visual signal.</strong> It marks the spot where letters were joined. The <em>a</em> in <em>are</em> is compressed at the join: <strong>they + are → they're</strong>. The apostrophe shows that join happened.
+      </div>
+      <div class="notice-box">
+        <strong>🔬 Notice:</strong> You can always check <em>they're</em> by replacing it with <strong>they are</strong>. If <em>they are</em> fits the sentence, then <em>they're</em> is the right spelling.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- THEIR family -->
+    <div>
+      <h3>🏠 The <em>belonging</em> family — words that carry <strong>&lt;the&gt;</strong> + <strong>&lt;her&gt;</strong></h3>
+      <button class="listen-btn" onclick="speak('The belonging family. Their carries two familiar pieces: the and her. It is a belonging word — it means something belongs to them.')">🔊 Listen</button>
+      <div class="constellation">
+        <div class="constellation-row">
+          <span class="const-related belonging">the</span>
+          <span class="const-arrow">+</span>
+          <span class="const-related belonging">her</span>
+          <span class="const-arrow">→</span>
+          <span class="const-center">their</span>
+          <span class="const-note">belonging to them</span>
+        </div>
+      </div>
+      <div class="meaning-anchor">
+        <span class="anchor-icon">🔍</span>
+        <div class="anchor-content">
+          <h4>Two familiar pieces in one word</h4>
+          <p>The word <strong>their</strong> carries <strong>the</strong> (the article we use for specific things) and <strong>her</strong> (a belonging word). Together, they build a word that means <em>belonging to a group</em>. The &lt;ir&gt; at the end echoes other belonging markers in English.</p>
+        </div>
+      </div>
+      <div class="word-sum-box">
+        <strong>their</strong> → carries <span class="morpheme-base">the</span> + <span class="morpheme-base">ir</span> (belonging marker)
+        <br>
+        <em style="color:var(--muted); font-size:0.9rem;">Related to: <strong>her</strong> (her things), <strong>the</strong> (pointing to something specific)</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2 — SORT INTO FAMILIES
+  ═══════════════════════════════════════════ -->
+  <div class="section amber-accent" id="sec-2">
+    <div class="section-label">Part 3 of 7 — Drag &amp; Drop</div>
+    <h2>Sort these words into their families</h2>
+    <button class="listen-btn" onclick="speakSection('sec-2-text')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen
+    </button>
+    <div id="sec-2-text">
+      <p style="margin-bottom:14px;">Drag each word chip into the family column where it belongs. Look at the spelling — the meaning is hiding in the letters.</p>
+    </div>
+
+    <div class="drag-instructions">
+      <span>👆</span> Drag each word into the right family column
+    </div>
+
+    <div class="word-bank" id="sort-bank">
+      <div class="drag-chip" draggable="true" data-word="where" data-family="place" id="sc-where">where</div>
+      <div class="drag-chip" draggable="true" data-word="they" data-family="contraction" id="sc-they">they</div>
+      <div class="drag-chip" draggable="true" data-word="her" data-family="belonging" id="sc-her">her</div>
+      <div class="drag-chip" draggable="true" data-word="here" data-family="place" id="sc-here">here</div>
+      <div class="drag-chip" draggable="true" data-word="are" data-family="contraction" id="sc-are">are</div>
+      <div class="drag-chip" draggable="true" data-word="the" data-family="belonging" id="sc-the">the</div>
+    </div>
+
+    <div class="sort-grid">
+      <div class="sort-column place">
+        <div class="sort-column-title">📍 Place Family<br><em>there, where, here</em></div>
+        <div class="sort-drop-area" data-family="place" id="drop-place"></div>
+      </div>
+      <div class="sort-column contraction">
+        <div class="sort-column-title">🔗 Contraction Family<br><em>they're = they + are</em></div>
+        <div class="sort-drop-area" data-family="contraction" id="drop-contraction"></div>
+      </div>
+      <div class="sort-column belonging">
+        <div class="sort-column-title">🏠 Belonging Family<br><em>their</em></div>
+        <div class="sort-drop-area" data-family="belonging" id="drop-belonging"></div>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <button class="btn-check" onclick="checkSort()">✓ Check my sort</button>
+      <button class="btn-reset" onclick="resetSort()">↺ Try again</button>
+    </div>
+    <div class="feedback-msg" id="sort-feedback"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3 — DRAG & DROP SET 1
+  ═══════════════════════════════════════════ -->
+  <div class="section" id="sec-3">
+    <div class="section-label">Part 4 of 7 — Drag &amp; Drop</div>
+    <h2>Choose the right word — Location sentences</h2>
+    <button class="listen-btn" onclick="speakDragSet('drag1')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen to sentences
+    </button>
+    <p style="margin-bottom:16px; font-family: var(--ui-font); font-size:14px; color:var(--muted);">Each sentence below needs one of the three words. Drag the right chip into the blank.</p>
+    <p style="margin-bottom:4px; font-family: var(--ui-font); font-size:13px; color:var(--muted);">💡 Hint: Ask yourself — Is this about a <strong>place</strong> 📍? A <strong>they are</strong> situation 🔗? Or <strong>belonging</strong> 🏠?</p>
+
+    <div class="word-bank" id="bank-drag1">
+      <div class="drag-chip" draggable="true" data-word="there" id="d1-there-1">there</div>
+      <div class="drag-chip" draggable="true" data-word="they're" id="d1-theyre-1">they're</div>
+      <div class="drag-chip" draggable="true" data-word="their" id="d1-their-1">their</div>
+      <div class="drag-chip" draggable="true" data-word="there" id="d1-there-2">there</div>
+      <div class="drag-chip" draggable="true" data-word="they're" id="d1-theyre-2">they're</div>
+      <div class="drag-chip" draggable="true" data-word="their" id="d1-their-2">their</div>
+    </div>
+
+    <div id="drag1">
+      <div class="sentence-row">
+        <span class="sentence-text">1. 🐕 The dogs are over</span>
+        <div class="drop-zone" data-answer="there" data-set="1" id="drop1-1" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">by the fence.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">Is this about a place?</span></span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">2. 🎒 I can see</span>
+        <div class="drop-zone" data-answer="their" data-set="1" id="drop1-2" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">backpacks by the door.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">Whose backpacks? Belonging!</span></span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">3. 🌧️</span>
+        <div class="drop-zone" data-answer="they're" data-set="1" id="drop1-3" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">waiting inside because of the rain.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">Try: "They are waiting..." Does that fit?</span></span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">4. 🏕️ We set up camp over</span>
+        <div class="drop-zone" data-answer="there" data-set="1" id="drop1-4" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">, near the trees.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">A location — look for &lt;here&gt;</span></span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">5. 🐦 The birds built</span>
+        <div class="drop-zone" data-answer="their" data-set="1" id="drop1-5" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">nest in the tall oak tree.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">Whose nest? The birds' nest — belonging!</span></span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">6. 🥾</span>
+        <div class="drop-zone" data-answer="they're" data-set="1" id="drop1-6" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">going on a hike this Saturday.</span>
+        <span class="tooltip-wrap">ℹ️<span class="tip">Try: "They are going..." Does it fit?</span></span>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <button class="btn-check" onclick="checkDragSet(1, 6)">✓ Check my answers</button>
+      <button class="btn-reset" onclick="resetDragSet(1, 6, 'bank-drag1')">↺ Try again</button>
+    </div>
+    <div class="feedback-msg" id="drag1-feedback"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 4 — DRAG & DROP SET 2
+  ═══════════════════════════════════════════ -->
+  <div class="section seafoam-accent" id="sec-4">
+    <div class="section-label">Part 5 of 7 — Drag &amp; Drop</div>
+    <h2>Choose the right word — Story sentences</h2>
+    <button class="listen-btn" onclick="speakDragSet('drag2')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen to sentences
+    </button>
+    <p style="margin-bottom: 16px; font-family: var(--ui-font); font-size:14px; color:var(--muted);">These sentences come from a short story about two explorers. Choose the right word for each blank.</p>
+
+    <div class="word-bank" id="bank-drag2">
+      <div class="drag-chip" draggable="true" data-word="there" id="d2-there-1">there</div>
+      <div class="drag-chip" draggable="true" data-word="they're" id="d2-theyre-1">they're</div>
+      <div class="drag-chip" draggable="true" data-word="their" id="d2-their-1">their</div>
+      <div class="drag-chip" draggable="true" data-word="there" id="d2-there-2">there</div>
+      <div class="drag-chip" draggable="true" data-word="they're" id="d2-theyre-2">they're</div>
+      <div class="drag-chip" draggable="true" data-word="their" id="d2-their-2">their</div>
+      <div class="drag-chip" draggable="true" data-word="there" id="d2-there-3">there</div>
+      <div class="drag-chip" draggable="true" data-word="their" id="d2-their-3">their</div>
+    </div>
+
+    <div id="drag2">
+      <div class="sentence-row">
+        <span class="sentence-text">1. 🌊 Two explorers packed</span>
+        <div class="drop-zone" data-answer="their" data-set="2" id="drop2-1" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">gear and set off at dawn.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">2. 🗺️</span>
+        <div class="drop-zone" data-answer="they're" data-set="2" id="drop2-2" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">heading toward the old lighthouse on the coast.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">3. 🏚️</span>
+        <div class="drop-zone" data-answer="there" data-set="2" id="drop2-3" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">, behind the lighthouse, they spotted a hidden path.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">4. 🧭</span>
+        <div class="drop-zone" data-answer="their" data-set="2" id="drop2-4" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">compass spun in a slow circle — something magnetic was nearby.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">5. 🌿</span>
+        <div class="drop-zone" data-answer="they're" data-set="2" id="drop2-5" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">not sure what made the compass spin, but they want to find out.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">6. 🪨 A large flat rock sat right</span>
+        <div class="drop-zone" data-answer="there" data-set="2" id="drop2-6" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">in the middle of the path.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">7. 📖 Both explorers opened</span>
+        <div class="drop-zone" data-answer="their" data-set="2" id="drop2-7" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">notebooks and began to sketch what they saw.</span>
+      </div>
+      <div class="sentence-row">
+        <span class="sentence-text">8. 🌅</span>
+        <div class="drop-zone" data-answer="there" data-set="2" id="drop2-8" ondragover="allowDrop(event)" ondrop="dropWord(event)">_____</div>
+        <span class="sentence-text">was a faint glow coming from beneath the rock.</span>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <button class="btn-check" onclick="checkDragSet(2, 8)">✓ Check my answers</button>
+      <button class="btn-reset" onclick="resetDragSet(2, 8, 'bank-drag2')">↺ Try again</button>
+    </div>
+    <div class="feedback-msg" id="drag2-feedback"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 5 — FILL IN THE BLANK
+  ═══════════════════════════════════════════ -->
+  <div class="section amber-accent" id="sec-5">
+    <div class="section-label">Part 6 of 7 — Fill in the Blank</div>
+    <h2>Type the right word</h2>
+    <button class="listen-btn" onclick="speakFITB()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      🔊 Listen
+    </button>
+    <p style="margin-bottom:16px; font-family: var(--ui-font); font-size:14px; color:var(--muted);">Type <strong>there</strong>, <strong>their</strong>, or <strong>they're</strong> in each blank. You can check one at a time or all at once.</p>
+
+    <div id="fitb-area">
+      <div class="fitb-sentence">
+        <span>1. 🐠 The fish swam over</span>
+        <input class="fitb-input" data-answer="there" id="fitb1" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>, near the coral.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>2. 🎸 Did you hear</span>
+        <input class="fitb-input" data-answer="their" id="fitb2" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>new song?</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>3. ☁️ I heard</span>
+        <input class="fitb-input" data-answer="they're" id="fitb3" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>building a new trail through the forest.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>4. 🌋</span>
+        <input class="fitb-input" data-answer="there" id="fitb4" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>is a dormant volcano on that island.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>5. 🦦</span>
+        <input class="fitb-input" data-answer="they're" id="fitb5" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>floating on their backs in the bay.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>6. 🌳 The twins built</span>
+        <input class="fitb-input" data-answer="their" id="fitb6" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>treehouse last summer.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>7. 🐺 The wolves made</span>
+        <input class="fitb-input" data-answer="their" id="fitb7" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>den right</span>
+        <input class="fitb-input" data-answer="there" id="fitb8" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>under the old cedar.</span>
+      </div>
+      <div class="fitb-sentence">
+        <span>8. 🧊</span>
+        <input class="fitb-input" data-answer="they're" id="fitb9" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>not going to believe what we found</span>
+        <input class="fitb-input" data-answer="there" id="fitb10" placeholder="type here" autocomplete="off" spellcheck="false">
+        <span>.</span>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <button class="btn-check" onclick="checkFITB()">✓ Check my answers</button>
+      <button class="btn-reset" onclick="resetFITB()">↺ Clear and try again</button>
+    </div>
+    <div class="feedback-msg" id="fitb-feedback"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 6 — CHOICE + REFLECTION
+  ═══════════════════════════════════════════ -->
+  <div class="section" id="sec-6">
+    <div class="section-label">Part 7 of 7 — Your Turn</div>
+    <h2>What did you notice?</h2>
+
+    <div class="reflection-box">
+      <h3>🔬 Word Scientist reflection</h3>
+      <p style="font-family:var(--ui-font); font-size:14px; color:#7a5000; margin-bottom:12px;">Choose a question to answer — or answer more than one if you want to!</p>
+
+      <p style="margin-bottom:8px;"><strong>Option A:</strong> How can you tell <em>there</em> from <em>their</em>?</p>
+      <textarea class="reflection-textarea" placeholder="Write your thinking here..."></textarea>
+
+      <p style="margin-bottom:8px; margin-top:14px;"><strong>Option B:</strong> What's a trick you invented for remembering <em>they're</em>?</p>
+      <textarea class="reflection-textarea" placeholder="Write your thinking here..."></textarea>
+
+      <p style="margin-bottom:8px; margin-top:14px;"><strong>Option C:</strong> What did you notice today that surprised you about these three spellings?</p>
+      <textarea class="reflection-textarea" placeholder="Write your thinking here..."></textarea>
+    </div>
+
+    <div class="notice-box" style="margin-top:20px;">
+      <strong>🌟 What you investigated today:</strong><br>
+      Three words that sound alike — but each has its own spelling, its own family, and its own meaning to carry. You didn't memorize a rule. You investigated a system.
+    </div>
+  </div>
+
+  <!-- COMPLETION -->
+  <div class="completion-banner" id="completion">
+    <h2>🎉 You did it, Word Scientist!</h2>
+    <p>You investigated <strong>there</strong>, <strong>their</strong>, and <strong>they're</strong> — and found the meaning hiding in every spelling.<br>
+    Those spellings aren't tricky. They make perfect sense once you know the families they come from.</p>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+// ── TTS ──
+let ttsEnabled = false;
+let ttsRate = 0.9;
+let currentUtterance = null;
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = ttsRate;
+  u.lang = 'en-US';
+  // Try to pick a natural voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v =>
+    v.name.includes('Samantha') || v.name.includes('Karen') ||
+    v.name.includes('Google US English') || v.name.includes('Microsoft Aria') ||
+    v.name.includes('Alex') || (v.lang === 'en-US' && v.localService === false)
+  ) || voices.find(v => v.lang === 'en-US');
+  if (preferred) u.voice = preferred;
+  currentUtterance = u;
+  window.speechSynthesis.speak(u);
+}
+
+function speakSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  speak(el.innerText);
+}
+
+function speakDragSet(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const rows = el.querySelectorAll('.sentence-row');
+  let text = '';
+  rows.forEach(r => {
+    text += r.innerText.replace('_____', '... blank ...').replace('ℹ️','') + '. ';
+  });
+  speak(text);
+}
+
+function speakFITB() {
+  const el = document.getElementById('fitb-area');
+  if (!el) return;
+  let text = '';
+  el.querySelectorAll('.fitb-sentence').forEach(s => {
+    const spans = s.querySelectorAll('span');
+    let line = '';
+    spans.forEach(sp => line += sp.innerText + ' ');
+    text += line.replace(/\s+/g,' ').trim() + '. Blank. ';
+  });
+  speak(text);
+}
+
+document.getElementById('btn-tts').addEventListener('click', function() {
+  ttsEnabled = !ttsEnabled;
+  this.classList.toggle('active', ttsEnabled);
+  if (ttsEnabled) speak('Text to speech is on. Press any listen button to hear a section read aloud.');
+  else { window.speechSynthesis.cancel(); }
+});
+
+document.getElementById('speed-range').addEventListener('input', function() {
+  ttsRate = parseFloat(this.value);
+});
+
+// Load voices async
+window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+
+// ── DYSLEXIA TOOLBAR ──
+document.getElementById('btn-dyslexic').addEventListener('click', function() {
+  document.body.classList.toggle('dyslexic-font');
+  this.classList.toggle('active');
+});
+document.getElementById('btn-spacing').addEventListener('click', function() {
+  document.body.classList.toggle('wide-spacing');
+  this.classList.toggle('active');
+});
+
+const tintOverlay = document.getElementById('tint-overlay');
+document.getElementById('tint-select').addEventListener('change', function() {
+  if (this.value === 'none') {
+    tintOverlay.style.opacity = '0';
+    tintOverlay.style.background = 'transparent';
+  } else {
+    tintOverlay.style.background = this.value;
+    tintOverlay.style.opacity = '1';
+  }
+});
+
+const rulerEl = document.getElementById('reading-ruler');
+let rulerOn = false;
+document.getElementById('btn-ruler').addEventListener('click', function() {
+  rulerOn = !rulerOn;
+  rulerEl.style.display = rulerOn ? 'block' : 'none';
+  this.classList.toggle('active', rulerOn);
+});
+document.addEventListener('mousemove', function(e) {
+  if (rulerOn) rulerEl.style.top = (e.clientY - 19) + 'px';
+});
+
+// ── DRAG AND DROP — SORT ──
+let draggedChip = null;
+let draggedFrom = null;
+
+function initDrag() {
+  document.querySelectorAll('.drag-chip').forEach(chip => {
+    chip.addEventListener('dragstart', function(e) {
+      draggedChip = this;
+      draggedFrom = this.parentElement;
+      setTimeout(() => this.classList.add('dragging'), 0);
+    });
+    chip.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+    });
+    // Touch support
+    chip.addEventListener('touchstart', touchStart, { passive: false });
+    chip.addEventListener('touchmove', touchMove, { passive: false });
+    chip.addEventListener('touchend', touchEnd);
+  });
+
+  document.querySelectorAll('.sort-drop-area').forEach(zone => {
+    zone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.classList.add('drag-over');
+    });
+    zone.addEventListener('dragleave', function() {
+      this.classList.remove('drag-over');
+    });
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      if (draggedChip) {
+        this.appendChild(draggedChip);
+        draggedChip = null;
+      }
+    });
+  });
+
+  // Allow drop back to bank
+  document.querySelectorAll('.word-bank').forEach(bank => {
+    bank.addEventListener('dragover', e => e.preventDefault());
+    bank.addEventListener('drop', function(e) {
+      e.preventDefault();
+      if (draggedChip) this.appendChild(draggedChip);
+    });
+  });
+}
+
+// Touch drag
+let touchClone = null, touchOffX = 0, touchOffY = 0;
+function touchStart(e) {
+  draggedChip = e.currentTarget;
+  draggedFrom = draggedChip.parentElement;
+  const t = e.touches[0];
+  const r = draggedChip.getBoundingClientRect();
+  touchOffX = t.clientX - r.left;
+  touchOffY = t.clientY - r.top;
+  touchClone = draggedChip.cloneNode(true);
+  touchClone.style.cssText = `position:fixed;z-index:999;opacity:0.8;pointer-events:none;transform:scale(1.05);`;
+  document.body.appendChild(touchClone);
+  positionClone(t);
+  e.preventDefault();
+}
+function touchMove(e) {
+  if (!touchClone) return;
+  const t = e.touches[0];
+  positionClone(t);
+  e.preventDefault();
+}
+function touchEnd(e) {
+  if (!touchClone) return;
+  const t = e.changedTouches[0];
+  touchClone.remove();
+  touchClone = null;
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  const zone = el ? (el.classList.contains('sort-drop-area') ? el :
+    el.closest('.sort-drop-area') || el.closest('.word-bank') || el.closest('.drop-zone')) : null;
+  if (zone) {
+    if (zone.classList.contains('drop-zone')) {
+      // Fill-sentence drop
+      const word = draggedChip.dataset.word;
+      zone.textContent = word;
+      zone.dataset.filled = word;
+      zone.classList.add('filled');
+      draggedChip.classList.add('used');
+    } else {
+      zone.appendChild(draggedChip);
+    }
+  }
+  draggedChip = null;
+}
+function positionClone(t) {
+  touchClone.style.left = (t.clientX - touchOffX) + 'px';
+  touchClone.style.top = (t.clientY - touchOffY) + 'px';
+}
+
+// ── SENTENCE DROP ZONES ──
+function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+document.querySelectorAll('.drop-zone').forEach(z => {
+  z.addEventListener('dragleave', function() { this.classList.remove('drag-over'); });
+});
+
+function dropWord(e) {
+  e.preventDefault();
+  const zone = e.currentTarget;
+  zone.classList.remove('drag-over');
+  if (!draggedChip) return;
+  const word = draggedChip.dataset.word;
+  // If zone already had a chip, return it to its bank
+  if (zone.dataset.filled) {
+    // find used chip with matching word and re-enable
+    const bankId = 'bank-drag' + zone.dataset.set;
+    const bank = document.getElementById(bankId) || document.getElementById('sort-bank');
+    const prev = [...bank.querySelectorAll('.drag-chip.used')].find(c => c.dataset.word === zone.dataset.filled);
+    if (prev) prev.classList.remove('used');
+  }
+  zone.textContent = word;
+  zone.dataset.filled = word;
+  zone.classList.remove('correct','incorrect');
+  zone.classList.add('filled');
+  draggedChip.classList.add('used');
+  draggedChip = null;
+}
+
+// ── CHECK SORT ──
+function checkSort() {
+  let correct = 0, total = 6;
+  ['place','contraction','belonging'].forEach(fam => {
+    const zone = document.getElementById('drop-' + fam);
+    zone.querySelectorAll('.drag-chip').forEach(chip => {
+      if (chip.dataset.family === fam) {
+        correct++;
+        chip.style.borderColor = 'var(--success)';
+        chip.style.background = 'var(--success-bg)';
+        chip.style.color = 'var(--success)';
+      } else {
+        chip.style.borderColor = '#c0392b';
+        chip.style.background = '#fdf0f0';
+        chip.style.color = '#c0392b';
+      }
+    });
+  });
+  const fb = document.getElementById('sort-feedback');
+  fb.classList.add('show');
+  if (correct === total) {
+    fb.className = 'feedback-msg show great';
+    fb.textContent = '🌟 You sorted all six correctly! You found all three families.';
+    markDone(2);
+  } else {
+    fb.className = 'feedback-msg show keep-going';
+    fb.textContent = `You got ${correct} out of ${total}. Look at the color clues — which family does each word's spelling belong to?`;
+  }
+}
+
+function resetSort() {
+  const bank = document.getElementById('sort-bank');
+  ['place','contraction','belonging'].forEach(fam => {
+    const zone = document.getElementById('drop-' + fam);
+    zone.querySelectorAll('.drag-chip').forEach(chip => {
+      chip.style.removeProperty('border-color');
+      chip.style.removeProperty('background');
+      chip.style.removeProperty('color');
+      bank.appendChild(chip);
+    });
+  });
+  const fb = document.getElementById('sort-feedback');
+  fb.className = 'feedback-msg';
+}
+
+// ── CHECK DRAG SETS ──
+function checkDragSet(setNum, total) {
+  let correct = 0;
+  for (let i = 1; i <= total; i++) {
+    const zone = document.getElementById('drop' + setNum + '-' + i);
+    if (!zone) continue;
+    const filled = zone.dataset.filled || '';
+    const answer = zone.dataset.answer;
+    zone.classList.remove('correct','incorrect','filled');
+    if (filled === answer) {
+      zone.classList.add('correct');
+      correct++;
+    } else if (filled) {
+      zone.classList.add('incorrect');
+    }
+  }
+  const fb = document.getElementById('drag' + setNum + '-feedback');
+  fb.classList.add('show');
+  if (correct === total) {
+    fb.className = 'feedback-msg show great';
+    fb.textContent = `🌟 All ${total} correct! Your investigation is strong.`;
+    markDone(setNum + 2);
+    if (setNum === 2) checkAllComplete();
+  } else {
+    fb.className = 'feedback-msg show keep-going';
+    fb.textContent = `You got ${correct} out of ${total}. The highlighted blanks need another look. Try: can you replace the word with "they are"? Does it still make sense?`;
+  }
+}
+
+function resetDragSet(setNum, total, bankId) {
+  const bank = document.getElementById(bankId);
+  for (let i = 1; i <= total; i++) {
+    const zone = document.getElementById('drop' + setNum + '-' + i);
+    if (!zone) continue;
+    if (zone.dataset.filled) {
+      const word = zone.dataset.filled;
+      // re-enable a used chip
+      const used = [...bank.querySelectorAll('.drag-chip.used')].find(c => c.dataset.word === word);
+      if (used) used.classList.remove('used');
+      zone.textContent = '_____';
+      delete zone.dataset.filled;
+      zone.classList.remove('correct','incorrect','filled');
+    }
+  }
+  document.getElementById('drag' + setNum + '-feedback').className = 'feedback-msg';
+}
+
+// ── FILL IN THE BLANK ──
+function checkFITB() {
+  let correct = 0, total = 10;
+  for (let i = 1; i <= 10; i++) {
+    const inp = document.getElementById('fitb' + i);
+    if (!inp) continue;
+    const val = inp.value.trim().toLowerCase().replace(/'/g,"'");
+    const ans = inp.dataset.answer.toLowerCase();
+    inp.classList.remove('correct','incorrect');
+    if (val === ans) { inp.classList.add('correct'); correct++; }
+    else if (val) { inp.classList.add('incorrect'); }
+  }
+  const fb = document.getElementById('fitb-feedback');
+  fb.classList.add('show');
+  if (correct === total) {
+    fb.className = 'feedback-msg show great';
+    fb.textContent = `🌟 All ${total} correct! You've got all three words sorted in your mind.`;
+    markDone(5);
+    checkAllComplete();
+  } else {
+    fb.className = 'feedback-msg show keep-going';
+    fb.textContent = `You got ${correct} out of ${total}. The boxes outlined in red need another look. Ask: is this a place? A "they are"? Or belonging?`;
+  }
+}
+
+function resetFITB() {
+  for (let i = 1; i <= 10; i++) {
+    const inp = document.getElementById('fitb' + i);
+    if (inp) { inp.value = ''; inp.classList.remove('correct','incorrect'); }
+  }
+  document.getElementById('fitb-feedback').className = 'feedback-msg';
+}
+
+// ── NAV DOTS ──
+const sections = ['sec-0','sec-1','sec-2','sec-3','sec-4','sec-5','sec-6'];
+const dots = document.querySelectorAll('.nav-dot');
+
+function markDone(idx) {
+  if (dots[idx]) { dots[idx].classList.remove('active'); dots[idx].classList.add('done'); }
+}
+function checkAllComplete() {
+  document.getElementById('completion').classList.add('show');
+}
+
+// Intersection observer for nav dots
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      if (idx >= 0) {
+        dots.forEach(d => d.classList.remove('active'));
+        dots[idx].classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+dots.forEach((dot, idx) => {
+  dot.addEventListener('click', () => {
+    const el = document.getElementById(sections[idx]);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── INIT ──
+window.addEventListener('load', initDrag);
+</script>
+</body>
+</html>
