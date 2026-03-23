@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spellbook of Sentence Structures — Grade 6 ELA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Source+Code+Pro:wght@400;500;600&display=swap');
+
+:root {
+  --void: #06080a;
+  --abyss: #0a0e12;
+  --deep: #0f1820;
+  --mid: #162230;
+  --surface: #1c2d3e;
+  --teal-deep: #0d4f5c;
+  --teal: #1a7a6e;
+  --teal-light: #25a898;
+  --amber: #e8a040;
+  --amber-light: #f5c472;
+  --amber-pale: #fde8b8;
+  --parchment: #f4edd8;
+  --parchment-mid: #ead5a8;
+  --ink: #1a1208;
+  --ink-mid: #2e2010;
+  --ink-light: #4a3820;
+  /* MTG color identity */
+  --blue-mana: #4a8fc0;
+  --black-mana: #9060c0;
+  --red-mana: #d04040;
+  --green-mana: #40a060;
+  --white-mana: #d0b860;
+  --gold: #c8900a;
+  --card-border: rgba(200, 160, 40, 0.45);
+  --glow: rgba(232, 160, 64, 0.35);
+  --glow-teal: rgba(26, 122, 110, 0.3);
+  --shadow-deep: 0 12px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.95;
+  background: var(--void);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── STAR FIELD BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 8%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 12%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(ellipse at 20% 0%, rgba(26,122,110,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(13,79,92,0.22) 0%, transparent 50%),
+    var(--abyss);
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ── ACCESSIBILITY BAR ── */
+.a11y-bar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(6, 8, 10, 0.95);
+  border-bottom: 1px solid rgba(232,160,64,0.2);
+  backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
+}
+.a11y-btn {
+  background: rgba(13,79,92,0.4);
+  border: 1px solid rgba(232,160,64,0.3);
+  color: rgba(245,196,114,0.8);
+  padding: 4px 11px; border-radius: 3px;
+  cursor: pointer; font-family: 'Source Code Pro', monospace; font-size: 11px;
+  letter-spacing: 0.04em; transition: all 0.2s; text-transform: uppercase;
+}
+.a11y-btn:hover, .a11y-btn.on {
+  background: rgba(232,160,64,0.2); border-color: var(--amber); color: var(--amber);
+}
+.speed-wrap {
+  display: flex; align-items: center; gap: 7px;
+  font-family: 'Source Code Pro', monospace; font-size: 11px;
+  color: rgba(245,196,114,0.6); letter-spacing: 0.04em;
+}
+.speed-wrap input[type=range] { width: 70px; accent-color: var(--amber); cursor: pointer; }
+.a11y-sep { width: 1px; height: 18px; background: rgba(232,160,64,0.15); }
+
+/* ── HEADER ── */
+.site-header {
+  padding: 56px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+}
+.header-glyph {
+  font-size: 52px;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 16px rgba(232,160,64,0.5));
+  animation: drift 5s ease-in-out infinite;
+}
+@keyframes drift { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
+.site-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(22px, 5vw, 44px);
+  font-weight: 900;
+  color: var(--amber);
+  text-shadow: 0 0 40px var(--glow), 0 2px 6px rgba(0,0,0,0.9);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.site-header .grade-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 16px;
+  border: 1px solid rgba(232,160,64,0.35);
+  border-radius: 2px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  color: rgba(245,196,114,0.6);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.site-header .tagline {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(245,196,114,0.55);
+}
+
+/* ── LAYOUT ── */
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 100px; }
+
+/* ── PROGRESS ── */
+.progress-panel {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(232,160,64,0.15);
+  border-radius: 4px;
+  padding: 12px 18px;
+  margin: 28px 0;
+}
+.progress-label { font-family: 'Source Code Pro', monospace; font-size: 11px; color: rgba(245,196,114,0.45); letter-spacing: 0.1em; white-space: nowrap; }
+.progress-track { flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--amber)); border-radius: 3px; width: 0%; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.progress-count { font-family: 'Cinzel', serif; font-size: 12px; color: var(--amber-light); white-space: nowrap; }
+
+/* ── SECTION CARD ── */
+.card {
+  background: linear-gradient(160deg, rgba(244,237,216,0.97) 0%, rgba(234,221,182,0.95) 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  margin: 28px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-deep);
+  position: relative;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+}
+.card-head {
+  background: linear-gradient(135deg, #0b1e28 0%, #0d2a38 100%);
+  border-bottom: 1px solid rgba(232,160,64,0.3);
+  padding: 16px 22px;
+  display: flex; align-items: center; gap: 12px;
+}
+.card-head-icon { font-size: 26px; flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(232,160,64,0.5)); }
+.card-head-text { flex: 1; min-width: 0; }
+.card-head h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--amber); letter-spacing: 0.06em;
+  text-shadow: 0 0 12px var(--glow);
+}
+.card-num {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px; color: rgba(232,160,64,0.4);
+  letter-spacing: 0.1em; margin-top: 2px;
+}
+.listen-btn {
+  background: rgba(232,160,64,0.1); border: 1px solid rgba(232,160,64,0.35);
+  color: rgba(245,196,114,0.8); padding: 5px 12px; border-radius: 3px;
+  cursor: pointer; font-family: 'Source Code Pro', monospace; font-size: 11px;
+  letter-spacing: 0.04em; transition: all 0.2s; flex-shrink: 0;
+  display: flex; align-items: center; gap: 5px;
+}
+.listen-btn:hover { background: rgba(232,160,64,0.22); color: var(--amber); }
+.card-body { padding: 24px 26px; }
+
+/* ── PROSE ── */
+.prose { font-size: 17px; line-height: 2.05; color: var(--ink-light); }
+.prose p { margin-bottom: 16px; }
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--teal-deep); font-weight: 700; }
+.hl-teal { color: var(--teal-deep); font-weight: 600; }
+.hl-amber { color: #7a4800; font-weight: 600; }
+.hl-blue { color: var(--mana-blue,#1a4a7a); font-weight: 600; }
+
+/* ── LORE QUOTE ── */
+.lore {
+  background: linear-gradient(135deg, rgba(10,20,28,0.88), rgba(13,30,42,0.85));
+  border-left: 3px solid var(--amber);
+  border-radius: 0 4px 4px 0;
+  padding: 16px 20px;
+  margin: 18px 0;
+  position: relative;
+}
+.lore::before { content: '"'; position: absolute; top: 4px; left: 10px; font-size: 48px; color: rgba(232,160,64,0.15); font-family: 'Cinzel', serif; line-height: 1; }
+.lore-text { font-style: italic; font-size: 16px; color: rgba(245,196,114,0.85); line-height: 2; padding-left: 8px; }
+.lore-source { font-family: 'Source Code Pro', monospace; font-size: 11px; color: rgba(245,196,114,0.4); margin-top: 6px; padding-left: 8px; letter-spacing: 0.06em; }
+
+/* ── MTG CARD TYPE DISPLAY ── */
+.spell-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.spell-tile {
+  border-radius: 5px;
+  padding: 16px 14px;
+  text-align: center;
+  border: 2px solid;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+.spell-tile:hover { transform: translateY(-3px); }
+.spell-tile::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.12) 0%, transparent 65%); pointer-events: none; }
+.tile-simple  { background: linear-gradient(160deg,#0e243c,#0a1a2c); border-color: #5a9ed0; }
+.tile-compound { background: linear-gradient(160deg,#1a0d30,#120820); border-color: #9070d0; }
+.tile-complex  { background: linear-gradient(160deg,#0c2a14,#081c0c); border-color: #50b870; }
+.tile-cc       { background: linear-gradient(160deg,#2c1c08,#1c1004); border-color: #c89030; }
+.tile-icon   { font-size: 30px; display: block; margin-bottom: 8px; }
+.tile-name   { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 4px; }
+.tile-simple .tile-name  { color: #a0d0ff; }
+.tile-compound .tile-name{ color: #c8a8ff; }
+.tile-complex .tile-name { color: #90e8a8; }
+.tile-cc .tile-name      { color: #f0c060; }
+.tile-sub    { font-size: 11px; opacity: 0.65; margin-bottom: 10px; font-style: italic; }
+.tile-rule   { font-size: 13px; line-height: 1.65; }
+.tile-simple .tile-rule  { color: #d0e8ff; }
+.tile-compound .tile-rule{ color: #e0d0ff; }
+.tile-complex .tile-rule { color: #c0f0d0; }
+.tile-cc .tile-rule      { color: #ffe0a0; }
+.mana-pip { position: absolute; top: 8px; right: 10px; font-size: 10px; opacity: 0.55; font-family: 'Source Code Pro', monospace; }
+
+/* ── TAGS ── */
+.tag {
+  display: inline-block; padding: 1px 7px; border-radius: 2px;
+  font-family: 'Source Code Pro', monospace; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.05em; vertical-align: middle; margin: 0 2px;
+}
+.tag-subj  { background: rgba(26,74,122,0.18); color: #1a4a7a; border: 1px solid #5a9ed0; }
+.tag-pred  { background: rgba(100,40,140,0.18); color: #5a2080; border: 1px solid #9070d0; }
+.tag-conj  { background: rgba(200,140,0,0.18);  color: #8a5a00; border: 1px solid #c8a030; }
+.tag-sub   { background: rgba(30,100,50,0.18);  color: #1a5a2a; border: 1px solid #50b870; }
+.tag-ic    { background: rgba(26,74,122,0.1);   color: #1a4a7a; border: 1px solid #5a9ed0; font-style: italic; }
+.tag-dc    { background: rgba(30,100,50,0.1);   color: #1a5a2a; border: 1px solid #50b870; font-style: italic; }
+
+/* ── DIAGRAM BLOCKS ── */
+.diagram {
+  background: rgba(13,79,92,0.07);
+  border: 1px solid rgba(13,79,92,0.22);
+  border-radius: 5px;
+  padding: 16px 18px;
+  margin: 14px 0;
+  font-size: 15px;
+}
+.diagram .sent-text { font-style: italic; color: var(--ink); margin-bottom: 12px; line-height: 1.7; }
+.clause-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+.clause-box {
+  display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  padding: 6px 10px; border-radius: 4px; border: 1px solid;
+}
+.clause-box.ic-box { background: rgba(26,74,122,0.09); border-color: #5a9ed0; }
+.clause-box.dc-box { background: rgba(30,100,50,0.09); border-color: #50b870; }
+.clause-box .box-label { font-family: 'Source Code Pro', monospace; font-size: 9px; letter-spacing: 0.06em; opacity: 0.6; width: 100%; }
+.plus { color: var(--amber); font-weight: 700; font-size: 17px; }
+.badge-fanboys {
+  background: rgba(200,140,0,0.18); border: 1px solid #c8a030; border-radius: 10px;
+  padding: 2px 9px; font-family: 'Source Code Pro', monospace; font-size: 11px; color: #8a5a00;
+}
+.badge-sub {
+  background: rgba(30,100,50,0.18); border: 1px solid #50b870; border-radius: 10px;
+  padding: 2px 9px; font-family: 'Source Code Pro', monospace; font-size: 11px; color: #1a5a2a;
+}
+.diagram-footer { font-size: 13px; color: #3a2a10; margin-top: 8px; }
+.diagram-footer strong { color: var(--teal-deep); }
+
+/* ── FORMULA BLOCKS ── */
+.formula-stack { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
+.formula-row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(13,79,92,0.15);
+  border-radius: 4px; padding: 10px 14px;
+}
+.formula-label {
+  font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em; min-width: 140px;
+}
+.fl-simple   { color: #1a3a6a; }
+.fl-compound { color: #3a1a5a; }
+.fl-complex  { color: #1a4a1a; }
+.fl-cc       { color: #4a3000; }
+.formula-eq { font-size: 13px; color: #5a4020; }
+
+/* ── SORT ACTIVITY ── */
+.sort-bank {
+  background: rgba(13,79,92,0.06);
+  border: 1px dashed rgba(13,79,92,0.25);
+  border-radius: 5px;
+  padding: 12px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 16px;
+  min-height: 56px;
+}
+.sort-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 0 0 16px;
+}
+.sort-bucket { border-radius: 5px; overflow: hidden; border: 2px solid; }
+.sb-simple   { border-color: #5a9ed0; }
+.sb-compound { border-color: #9070d0; }
+.sb-complex  { border-color: #50b870; }
+.sb-cc       { border-color: #c89030; }
+.sb-head {
+  padding: 7px 12px;
+  font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px;
+}
+.sb-simple .sb-head   { background: rgba(26,74,122,0.2);  color: #1a3a6a; }
+.sb-compound .sb-head { background: rgba(74,26,106,0.2);  color: #3a1a5a; }
+.sb-complex .sb-head  { background: rgba(26,90,42,0.2);   color: #1a4a1a; }
+.sb-cc .sb-head       { background: rgba(120,88,0,0.2);   color: #4a3000; }
+.sb-drop {
+  min-height: 75px; padding: 8px; background: rgba(255,255,255,0.55);
+  display: flex; flex-direction: column; gap: 6px;
+  transition: background 0.2s;
+}
+.sb-drop.over { background: rgba(26,122,110,0.1); }
+.sent-chip {
+  padding: 7px 11px;
+  background: white; border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 3px; font-size: 13px; font-style: italic;
+  color: var(--ink-light); cursor: grab;
+  line-height: 1.5; transition: box-shadow 0.15s; user-select: none;
+}
+.sent-chip:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.15); }
+.sent-chip.dragging { opacity: 0.35; }
+
+/* ── MATCHING ── */
+.match-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.match-col-label {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.06em;
+  color: var(--teal); margin-bottom: 6px;
+}
+.match-item {
+  padding: 9px 13px; border-radius: 4px; font-size: 14px;
+  cursor: pointer; border: 2px solid; transition: all 0.18s; user-select: none;
+  line-height: 1.5;
+}
+.match-sent { background: rgba(26,74,122,0.09); border-color: #5a9ed0; color: var(--ink-light); }
+.match-type {
+  background: rgba(200,140,0,0.09); border-color: rgba(200,140,0,0.4);
+  color: var(--ink-light); font-family: 'Source Code Pro', monospace; font-size: 12px;
+}
+.match-item.sel { box-shadow: 0 0 0 3px rgba(232,160,64,0.5); transform: scale(1.01); }
+.match-item.hit { background: rgba(42,138,58,0.14) !important; border-color: #2a8a3a !important; cursor: default; }
+.match-item.miss { animation: shake 0.4s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+
+/* ── WORD INQUIRY (SWI light touch) ── */
+.inquiry-box {
+  background: linear-gradient(135deg, rgba(13,79,92,0.08), rgba(26,122,110,0.06));
+  border: 1px solid rgba(26,122,110,0.3);
+  border-radius: 5px;
+  padding: 18px 20px;
+  margin: 18px 0;
+}
+.inquiry-title {
+  font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
+  color: var(--teal-deep); letter-spacing: 0.05em; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.word-sum-line {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px; color: var(--ink-mid);
+  background: rgba(255,255,255,0.6); border: 1px solid rgba(13,79,92,0.2);
+  border-radius: 3px; padding: 6px 12px; margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.word-sum-line .base { color: var(--teal-deep); font-weight: 600; }
+.word-sum-line .affix { color: #5a2080; font-weight: 600; }
+.word-sum-line .arrow { color: var(--amber); }
+.word-sum-line .result { color: #1a4a00; font-weight: 600; }
+.inquiry-note { font-size: 15px; color: var(--ink-light); line-height: 1.9; margin-top: 10px; }
+
+/* ── CHOICE / IDENTIFY BUTTONS ── */
+.id-choices { display: flex; flex-wrap: wrap; gap: 9px; margin: 14px 0; }
+.id-btn {
+  padding: 8px 16px; border-radius: 4px; cursor: pointer;
+  font-family: 'Crimson Pro', serif; font-size: 15px; border: 2px solid;
+  background: white; transition: all 0.18s; color: var(--ink-light);
+}
+.id-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.id-btn.correct { background: rgba(42,138,58,0.12) !important; border-color: #2a8a3a !important; color: #1a3a1a; }
+.id-btn.wrong   { background: rgba(192,64,64,0.08); border-color: #c04040; color: #4a1010; }
+.id-btn.neutral-s { border-color: #5a9ed0; }
+.id-btn.neutral-co{ border-color: #9070d0; }
+.id-btn.neutral-cx{ border-color: #50b870; }
+.id-btn.neutral-cc{ border-color: #c89030; }
+
+/* ── REFLECTION ── */
+.reflect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.reflect-card {
+  background: white; border: 1px solid rgba(13,79,92,0.18);
+  border-top: 3px solid; border-radius: 5px; padding: 16px;
+}
+.reflect-card.blue { border-top-color: #5a9ed0; }
+.reflect-card.green{ border-top-color: #50b870; }
+.reflect-card.gold { border-top-color: #c89030; }
+.reflect-card.purple{ border-top-color: #9070d0; }
+.reflect-title { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+.reflect-card.blue .reflect-title   { color: #1a3a6a; }
+.reflect-card.green .reflect-title  { color: #1a4a1a; }
+.reflect-card.gold .reflect-title   { color: #4a3000; }
+.reflect-card.purple .reflect-title { color: #3a1a5a; }
+.reflect-prompt { font-size: 14px; color: var(--ink-light); line-height: 1.8; }
+
+/* one/two word input */
+.word-input {
+  display: block; margin-top: 10px;
+  width: 100%; padding: 7px 10px;
+  background: rgba(13,79,92,0.05);
+  border: 1px solid rgba(13,79,92,0.25); border-radius: 3px;
+  font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);
+}
+.word-input:focus { outline: none; border-color: var(--teal); }
+.word-input::placeholder { color: rgba(74,56,32,0.4); font-style: italic; }
+
+/* ── FEEDBACK ── */
+.fb {
+  display: none; padding: 10px 16px; border-radius: 4px;
+  font-size: 14px; line-height: 1.7; margin-top: 12px; border: 1px solid;
+}
+.fb.show { display: block; }
+.fb.ok   { background: rgba(42,138,58,0.1); border-color: #2a8a3a; color: #1a3a1a; }
+.fb.hint { background: rgba(200,140,0,0.1); border-color: #c8a030; color: #5a3800; }
+
+/* ── BUTTONS ── */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.btn {
+  display: inline-block; padding: 9px 22px; border-radius: 4px;
+  cursor: pointer; font-family: 'Cinzel', serif; font-size: 12px;
+  letter-spacing: 0.05em; font-weight: 700; border: 2px solid;
+  transition: all 0.2s;
+}
+.btn-go {
+  background: linear-gradient(135deg, var(--teal-deep), var(--teal));
+  color: var(--amber-light); border-color: rgba(232,160,64,0.45);
+}
+.btn-go:hover { box-shadow: 0 4px 16px var(--glow-teal); transform: translateY(-1px); }
+.btn-reset { background: transparent; color: var(--teal-deep); border-color: rgba(13,79,92,0.35); }
+.btn-reset:hover { background: rgba(13,79,92,0.07); }
+
+/* ── COMPLETION ── */
+.finale {
+  display: none; text-align: center;
+  background: linear-gradient(145deg, #090f14, #0c1c26);
+  border: 2px solid var(--amber); border-radius: 6px;
+  padding: 36px 28px; margin: 28px 0;
+  box-shadow: 0 0 50px var(--glow);
+}
+.finale.show { display: block; }
+.finale h2 { font-family: 'Cinzel', serif; color: var(--amber); font-size: 26px; margin-bottom: 14px; }
+.finale p  { color: rgba(245,196,114,0.8); font-size: 17px; line-height: 2; }
+
+/* ── READING RULER ── */
+#ruler {
+  display: none; position: fixed; left: 0; right: 0; height: 38px;
+  background: rgba(232,160,64,0.1);
+  border-top: 2px solid rgba(232,160,64,0.35);
+  border-bottom: 2px solid rgba(232,160,64,0.35);
+  pointer-events: none; z-index: 997;
+}
+
+/* ── TINT ── */
+#tint { position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: 0; transition: opacity 0.3s; }
+
+/* ── OVERRIDE CLASSES ── */
+body.od-font,
+body.od-font .prose,
+body.od-font .sent-chip,
+body.od-font .match-item,
+body.od-font .id-btn,
+body.od-font .reflect-prompt,
+body.od-font .word-input,
+body.od-font .diagram .sent-text { font-family: 'OpenDyslexic', 'Comic Sans MS', cursive !important; }
+body.big .prose, body.big .sent-chip, body.big .match-item, body.big .id-btn { font-size: 20px !important; }
+body.spacing .prose, body.spacing .sent-chip, body.spacing .match-item { letter-spacing: 0.1em !important; word-spacing: 0.2em !important; }
+body.lh .prose, body.lh .diagram { line-height: 2.7 !important; }
+
+@media(max-width:600px){
+  .sort-grid { grid-template-columns: 1fr; }
+  .match-cols { grid-template-columns: 1fr; }
+  .spell-row  { grid-template-columns: 1fr 1fr; }
+  .reflect-grid { grid-template-columns: 1fr; }
+  .card-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div id="tint"></div>
+<div id="ruler"></div>
+
+<!-- ═══ ACCESSIBILITY BAR ═══════════════════════════ -->
+<div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+  <button class="a11y-btn" onclick="tog('od-font',this)">OpenDyslexic</button>
+  <button class="a11y-btn" onclick="tog('big',this)">Larger Text</button>
+  <button class="a11y-btn" onclick="tog('spacing',this)">Letter Spacing</button>
+  <button class="a11y-btn" onclick="tog('lh',this)">Line Spacing</button>
+  <button class="a11y-btn" onclick="cycleTint()">Screen Tint</button>
+  <button class="a11y-btn" id="rulerBtn" onclick="toggleRuler()">Reading Ruler</button>
+  <div class="a11y-sep"></div>
+  <div class="speed-wrap">
+    🔊 &nbsp;SPEED:
+    <input type="range" id="spd" min="0.5" max="1.5" step="0.1" value="0.9">
+    <span id="spdLbl">0.9×</span>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══════════════════════════════════════ -->
+<header class="site-header">
+  <span class="header-glyph">⚔️</span>
+  <h1>The Spellbook of Sentence Structures</h1>
+  <span class="grade-badge">Grade 6 ELA · Sentence Structures · Lokahi Connect</span>
+  <span class="tagline">"Every spell has a structure. Every sentence does too."</span>
+</header>
+
+<div class="wrap">
+
+<!-- PROGRESS -->
+<div class="progress-panel">
+  <span class="progress-label">PROGRESS</span>
+  <div class="progress-track"><div class="progress-fill" id="pbar"></div></div>
+  <span class="progress-count" id="pcnt">0 / 6</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 1: THE HOOK
+══════════════════════════════════════════════════ -->
+<div class="card" id="s1">
+  <div class="card-head">
+    <span class="card-head-icon">🗺️</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 1 OF 6</div>
+      <h2>Why This Matters in MTG</h2>
+    </div>
+    <button class="listen-btn" onclick="speak('s1-read')">🔊 Listen</button>
+  </div>
+  <div class="card-body">
+    <div class="lore">
+      <p class="lore-text">In the beginning, there was the Word. And the Word had structure.</p>
+      <p class="lore-source">— Jace Beleren, in the Tome of the Sphinx</p>
+    </div>
+    <div id="s1-read" class="prose">
+      <p>You already know that Magic cards have <strong>types</strong>. Instant. Sorcery. Creature. Enchantment. Planeswalker. The type tells you what the card does and the rules that govern it.</p>
+      <p>Sentences work the same way. Every sentence has a <strong>structure type</strong> — and that structure is built from smaller units called <strong>clauses</strong>, the same way a card's abilities are built from keywords and text.</p>
+      <p>There are four sentence structure types. By the end of this, you'll be able to identify all four on sight — and understand exactly why each one is built the way it is.</p>
+    </div>
+
+    <div class="spell-row">
+      <div class="spell-tile tile-simple">
+        <span class="mana-pip">◈</span>
+        <span class="tile-icon">⚡</span>
+        <div class="tile-name">SIMPLE</div>
+        <div class="tile-sub">Instant // One Clause</div>
+        <div class="tile-rule">One independent clause. Fast. Direct. Can't be countered by complexity.</div>
+      </div>
+      <div class="spell-tile tile-compound">
+        <span class="mana-pip">◈◈</span>
+        <span class="tile-icon">⚔️</span>
+        <div class="tile-name">COMPOUND</div>
+        <div class="tile-sub">Sorcery // Two Equal Clauses</div>
+        <div class="tile-rule">Two independent clauses joined by FANBOYS. Equal power on both sides.</div>
+      </div>
+      <div class="spell-tile tile-complex">
+        <span class="mana-pip">◈◈</span>
+        <span class="tile-icon">🌀</span>
+        <div class="tile-name">COMPLEX</div>
+        <div class="tile-sub">Enchantment // Dependent Bond</div>
+        <div class="tile-rule">One independent + one dependent clause. A subordinating conjunction creates the link.</div>
+      </div>
+      <div class="spell-tile tile-cc">
+        <span class="mana-pip">◈◈◈</span>
+        <span class="tile-icon">🐉</span>
+        <div class="tile-name">COMPOUND-COMPLEX</div>
+        <div class="tile-sub">Legendary // Full Enchantment</div>
+        <div class="tile-rule">Two or more independent clauses plus at least one dependent clause. Maximum power.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="done(1)">Understood — next section ➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 2: THE CODEX
+══════════════════════════════════════════════════ -->
+<div class="card" id="s2">
+  <div class="card-head">
+    <span class="card-head-icon">📖</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 2 OF 6</div>
+      <h2>The Two Clause Types — Your Core Creatures</h2>
+    </div>
+    <button class="listen-btn" onclick="speak('s2-read')">🔊 Listen</button>
+  </div>
+  <div class="card-body">
+    <div id="s2-read" class="prose">
+      <p>Everything builds from two clause types. Think of them as your two core creature types — you need to know what each one does before you can play the game.</p>
+    </div>
+
+    <!-- Independent clause -->
+    <div style="background:rgba(26,74,122,0.07);border:1px solid #5a9ed0;border-radius:5px;padding:16px 18px;margin:14px 0;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#1a3a6a;margin-bottom:10px;">🛡️ INDEPENDENT CLAUSE</div>
+      <div class="prose">
+        <p>Has a <span class="tag tag-subj">SUBJECT</span> + <span class="tag tag-pred">PREDICATE</span> and can stand on its own as a complete thought. It doesn't need anything else to make sense.</p>
+      </div>
+      <div style="margin-top:10px;font-style:italic;font-size:15px;color:var(--ink-mid);">
+        "Teferi altered the timestream." &nbsp;✔ Complete.<br>
+        "Chandra unleashed the flame." &nbsp;✔ Complete.<br>
+        "Garruk hunted across the planes." &nbsp;✔ Complete.
+      </div>
+    </div>
+
+    <!-- Dependent clause -->
+    <div style="background:rgba(30,100,50,0.07);border:1px solid #50b870;border-radius:5px;padding:16px 18px;margin:14px 0;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:#1a4a1a;margin-bottom:10px;">🔗 DEPENDENT CLAUSE</div>
+      <div class="prose">
+        <p>Also has a subject and predicate — but it <strong>cannot stand alone</strong>. It starts with a <span class="tag tag-sub">SUBORDINATOR</span> that makes it depend on another clause to be complete.</p>
+      </div>
+      <div style="margin-top:10px;font-style:italic;font-size:15px;color:var(--ink-mid);">
+        "Because Teferi altered the timestream..." &nbsp;⚠ Incomplete. Waiting for more.<br>
+        "Although Chandra was powerful..." &nbsp;⚠ Incomplete.<br>
+        "When Garruk hunted across the planes..." &nbsp;⚠ Incomplete.
+      </div>
+    </div>
+
+    <!-- Conjunctions -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
+      <div style="background:rgba(200,140,0,0.07);border:1px solid #c8a030;border-radius:5px;padding:14px 16px;">
+        <div style="font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:#6a4400;margin-bottom:8px;">⚡ COORDINATING CONJUNCTIONS</div>
+        <div class="prose" style="font-size:14px;">Join two <em>independent</em> clauses as equals.<br><br>
+        <span class="tag tag-conj">for</span> <span class="tag tag-conj">and</span> <span class="tag tag-conj">nor</span> <span class="tag tag-conj">but</span> <span class="tag tag-conj">or</span> <span class="tag tag-conj">yet</span> <span class="tag tag-conj">so</span><br><br>
+        Mnemonic: <strong>FANBOYS</strong></div>
+      </div>
+      <div style="background:rgba(30,100,50,0.07);border:1px solid #50b870;border-radius:5px;padding:14px 16px;">
+        <div style="font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:#1a4a1a;margin-bottom:8px;">🌀 SUBORDINATING CONJUNCTIONS</div>
+        <div class="prose" style="font-size:14px;">Begin a <em>dependent</em> clause — creates time, cause, condition, or contrast relationships.<br><br>
+        <span class="tag tag-sub">because</span> <span class="tag tag-sub">although</span> <span class="tag tag-sub">when</span> <span class="tag tag-sub">if</span> <span class="tag tag-sub">since</span> <span class="tag tag-sub">while</span> <span class="tag tag-sub">unless</span> <span class="tag tag-sub">after</span></div>
+      </div>
+    </div>
+
+    <div class="prose"><p>The formulas for the four types:</p></div>
+    <div class="formula-stack">
+      <div class="formula-row"><span class="formula-label fl-simple">⚡ SIMPLE =</span> <span class="tag tag-ic">IC</span></div>
+      <div class="formula-row"><span class="formula-label fl-compound">⚔️ COMPOUND =</span> <span class="tag tag-ic">IC</span> <span class="formula-eq">+</span> <span class="badge-fanboys">FANBOYS</span> <span class="formula-eq">+</span> <span class="tag tag-ic">IC</span></div>
+      <div class="formula-row"><span class="formula-label fl-complex">🌀 COMPLEX =</span> <span class="tag tag-ic">IC</span> <span class="formula-eq">+</span> <span class="tag tag-dc">DC</span></div>
+      <div class="formula-row"><span class="formula-label fl-cc">🐉 COMPOUND-COMPLEX =</span> <span class="tag tag-ic">IC</span> <span class="formula-eq">+</span> <span class="badge-fanboys">FANBOYS</span> <span class="formula-eq">+</span> <span class="tag tag-ic">IC</span> <span class="formula-eq">+</span> <span class="tag tag-dc">DC</span></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="done(2)">Got it — continue ➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 3: THE FIELD GUIDE
+══════════════════════════════════════════════════ -->
+<div class="card" id="s3">
+  <div class="card-head">
+    <span class="card-head-icon">🔍</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 3 OF 6</div>
+      <h2>Four Sentences, Fully Labeled</h2>
+    </div>
+    <button class="listen-btn" onclick="speak('s3-read')">🔊 Listen</button>
+  </div>
+  <div class="card-body">
+    <div id="s3-read" class="prose">
+      <p>Here are all four types in the wild — each one mapped and labeled. Study the structure before moving on.</p>
+    </div>
+
+    <div class="diagram">
+      <div class="sent-text">"Karn walked the blind eternities."</div>
+      <div class="clause-row">
+        <div class="clause-box ic-box">
+          <span class="box-label">INDEPENDENT CLAUSE</span>
+          <span class="tag tag-subj">Karn</span>&nbsp;<span class="tag tag-pred">walked the blind eternities</span>
+        </div>
+      </div>
+      <div class="diagram-footer">→ <strong>Simple.</strong> One IC. One complete thought. No conjunction needed.</div>
+    </div>
+
+    <div class="diagram">
+      <div class="sent-text">"Liliana raised the dead, <em>but</em> Jace saw through her plan."</div>
+      <div class="clause-row">
+        <div class="clause-box ic-box"><span class="box-label">IC</span><span class="tag tag-subj">Liliana</span>&nbsp;<span class="tag tag-pred">raised the dead</span></div>
+        <span class="plus">+</span>
+        <span class="badge-fanboys">but</span>
+        <span class="plus">+</span>
+        <div class="clause-box ic-box"><span class="box-label">IC</span><span class="tag tag-subj">Jace</span>&nbsp;<span class="tag tag-pred">saw through her plan</span></div>
+      </div>
+      <div class="diagram-footer">→ <strong>Compound.</strong> Two ICs joined by <em>but</em> (FANBOYS). Equal clauses, contrasting meaning.</div>
+    </div>
+
+    <div class="diagram">
+      <div class="sent-text">"<em>Although</em> the Eldrazi had awakened, Nissa held the land together."</div>
+      <div class="clause-row">
+        <div class="clause-box dc-box"><span class="box-label">DEPENDENT CLAUSE (starts with subordinator)</span><span class="badge-sub">Although</span>&nbsp;<span class="tag tag-subj">the Eldrazi</span>&nbsp;<span class="tag tag-pred">had awakened</span></div>
+        <span class="plus">+</span>
+        <div class="clause-box ic-box"><span class="box-label">IC</span><span class="tag tag-subj">Nissa</span>&nbsp;<span class="tag tag-pred">held the land together</span></div>
+      </div>
+      <div class="diagram-footer">→ <strong>Complex.</strong> DC + IC. The word <em>although</em> makes the first clause depend on the second.</div>
+    </div>
+
+    <div class="diagram">
+      <div class="sent-text">"Chandra ignited her spark, <em>and</em> Gideon raised his shield, <em>because</em> the Phyrexians had breached the gate."</div>
+      <div class="clause-row">
+        <div class="clause-box ic-box"><span class="box-label">IC</span><span class="tag tag-subj">Chandra</span>&nbsp;<span class="tag tag-pred">ignited her spark</span></div>
+        <span class="plus">+</span><span class="badge-fanboys">and</span><span class="plus">+</span>
+        <div class="clause-box ic-box"><span class="box-label">IC</span><span class="tag tag-subj">Gideon</span>&nbsp;<span class="tag tag-pred">raised his shield</span></div>
+        <span class="plus">+</span>
+        <div class="clause-box dc-box"><span class="box-label">DC</span><span class="badge-sub">because</span>&nbsp;<span class="tag tag-subj">the Phyrexians</span>&nbsp;<span class="tag tag-pred">had breached the gate</span></div>
+      </div>
+      <div class="diagram-footer">→ <strong>Compound-Complex.</strong> Two ICs joined by <em>and</em>, plus a DC beginning with <em>because</em>.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="done(3)">I see the patterns — next ➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 4: SORT THE SPELLS
+══════════════════════════════════════════════════ -->
+<div class="card" id="s4">
+  <div class="card-head">
+    <span class="card-head-icon">🃏</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 4 OF 6</div>
+      <h2>Sort the Spells</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="prose">
+      <p>Eight sentences. Four buckets. Drag each sentence into the correct structure type. Use what you know about clauses and conjunctions.</p>
+    </div>
+
+    <div class="sort-bank" id="sortBank"></div>
+
+    <div class="sort-grid">
+      <div class="sort-bucket sb-simple">
+        <div class="sb-head">⚡ Simple</div>
+        <div class="sb-drop" id="z-simple" ondragover="allowDrop(event)" ondrop="dropTo(event,'simple')"></div>
+      </div>
+      <div class="sort-bucket sb-compound">
+        <div class="sb-head">⚔️ Compound</div>
+        <div class="sb-drop" id="z-compound" ondragover="allowDrop(event)" ondrop="dropTo(event,'compound')"></div>
+      </div>
+      <div class="sort-bucket sb-complex">
+        <div class="sb-head">🌀 Complex</div>
+        <div class="sb-drop" id="z-complex" ondragover="allowDrop(event)" ondrop="dropTo(event,'complex')"></div>
+      </div>
+      <div class="sort-bucket sb-cc">
+        <div class="sb-head">🐉 Compound-Complex</div>
+        <div class="sb-drop" id="z-cc" ondragover="allowDrop(event)" ondrop="dropTo(event,'cc')"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="checkSort()">Check my sort ✦</button>
+      <button class="btn btn-reset" onclick="resetSort()">Reset</button>
+    </div>
+    <div id="sortFb" class="fb"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 5: MATCHING + WORD INQUIRY
+══════════════════════════════════════════════════ -->
+<div class="card" id="s5">
+  <div class="card-head">
+    <span class="card-head-icon">🧩</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 5 OF 6</div>
+      <h2>Match the Sentence to Its Type</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="prose">
+      <p>Click a sentence on the left. Then click its matching structure type on the right.</p>
+    </div>
+
+    <div class="match-cols" id="matchGrid"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="checkMatch()">Check matches ✦</button>
+      <button class="btn btn-reset" onclick="resetMatch()">Reset</button>
+    </div>
+    <div id="matchFb" class="fb"></div>
+
+    <!-- SWI LIGHT TOUCH -->
+    <div class="inquiry-box" style="margin-top:28px;">
+      <div class="inquiry-title">🔬 A Word Worth Noticing</div>
+      <div class="prose" style="margin-bottom:12px;">
+        <p>You've been using the word <strong>independent</strong> a lot. It turns out that word is built — not invented. Look at its structure:</p>
+      </div>
+      <div class="word-sum-line">
+        <span class="base">depend</span> <span style="color:#888">→ </span> meaning: <em>to rely on something else</em>
+      </div>
+      <div class="word-sum-line">
+        <span class="affix">in-</span> <span class="arrow">+</span> <span class="base">depend</span> <span class="affix">+ent</span> <span class="arrow">→</span> <span class="result">independent</span>
+      </div>
+      <div class="inquiry-note">
+        The prefix <strong>in-</strong> means "not." So <em>independent</em> literally means "not depending on anything else" — which is exactly what an independent clause does. It doesn't rely on another clause to be complete.<br><br>
+        Same logic: a <em>dependent</em> clause literally depends on another clause. The spelling tells you the meaning.
+      </div>
+      <div style="margin-top:14px;">
+        <div style="font-size:14px;color:var(--ink-light);margin-bottom:6px;">Can you think of another word built from <strong>depend</strong>? Type one word:</div>
+        <input class="word-input" id="dependWord" maxlength="30" placeholder="one word...">
+        <div id="dependFb" style="font-size:13px;margin-top:6px;color:#2a6a2a;display:none;"></div>
+        <button class="btn btn-go" style="margin-top:8px;padding:6px 16px;font-size:11px;" onclick="checkDependWord()">Check it</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 6: REFLECTION
+══════════════════════════════════════════════════ -->
+<div class="card" id="s6">
+  <div class="card-head">
+    <span class="card-head-icon">✨</span>
+    <div class="card-head-text">
+      <div class="card-num">SECTION 6 OF 6</div>
+      <h2>The Scholar's Journal</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="prose">
+      <p>No required answers here — just a few things worth thinking about. Respond to whichever ones interest you. One word or twenty, your choice.</p>
+    </div>
+
+    <div class="reflect-grid">
+      <div class="reflect-card blue">
+        <div class="reflect-title">🔍 What did you notice?</div>
+        <div class="reflect-prompt">What pattern stood out to you as you worked through these sentence types?</div>
+        <input class="word-input" placeholder="a word or phrase..." maxlength="80">
+      </div>
+      <div class="reflect-card gold">
+        <div class="reflect-title">🐉 The Legendary Sentence</div>
+        <div class="reflect-prompt">Compound-complex sentences are the most powerful — but are they always the best choice? When would a Simple sentence hit harder?</div>
+        <input class="word-input" placeholder="your thinking..." maxlength="80">
+      </div>
+      <div class="reflect-card green">
+        <div class="reflect-title">🌀 The Subordinator</div>
+        <div class="reflect-prompt">Pick one subordinating conjunction — <em>because, although, when, unless, if, since, while, after</em> — that feels the most powerful to you. Which one and why?</div>
+        <input class="word-input" placeholder="one word + reason..." maxlength="80">
+      </div>
+      <div class="reflect-card purple">
+        <div class="reflect-title">⚔️ Your Own Sentence</div>
+        <div class="reflect-prompt">Write one sentence of any type using an MTG or D&D character. Then click the type it is below.</div>
+        <input class="word-input" placeholder="your sentence..." maxlength="120" id="ownSent">
+        <div class="id-choices" style="margin-top:10px;">
+          <button class="id-btn neutral-s" style="font-size:13px;padding:5px 12px;" onclick="pickType(this,'s')">⚡ Simple</button>
+          <button class="id-btn neutral-co" style="font-size:13px;padding:5px 12px;" onclick="pickType(this,'co')">⚔️ Compound</button>
+          <button class="id-btn neutral-cx" style="font-size:13px;padding:5px 12px;" onclick="pickType(this,'cx')">🌀 Complex</button>
+          <button class="id-btn neutral-cc" style="font-size:13px;padding:5px 12px;" onclick="pickType(this,'cc')">🐉 Cmpd-Complex</button>
+        </div>
+        <div id="typeFb" style="font-size:13px;color:#2a6a2a;margin-top:6px;display:none;"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-go" onclick="done(6);showFinale()">Complete the Spellbook ⚔️</button>
+    </div>
+  </div>
+</div>
+
+<!-- FINALE -->
+<div class="finale" id="finale">
+  <div style="font-size:46px;margin-bottom:14px;filter:drop-shadow(0 0 16px rgba(232,160,64,0.5))">🐉⚔️✨</div>
+  <h2>Spellbook Complete.</h2>
+  <p>You've mapped all four sentence structures. That's the kind of pattern recognition that makes strong writers — and strong readers of anything, including card text.<br><br>
+  <em>"The first ability of a great mind is to see what others skim past."</em><br>
+  <span style="font-size:14px;opacity:0.6;">— Jace Beleren</span></p>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── DATA ─────────────────────────────────────────
+
+const sortItems = [
+  { id:'a', text:'Serra Angel descended from the clouds.', type:'simple' },
+  { id:'b', text:'Jace searched the archives, but the tome had vanished.', type:'compound' },
+  { id:'c', text:'Because Liliana had broken her pact, the demons came for her.', type:'complex' },
+  { id:'d', text:'Karn stood motionless.', type:'simple' },
+  { id:'e', text:'Teferi slowed time, and Nissa raised a barrier, while the Phyrexians advanced.', type:'cc' },
+  { id:'f', text:'Although Garruk was cursed, he never stopped hunting.', type:'complex' },
+  { id:'g', text:'The Gatewatch assembled, yet they were outnumbered.', type:'compound' },
+  { id:'h', text:'Chandra lit the fuse, and Gideon charged forward, because retreat was not an option.', type:'cc' },
+];
+
+const matchItems = [
+  { id:'m1', sent:'Nicol Bolas conquered Amonkhet.', type:'Simple', icon:'⚡' },
+  { id:'m2', sent:'Karn built machines, and Urza built empires.', type:'Compound', icon:'⚔️' },
+  { id:'m3', sent:'Unless the Gatewatch intervened, all would be lost.', type:'Complex', icon:'🌀' },
+  { id:'m4', sent:'Jace wiped his own memory, yet the truth returned, because the mind does not forget.', type:'Compound-Complex', icon:'🐉' },
+  { id:'m5', sent:'Since Liliana controlled the Chain Veil, her power grew unchecked.', type:'Complex', icon:'🌀' },
+  { id:'m6', sent:'Chandra burned everything.', type:'Simple', icon:'⚡' },
+];
+
+// depend- word family (partial)
+const dependFamily = ['dependency','dependencies','dependable','dependably','dependability','dependence','dependences','dependent','dependents','dependently','depend','depends','depended','depending','independence','independently','independents','codepend','codependent','codependency','undependable'];
+
+// ── STATE ─────────────────────────────────────────
+let completed = 0;
+let sortState  = {};
+let selMatch   = null;
+let pairsMatch = {};
+
+// ── INIT ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildSort();
+  buildMatch();
+  document.getElementById('spd').addEventListener('input', function(){
+    document.getElementById('spdLbl').textContent = parseFloat(this.value).toFixed(1) + '×';
+  });
+  document.addEventListener('mousemove', moveRuler);
+  // drop zone drag-leave cleanup
+  document.querySelectorAll('.sb-drop').forEach(z => {
+    z.addEventListener('dragleave', () => z.classList.remove('over'));
+  });
+});
+
+// ── PROGRESS ──────────────────────────────────────
+function done(n) {
+  const card = document.getElementById('s'+n);
+  if (card && !card.dataset.done) {
+    card.dataset.done = '1';
+    completed++;
+    document.getElementById('pbar').style.width = Math.round(completed/6*100)+'%';
+    document.getElementById('pcnt').textContent = completed+' / 6';
+  }
+}
+function showFinale() {
+  const el = document.getElementById('finale');
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── SORT ──────────────────────────────────────────
+function buildSort() {
+  const bank = document.getElementById('sortBank');
+  [...sortItems].sort(()=>Math.random()-0.5).forEach(item => {
+    const c = document.createElement('div');
+    c.className = 'sent-chip';
+    c.id = 'sc-'+item.id;
+    c.textContent = item.text;
+    c.draggable = true;
+    c.dataset.id = item.id;
+    c.addEventListener('dragstart', e => { e.dataTransfer.setData('text',item.id); c.classList.add('dragging'); });
+    c.addEventListener('dragend', () => c.classList.remove('dragging'));
+    bank.appendChild(c);
+  });
+}
+function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add('over'); }
+function dropTo(e, zone) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('over');
+  const id = e.dataTransfer.getData('text');
+  const chip = document.getElementById('sc-'+id);
+  if (chip) { e.currentTarget.appendChild(chip); sortState[id] = zone; }
+}
+function checkSort() {
+  let ok = 0;
+  sortItems.forEach(i => { if(sortState[i.id]===i.type) ok++; });
+  const fb = document.getElementById('sortFb');
+  if (ok === sortItems.length) {
+    fb.className='fb ok show';
+    fb.innerHTML='✅ All eight sorted correctly. Excellent pattern recognition — you picked up on the conjunctions fast.';
+    done(4);
+  } else if (ok >= 5) {
+    fb.className='fb hint show';
+    fb.innerHTML=`🔍 ${ok} of 8 correct. Strong start. Look at the ones you're unsure about: does each clause stand on its own? Does any clause start with a subordinator like <em>because, although, while</em>?`;
+  } else {
+    fb.className='fb hint show';
+    fb.innerHTML=`🔍 ${ok} of 8. Try this: for each sentence, first count the clauses. Then ask — can each clause stand alone? Does any clause start with a subordinating word?`;
+  }
+}
+function resetSort() {
+  sortState = {};
+  const bank = document.getElementById('sortBank');
+  sortItems.forEach(i => {
+    const c = document.getElementById('sc-'+i.id);
+    if (c) bank.appendChild(c);
+  });
+  document.getElementById('sortFb').className='fb';
+}
+
+// ── MATCH ─────────────────────────────────────────
+function buildMatch() {
+  selMatch = null; pairsMatch = {};
+  const grid = document.getElementById('matchGrid');
+  const shuffS = [...matchItems].sort(()=>Math.random()-0.5);
+  const shuffT = [...matchItems].sort(()=>Math.random()-0.5);
+  grid.innerHTML = `
+    <div>
+      <div class="match-col-label">SENTENCES</div>
+      ${shuffS.map(m=>`<div class="match-item match-sent" id="ms-${m.id}" onclick="pickMatch('s','${m.id}')">${m.sent}</div>`).join('')}
+    </div>
+    <div>
+      <div class="match-col-label">STRUCTURE TYPE</div>
+      ${shuffT.map(m=>`<div class="match-item match-type" id="mt-${m.id}" onclick="pickMatch('t','${m.id}')">${m.icon} ${m.type}</div>`).join('')}
+    </div>
+  `;
+}
+function pickMatch(side, id) {
+  const el = document.getElementById((side==='s'?'ms-':'mt-')+id);
+  if (!el || el.classList.contains('hit')) return;
+  if (!selMatch) {
+    selMatch = {side,id,el};
+    el.classList.add('sel');
+    return;
+  }
+  if (selMatch.side === side) {
+    selMatch.el.classList.remove('sel');
+    selMatch = {side,id,el};
+    el.classList.add('sel');
+    return;
+  }
+  const sId = side==='t' ? selMatch.id : id;
+  const tId = side==='t' ? id : selMatch.id;
+  selMatch.el.classList.remove('sel');
+  el.classList.remove('sel');
+  const sData = matchItems.find(m=>m.id===sId);
+  const tData = matchItems.find(m=>m.id===tId);
+  if (sData && tData && sData.type === tData.type) {
+    document.getElementById('ms-'+sId).classList.add('hit');
+    document.getElementById('mt-'+tId).classList.add('hit');
+    pairsMatch[sId] = tId;
+  } else {
+    const msEl = document.getElementById('ms-'+sId);
+    const mtEl = document.getElementById('mt-'+tId);
+    msEl.classList.add('miss'); mtEl.classList.add('miss');
+    setTimeout(()=>{ msEl.classList.remove('miss'); mtEl.classList.remove('miss'); }, 500);
+  }
+  selMatch = null;
+}
+function checkMatch() {
+  const c = Object.keys(pairsMatch).length;
+  const fb = document.getElementById('matchFb');
+  if (c === matchItems.length) {
+    fb.className='fb ok show';
+    fb.innerHTML='✅ All matched. You can read sentence structure on sight now.';
+    done(5);
+  } else {
+    fb.className='fb hint show';
+    fb.innerHTML=`🔍 ${c} of ${matchItems.length} matched. Keep going — click sentence, then type.`;
+  }
+}
+function resetMatch() { document.getElementById('matchFb').className='fb'; buildMatch(); }
+
+// ── WORD INQUIRY ──────────────────────────────────
+function checkDependWord() {
+  const val = document.getElementById('dependWord').value.trim().toLowerCase();
+  const fb = document.getElementById('dependFb');
+  fb.style.display = 'block';
+  if (!val) { fb.style.color='#8a5000'; fb.textContent='Type a word first.'; return; }
+  if (dependFamily.includes(val)) {
+    fb.style.color='#1a6a1a';
+    fb.textContent = `✅ "${val}" — yes, that's built from the same base ⟨depend⟩. The spelling carries the meaning across the whole family.`;
+  } else {
+    fb.style.color='#8a5000';
+    fb.textContent = `🔍 "${val}" — interesting guess. Think about the base ⟨depend⟩ — what prefixes or suffixes could attach to it? Try: un-, in-, -ent, -ence, -able, -ing, -ed…`;
+  }
+}
+
+// ── OWN SENTENCE TYPE PICK ─────────────────────────
+function pickType(btn, type) {
+  document.querySelectorAll('#s6 .id-btn').forEach(b => b.className = b.className.replace(/ correct| wrong/,''));
+  btn.classList.add('correct');
+  const fb = document.getElementById('typeFb');
+  fb.style.display = 'block';
+  const labels = {s:'Simple',co:'Compound',cx:'Complex',cc:'Compound-Complex'};
+  fb.style.color = '#1a6a1a';
+  fb.textContent = `You marked this as ${labels[type]}. Scroll back to the formulas in Section 2 to double-check your reasoning — you'll know if it's right.`;
+}
+
+// ── ACCESSIBILITY ──────────────────────────────────
+function tog(cls, btn) {
+  document.body.classList.toggle(cls);
+  btn.classList.toggle('on');
+}
+const tints = ['transparent','rgba(255,240,200,0.22)','rgba(180,215,255,0.18)','rgba(210,255,200,0.18)'];
+let tintIdx = 0;
+function cycleTint() {
+  tintIdx = (tintIdx+1) % tints.length;
+  const t = document.getElementById('tint');
+  if (tints[tintIdx]==='transparent') { t.style.opacity=0; }
+  else { t.style.background=tints[tintIdx]; t.style.opacity=1; }
+}
+let rulerOn = false;
+function toggleRuler() {
+  rulerOn = !rulerOn;
+  document.getElementById('ruler').style.display = rulerOn ? 'block' : 'none';
+  document.getElementById('rulerBtn').classList.toggle('on', rulerOn);
+}
+function moveRuler(e) {
+  if (!rulerOn) return;
+  document.getElementById('ruler').style.top = (e.clientY - 19)+'px';
+}
+function speak(id) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const el = document.getElementById(id);
+  if (!el) return;
+  const utt = new SpeechSynthesisUtterance(el.innerText || el.textContent);
+  utt.rate = parseFloat(document.getElementById('spd').value);
+  const voices = speechSynthesis.getVoices();
+  const v = voices.find(v=>v.name.includes('Neural')||v.name.includes('Premium')||v.name.includes('Natural'))
+          || voices.find(v=>v.lang&&v.lang.startsWith('en'));
+  if (v) utt.voice = v;
+  speechSynthesis.speak(utt);
+}
+if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>{};
+
+// ── TOUCH DRAG-AND-DROP (Chromebook / tablet support) ──
+(function() {
+  let dragEl = null;
+  let ghost  = null;
+
+  function getZoneAt(x, y) {
+    // Temporarily hide ghost so it doesn't block elementFromPoint
+    if (ghost) ghost.style.display = 'none';
+    const el = document.elementFromPoint(x, y);
+    if (ghost) ghost.style.display = '';
+    if (!el) return null;
+    return el.closest('.sb-drop') || el.closest('#sortBank');
+  }
+
+  document.addEventListener('touchstart', function(e) {
+    const chip = e.target.closest('.sent-chip');
+    if (!chip) return;
+    dragEl = chip;
+    const r = chip.getBoundingClientRect();
+    // Create visual ghost
+    ghost = chip.cloneNode(true);
+    ghost.style.cssText = `
+      position:fixed; z-index:9999; pointer-events:none;
+      width:${r.width}px; opacity:0.85;
+      left:${r.left}px; top:${r.top}px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.3);
+      transform:rotate(2deg); transition:none;
+    `;
+    document.body.appendChild(ghost);
+    chip.style.opacity = '0.3';
+  }, {passive:true});
+
+  document.addEventListener('touchmove', function(e) {
+    if (!dragEl || !ghost) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    ghost.style.left = (t.clientX - ghost.offsetWidth/2) + 'px';
+    ghost.style.top  = (t.clientY - ghost.offsetHeight/2) + 'px';
+    // Highlight zone under finger
+    document.querySelectorAll('.sb-drop, #sortBank').forEach(z => z.classList.remove('over'));
+    const zone = getZoneAt(t.clientX, t.clientY);
+    if (zone) zone.classList.add('over');
+  }, {passive:false});
+
+  document.addEventListener('touchend', function(e) {
+    if (!dragEl || !ghost) return;
+    const t = e.changedTouches[0];
+    document.querySelectorAll('.sb-drop, #sortBank').forEach(z => z.classList.remove('over'));
+    const zone = getZoneAt(t.clientX, t.clientY);
+    if (zone && zone.id !== 'sortBank') {
+      const zoneKey = zone.id.replace('z-','');
+      zone.appendChild(dragEl);
+      sortState[dragEl.dataset.id] = zoneKey;
+    } else if (zone && zone.id === 'sortBank') {
+      zone.appendChild(dragEl);
+      delete sortState[dragEl.dataset.id];
+    }
+    dragEl.style.opacity = '';
+    ghost.remove();
+    dragEl = null;
+    ghost  = null;
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
